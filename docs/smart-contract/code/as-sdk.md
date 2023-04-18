@@ -27,7 +27,7 @@ The OpDatastore namespace includes functions to interact with the operation data
 
 ## Storage
 
-The Storage namespace includes functions for interacting with the key-value datastore. This namespace is particularly useful for reading and writing data that is expected to persist between contract executions, such as contract state or user information. For more information on this namespace, see the [AS-SDK Storage documentation](https://as-sdk.docs.massa.net/modules/Storage.html) or take a [tour of its functionalities](todo).
+The Storage namespace includes functions to interact with the key-value datastore. This namespace is particularly useful to read and write data that is expected to persist between contract executions, such as contract state or user information. For more information on this namespace, see the [AS-SDK Storage documentation](https://as-sdk.docs.massa.net/modules/Storage.html) or take a [tour of its functionalities](todo).
 
 ## Utilities
 
