@@ -1,12 +1,13 @@
 ---
 id: sdk
+sidebar_label: AS SDK
 ---
 
 # AS-SDK
 
-The AS-SDK is a software development kit designed specifically for Massa smart contracts written in AssemblyScript. It provides a set of functions and objects that wrap the ABIs exposed by the node.
+AS-SDK is a software development kit designed specifically for Massa smart contracts written in AssemblyScript. It provides a set of functions and objects that wrap the ABIs exposed by the node.
 
-The AS-SDK includes several namespaces, each containing functions and objects that provide specific functionality:
+It includes several namespaces, each containing functions and objects that provide specific functionalities:
 
 ## Coins
 
