@@ -15,7 +15,7 @@ The Coins namespace includes functions for interacting with wallet balances and 
 
 ## Context
 
-The Context namespace includes functions for interacting with the execution context of a smart contract on the Massa blockchain. This namespace is particularly useful for retrieving information about the current state of a smart contract, such as the caller and callee of the current contract, the call stack, the amount of transferred coins, the remaining gas, and the timestamp. For more information on this namespace, see the [AS-SDK Context documentation](https://as-sdk.docs.massa.net/modules/Context.html) or take a [tour of its functionalities](todo).
+The Context namespace includes functions to interact with the execution context of a smart contract on the Massa blockchain. This namespace is particularly useful to retrieve information about the current state of a smart contract, such as the caller and callee of the current contract, the call stack, the amount of transferred coins, the remaining gas, and the timestamp. For more information on this namespace, see the [AS-SDK Context documentation](https://as-sdk.docs.massa.net/modules/Context.html) or take a [tour of its functionalities](todo).
 
 ## Contract
 
