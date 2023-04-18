@@ -20,5 +20,5 @@ While smart contracts have many benefits, they also have limitations.
 For example, smart contracts:
 
 - Are small, and storage has a cost.
-- Have short execution times, where gas has a cost and there is a limit for a given slot.
+- Have short execution times, and execution has a cost, often called gas, and there is a gas limit for a given slot.
 - Must be deterministic, which implies that all their parameters are public and they can only access information on the blockchain.
