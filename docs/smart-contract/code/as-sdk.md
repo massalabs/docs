@@ -23,7 +23,7 @@ The Contract namespace includes functions to interact with other smart contract 
 
 ## OpDatastore
 
-The OpDatastore namespace includes functions for interacting with the operation datastore. This namespace is particularly useful for reading and writing data that is expected to persist between contract executions, such as contract state or user information. For more information on this namespace, see the [AS-SDK OpDatastore documentation](https://as-sdk.docs.massa.net/modules/OpDatastore.html) or take a [tour of its functionalities](todo).
+The OpDatastore namespace includes functions to interact with the operation datastore. This namespace is particularly useful to read and write data that is expected to persist between contract executions, such as contract state or user information. For more information on this namespace, see the [AS-SDK OpDatastore documentation](https://as-sdk.docs.massa.net/modules/OpDatastore.html) or take a [tour of its functionalities](todo).
 
 ## Storage
 
