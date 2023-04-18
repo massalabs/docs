@@ -19,7 +19,7 @@ The Context namespace includes functions for interacting with the execution cont
 
 ## Contract
 
-The Contract namespace includes functions for interacting with other smart contract functions and manipulating their bytecode. This namespace is particularly useful for creating new smart contracts and sending messages to existing ones. For more information on this namespace, see the [AS-SDK Contract documentation](https://as-sdk.docs.massa.net/modules/Contract.html) or take a [tour of its functionalities](todo).
+The Contract namespace includes functions to interact with other smart contract functions and manipulate their bytecode. This namespace is particularly useful to create new smart contracts and send messages to existing ones. For more information on this namespace, see the [AS-SDK Contract documentation](https://as-sdk.docs.massa.net/modules/Contract.html) or take a [tour of its functionalities](todo).
 
 ## OpDatastore
 
