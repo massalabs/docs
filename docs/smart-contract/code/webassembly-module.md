@@ -5,7 +5,7 @@ sidebar_label: WebAssembly Module
 
 # WebAssembly Module
 
-Each smart contract is a WebAssembly module with exported functions and has access to specific node ABIs. We will see these ABIs in the next chapter.
+Each smart contract is a WebAssembly module with exported functions, and has access to specific node ABIs. We will see these ABIs in the next chapter.
 
 WebAssembly code is compiled from AssemblyScript, a language created specifically for WebAssembly.
 
