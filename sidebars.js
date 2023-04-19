@@ -26,7 +26,7 @@ const sidebars = {
         },
         {
           type: "category",
-          label: "Code",
+          label: "Develop",
           items: [
             {
               type: "doc",
