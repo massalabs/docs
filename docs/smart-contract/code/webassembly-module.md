@@ -21,7 +21,7 @@ To learn more about AssemblyScript, WebAssembly modules, and ABIs, we invite you
 - [Wikipedia explaination of the concept of ABI](https://en.wikipedia.org/wiki/Application_binary_interface).
 
 :::caution
-Do not initialize a smart contract project following AssemblyScript documentation. It will be usely painful. Go back to the [quick start tutorial](todo) or use the following command:
+Do not initialize a smart contract project following AssemblyScript documentation. It will be unnecessarily painful. Go back to the [quick start tutorial](todo) or use the following command:
 ```shell
 npx clear-npx-cache && npx @massalabs/sc-project-initializer@dev init my-first-sc && cd my-first-sc
 ```
