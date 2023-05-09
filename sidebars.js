@@ -50,6 +50,19 @@ const sidebars = {
       ],
     },
   ],
+  nodeSidebar: [
+    {
+      type: "category",
+      label: "Node",
+      items: [
+        {
+          type: "doc",
+          id: "node/intro",
+          label: "Introduction",
+        },
+      ],
+    },
+  ],
 };
 
 module.exports = sidebars;

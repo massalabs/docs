@@ -71,6 +71,12 @@ const config = {
             label: 'Tutorial',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'nodeSidebar',
+            position: 'left',
+            label: 'Testnet',
+          },
+          {
             href: 'https://github.com/massalabs/',
             label: 'GitHub',
             position: 'right',
@@ -85,7 +91,7 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs/intro',
+                to: '/docs/smart-contract/intro',
               },
             ],
           },
@@ -112,7 +118,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Massa Labs. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Massa Labs.`,
       },
       prism: {
         theme: lightCodeTheme,

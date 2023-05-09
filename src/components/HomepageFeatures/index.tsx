@@ -4,51 +4,24 @@ import Link from "@docusaurus/Link";
 import styles from './styles.module.css';
 
 const FeatureList = [
-  {
-    title: "Discover MultiversX",
-    content:
-      "Meet the blockchain that can offer true internet-scale performance.",
-    docName: "welcome/welcome-to-multiversx",
-    icon: "💡",
-  },
+  // {
+  //   title: "Discover Massa",
+  //   content:
+  //     "Meet the deecntralized and scaled blockchain.",
+  //   docName: "todo",
+  //   icon: "💡",
+  // },
   {
     title: "Start Building",
-    content: "Build your decentralized application in minutes.",
-    docName: "developers/overview",
+    content: "Start building your decentralized application.",
+    docName: "docs/smart-contract/intro",
     icon: "🛠️",
   },
   {
-    title: "Run a Validator Node",
+    title: "Run a Testnet Node",
     content: "Validate transactions, secure the network, and earn rewards.",
-    docName: "validators/overview",
+    docName: "docs/node/intro",
     icon: "🖥",
-  },
-  {
-    title: "Integrate a Platform",
-    content:
-      "Follow our guide to integrate exchanges, wallets, and other platforms.",
-    docName: "integrators/overview",
-    icon: "🏛",
-  },
-  {
-    title: "Manage a Wallet",
-    content: "Create a wallet to send, receive and store MultiversX tokens.",
-    docName: "wallet/overview",
-    icon: "📱",
-  },
-  {
-    title: "Create a Token",
-    content:
-      "Issue your own ESDT token, MultiversX's improved equivalent of ERC-20.",
-    docName: "tokens/overview",
-    icon: "🔷",
-  },
-  {
-    title: "Learn How MultiversX Works",
-    content:
-      "Explore Adaptive state sharding, Secure Proof of Stake, and the MultiversX WASM VM.",
-    docName: "technology/architecture-overview",
-    icon: "🔬",
   },
 ];
 
