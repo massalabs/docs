@@ -56,15 +56,70 @@ const sidebars = {
   ],
   nodeSidebar: [
     {
-      type: "category",
-      label: "Node",
-      items: [
-        {
-          type: "doc",
-          id: "node/intro",
-          label: "Introduction",
-        },
-      ],
+      type: "doc",
+      id: "node/home",
+      label: "Home",
+    },
+    {
+      "type": "html",
+      "value": "<hr/>"
+    },
+    {
+      "type": "html",
+      "value": "<span class='menu__link'><b><small> Running a Node </small></b></span>"
+    },
+    {
+      type: "doc",
+      id: "node/install",
+      label: "Installing a node",
+    },
+    {
+      type: "doc",
+      id: "node/run",
+      label: "Running a node",
+    },
+    {
+      type: "doc",
+      id: "node/update",
+      label: "Updating a node",
+    },
+    {
+      type: "doc",
+      id: "node/wallet",
+      label: "Creating a wallet",
+    },
+    {
+      type: "doc",
+      id: "node/stake",
+      label: "Staking",
+    },
+    {
+      type: "doc",
+      id: "node/routability",
+      label: "Routability",
+    },
+    {
+      type: "doc",
+      id: "node/reward",
+      label: "Testnet Staking Rewards Program",
+    },
+    {
+      "type": "html",
+      "value": "<hr/>"
+    },
+    {
+      "type": "html",
+      "value": "<span class='menu__link'><b><small> FAQ and Community </small></b></span>"
+    },
+    {
+      type: "doc",
+      id: "node/faq",
+      label: "Frequently Asked Questions",
+    },
+    {
+      type: "doc",
+      id: "node/tutorials",
+      label: "Tutorials and community resources",
     },
   ],
 };
