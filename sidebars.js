@@ -19,6 +19,10 @@ const sidebars = {
   // But you can create a sidebar manually
   tutorialSidebar: [
     {
+      type: "doc",
+      id: "smart-contract/code/quick-start",
+    },
+    {
       type: "category",
       label: "Smart Contract",
       items: [
