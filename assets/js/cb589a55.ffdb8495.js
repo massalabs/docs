@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocu_dev=self.webpackChunkdocu_dev||[]).push([[8833],{7585:e=>{e.exports=JSON.parse('{"permalink":"/docu-dev/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
