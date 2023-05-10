@@ -63,6 +63,18 @@ const sidebars = {
       ],
     },
   ],
+  rpcSidebar: [
+    {
+      type: "doc",
+      id: "rpc/home",
+      label: "Home",
+    },
+    {
+      type: "doc",
+      id: "rpc/providers",
+      label: "RPC Providers",
+    },
+  ],
 };
 
 module.exports = sidebars;
