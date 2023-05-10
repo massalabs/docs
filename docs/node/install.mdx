@@ -1,0 +1,90 @@
+---
+id: install
+sidebar_label: Installing a node
+---
+
+# Installing a node
+
+:::info
+
+Right now 4 cores and 8 GB of RAM should be enough to run a node, but it might increase in the future.
+More info in the [FAQ](./faq.mdx).
+
+:::
+
+## From thyra (simplest installation)
+
+If you wish to run a Massa node with a couple of clicks only, you can download thyra app and activate the node-manager
+plugin. This will enable you to configure, install, start and even update a node using a simple graphical interface.
+For that, there are 5 steps to follow:
+
+1. Install thyra based on your OS:
+    - [Windows](https://github.com/massalabs/thyra/releases/latest/download/thyra-installer_windows_amd64.exe)
+    - MacOS
+        - For Apple Silicon CPUs (M1, M2...), use
+        [ARM](https://github.com/massalabs/thyra/releases/latest/download/thyra-installer_darwin_arm64.tar.gz)
+        - For Intel CPUs (i5, i7...), use
+        [AMD](https://github.com/massalabs/thyra/releases/latest/download/thyra-installer_darwin_amd64.tar.gz)
+    - [Linux](https://github.com/massalabs/thyra/releases/latest/download/thyra-installer_linux_amd64.tar.gz)
+2. Start thyra using the icon tray. If you need help,
+[this page](https://github.com/massalabs/thyra/blob/main/INSTALLATION.md) can help.
+3. [Configure your VPS](https://github.com/massalabs/thyra-node-manager-plugin/wiki) and go to
+[Thyra home page](https://my.massa/thyra/home/).
+4. Install the node-manager plugin.
+5. Add your VPS details and click on "start".
+6. You're now a Massa node-runner!
+
+:::info
+
+If you have trouble following this procedure, feel free to
+[open a question](https://github.com/massalabs/thyra/issues/new) describing your problem.
+
+:::
+
+## From binaries (simple installation)
+
+If you just wish to run a Massa node without compiling it yourself, you can simply download the latest binary below and
+go the the next step: [Running a node](./run.mdx).
+
+- [Windows executable](https://github.com/massalabs/massa/releases/download/TEST.22.1/massa_TEST.22.1_release_windows.zip)
+- [Linux binary](https://github.com/massalabs/massa/releases/download/TEST.22.1/massa_TEST.22.1_release_linux.tar.gz) - 
+only works with libc2.28 and higher (for example Ubuntu 20.04 and higher)
+- [MacOS binary](https://github.com/massalabs/massa/releases/download/TEST.22.1/massa_TEST.22.1_release_macos.tar.gz)
+
+## From source code (advanced installation)
+
+Otherwise, if you wish to run a Massa node from source code, here are the steps to follow:
+
+### On Ubuntu / MacOS
+
+- on Ubuntu, these libs must be installed: ```sudo apt install pkg-config curl git build-essential libssl-dev libclang-dev cmake```
+- on MacOS: ```brew install llvm cmake```
+- install [rustup](https://www.rust-lang.org/tools/install): ```curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh```
+- configure path: ```source $HOME/.cargo/env```
+- check rust version: ```rustc --version```
+- install nigthly: ```rustup toolchain install nightly-2023-02-27```
+- set it as default: ```rustup default nightly-2023-02-27```
+- check rust version: ```rustc --version```
+- clone this repo: ```git clone --branch testnet https://github.com/massalabs/massa.git```
+
+### On Windows
+
+**Set up your Rust environment**:
+- On Windows, you should first follow the indications from Microsoft to be able to run on a Rust environment [here](https://docs.microsoft.com/en-gb/windows/dev-environment/rust/setup).
+    - Install Visual Studio (recommended) or the Microsoft C++ Build Tools.
+    - Once Visual Studio is installed, click on C++ Build Tool. Select on the right column called "installation details" the following packages:
+        - MSCV v142 -- VS 2019
+        - Windows 10 SDK
+        - C++ CMake tools for Windows
+        - Testing Tools Core Feature
+    - Click install on the bottom right to download and install those packages
+- Install NASM: https://www.nasm.us/pub/nasm/releasebuilds/2.16.01/ choose win32 or win64 folder depending on your architecture and download then launch the installer.
+- Install Chocolatey and run: ```choco install llvm cmake protoc```
+- Install Rust, to be downloaded [here](https://www.rust-lang.org/tools/install)
+- Install Git for windows, to be downloaded [here](https://git-scm.com/download/win)
+- Install install protoc in your PATH, to be downloaded [here](https://github.com/protocolbuffers/protobuf/releases)
+
+**Clone the Massa Git Repository**:
+- Open Windows Power Shell
+    - Clone the latest distributed version: ```git clone --branch testnet https://github.com/massalabs/massa.git```
+    - Change default Rust to nightly: ```rustup default nightly-2023-02-27```
