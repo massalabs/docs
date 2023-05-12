@@ -80,6 +80,12 @@ const config = {
             label: 'Testnet',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'rpcSidebar',
+            position: 'left',
+            label: 'RPC',
+          },
+          {
             href: 'https://github.com/massalabs/',
             label: 'GitHub',
             position: 'right',
