@@ -4,13 +4,13 @@ import Link from "@docusaurus/Link";
 import styles from './styles.module.css';
 
 const FeatureList = [
-  // {
-  //   title: "Discover Massa",
-  //   content:
-  //     "Meet the deecntralized and scaled blockchain.",
-  //   docName: "todo",
-  //   icon: "💡",
-  // },
+  {
+    title: "Discover Massa",
+    content:
+      "Learn what Massa offers and what you can build with it.",
+    docName: "docs/learn/home",
+    icon: "💡",
+  },
   {
     title: "Start Building",
     content: "Start building your decentralized application.",
@@ -19,7 +19,7 @@ const FeatureList = [
   },
   {
     title: "Run a Testnet Node",
-    content: "Validate transactions, secure the network, and earn rewards.",
+    content: "Validate transactions, secure the network, earn rewards.",
     docName: "docs/node/intro",
     icon: "🖥",
   },

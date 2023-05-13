@@ -2,7 +2,6 @@
 sidebar_position: 1
 ---
 
-
 # Introduction
 
 Smart contracts are programs that can interact with the blockchain, which can be viewed as a *decentralized database*. They allow developers to build decentralized applications (dApps) with controlled execution of contractual terms, where **code is law**.
