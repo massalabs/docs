@@ -71,6 +71,26 @@ const sidebars = {
     },
     {
       type: "html",
+      value: "<span class='menu__link'><b><small> Developer Tools </small></b></span>"
+    },
+    {
+      type: "doc",
+      id: "build/sdks",
+    },
+    {
+      type: "doc",
+      id: "build/explorers",
+    },
+    {
+      type: "doc",
+      id: "build/wallets",
+    },
+    {
+      type: "html",
+      value: "<hr/>"
+    },
+    {
+      type: "html",
       value: "<span class='menu__link'><b><small> API and RPC </small></b></span>"
     },
     {
@@ -85,28 +105,40 @@ const sidebars = {
       type: "doc",
       id: "build/providers",
     },
+  ],
+  learnSidebar: [
+    {
+      type: "doc",
+      id: "learn/home",
+    },
     {
       type: "html",
       value: "<hr/>"
     },
     {
       type: "html",
-      value: "<span class='menu__link'><b><small> Tools </small></b></span>"
+      value: "<span class='menu__link'><b><small> Massa Features </small></b></span>"
     },
     {
       type: "doc",
-      id: "build/explorers",
+      id: "learn/decentralized-web",
     },
     {
       type: "doc",
-      id: "build/wallets",
+      id: "learn/autonomous-sc",
     },
-  ],
-  learnSidebar: [
+    {
+      type: "html",
+      value: "<hr/>"
+    },
+    {
+      type: "html",
+      value: "<span class='menu__link'><b><small> Massa Architecture </small></b></span>"
+    },
     {
       type: "doc",
-      id: "learn/home",
-    }
+      id: "learn/architecture",
+    },
   ],
   tutorialSidebar: [
     {
