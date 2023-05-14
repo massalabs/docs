@@ -91,11 +91,6 @@ const config = {
             position: 'left',
             label: '🖥 Testnet',
           },
-          {
-            href: 'https://github.com/massalabs/',
-            label: 'GitHub',
-            position: 'right',
-          },
         ],
       },
       footer: {

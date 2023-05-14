@@ -14,8 +14,14 @@ const FeatureList = [
   {
     title: "Start Building",
     content: "Start building your decentralized application.",
-    docName: "docs/smart-contract/intro",
+    docName: "docs/build/home",
     icon: "🛠️",
+  },
+  {
+    title: "Tutorials",
+    content: "Learn how to build decentralized applications through examples.",
+    docName: "docs/tutorial/home",
+    icon: "📖",
   },
   {
     title: "Run a Testnet Node",

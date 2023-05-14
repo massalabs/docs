@@ -64,6 +64,11 @@ const sidebars = {
           ],
         },
       ],
+      
+    },
+    {
+      type: "doc",
+      id: "build/frontend",
     },
     {
       type: "html",
