@@ -98,7 +98,6 @@ const sidebars = {
           ],
         },
       ],
-      
     },
     {
       type: "doc",
@@ -121,8 +120,22 @@ const sidebars = {
       id: "build/explorers",
     },
     {
-      type: "doc",
-      id: "build/wallets",
+      type: "category",
+      label: "Wallets",
+      items: [
+        {
+          type: "doc",
+          id: "build/wallet/wallet-provider",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/massa-station",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/community-wallets",
+        },
+      ],
     },
     {
       type: "html",
