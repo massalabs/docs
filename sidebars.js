@@ -138,6 +138,10 @@ const sidebars = {
       ],
     },
     {
+      type: "doc",
+      id: "build/networks-faucets",
+    },
+    {
       type: "html",
       value: "<hr/>"
     },
