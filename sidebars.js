@@ -121,6 +121,10 @@ const sidebars = {
     },
     {
       type: "doc",
+      id: "build/standards",
+    },
+    {
+      type: "doc",
       id: "build/explorers",
     },
     {
