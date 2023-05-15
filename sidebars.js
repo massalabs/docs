@@ -104,6 +104,10 @@ const sidebars = {
       id: "build/frontend",
     },
     {
+      type: "doc",
+      id: "build/massastation-plugin",
+    },
+    {
       type: "html",
       value: "<hr/>"
     },
