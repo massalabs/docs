@@ -22,7 +22,7 @@ To learn more about AssemblyScript, WebAssembly modules, and ABIs, we invite you
 
 :::caution
 
-Do not initialize a smart contract project following AssemblyScript documentation. It will be unnecessarily painful. Go back to the [quick start tutorial](./quick-start) or use the following command:
+Do not initialize a smart contract project following AssemblyScript documentation. It will be unnecessarily painful. Go back to the [quick start tutorial](../quickstart) or use the following command:
 ```shell
 npx clear-npx-cache && npx @massalabs/sc-project-initializer@dev init my-first-sc && cd my-first-sc
 ```

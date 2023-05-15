@@ -101,7 +101,7 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs/smart-contract/intro',
+                to: '/docs/tutorial/home',
               },
             ],
           },
