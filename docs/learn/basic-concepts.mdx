@@ -1,0 +1,183 @@
+---
+id: basic-concepts
+sidebar_label: Basic concepts
+---
+
+# Basic concepts
+
+Let's dive into the basic definitions and concepts of Massa blockchain.
+
+The goal of the Massa network is to build a consensus between **nodes** to gather and order **blocks** that contain ordered lists of **operations**. An operation ultimate purpose once executed is to act as transitions for the global network state, called the **ledger**.
+
+Operations are produced by external clients and sent to the Massa network via a node. Some operations are containing code to be run as **smart contracts**, enabling complex programmatic modifications of the ledger. Nodes gather pending operations and group them into blocks. Each block has limited space to store operations. Traditional blockchains typically link blocks sequentially, including a hash of the previous block in the block header for temporal ordering. In contrast, Massa blocks are organized into a complex spatio-temporal structure, enabling parallelization and improved block-creation performance.
+
+Instead of one chain, there are exactly 32 **threads** of chains running in parallel, with blocks equally spread on each thread over time, and stored inside **slots** that are spaced at fixed time intervals:
+
+:::danger
+add diagram 1 from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html
+:::
+
+The time between two slots located on the same thread is called a **period** and lasts 16s (conventionally called `t0`). Corresponding slots in threads are slightly shifted in time relative to one another, by one period divided by the number of threads, which is `16s/32 = 0.5s`, so that a period contains exactly 32 slots equally spaced over the 32 threads. A **cycle** is defined as the succession of 128 periods and so lasts a bit more than 34min. Periods are numbered by increments of one, so can be used together with a thread number to uniquely identify a block slot. Period 0 is the genesis and contains genesis blocks with no parents.
+
+The job of the Massa nodes network is to essentially collectively fill up slots with valid blocks. To do so, at each interval of 0.5s, a specific node in the network is elected to be allowed to create a block (more about the selection process [here](to do), and the proof of stake sybil resistance mechanism [here](to do)), and will be rewarded if it creates a valid block in time. It is also possible that a node misses its opportunity to create the block, in which case the slot will remain empty (this is called a **block miss**).
+
+In traditional blockchains, blocks are simply referencing their unique parent, forming a chain. In the case of Massa, each block is referencing one parent block in each thread (so, 32 parents). Here is an example illustrated with one particular block:
+
+:::danger
+add diagram 2 from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html
+:::
+
+Let’s introduce some relevant definitions and concepts generally necessary to understand how the Massa network operates. We will then explain the node architecture and how the whole system works.
+
+
+## Ledger
+The ledger is a map that stores a global mapping between addresses and information related to these addresses. It is replicated in each node. The consensus building mechanism ensures that agreement on what operations have been finalized (and in what order) will be reached over the whole network. The ledger is the state of the Massa network, and operations (see below) are requests to modify the ledger. 
+
+The information stored in the ledger with each address is the following:
+
+:::danger
+add table from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#ledger
+:::
+
+:::danger
+To add:
+- ledger size limitations, and reasoning why we limit the size
+:::
+
+## Address
+Each account in Massa has a public and private key associated with it. This is how messages can be signed and identity enforced.
+The address of an account is simply the hash of its public key. 
+
+:::danger
+**To add:**
+- Explain functionality of an address - simply, what it can do. 
+- Length of the address object in symbols.
+- How they are encrypted. 
+- Explain prefixes in address naming. 
+:::
+
+
+## Smart Contract
+Smart contracts are a piece of code that can be run inside the Massa virtual machine, which can modify the ledger, and accept incoming requests through a public interface (via smart contract operations). 
+
+:::danger
+**To add:**
+- Explain prefix and length in symbols relating to Address object. 
+- Explain how they are different from addresses in terms of functionality (what permissions smart contracts have in terms of ledger read/write access, based on their address)
+- Why are they used - mention main use cases.
+:::
+
+Smart contracts are currently written in AssemblyScript, a stricter derivation from TypeScript, which is itself a type-safe version of JavaScript. AssemblyScript compiles to WebAssembly bytecode (wasm). Massa nodes Execution Module runs such bytecode. 
+Smart contracts have access to their own datastore, so they can modify the ledger.
+
+### Autonomous Smart Contract
+One particularity of Massa smart contracts compared to other blockchain smart contracts is their ability to wake up by themselves independently of an exterior request on their interface. We call them Autonomous Smart Contracts, as they allow more autonomy and less dependency on external centralized services.
+
+:::danger
+**To add:**
+- description of the functionality of autonomous smart contracts on Massa
+- mention a few use-cases
+:::
+
+:::note
+ Learn more about Autonomouse Smart Conctracts [here](to do)
+:::
+
+
+## Storage costs
+:::danger
+To add:
+- describe how due to limited ledger space we introduce the storage cost concept.
+- describe who pays for the storage of smart contracts and how;
+:::
+
+## Operation 
+Fundamentally, the point of the Massa network is to gather, order and execute operations. Operations are recorded inside blocks that are located in slots. 
+
+:::danger
+**To add:**
+- Describe what an operation is in a simple way. 
+- Draw link to 'transactions' as called on other blockchains, so that the first time readers can understand it.
+- Mention the length of the Op hash on Massa blockchain.
+:::
+
+
+### Operation types
+There are three types of operations: transactions, roll operations, and smart contract code execution. The general structure of an operation is the following, and the different types of operations differ by their payload:
+
+:::danger
+add table from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#operation
+:::
+
+#### Transaction operations
+Transactions are operations that move native Massa coins between addresses. Here is the corresponding payload:
+
+:::danger
+add table from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#transactions-operations
+:::
+
+#### Buy/Sell Rolls operations
+Rolls are staking tokens that participants can buy or sell with native Massa coins. By owning rolls, addresses can participate in block creation  `(more about staking below)`. This is done via special operations, with a simple payload:
+
+:::danger
+add table from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#buy-sell-rolls-operations
+:::
+
+#### Smart Contract operations
+Smart Contracts are pieces of code that can be run inside the Massa virtual machine. There are two ways of calling for the execution of code; by direct execution of bytecode, and by a smart-contract function call. Former is done using the Execute SC operation, and latter with Call SC operation.
+
+1. Execute SC operation
+ 
+ :::danger
+    **To add** 
+    - A well described functionality of Execute SC, with a few key examples. - max 4 sentences.
+    - Mention how Execute SC can be used to perform ledger changes without a need of deploying an SC. This is a unique Massa feature with a lot of usecases that can be mentioned. 
+    - Connect the content to the table of payload below.
+ :::
+
+ :::danger
+ **To add:**
+ table for Execute SC payload from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#smart-contract-operations 
+ :::
+
+
+
+2. Call SC operation
+
+:::danger
+    **To add** 
+    - A well described functionality of Call SC, with a few key examples. - max 4 sentences.
+    - Connect the content to the table of payload below.
+:::
+
+:::danger
+ **To add:**
+Here, the code is indirectly called via the call to an existing smart contract function, together with the required parameters: + table for Call SC from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#smart-contract-operations
+:::
+
+:::tip
+Give simple examples on when to use Execute and when Call SC. + Redirect to 'tutorials' section if necessary.
+:::
+
+## Transaction fee
+:::danger
+To add:
+- describe the concept of transaction fees at Massa and how the likelihood of Op being added to the block depends on it. 
+- briefly introduce how transaction fees relate to gas and gas limit.
+:::
+
+## Block
+A block is a data structure built by nodes and its function is to aggregate several operations. As explained above, for each new slot that becomes active, a particular node in the network is elected in a deterministic way with the task of creating the block that will be stored in that slot (more about this in the description of the Selector Module below). A block from a given thread can only contain operations originating from a creator_public_key whose hash’s five first bits designate the corresponding thread, thus implicitly avoiding collisions in operations integrated into parallel threads.
+
+:::danger
+ **To add:**
+    - Maximum block size
+    - The content of a block is as follows:
+        table from docs: https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#block
+    - Explain briefly final and stale blocks and redirect to learn [more](to do) at architecture -> Finalized blocks, stale blocks.
+:::
+
+
+### Endorsements
+Endorsements are optional inclusion in the block, but their inclusion is incentivized for block creators. They are validations of the fact that the parent block on the thread of the block is the best parent that could have been chosen, done by other nodes that have also been deterministically selected via the proof of stake probability distribution (see below). A comprehensive description of endorsements can be found [here](to do), so we will not go further into details in the context of this introduction.
+

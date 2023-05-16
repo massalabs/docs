@@ -1,0 +1,42 @@
+---
+id: operation-lifecycle
+sidebar_label: Operation lifecycle
+---
+# Operation lifecycle
+
+After learning about the Basic concepts and Massa's node architecture, we have all the elements and vocabulary in place to explore the lifecycle of an operation within the network; from creation to permanent execution in a finalized block.
+
+Operations originate externally from a client that is forging the operation, for example: a transaction or a smart contract code execution. The client will have to know the IP address of a Massa Node (this can be either because it is a node itself and will simply use localhost, or via some maintained list of known nodes and/or some browser plugin), and will then send the operation to the API Module.
+
+When an operation is made available in a given node, it will be broadcasted to all other nodes via the Protocol/Network Module and to factories via the API Module, so that it will eventually end up in all the Pool Modules of the network.
+
+Let’s assume we just got a code execution operation from an external client. Let’s suppose the client knows a particular node, which is running its block factory on the same machine, and sends the operation to this node. These are the different steps of the operation processing that will occur, as illustrated in the schema below:
+
+1. The operation enters the node via the API Module (the operation path is marked in blue)
+
+2. The API Module forwards the operation to the Pool Module and broadcasts it to other nodes via the Protocol/Network Module. Other nodes hearing about it will also broadcast it (gossip protocol), and feed it to their Pool Module, unless they are pure consensus nodes without factories
+
+3. At that stage, the operation sits in the Pool Modules of most nodes
+
+4. The Selector Module elects a particular node to handle the block production of the next current slot
+
+5. The elected node Block Factory finds out about its election by querying a Selector Module (via the API Module)
+
+6. It starts building a block by picking up pending operations in the Pool Module. The original operation is eventually picked and integrated into the block. We will now follow the block around (the block path is marked in green)
+
+7. The newly produced block is sent via the API to remote or local nodes, to reach the Graph/Consensus Module
+
+8. The new block is processed by the Graph/Consensus Module to be included into the pending blocks DAG and potentially integrated into a new blockclique
+
+9. The Graph/Consensus Module sends the new block to other nodes via the Protocol/Network Module, to ensure synchronization of the information in the network. The new block reaching other nodes is similarly going to be integrated into their Graph/Consensus Module
+
+10. In general, the blockclique will be extended with the new block and so will reach the Execution Module from the Graph/Consensus Module via the notification of a new blockclique. Eventually, it will also be notified as a final block if it gets finalized.
+
+11. The Execution Module will run the blocks that are part of the updated blockclique, so the original block will eventually be executed. Within the block is the original operation that was originally sent and that will then be applied to the ledger for potential modifications. At this stage, the modifications are not permanent and simply stored in a diff compared to the finalized ledger
+
+12. Eventually, the block will be marked as final and the ledger modification, including the operation changes, will become final in the finalized ledger.
+
+:::danger
+Add the diagram from https://docs.massa.net/en/latest/general-doc/architecture/archi-global.html#operation-lifecycle
+:::
+
