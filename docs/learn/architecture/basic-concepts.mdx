@@ -19,7 +19,7 @@ add diagram 1 from https://docs.massa.net/en/latest/general-doc/architecture/arc
 
 The time between two slots located on the same thread is called a **period** and lasts 16s (conventionally called `t0`). Corresponding slots in threads are slightly shifted in time relative to one another, by one period divided by the number of threads, which is `16s/32 = 0.5s`, so that a period contains exactly 32 slots equally spaced over the 32 threads. A **cycle** is defined as the succession of 128 periods and so lasts a bit more than 34min. Periods are numbered by increments of one, so can be used together with a thread number to uniquely identify a block slot. Period 0 is the genesis and contains genesis blocks with no parents.
 
-The job of the Massa nodes network is to essentially collectively fill up slots with valid blocks. To do so, at each interval of 0.5s, a specific node in the network is elected to be allowed to create a block (more about the selection process [here](to do), and the proof of stake sybil resistance mechanism [here](to do)), and will be rewarded if it creates a valid block in time. It is also possible that a node misses its opportunity to create the block, in which case the slot will remain empty (this is called a **block miss**).
+The job of the Massa nodes network is to essentially collectively fill up slots with valid blocks. To do so, at each interval of 0.5s, a specific node in the network is elected to be allowed to create a block (more about the selection process [here](XXX TODO XXX), and the proof of stake sybil resistance mechanism [here](XXX TODO XXX)), and will be rewarded if it creates a valid block in time. It is also possible that a node misses its opportunity to create the block, in which case the slot will remain empty (this is called a **block miss**).
 
 In traditional blockchains, blocks are simply referencing their unique parent, forming a chain. In the case of Massa, each block is referencing one parent block in each thread (so, 32 parents). Here is an example illustrated with one particular block:
 
@@ -80,7 +80,7 @@ One particularity of Massa smart contracts compared to other blockchain smart co
 :::
 
 :::note
- Learn more about Autonomouse Smart Conctracts [here](to do)
+ Learn more about Autonomouse Smart Conctracts [here](XXX TODO XXX)
 :::
 
 
@@ -174,10 +174,10 @@ A block is a data structure built by nodes and its function is to aggregate seve
     - Maximum block size
     - The content of a block is as follows:
         table from docs: https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#block
-    - Explain briefly final and stale blocks and redirect to learn [more](to do) at architecture -> Finalized blocks, stale blocks.
+    - Explain briefly final and stale blocks and redirect to learn [more](XXX TODO XXX) at architecture -> Finalized blocks, stale blocks.
 :::
 
 
 ### Endorsements
-Endorsements are optional inclusion in the block, but their inclusion is incentivized for block creators. They are validations of the fact that the parent block on the thread of the block is the best parent that could have been chosen, done by other nodes that have also been deterministically selected via the proof of stake probability distribution (see below). A comprehensive description of endorsements can be found [here](to do), so we will not go further into details in the context of this introduction.
+Endorsements are optional inclusion in the block, but their inclusion is incentivized for block creators. They are validations of the fact that the parent block on the thread of the block is the best parent that could have been chosen, done by other nodes that have also been deterministically selected via the proof of stake probability distribution (see below). A comprehensive description of endorsements can be found [here](XXX TODO XXX), so we will not go further into details in the context of this introduction.
 
