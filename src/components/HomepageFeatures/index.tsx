@@ -14,7 +14,7 @@ const FeatureList = [
   {
     title: "Learn",
     content: "Learn basic concepts and inner workings of Massa blockchain.",
-    docName: "docs/learn/basic-concepts",
+    docName: "docs/learn/home",
     icon: "🎓",
   },
   {
