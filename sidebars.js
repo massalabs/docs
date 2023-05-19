@@ -36,11 +36,11 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "learn/architecture/consensus-quality",
+      id: "learn/architecture/operation-lifecycle",
     },
     {
       type: "doc",
-      id: "learn/architecture/operation-lifecycle",
+      id: "learn/architecture/consensus-quality",
     },
   ],
   tutorialSidebar: [

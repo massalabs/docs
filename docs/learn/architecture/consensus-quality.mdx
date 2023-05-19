@@ -6,33 +6,58 @@ sidebar_label: Consensus quality initiatives
 
 This section describes the mechanisms we use to maximize the consensus quality on Massa blockchain. 
 
+- to do
+
 ## Endorsement
 
-Massa uses the Proof-of-Stake selection mechanism with Nakamoto consensus. In that context, when there are multiple cliques in close competition, we want all nodes to converge towards a single clique as fast as possible to minimize finality time and maximize the quality of the consensus. To achieve this, we draw inspiration from Tezos and introduce the concept of Endorsement.
+Massa uses the Proof-of-Stake selection mechanism with Nakamoto consensus. In that context, when there are multiple cliques 
+in close competition, we want all nodes to converge towards a single clique as fast as possible to minimize finality time 
+and maximize the quality of the consensus. To achieve this, we draw inspiration from Tezos and introduce the concept of Endorsement.
 
-Each block header in Massa contains E ordered endorsement slots. An endorsement includes the slot it belongs to, the hash of the endorsed block, the endorsement slot index, the creator's public key, and a signature. At each slot, a Proof-of-Stake selection mechanism chooses the block creator and E other stakers who can create endorsements for that slot. Endorsements can be seen as votes endorsing the parent block in the corresponding thread. 
+Each block header in Massa contains E ordered endorsement slots. An endorsement includes the slot it belongs to, the hash 
+of the endorsed block, the endorsement slot index, the creator's public key, and a signature. At each slot, a Proof-of-Stake 
+selection mechanism chooses the block creator and E other stakers who can create endorsements for that slot. Endorsements can 
+be seen as votes endorsing the parent block in the corresponding thread. 
 
-The attacker's likelihood of consecutive PoS draws decreases exponentially. With endorsements, E+1 draws occur at each slot, increasing safety and convergence speed. The consensus algorithm selects the clique with the highest fitness as the blockclique, where the fitness is determined by the number of PoS draws involved in creating the block. This mechanism enhances safety and convergence speed by allowing block producers to select the best clique based on the endorsements' "votes." 
+The attacker's likelihood of consecutive PoS draws decreases exponentially. With endorsements, E+1 draws occur at each slot, 
+increasing safety and convergence speed. The consensus algorithm selects the clique with the highest fitness as the blockclique, where 
+the fitness is determined by the number of PoS draws involved in creating the block. This mechanism enhances safety and convergence 
+speed by allowing block producers to select the best clique based on the endorsements' "votes." 
 
-:::danger
-Above part is the summary of the Basic principles section given [here](https://docs.massa.net/en/latest/general-doc/architecture/endorsements.html#basic-principle). Needs validation by core team. 
-:::
 
 ### Endorsement structure
+
+Note that the *WrappedEndorsement* structure includes the underlying *Endorsement* as well as the signature, 
+and the public key of the endorsement producer.
+
+Within a block, endorsements are fully included inside the header.
+
+A header is invalidated if:
+
+- it contains strictly more than *E* endorsements
+- at least one of the endorsements fails deserialization or signature verification
+- at least one of the endorsements endorses a block different than the parent of the including block within its own thread
+- any of the endorsements should not have been produced at that (*endorsement.slot*, *endorsement.index*) according to the selector
+- there is strictly more than one endorsement with a given *endorsement.index*
+
 :::danger
-Core to validate current structure or update [here](https://docs.massa.net/en/latest/general-doc/architecture/endorsements.html#structure-of-an-endorsement). In the current list of future improvements at [the end of the section](https://docs.massa.net/en/latest/general-doc/architecture/endorsements.html#future-features), there are some issues that are merged.
+add table from [here](https://docs.massa.net/en/latest/general-doc/architecture/endorsements.html#structure-of-an-endorsement). 
 :::
 
 ### Endorsement lifecycle
-To create endorsements for a specific slot S, the Endorsement Factory wakes up at a certain timestamp and checks the endorsement producer draws for that slot. It attempts to create endorsements using the keypairs managed by its wallet. The factory asks Consensus for the latest blockclique block with a lower period than S.period to choose the block to endorse. The created endorsements are sent to the Endorsement Pool for future inclusion in blocks and propagated through the Protocol to other nodes.
+To create endorsements for a specific slot S, the Endorsement Factory wakes up at a certain timestamp and checks 
+the endorsement producer draws for that slot. It attempts to create endorsements using the keypairs managed by its wallet.
+The factory asks Consensus for the latest blockclique block with a lower period than S.period to choose the block to endorse. 
+The created endorsements are sent to the Endorsement Pool for future inclusion in blocks and propagated through the 
+Protocol to other nodes.
 
-In the Protocol, endorsements can be received from other modules or nodes. Received endorsements are propagated and added to the Endorsement Pool if they are not already known. The Endorsement Pool stores a limited number of endorsements that can potentially be included in future blocks. Consensus notifies the Endorsement Pool of newly finalized blocks, allowing it to remove endorsements that can only be included in already-finalized slots.
+In the Protocol, endorsements can be received from other modules or nodes. Received endorsements are propagated and added 
+to the Endorsement Pool if they are not already known. The Endorsement Pool stores a limited number of endorsements that 
+can potentially be included in future blocks. Consensus notifies the Endorsement Pool of newly finalized blocks, allowing 
+it to remove endorsements that can only be included in already-finalized slots.
 
-When the Block Factory produces a block and needs to include endorsements in its header, it requests the Endorsement Pool for the endorsements that endorse the block's parent in its thread and can be included in the block's slot.
-
-:::danger
-Above part is the summary of the lifecycle of an endorsement section given [here](https://docs.massa.net/en/latest/general-doc/architecture/endorsements.html#lifecycle-of-an-endorsement). Needs validation by core team. If not good, we need a shorter version of this section compared to current Massa docs one, so this section will need a rewrite.
-:::
+When the Block Factory produces a block and needs to include endorsements in its header, it requests the Endorsement Pool 
+for the endorsements that endorse the block's parent in its thread and can be included in the block's slot.
 
 ### Incentives and penalties
 To incentivize the creation and endorsement of blocks, as well as the inclusion of endorsements in blocks, a revenue split is implemented. The total revenue generated by a block, denoted as R, is divided into 1+E equal parts, where E is the number of endorsements.
@@ -47,30 +72,12 @@ Each part, denoted as r, is distributed as follows:
     
 This revenue split increases the frequency at which stakers receive coins, reducing the need for staking pools.
 
-:::danger
-Above part is the summary of the lifecycle of an endorsement section given [here](https://docs.massa.net/en/latest/general-doc/architecture/endorsements.html#incentives-and-penalties). Needs validation by core team. If not good, we need a shorter rewrite.
-:::
-
 ### Technical decisions
-:::danger
-- I suggest renaming the section called [Choosing the value of E](https://docs.massa.net/en/latest/general-doc/architecture/endorsements.html#choosing-the-value-of-e) and include all technical aspects mentioned: Finality fork attacks, Security level, but more short. 
-- suggestion: remove the simulation results section and display a sentence about the simulation results and a reference to the [technical paper](https://arxiv.org/abs/1803.09029)
-- suggestion: remove Future features subsection from this learning segment.
-:::
+- to do
 
 
 ## Slashing
-:::danger
-This mechanism should be described in full in the same way and structure the Endorsement is explained. 
-- Introduce the reasons for slashing in our PoS. 
-- How it works
-- Incentives and penalties section which describes how exactly we penalize stakers.
-:::
+- to do
 
 ## Node banning
-:::danger
-This mechanism should be described in full in the same way and structure the Endorsement and Slashing. 
-- Introduce the reasons for node banning and situations when it occurs. 
-- How it works
-- Incentives and penalties section which describes how exactly we ban nodes and what it means for the node runners.
-:::
+- to do
