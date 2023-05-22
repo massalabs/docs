@@ -33,7 +33,7 @@ Module. Other nodes hearing about it will also broadcast it (gossip protocol), a
 
 4. The Selector Module elects a particular node to handle the block production of the next current slot
 
-5. The elected node Block Factory finds out about its election by querying a Selector Module (via the API Module)
+5. The elected node Block Factory finds out about its election by querying a Selector Module
 
 6. It starts building a block by picking up pending operations in the Pool Module. The original operation is 
 eventually picked and integrated into the block. We will now follow the block around (the block path is marked in green)
