@@ -29,7 +29,7 @@ network so you have to be careful on which node you connect to avoid downloading
 
 ## API Module
 The API Module is the public window of the node to the rest of the world. It allows for interactions with external clients or 
-factories via a `gRPC (and JSON RPC?)` protocol.
+factories via a [JSON RPC](todo ) and [gRPC](todo ) protocols. 
 
 
 The API includes interfaces to do the following:
@@ -39,8 +39,7 @@ The API includes interfaces to do the following:
 parents, draws, etc.
 
 ## Protocol/Network Module
-The Protocol/Network Module implements the protocol connecting consensus nodes. This protocol is supported by a binary and optimized 
-transport layer and `does not use JSON RPC`.
+The Protocol/Network Module implements the protocol connecting consensus nodes. This protocol is supported by a binary and optimized transport layer.
 
 
 The Protocol/Network Module will relay all operations/blocks creation and propagation, so that all other nodes in the 

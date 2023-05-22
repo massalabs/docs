@@ -46,8 +46,7 @@ add table from [here](https://docs.massa.net/en/latest/general-doc/architecture/
 
 ### Endorsement lifecycle
 To create endorsements for a specific slot S, the Endorsement Factory wakes up at a certain timestamp and checks 
-the endorsement producer draws for that slot. It attempts to create endorsements using the keypairs managed by its wallet.
-The factory asks Consensus for the latest blockclique block with a lower period than S.period to choose the block to endorse. 
+the endorsement producer draws for that slot. The factory asks Consensus for the latest blockclique block with a lower period than S.period to choose the block to endorse. 
 The created endorsements are sent to the Endorsement Pool for future inclusion in blocks and propagated through the 
 Protocol to other nodes.
 

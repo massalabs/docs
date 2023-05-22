@@ -36,7 +36,7 @@ Module. Other nodes hearing about it will also broadcast it (gossip protocol), a
 5. The elected node Block Factory finds out about its election by querying a Selector Module
 
 6. It starts building a block by picking up pending operations in the Pool Module. The original operation is 
-eventually picked and integrated into the block. We will now follow the block around (the block path is marked in green)
+eventually picked and integrated into the block. It's worth to mention that only operations created by an address within the same thread as the block can be included. This is known as a 'transaction sharding' technique and it's used to prevent double spending problem. We will now follow the block around (the block path is marked in green)
 
 7. The newly produced block is sent to the Graph/Consensus Module
 
