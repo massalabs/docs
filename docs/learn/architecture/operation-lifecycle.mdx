@@ -27,8 +27,7 @@ Add the diagram from https://docs.massa.net/en/latest/general-doc/architecture/a
 1. The operation enters the node via the API Module (the operation path is marked in blue)
 
 2. The API Module forwards the operation to the Pool Module and broadcasts it to other nodes via the Protocol/Network 
-Module. Other nodes hearing about it will also broadcast it (gossip protocol), and feed it to their Pool Module, unless 
-they are pure consensus nodes without factories
+Module. Other nodes hearing about it will also broadcast it (gossip protocol), and feed it to their Pool Module.
 
 3. At that stage, the operation sits in the Pool Modules of most nodes
 
