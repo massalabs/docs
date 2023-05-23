@@ -21,9 +21,7 @@ enabling parallelization and improved block-creation performance.
 Instead of one chain, there are exactly 32 **threads** of chains running in parallel, with blocks equally spread on
  each thread over time, and stored inside **slots** that are spaced at fixed time intervals:
 
-:::danger
-add diagram 1 from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html
-:::
+![](structure.drawio.svg)
 
 The time between two slots located on the same thread is called a **period** and lasts 16s (conventionally called `t0`). 
 Corresponding slots in threads are slightly shifted in time relative to one another, by one period divided by the number 
@@ -42,9 +40,7 @@ In traditional blockchains, blocks are simply referencing their unique parent, f
 Massa, each block is referencing one parent block in each thread (so, 32 parents). Here is an example 
 illustrated with one particular block:
 
-:::danger
-add diagram 2 from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html
-:::
+![](block_parents.drawio.svg)
 
 Let’s introduce some relevant definitions and concepts generally necessary to understand how the Massa network operates. 
 We will then explain the node architecture and how the whole system works.
@@ -58,9 +54,23 @@ and operations (see below) are requests to modify the ledger.
 
 The information stored in the ledger with each address is the following:
 
-:::danger
-add table from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#ledger
-:::
+<table>
+    <tr>
+        <th colspan="2">Ledger Information Associated with Each Address</th>
+    </tr>
+    <tr>
+        <td><code>balance</code></td>
+        <td>The amount of Massa coins owned by the address</td>
+    </tr>
+    <tr>
+        <td><code>bytecode</code></td>
+        <td>When the address references a smart contract, this is the compiled code corresponding to the smart contract (typically contains several functions that act as API entry points for the smart contract)</td>
+    </tr>
+    <tr>
+        <td><code>datastore</code></td>
+        <td>A key/value map that can store any persistent data related to a smart contract, its variables, etc</td>
+    </tr>
+</table>
 
 
 ## Address
@@ -100,24 +110,68 @@ recorded inside blocks that are located in slots.
 There are three types of operations: transactions, roll operations, and smart contract code execution. 
 The general structure of an operation is the following, and the different types of operations differ by their payload:
 
-:::danger
-add table from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#operation
-:::
+<table>
+    <tr>
+        <th colspan="2">Operation header</th>
+    </tr>
+    <tr>
+        <td><code>creator_public_key</code></td>
+        <td>The public key of the operation creator (32 bytes)</td>
+    </tr>
+    <tr>
+        <td><code>expiration_period</code></td>
+        <td>Period after which the operation is expired (u64 varint)</td>
+    </tr>
+    <tr>
+        <td><code>fee</code></td>
+        <td>The amount of fees the creator is willing to pay (u64 varint)</td>
+    </tr>
+    <tr>
+        <td><code>type</code></td>
+        <td>The type of operation (from 0 to 4: transaction, rollbuy, rollsell, executesc, callsc) (u64 varint)</td>
+    </tr>
+    <tr>
+        <td><code>payload</code></td>
+        <td>The content of the operation (see below)</td>
+    </tr>
+    <tr>
+        <td><code>signature</code></td>
+        <td>Signature of all the above with the private key of the operation creator (64 bytes)</td>
+    </tr>   
+</table>
 
 #### Transaction operations
 Transactions are operations that move native Massa coins between addresses. Here is the corresponding payload:
 
-:::danger
-add table from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#transactions-operations
-:::
+<table>
+    <tr>
+        <th colspan="2">Transaction payload</th>
+    </tr>
+    <tr>
+        <td><code>amount</code></td>
+        <td>The amount of coins to transfer (u64 varint)</td>
+    </tr>
+    <tr>
+        <td><code>destination_address</code></td>
+        <td>The address of the recipient (32 bytes)
+    </td>
+    </tr> 
+</table>
 
 #### Buy/Sell Rolls operations
 Rolls are staking tokens that participants can buy or sell with native Massa coins. By owning rolls, 
 addresses can participate in block creation  [more about staking below](todo). This is done via special operations, with a simple payload:
 
-:::danger
-add table from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#buy-sell-rolls-operations
-:::
+<table>
+    <tr>
+        <th colspan="2">Roll buy/sell payload</th>
+    </tr>
+    <tr>
+        <td><code>nb_of_rolls</code></td>
+        <td>The number of rolls to buy or to sell (u64 varint)
+    </td>
+    </tr>
+</table>
 
 #### Smart Contract operations
 Smart Contracts are pieces of code that can be run inside the Massa virtual machine. There are two ways 
@@ -128,22 +182,71 @@ Former is done using the Execute SC operation, and latter with Call SC operation
  
  - to do
 
- :::danger
- **To add:**
- table for Execute SC payload from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#smart-contract-operations 
- :::
+<table>
+    <tr>
+        <th colspan="2">Execute SC payload</th>
+    </tr>
+    <tr>
+        <td><code>max_gas</code></td>
+        <td>The maximum gas spendable for this operation (u64 varint)</td>
+    </tr>
+    <tr>
+        <td><code>bytecode_len</code></td>
+        <td>The length of the bytecode field (u64 varint)</td>
+    </tr>
+    <tr>
+        <td><code>bytecode</code></td>
+        <td>The bytecode to run (in the context of the caller address)</td>
+    </tr>
+    <tr>
+        <td><code>datastore_len</code></td>
+        <td>The number of the datastore keys (u64 varint), each record is then stored one after another</td>
+    </tr>
+    <tr>
+        <td>list of datastore records</td>
+        <td>Concatenation of <code>key_len</code> (u8), <code>key</code>, <code>value_len</code> (u64 varint), <code>value</code></td>
+    </tr>
+</table>
 
 
 
 2. Call SC operation
 
-- to do
+Here, the code is indirectly called via the call to an existing smart contract function, together with the required parameters: 
 
-:::danger
- **To add:**
-Here, the code is indirectly called via the call to an existing smart contract function, together with the 
-required parameters: + table for Call SC from https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#smart-contract-operations
-:::
+<table>
+    <tr>
+        <th colspan="2">Call SC</th>
+    </tr>
+    <tr>
+        <td><code>max_gas</code></td>
+        <td>The maximum gas spendable for this operation (u64 varint)</td>
+    </tr>
+    <tr>
+        <td><code>coins</code></td>
+        <td>The coins transferred in the call (u64 varint)</td>
+    </tr>
+    <tr>
+        <td><code>target_address</code></td>
+        <td>The address of the targeted smart contract (32 bytes)</td>
+    </tr>
+    <tr>
+        <td><code>function_name_length</code></td>
+        <td>The length of the name of the function that is called (u8)</td>
+    </tr>
+    <tr>
+        <td><code>function_name</code></td>
+        <td>The name of the function that is called (utf8)</td>
+    </tr>
+    <tr>
+        <td><code>param_len</code></td>
+        <td>The number of parameters of the function call (u64 varint)</td>
+    </tr>
+    <tr>
+        <td><code>params</code></td>
+        <td>The parameters of the function call</td>
+    </tr>
+</table>
 
 :::tip
 - to do
@@ -161,11 +264,44 @@ hash’s five first bits designate the corresponding thread, thus implicitly avo
 
 - to do
 
-:::danger
- **To add:**
-    - The content of a block is as follows:
-        table from docs: https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#block
-:::
+The content of a block is as follows:
+
+<table>
+    <tr>
+        <th colspan="2">Block header</th>
+    </tr>
+    <tr>
+        <td><code>slot</code></td>
+        <td>A description of the block slot, defined by a couple (period, thread) that uniquely identify it</td>
+    </tr>
+    <tr>
+        <td><code>creator_public_key</code></td>
+        <td>The public key of the block creator (32 bytes)</td>
+    </tr>
+    <tr>
+        <td><code>parents</code></td>
+        <td>A list of the 32 parents of the block, one parent per thread (parent blocks are identified by the block hash)</td>
+    </tr>
+    <tr>
+        <td><code>endorsements</code></td>
+        <td>A list of the 16 endorsements for the block (more about endorsements below)</td>
+    </tr>
+    <tr>
+        <td><code>operations_hash</code></td>
+        <td>A hash of all the operations included in the block (=hash of the block body below)</td>
+    </tr>
+    <tr>
+        <td><code>signature</code></td>
+        <td>Signature of all the above with the private key of the block creator</td>
+    </tr>
+    <tr>
+        <th colspan="2">Block body</th>
+    </tr>
+    <tr>
+        <td><code>operations</code></td>
+        <td>The list of all operations included in the block</td>
+    </tr>
+</table>
 
 ### Endorsements
 Endorsements are optional inclusion in the block, but their inclusion is incentivized for block creators. They are 

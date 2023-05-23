@@ -40,9 +40,17 @@ A header is invalidated if:
 - any of the endorsements should not have been produced at that (*endorsement.slot*, *endorsement.index*) according to the selector
 - there is strictly more than one endorsement with a given *endorsement.index*
 
-:::danger
-add table from [here](https://docs.massa.net/en/latest/general-doc/architecture/endorsements.html#structure-of-an-endorsement). 
-:::
+```rust
+pub struct Endorsement {
+  /// slot in which the endorsement can be included
+  pub slot: Slot,
+  /// endorsement index inside the including block
+  pub index: u32,
+  /// Hash of endorsed block.
+  /// This is the parent in thread `self.slot.thread` of the block in which the endorsement is included
+  pub endorsed_block: BlockId,
+}
+```
 
 ### Endorsement lifecycle
 To create endorsements for a specific slot S, the Endorsement Factory wakes up at a certain timestamp and checks 
