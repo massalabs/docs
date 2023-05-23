@@ -144,7 +144,7 @@ can independently and consistently decide on which clique is the best candidate 
 The metric used in a traditional blockchain to rank competing chain candidates is habitually the length of the chain, or more 
 precisely the total amount of work invested in the chain (also known as “Nakamoto consensus”). In the case of block cliques, 
 we will introduce a notion of fitness for each block, and the fitness of the clique will simply be the sum of all its block’s 
-fitness. The block fitness `f(b)` is simply defined as `1+e, e` being the number of endorsements registered in the block.
+fitness. The block fitness $f(b)$ is simply defined as $1+e, e$ being the number of endorsements registered in the block.
 
 Taking the maximal clique with the highest fitness (or some hash-based deterministic selection in case of equality), the 
 Graph/Consensus module can define what is called the blockclique at the current time.
@@ -155,9 +155,14 @@ there is also a pruning mechanism in charge of reducing the size of the graph by
 also blocks that can be considered stale and will never finalize.
 
 
-:::danger
-copy other 3 paragraphs from [here](https://docs.massa.net/en/latest/general-doc/architecture/archi-global.html#finalized-blocks-stale-blocks) using [Katex for math equations](https://docusaurus.io/docs/markdown-features/math-equations)
-:::
+If a block is only contained inside cliques that have a fitness lower than the fitness of the blockclique (the clique with the maximal fitness), minus a constant $\Delta_{f}^{0}$, then this block is considered stale. Also, any new block that includes in its parents a stale block is stale.
+
+A block is considered final if it is part of all maximal cliques, and included in at least one clique where the total sum of the fitness of all its descendants is greater than $\Delta_{f}^{0}$.
+
+
+ $\Delta_{f}^{0}$ is defined as a constant $F$ multiplied by $1+E$ 
+ ($E$ being the total max number of endorsements in a block, currently 16), and $F$ effectively measuring the maximum span in fully endorsed blocks of a successful blockclique, or the number of fully endorsed blocks by which an alternative clique can be shorter than the blockclique before its blocks may be discarded as stale.
+
 
 ### Graph/Consensus Module Function
 The Consensus Module (formerly known as the Graph) receives new block proposals, integrates them into the set of pending blocks, 
