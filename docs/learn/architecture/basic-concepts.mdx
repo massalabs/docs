@@ -32,7 +32,7 @@ genesis and contains genesis blocks with no parents.
 
 The job of the Massa nodes network is to essentially collectively fill up slots with valid blocks. To do so, 
 at each interval of 0.5s, a specific node in the network is elected to be allowed to create a block (more about 
-the selection process [here](XXX TODO XXX), and the proof of stake sybil resistance mechanism [here](XXX TODO XXX)),
+the selection process [here](/docu-dev/docs/learn/architecture#selector-module-proof-of-stake-sybil-resistance), and the proof of stake sybil resistance mechanism [here](/docu-dev/docs/learn/architecture#selector-module-proof-of-stake-sybil-resistance)),
  and will be rewarded if it creates a valid block in time. It is also possible that a node misses its opportunity 
  to create the block, in which case the slot will remain empty (this is called a **block miss**).
 
