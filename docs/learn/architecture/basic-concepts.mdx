@@ -23,9 +23,9 @@ Instead of one chain, there are exactly 32 **threads** of chains running in para
 
 ![](structure.drawio.svg)
 
-The time between two slots located on the same thread is called a **period** and lasts 16s (conventionally called `t0`). 
+The time between two slots located on the same thread is called a **period** and lasts 16s (conventionally called $t_0$). 
 Corresponding slots in threads are slightly shifted in time relative to one another, by one period divided by the number 
-of threads, which is `16s/32 = 0.5s`, so that a period contains exactly 32 slots equally spaced over the 32 threads. 
+of threads, which is $16s/32 = 0.5s$, so that a period contains exactly 32 slots equally spaced over the 32 threads. 
 A **cycle** is defined as the succession of 128 periods and so lasts a bit more than 34min. Periods are numbered by 
 increments of one, so can be used together with a thread number to uniquely identify a block slot. Period 0 is the 
 genesis and contains genesis blocks with no parents.
