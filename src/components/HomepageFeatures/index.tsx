@@ -12,6 +12,12 @@ const FeatureList = [
   //   icon: "💡",
   // },
   {
+    title: "Learn",
+    content: "Learn basic concepts and inner workings of Massa blockchain.",
+    docName: "docs/learn/home",
+    icon: "🎓",
+  },
+  {
     title: "Start Building",
     content: "Start building your decentralized application.",
     docName: "docs/smart-contract/intro",
