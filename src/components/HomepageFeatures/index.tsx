@@ -1,7 +1,7 @@
-import React from 'react';
-import clsx from 'clsx';
+import React from "react";
+import clsx from "clsx";
 import Link from "@docusaurus/Link";
-import styles from './styles.module.css';
+import styles from "./styles.module.css";
 
 const FeatureList = [
   // {
@@ -20,7 +20,7 @@ const FeatureList = [
   {
     title: "Start Building",
     content: "Start building your decentralized application.",
-    docName: "docs/smart-contract/intro",
+    docName: "docs/build/home",
     icon: "🛠️",
   },
   {

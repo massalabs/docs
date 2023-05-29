@@ -80,6 +80,25 @@ const sidebars = {
       ],
     },
   ],
+  buildSidebar: [
+    {
+      type: "doc",
+      id: "build/home",
+    },
+    {
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> Build a dApp </small></b></span>",
+    },
+    {
+      type: "doc",
+      id: "build/quickstart",
+    },
+  ],
   nodeSidebar: [
     {
       type: "doc",
@@ -87,12 +106,13 @@ const sidebars = {
       label: "Home",
     },
     {
-      "type": "html",
-      "value": "<hr/>"
+      type: "html",
+      value: "<hr/>",
     },
     {
-      "type": "html",
-      "value": "<span class='menu__link'><b><small> Running a Node </small></b></span>"
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> Running a Node </small></b></span>",
     },
     {
       type: "doc",
@@ -130,12 +150,13 @@ const sidebars = {
       label: "Testnet Staking Rewards Program",
     },
     {
-      "type": "html",
-      "value": "<hr/>"
+      type: "html",
+      value: "<hr/>",
     },
     {
-      "type": "html",
-      "value": "<span class='menu__link'><b><small> FAQ and Community </small></b></span>"
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> FAQ and Community </small></b></span>",
     },
     {
       type: "doc",
