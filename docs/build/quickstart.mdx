@@ -85,11 +85,11 @@ Let's create this in a file called **`helloWorld.ts`** in your **`assembly/contr
 ```tsx
 import { Args, stringToBytes } from "@massalabs/as-types";
 import {
-  Storage,
   callerHasWriteAccess,
   generateEvent,
+  Storage,
+  Context,
 } from "@massalabs/massa-as-sdk";
-import { isDeployingContract } from "@massalabs/massa-as-sdk/assembly/std/context";
 
 /**
  * This function is meant to be called only one time: when the contract is deployed.
@@ -99,7 +99,7 @@ import { isDeployingContract } from "@massalabs/massa-as-sdk/assembly/std/contex
 export function constructor(_: StaticArray<u8>): StaticArray<u8> {
   // This line is important. It ensures that this function can't be called in the future.
   // If you remove this check, someone could call your constructor function and reset your smart contract.
-  if (!isDeployingContract()) {
+  if (!Context.isDeployingContract()) {
     return [];
   }
 
