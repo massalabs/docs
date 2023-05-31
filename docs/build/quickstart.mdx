@@ -242,8 +242,38 @@ npm run deploy
 You should see output similar to the following:
 
 ```bash
-Deploying contract...
-Contract deployed at: 0x
+Operation successfully submitted with id: O1Pp1bF3mYduTPyVhqpRCymexowHwfDaHomuPMzPuwDSirM5e2o
+Waiting for events...
+Event Data Received: [
+  {
+    context: {
+      slot: [Object],
+      block: 'B1gYHVcpXkmoqv26BuDc8Y5KfNj69iiFc4vWm7kk7bPyvF5xb1T',
+      read_only: false,
+      index_in_slot: 0,
+      call_stack: [Array],
+      origin_operation_id: 'O1Pp1bF3mYduTPyVhqpRCymexowHwfDaHomuPMzPuwDSirM5e2o',
+      is_final: false,
+      is_error: false
+    },
+    data: 'New greeting has been set Hello, world!'
+  },
+  {
+    context: {
+      slot: [Object],
+      block: 'B1gYHVcpXkmoqv26BuDc8Y5KfNj69iiFc4vWm7kk7bPyvF5xb1T',
+      read_only: false,
+      index_in_slot: 1,
+      call_stack: [Array],
+      origin_operation_id: 'O1Pp1bF3mYduTPyVhqpRCymexowHwfDaHomuPMzPuwDSirM5e2o',
+      is_final: false,
+      is_error: false
+    },
+    data: 'Contract deployed at address: AS1ZWVy8L5ficWH5kAvs4t28E28heFjhHLUaCpPEdqp8APd6uM67'
+  }
+]
+Awaiting FINAL transaction status....
+Transaction with Operation ID O1Pp1bF3mYduTPyVhqpRCymexowHwfDaHomuPMzPuwDSirM5e2o has reached finality!
 ```
 
 ## Frontend
