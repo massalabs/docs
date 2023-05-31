@@ -23,15 +23,228 @@ The frontend of our dApp will be a simple web interface built using vanilla Java
 
 ### Setting up your project
 
-TODO: How to create a new project
+The first step in building your decentralized application (dApp) is to set up your development environment. This will involve installing the necessary software and libraries, and initializing your smart contract project.
 
-### Writing a smart contract
+- **Step 1 Install Node.js and npm**
 
-TODO: Code walkthrough
+Before you can begin developing your dApp, you need to have Node.js and npm (Node Package Manager) installed on your computer. You can download and install Node.js and npm from the official website: **[https://nodejs.org/](https://nodejs.org/)**
+
+- **Step 2 Initialize Your Smart Contract Project**
+
+After you have installed Node.js and npm, you can initialize your smart contract project. Navigate to the directory where you want to create your project in the terminal and run the following command:
+
+```bash
+npx @massalabs/sc-project-initializer init massa-hello-world
+```
+
+After running this command, you should see a new folder named **`massa-hello-world`** (or whatever name you chose for your project) in your directory. This folder is your smart contract project, and it should contain all the necessary files for developing a Massa smart contract:
+
+You should have this structure
+
+```bash
+├── README.md
+├── as-pect.asconfig.json
+├── as-pect.config.js
+├── asconfig.json
+├── assembly
+│   ├── __tests__
+│   │   ├── as-pect.d.ts
+│   │   └── massa-example.spec.ts
+│   ├── contracts
+│   │   ├── main.ts
+│   │   └── run.ts
+│   └── tsconfig.json
+├── package-lock.json
+├── package.json
+├── src
+│   └── deploy.ts
+└── tsconfig.json
+```
+
+:::info
+
+- **`README.md`**: This file usually contains information about the project, such as its description, setup instructions, and usage examples.
+- **`as-pect.asconfig.json`** and **`as-pect.config.js`**: These files are used for configuration of the AssemblyScript testing framework, **`as-pect`**. It's used for writing tests for your AssemblyScript code.
+- **`asconfig.json`**: This is the configuration file for the AssemblyScript compiler. It specifies settings like the target runtime and which files to include in the compilation.
+- **`assembly`**: This directory contains the AssemblyScript code for your smart contract.
+  - **`__tests__`**: This directory contains test files for your smart contract. The **`as-pect.d.ts`** file contains type definitions for **`as-pect`**, and **`massa-example.spec.ts`** is likely a test suite for your smart contract.
+  - **`contracts`**: This directory contains the main AssemblyScript files of your smart contract. **`main.ts`** is usually the entry point of your smart contract, and **`run.ts`** is likely a file to test the execution of the contract.
+  - **`tsconfig.json`**: This is another configuration file for the TypeScript compiler used in the AssemblyScript environment.
+- **`package-lock.json`** and **`package.json`**: These are npm files. **`package.json`** holds metadata relevant to the project and it is used to manage the project's dependencies, scripts, version and a whole lot more. **`package-lock.json`** is automatically generated and it describes the exact tree of npm dependencies that were installed for your project.
+- **`src`**: This directory is typically where the source code for the application lives. The **`deploy.ts`** file is probably the script used to deploy your smart contract to the Massa blockchain.
+- **`tsconfig.json`**: This is the configuration file for the TypeScript compiler. It's used in this context for any JavaScript or TypeScript code that's not part of the AssemblyScript smart contract, such as scripts for deploying the contract.
+
+:::
+
+### Writing the smart contract
+
+Great! Let's proceed with writing a basic smart contract. Given we're using AssemblyScript for the Massa blockchain, we'll continue with the "Hello, World!" example. This smart contract will allow users to set and get a greeting message.
+
+Let's create this in a file called **`helloWorld.ts`** in your **`assembly/contracts`** directory:
+
+```tsx
+import { Args, stringToBytes } from "@massalabs/as-types";
+import {
+  Storage,
+  callerHasWriteAccess,
+  generateEvent,
+} from "@massalabs/massa-as-sdk";
+import { isDeployingContract } from "@massalabs/massa-as-sdk/assembly/std/context";
+
+/**
+ * This function is meant to be called only one time: when the contract is deployed.
+ *
+ * @param _ - not used
+ */
+export function constructor(_: StaticArray<u8>): StaticArray<u8> {
+  // This line is important. It ensures that this function can't be called in the future.
+  // If you remove this check, someone could call your constructor function and reset your smart contract.
+  if (!isDeployingContract()) {
+    return [];
+  }
+
+  const greeting = "Hello, world!";
+
+  Storage.set("greeting", greeting);
+
+  generateEvent(`New greeting has been set ${greeting}`);
+
+  return [];
+}
+
+/**
+ * @param _args - The argument contains the greeting string
+ *
+ * @returns empty array
+ */
+export function setGreeting(_args: StaticArray<u8>): StaticArray<u8> {
+  if (!callerHasWriteAccess()) {
+    throw new Error("Caller has no write access");
+  }
+
+  const args = new Args(_args);
+  const greeting = args
+    .nextString()
+    .expect("Message argument is missing or invalid");
+
+  Storage.set("greeting", greeting);
+
+  generateEvent(`Greeting has been set ${greeting}`);
+
+  return [];
+}
+
+/**
+ * @param _ - not used
+ *
+ * @returns empty array
+ *
+ * @throws if greeting is not set
+ */
+export function getGreeting(_: StaticArray<u8>): StaticArray<u8> {
+  const greeting = Storage.get("greeting");
+
+  generateEvent(`Greeting has been read ${greeting}`);
+
+  return stringToBytes(greeting);
+}
+```
 
 ### Deploy
 
-TODO: How to deploy
+Deploying your smart contract to the Massa blockchain involves several steps. Your assemblyscript file will need to be compile into a WebAssembly module, create a deployment transaction, and then send that transaction to the blockchain. Let's go through the process:
+
+- **Step 1: Create a .env**
+
+In your **`.env`** file, you will define two environment variables: **`WALLET_PRIVATE_KEY`** and **`JSON_RPC_URL_PUBLIC`**. Let's go through each of them:
+
+- **`WALLET_PRIVATE_KEY`**: This environment variable is intended to store your wallet's private key that will be used to deploy the contract. Make sure you have coins on this address
+- **`JSON_RPC_URL_PUBLIC`**: This is the URL of the JSON-RPC interface of a public Massa testnet node.
+
+```
+WALLET_PRIVATE_KEY=""
+
+JSON_RPC_URL_PUBLIC=https://test.massa.net/api/v2:33035
+```
+
+- **Step 2: Compile Your Smart Contract**
+
+Before you can deploy your contract, you need to compile it into WebAssembly (Wasm) format. This can be done using the AssemblyScript compiler.
+
+In the project directory, run the following command:
+
+```bash
+npm run build
+```
+
+This command compiles your **`helloWorld.ts`** contract into a **`helloWorld.wasm`** file and optimizes it for size.
+
+- **Step 3: Create the Deployment Script**
+
+In your **`src`** directory, you'll need a **`deploy.ts`** file that defines a function to deploy the smart contract. This function will use Massa's JavaScript SDK to send a deployment transaction to the blockchain.
+
+The **`deploy.ts`** file might look something like this:
+
+```tsx
+import * as dotenv from "dotenv";
+import { readFileSync } from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { deploySC, WalletClient, ISCData } from "@massalabs/massa-sc-deployer";
+import { Args, fromMAS } from "@massalabs/massa-web3";
+
+dotenv.config();
+
+const publicApi = process.env.JSON_RPC_URL_PUBLIC;
+if (!publicApi) {
+  throw new Error("Missing JSON_RPC_URL_PUBLIC in .env file");
+}
+const privKey = process.env.WALLET_PRIVATE_KEY;
+if (!privKey) {
+  throw new Error("Missing WALLET_PRIVATE_KEY in .env file");
+}
+
+const deployerAccount = await WalletClient.getAccountFromSecretKey(privKey);
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(path.dirname(__filename));
+
+(async () => {
+  await deploySC(
+    publicApi,
+    deployerAccount,
+    [
+      {
+        data: readFileSync(path.join(__dirname, "build", "helloWorld.wasm")),
+        coins: fromMAS(0.1),
+        args: new Args().addString("Test"),
+      } as ISCData,
+    ],
+    0n,
+    4_200_000_000n,
+    true
+  );
+  process.exit(0);
+})();
+```
+
+TODO: explain the file
+
+- **Step 4: Deploy the smart contract**
+
+Now that you have a deployment script, you can deploy your smart contract to the Massa blockchain. In the project directory, run the following command:
+
+```bash
+npm run deploy
+```
+
+You should see output similar to the following:
+
+```bash
+Deploying contract...
+Contract deployed at: 0x
+```
 
 ## Frontend
 
