@@ -78,9 +78,9 @@ You should have this structure
 
 ### Writing the smart contract
 
-Great! Let's proceed with writing a basic smart contract. Given we're using AssemblyScript for the Massa blockchain, we'll continue with the "Hello, World!" example. This smart contract will allow users to set and get a greeting message.
+Let's proceed with writing a basic smart contract. This smart contract will allow users to set and get a greeting message.
 
-Let's create this in a file called **`helloWorld.ts`** in your **`assembly/contracts`** directory:
+Copy the following code in a file called **`helloWorld.ts`** in your **`assembly/contracts`** directory:
 
 ```tsx
 import { Args, stringToBytes } from "@massalabs/as-types";
@@ -113,28 +113,8 @@ export function constructor(_: StaticArray<u8>): StaticArray<u8> {
 }
 
 /**
- * @param _args - The argument contains the greeting string
+ * Get the current greeting message.
  *
- * @returns empty array
- */
-export function setGreeting(_args: StaticArray<u8>): StaticArray<u8> {
-  if (!callerHasWriteAccess()) {
-    throw new Error("Caller has no write access");
-  }
-
-  const args = new Args(_args);
-  const greeting = args
-    .nextString()
-    .expect("Message argument is missing or invalid");
-
-  Storage.set("greeting", greeting);
-
-  generateEvent(`Greeting has been set ${greeting}`);
-
-  return [];
-}
-
-/**
  * @param _ - not used
  *
  * @returns empty array
