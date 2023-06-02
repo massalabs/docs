@@ -20,11 +20,12 @@ const sidebars = {
     },
     {
       type: "html",
-      value: "<hr/>"
+      value: "<hr/>",
     },
     {
       type: "html",
-      value: "<span class='menu__link'><b><small> Massa Architecture </small></b></span>"
+      value:
+        "<span class='menu__link'><b><small> Massa Architecture </small></b></span>",
     },
     {
       type: "doc",
@@ -97,6 +98,28 @@ const sidebars = {
     {
       type: "doc",
       id: "build/quickstart",
+    },
+    {
+      type: "category",
+      label: "Wallets",
+      items: [
+        {
+          type: "doc",
+          id: "build/wallet/wallet-provider",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/massa-station",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/community-wallets",
+        },
+      ],
+    },
+    {
+      type: "doc",
+      id: "build/networks-faucets",
     },
   ],
   nodeSidebar: [
