@@ -101,11 +101,12 @@ const sidebars = {
     },
     {
       type: "html",
-      value: "<hr/>"
+      value: "<hr/>",
     },
     {
       type: "html",
-      value: "<span class='menu__link'><b><small> Developer Tools </small></b></span>"
+      value:
+        "<span class='menu__link'><b><small> Developer Tools </small></b></span>",
     },
     {
       type: "doc",
