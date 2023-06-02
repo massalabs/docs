@@ -105,6 +105,11 @@ const sidebars = {
       items: [
         {
           type: "doc",
+          id: "build/wallet/intro",
+          label: "Introduction",
+        },
+        {
+          type: "doc",
           id: "build/wallet/wallet-provider",
         },
         {

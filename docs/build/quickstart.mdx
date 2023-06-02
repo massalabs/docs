@@ -5,11 +5,15 @@ sidebar_label: Quickstart
 
 # Build your first decentralized application
 
-Welcome to the quickstart guide to building your first decentralized application (dApp) on the Massa blockchain. This guide will walk you through the process of developing a simple "Hello World" dApp using a smart contract written in AssemblyScript and a basic frontend using either HTML, CSS, JavaScript, or React.
+Welcome to the quickstart guide to building your first decentralized application (dApp) on the Massa blockchain.
+
+This guide will walk you through the process of developing a simple "Hello World" dApp using a smart contract written in AssemblyScript and a basic frontend using React.
 
 ## Overview
 
-The application we're building is straightforward - a user can retrieve a greeting message set during the deployment of the dApp. This greeting message is stored on the blockchain and is permanently visible to all users of the dApp.
+The application we're building is straightforward: a user can retrieve a greeting message set during the deployment of the dApp.
+
+This greeting message is stored on the blockchain and is permanently visible to all users of the dApp.
 
 - **Smart Contract (SC)**
 
@@ -17,7 +21,7 @@ Our smart contract, written in AssemblyScript, will form the backbone of our dAp
 
 - **Frontend**
 
-This simple web interface, built with either vanilla JavaScript or React, will allow users to read the greeting message set during the deployment. It will interact with the Massa blockchain and read data from our smart contract.
+This simple web interface, built in React, will allow users to read the greeting message set during the deployment. It will interact with the Massa blockchain and read data from our smart contract.
 
 ## Smart Contract
 
@@ -27,13 +31,9 @@ This simple web interface, built with either vanilla JavaScript or React, will a
 
 We recommend using Node.js version 18 or later, and the compatible npm version. You can download and install Node.js and npm from the official website: https://nodejs.org/.
 
-- **Massa wallet with coins on it**
+- **Massa wallet with coins on it and your secret key**
 
-Before deploying your smart contract to the Massa blockchain, you need to have a funded Massa wallet. Check our guide on creating and funding a Massa wallet here (TODO: link to be added).
-
-- **The secret key of your wallet**
-
-To deploy your smart contract, you will need your wallet's secret key. Follow this tutorial (TODO: link to be added) to retrieve your wallet information.
+Before deploying your smart contract to the Massa blockchain, you need to have a funded Massa wallet and your secret key. Check our guide on creating and funding a Massa wallet [here](wallet/intro).
 
 ### Setting up your project
 
