@@ -4,5 +4,86 @@ sidebar_label: Autonomous Smart Contracts
 ---
 
 # Autonomous Smart Contracts
+this should be turned into a folder and have pages: Introduction, ASC on the Massa blockchain, 
 
-Improve significantly: https://docs.massa.net/en/latest/general-doc/autonomous-sc.html
+## Introduction
+
+Massa Blockchain introduces a groundbreaking feature known as Autonomous Smart Contracts. 
+These smart contracts possess a unique capability—they can independently determine their own activation without any external actors. 
+By the end of this page, you will gain a fundamental understanding of:
+
+- The limitations of current smart contracts on existing blockchains
+- How Massa Blockchain overcomes these limitations by empowering pre-programmed execution
+- The inner workings and mechanisms behind autonomous smart contracts
+
+## Challenges with Existing Smart Contracts
+
+In today's blockchain landscape, smart contracts face limitations when it comes to automating operations without external triggers. 
+While automation lies at the heart of numerous industries, particularly in the realm of modern finance, only 
+certain actions within decentralized finance (DeFi) protocols, such as lending and arbitration, are automated. 
+However, even these actions are typically executed by off-chain bots. The absence of external calls prevents smart contracts, 
+as they exist in current public blockchains, from performing automated operations.
+
+Many decentralized protocols rely on recurrent triggers to ensure their smooth operation. 
+For example, in decentralized lending protocols, borrowers lock crypto assets as collateral when obtaining loans. 
+If the value of the collateralized asset drops below a specified threshold, the borrower's position becomes under-collateralized 
+and requires immediate action. To maintain the integrity of the protocol, such positions must be liquidated. Currently, 
+these liquidations are executed by organizations or individuals who run bots, often on centralized cloud services.
+
+
+
+## The Need for a Reliable Automation Mechanism
+
+The reliance on recurrent triggers is a prevalent requirement across numerous applications. Consequently, significant time and effort have been invested in developing more dependable networks of bots to ensure the timely execution of transactions. However, since these solutions operate off-chain, there is no guarantee that the execution will be triggered effectively. In cases where bots fail to execute transactions, decentralized protocols face risks, as do the applications built on top of them.
+
+# Autonomous Smart Contracts on the Massa Blockchain
+
+Massa's Autonomous Smart Contracts address the challenges of reliability, sophistication, and centralization that plague dApps seeking to offer automated smart-contract execution on behalf of their users. These innovative smart contracts introduce the ability to self-wake, granting them the power to autonomously perform arbitrary operations. For instance, they can be programmed to trigger specific calls when predefined exchange rate targets within liquid pools are met.
+
+## The Mechanism within Massa Network
+
+ - ##to do:##
+    1. Review info from here and update if needed https://docs.massa.net/en/latest/general-doc/autonomous-sc.html#mechanism-in-massa-network
+    2. Create a diagram like in Operation lifecycle, that follows all mentioned info in the text. As here: https://docs.massa.net/en/latest/general-doc/architecture/archi-global.html#operation-lifecycle
+
+
+
+
+# Use-cases and applications
+
+We already learned that autonomous smart contracts have the special ability to self wake-up and execute actions when specific conditions are met. 
+This offers a wide range of compelling use-cases that were either impossible, too costly, or risky to do with benchmark smart-contract functionalities. 
+Here are some of the best use cases for autonomous smart contracts:
+
+1.  Decentralized Finance (DeFi): Autonomous smart contracts can revolutionize DeFi applications by enabling automated and self-executing actions. Some notable use cases include:
+    - Automated liquidations: Smart contracts can automatically trigger the liquidation of under-collateralized positions in lending protocols when predetermined thresholds are breached.
+    - Yield farming strategies: Contracts can autonomously perform yield farming strategies, automatically swapping and reinvesting tokens based on predefined conditions.
+    - Dynamic portfolio rebalancing: Smart contracts can automatically adjust portfolio allocations based on market conditions, ensuring desired asset ratios are maintained.
+    
+2. Supply Chain Management: Autonomous smart contracts have the potential to streamline supply chain processes by automating specific actions triggered by predefined conditions. Key use cases include:
+    - Automatic inventory management: Contracts can initiate purchase orders or trigger production when inventory levels reach predefined thresholds, ensuring optimal stock levels.
+    - Quality control and compliance: Smart contracts can autonomously perform quality checks and audits based on predefined criteria, ensuring compliance with standards and regulations.
+
+3. Insurance Claims: Autonomous smart contracts can revolutionize the insurance industry by automating claims processes. Notable use cases include:
+    - Instant claims settlement: Contracts can automatically trigger claim payments when specific conditions, such as verified damage or loss, are met, accelerating the claims settlement process.
+    - Parametric insurance: Smart contracts can leverage external data feeds, such as weather or seismic information, to autonomously determine and process claims without human intervention.
+    
+4. Gaming and NFTs: Autonomous smart contracts can bring enhanced functionality and interactivity, and cost-reduction in on-chain execution, to gaming and non-fungible token (NFT) platforms. Key use cases include:
+    - Dynamic NFTs: Contracts can imbue NFTs with evolving characteristics or abilities based on predefined conditions, creating captivating and unique gaming experiences.
+    - Automated auctions: Contracts can autonomously initiate and manage auctions for rare items, with bidding and settlement executed automatically when predetermined criteria are met.
+
+5. Decentralized Autonomous Organizations (DAOs): Autonomous smart contracts are instrumental in enabling self-governance and decision-making within DAOs. Notable use cases include:
+    - Voting and governance: Contracts can autonomously trigger voting processes based on predefined conditions, empowering token holders to participate in important decision-making. There are various applications for this: from voting in local communities to democratic processes in corporate governance.
+    - Automated fund management: Smart contracts can autonomously allocate funds, distribute dividends, or trigger investments based on predefined rules and performance metrics.
+
+6. Real Estate Transactions: Smart contracts can streamline various aspects of real estate transactions, increasing efficiency and reducing the need for intermediaries. Key use cases include:
+    - Escrow and payment automation: Contracts can securely hold funds in escrow and automatically release them when specific conditions, such as successful property transfer or completion of milestones, are met.
+    - Streamlined rental agreements: Contracts can automate rental payments, manage security deposits, and enforce the terms and conditions stipulated in the agreement.
+
+These examples illustrate just a few of the many compelling use cases for autonomous smart contracts. The self wake-up functionality empowers automated processes, reduces reliance on intermediaries, and enhances efficiency and transparency across diverse industries.
+
+
+# Going further
+
+If you want to go further and start coding your own autonomous smart contract, you can read more about the ABI that allows you to automate your smart contracts and find examples of autonomous smart contracts (here - link the section in Build part, an alternative to this one: https://docs.massa.net/en/latest/web3-dev/smart-contracts/autonomous-smart-contract.html#web3-asc])[to do].
+
