@@ -69,6 +69,11 @@ const sidebars = {
       id: "build/quickstart",
     },
     {
+      type: "doc",
+      id: "build/faucet",
+      label: "Faucet massa",
+    },
+    {
       type: "category",
       label: "Smart Contract",
       items: [
