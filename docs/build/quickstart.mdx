@@ -140,9 +140,192 @@ With your smart contract compiled and ready, you can now deploy it to the Massa 
 npm run deploy
 ```
 
-Upon successful execution, the console should display information about the transaction.
+Upon successful execution, the console should display the operation id that you can use to track the deployment of your smart contract.
 
 ## Frontend
+
+This section provides a guide to set up and code the frontend for the "Hello World" dApp.
+We will utilize React with TypeScript to build the user interface, which will interact with the deployed smart contract on the Massa blockchain.
+Let's dive in!
+
+### Setting up your project
+
+To set up your frontend project, follow these steps:
+
+- **Step 1: Initialize Your React Application**
+
+Open your terminal, navigate to your desired directory, and execute the following command to create a new React project:
+
+```bash
+npx create-react-app my-app --template typescript
+```
+
+Replace `my-app` in the command with the name of your project. The `--template typescript` flag sets up a TypeScript template for our React application.
+
+After completing the installation process, navigate to your project folder:
+
+```bash
+cd my-app
+```
+
+- **Step 2: Installing Massa Web3**
+
+Next, install the Massa Web3 package.
+This package enables our frontend to interact with the Massa blockchain. To install it, run the following command:
+
+```bash
+npm install @massalabs/massa-web3@1.17.0
+```
+
+Version 1.17.0 is the latest version compatible with Buildnet, which is Massa's blockchain network for developers.
+
+We are now ready to start coding the frontend of our dApp!
+
+- **Step 3: Building the Frontend**
+
+Before writing our component, navigate to the **src** folder and locate the `App.tsx` file.
+This file serves as the main entry point for your application. We will replace its content with our component's code.
+
+Open the App.tsx file in your preferred text editor and replace the content with the following code:
+
+```tsx
+import {
+  Args,
+  Client,
+  ClientFactory,
+  fromMAS,
+  strToBytes,
+  bytesToStr,
+  IProvider,
+  ProviderType,
+  WalletClient,
+} from "@massalabs/massa-web3";
+import { useEffect, useState } from "react";
+
+const baseAccountSecretKey = "SECRET_KEY";
+
+// initialize a custom client with the BuildNet endpoints
+const providers: Array<IProvider> = [
+  {
+    url: "https://buildnet.massa.net/api/v2:33035",
+    type: ProviderType.PUBLIC,
+  } as IProvider,
+  {
+    url: "https://buildnet.massa.net/api/v2:33034",
+    type: ProviderType.PRIVATE,
+  } as IProvider,
+];
+
+const sc_addr = "SC_ADDRESS";
+
+/**
+ * Content component that handles interactions with a Massa smart contract
+ * @returns The rendered component
+ */
+function Content() {
+  /**
+   * State variables to manage the web3 client and greetings
+   */
+  const [web3client, setWeb3client] = useState<Client | null>(null);
+  const [greeting, setGreeting] = useState<string | null>(null);
+
+  /**
+   * Initialize the web3 client using the custom provider defined above
+   */
+  useEffect(() => {
+    const initClient = async () => {
+      const baseAccount = await WalletClient.getAccountFromSecretKey(
+        baseAccountSecretKey
+      );
+      const client = await ClientFactory.createCustomClient(
+        providers,
+        false,
+        baseAccount
+      );
+      setWeb3client(client);
+    };
+    initClient().catch(console.error);
+  }, []);
+
+  /**
+   * Fetch the greeting when the web3 client is initialized
+   */
+  useEffect(() => {
+    if (web3client) {
+      funcGetGreeting();
+    }
+  }, [web3client]);
+
+  /**
+   * Function to get the current greeting from the smart contract
+   */
+  async function funcGetGreeting() {
+    if (web3client) {
+      let res = await web3client
+        .publicApi()
+        .getDatastoreEntries([
+          { address: sc_addr, key: strToBytes("greeting") },
+        ]);
+      if (res[0].candidate_value) {
+        let greetingDecoded = bytesToStr(res[0].candidate_value);
+        setGreeting(greetingDecoded);
+      }
+    }
+  }
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <div>Greeting: {greeting}</div>
+    </div>
+  );
+}
+
+export default Content;
+```
+
+Ensure to replace `SECRET_KEY` and `SC_ADDRESS` with your own secret key and smart contract address.
+
+### Breaking Down the Code
+
+The code may seem complicated at first glance, but breaking it down into smaller parts makes it easier to understand.
+
+- **Setting up providers and initializing a custom client for the Massa's Buildnet**
+
+In this scenario, we want our application to interact with the Massa's buildnet. To achieve this, in our `initClient` function,
+we're creating a custom client specifically for the Massa's buildnet using the `ClientFactory.createCustomClient` method.
+
+We provide this method with the array of providers that we defined earlier in order to connect to the Massa's Buildnet nodes.
+
+- **Base Account and Secret Key**
+
+The `baseAccountSecretKey` is the secret key of your Massa wallet. In a real application, you would never expose your secret key like this, but for simplicity and demonstration purposes, we are including it directly in the code.
+
+The `WalletClient.getAccountFromSecretKey` method is used to obtain our account from the secret key. This account is then passed to the `createCustomClient` method to initialize our client.
+
+- **Retrieving the Greeting**
+
+The `funcGetGreeting` function retrieves the current greeting from the smart contract's storage and sets it to the greeting state variable.
+
+- **User Interface**
+
+The user interface consists of a centered text display that shows the current greeting fetched from your smart contract's storage.
+
+Finally, start your application by running:
+
+```bash
+npm run start
+```
+
+Your application will run at `http://localhost:3000`.
+You should see the current greeting that is set in your smart contract.
 
 ## Testing
 
