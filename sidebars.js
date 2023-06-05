@@ -46,38 +46,7 @@ const sidebars = {
   tutorialSidebar: [
     {
       type: "doc",
-      id: "smart-contract/code/quick-start",
-    },
-    {
-      type: "category",
-      label: "Smart Contract",
-      items: [
-        {
-          type: "doc",
-          id: "smart-contract/intro",
-          label: "Introduction",
-        },
-        {
-          type: "category",
-          label: "Develop",
-          items: [
-            {
-              type: "doc",
-              id: "smart-contract/code/prerequisites",
-            },
-            {
-              type: "doc",
-              id: "smart-contract/code/webassembly-module",
-              label: "WebAssembly Module",
-            },
-            {
-              type: "doc",
-              id: "smart-contract/code/sdk",
-              label: "WebAssembly Module",
-            },
-          ],
-        },
-      ],
+      id: "tutorial/home",
     },
   ],
   buildSidebar: [
@@ -97,6 +66,37 @@ const sidebars = {
     {
       type: "doc",
       id: "build/quickstart",
+    },
+    {
+      type: "category",
+      label: "Smart Contract",
+      items: [
+        {
+          type: "doc",
+          id: "build/smart-contract/intro",
+          label: "Introduction",
+        },
+        {
+          type: "category",
+          label: "Develop",
+          items: [
+            {
+              type: "doc",
+              id: "build/smart-contract/prerequisites",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/webassembly-module",
+              label: "WebAssembly Module",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/sdk",
+              label: "WebAssembly Module",
+            },
+          ],
+        },
+      ],
     },
   ],
   nodeSidebar: [
@@ -167,18 +167,6 @@ const sidebars = {
       type: "doc",
       id: "node/tutorials",
       label: "Tutorials and community resources",
-    },
-  ],
-  rpcSidebar: [
-    {
-      type: "doc",
-      id: "rpc/home",
-      label: "Home",
-    },
-    {
-      type: "doc",
-      id: "rpc/providers",
-      label: "RPC Providers",
     },
   ],
 };
