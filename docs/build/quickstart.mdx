@@ -144,6 +144,177 @@ Upon successful execution, the console should display information about the tran
 
 ## Frontend
 
+In this section, we will guide you on how to set up and code the frontend for the "Hello World" dApp we are creating. 
+We will be using React with TypeScript for building the user interface that interacts with our deployed smart contract on the Massa blockchain. 
+Let's get started!
+
+### Setting up your project
+
+Follow these steps to set up your frontend project:
+
+- **Step 1: Initialize Your React Application**
+
+Open your terminal, navigate to your desired directory, and run the following command to create a new React project:
+
+```bash
+npx create-react-app my-app --template typescript
+```
+In the command above, replace my-app with the name you want to give to your project. The `--template typescript` flag is used to set up a TypeScript template for our React application.
+
+Once the installation process is completed, navigate to your project folder:
+
+```bash
+cd my-app
+```
+- **Step 2: Installing Massa Web3**
+
+After setting up our project, we need to install the Massa Web3 package. 
+This package will allow our frontend to interact with the Massa blockchain. Run the following command to install it:
+
+```bash
+npm install @massalabs/massa-web3@1.17.0
+```
+The version 1.17.0 is the latest version compatible with the Buildnet, Massa's blockchain network for developers.
+
+Now we are ready to start coding the frontend of our dApp!
+
+- **Step 3: Building the Frontend**
+
+Before we start writing our component, navigate to your **src** folder and find the `App.tsx` file. 
+This file is the main entry point for your application. We will replace its content with our component's code.
+
+Open the `App.tsx` file in your preferred text editor and replace the content with the following code:
+
+```tsx
+import {
+  Args,
+  Client,
+  ClientFactory,
+  fromMAS,
+  strToBytes,
+  bytesToStr,
+  IProvider,
+  ProviderType,
+  WalletClient,
+} from "@massalabs/massa-web3";
+import { useEffect, useState } from "react";
+
+const baseAccountSecretKey = "SECRET_KEY";
+
+// initialize a custom client with the BuildNet endpoints
+const providers: Array<IProvider> = [
+  {
+      url: "https://buildnet.massa.net/api/v2:33035",
+      type: ProviderType.PUBLIC,
+  } as IProvider,
+  {
+      url: "https://buildnet.massa.net/api/v2:33034",
+      type: ProviderType.PRIVATE,
+  } as IProvider,
+];
+
+const sc_addr = "SC_ADDRESS"
+
+/**
+ * Content component that handles interactions with a Massa smart contract
+ * @returns The rendered component
+ */
+function Content() {
+  /**
+   * State variables to manage the web3 client and greetings
+   */
+  const [web3client, setWeb3client] = useState<Client | null>(null);
+  const [greeting, setGreeting] = useState<string | null>(null);
+
+  /**
+   * Initialize the web3 client using the custom provider defined above
+   */
+  useEffect(() => {
+    const initClient = async () => {
+      const baseAccount = await WalletClient.getAccountFromSecretKey(baseAccountSecretKey);
+      const client = await ClientFactory.createCustomClient(
+        providers,
+        false,
+        baseAccount
+      );
+      setWeb3client(client);
+    }
+    initClient().catch(console.error);
+  }, []);
+
+  /**
+   * Fetch the greeting when the web3 client is initialized
+   */
+  useEffect(() => {
+    if (web3client) {
+      funcGetGreeting();
+    }
+  }, [web3client]);
+
+  /**
+   * Function to get the current greeting from the smart contract
+   */
+  async function funcGetGreeting() {
+    if (web3client) {
+      let res = await web3client.publicApi().getDatastoreEntries([{ address: sc_addr, key: strToBytes('greeting') }]);
+      if (res[0].candidate_value) {
+        let greetingDecoded = bytesToStr(res[0].candidate_value);
+        setGreeting(greetingDecoded);
+      }
+    }
+  }
+
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh'
+    }}>
+      <div>Greeting: {greeting}</div>
+    </div>
+  )
+}
+
+
+export default Content;
+```
+
+Don't forget to replace `SECRET_KEY` and `SC_ADDRESS` with your own secret key and smart contract address.
+
+### Breaking Down the Code
+
+This code might look complicated, but let's break it down into parts to understand it better.
+
+- **Setting up providers and initializing a custom client for the Massa's Buildnet**
+
+In this scenario, we want our application to interact with the Massa's buildnet. To achieve this, in our `initClient` function, 
+we're creating a custom client specifically for the Massa's buildnet using the `ClientFactory.createCustomClient` method.
+
+We provide this method with the array of providers that we defined earlier in order to connect to the Massa's Buildnet nodes.
+
+- **Base Account and Secret Key**
+
+The `baseAccountSecretKey` is the secret key of your Massa wallet. In a real application, you would never expose your secret key like this, but for simplicity and demonstration purposes, we are including it directly in the code.
+
+The `WalletClient.getAccountFromSecretKey` method is used to obtain our account from the secret key. This account is then passed to the `createCustomClient` method to initialize our client.
+
+- **Getting the Greeting**
+
+The `funcGetGreeting` function retrieves the current greeting from the smart contract's storage and sets it to the greeting state variable.
+
+- **User Interface**
+
+The user interface consists of a centered text display that shows the current greeting that is retrieved from your smart contract's storage.
+
+```bash
+npm run start
+```
+
+Your application will run at `http://localhost:3000`. 
+You should be able to see the current greeting that is set in your smart contract.
+
 ## Testing
 
 TODO
