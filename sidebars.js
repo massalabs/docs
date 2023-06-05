@@ -20,11 +20,12 @@ const sidebars = {
     },
     {
       type: "html",
-      value: "<hr/>"
+      value: "<hr/>",
     },
     {
       type: "html",
-      value: "<span class='menu__link'><b><small> Massa Architecture </small></b></span>"
+      value:
+        "<span class='menu__link'><b><small> Massa Architecture </small></b></span>",
     },
     {
       type: "doc",
@@ -133,6 +134,11 @@ const sidebars = {
       type: "doc",
       id: "node/wallet",
       label: "Creating a wallet",
+    },
+    {
+      type: "doc",
+      id: "node/faucet",
+      label: "Faucet massa",
     },
     {
       type: "doc",
