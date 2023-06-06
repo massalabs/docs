@@ -110,15 +110,6 @@ const config = {
         style: "dark",
         links: [
           {
-            title: "Docs",
-            items: [
-              {
-                label: "Tutorial",
-                to: "/docs/smart-contract/intro",
-              },
-            ],
-          },
-          {
             title: "Community",
             items: [
               {
