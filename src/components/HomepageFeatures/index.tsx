@@ -4,13 +4,6 @@ import Link from "@docusaurus/Link";
 import styles from "./styles.module.css";
 
 const FeatureList = [
-  // {
-  //   title: "Discover Massa",
-  //   content:
-  //     "Meet the deecntralized and scaled blockchain.",
-  //   docName: "todo",
-  //   icon: "💡",
-  // },
   {
     title: "Learn",
     content: "Learn basic concepts and inner workings of Massa blockchain.",
