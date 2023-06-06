@@ -142,11 +142,6 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "node/faucet",
-      label: "Faucet massa",
-    },
-    {
-      type: "doc",
       id: "node/stake",
       label: "Staking",
     },
