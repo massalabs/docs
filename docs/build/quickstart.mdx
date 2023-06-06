@@ -2,77 +2,72 @@
 id: quickstart
 sidebar_label: Quickstart
 ---
+# Build Your First dApp
+Welcome, Developer! You're about to embark on an exciting journey where you'll build your very first decentralized application (dApp) using the Massa blockchain. If you're thrilled about the world of blockchain, smart contracts, and dApps, you've come to the right place!
 
-# Build your first dApp
+This guide will help you build a simple "Hello World" dApp. We'll use a smart contract written in AssemblyScript and a user-friendly frontend designed in React.
 
-Welcome to the quickstart guide to building your first decentralized application (dApp) on the Massa blockchain.
+## Getting to Know the Project
+Here's the scoop: Our application is simple. A user can retrieve a greeting message that was set during the deployment of the dApp. This message is stored on the blockchain and is permanently visible to all users of the dApp.
 
-This guide will walk you through the process of developing a simple "Hello World" dApp using a smart contract written in AssemblyScript and a basic frontend using React.
+- **The Smart Contract (SC)**
+The smart contract, written in AssemblyScript, is the backbone of our dApp. It houses a single greeting message that users can read.
 
-## Overview
+- **The Frontend**
+A basic web interface built in React will allow users to read the greeting message. This interface interacts with the Massa blockchain and fetches data from our smart contract.
 
-The application we're building is straightforward: a user can retrieve a greeting message set during the deployment of the dApp.
-
-This greeting message is stored on the blockchain and is permanently visible to all users of the dApp.
-
-- **Smart Contract (SC)**
-
-Our smart contract, written in AssemblyScript, will form the backbone of our dApp. It will store a single greeting message that users can read.
-
-- **Frontend**
-
-This simple web interface, built in React, will allow users to read the greeting message set during the deployment. It will interact with the Massa blockchain and read data from our smart contract.
-
-## Smart Contract
-
-### Requirements
+## The Smart Contract
+Before we start, here's what you'll need:
 
 - **Node.js and npm installed**
-
 We recommend using Node.js version 18 or later, and the compatible npm version. You can download and install Node.js and npm from the official website: https://nodejs.org/.
 
-- **Massa wallet with coins on it and your secret key**
+- **Massa Wallet and your secret key**
+You'll need a funded Massa wallet and your secret key before you deploy your smart contract to the Massa blockchain. 
 
-Before deploying your smart contract to the Massa blockchain, you need to have a funded Massa wallet and your secret key. Check our guide on creating and funding a Massa wallet [here](wallet/intro).
+:::info
+Not sure how to create and fund a Massa wallet? Check our guide [here](XXX).
+:::
 
-### Setting up your project
+### Setting up Your Project
+Here are the steps to set up your smart contract project:
 
-Follow these steps to set up your smart contract project:
-
-- **Step 1 Initialize Your Smart Contract Project**
-
-Open a terminal, navigate to your preferred directory, and run the following command to create your project:
+#### Step 1: Initialize Your Smart Contract Project
+Firstly, open a terminal, and navigate to your preferred directory. Now, let's create your project with the following command:
 
 ```bash
 npx @massalabs/sc-project-initializer init massa-hello-world
 ```
 
-This command creates a new folder named massa-hello-world containing all the necessary files for developing a Massa smart contract.
+With this command, you create a new folder named massa-hello-world with all the necessary files for developing a Massa smart contract.
 
 :::info
-**assembly**: This directory is where your smart contract code lives. It includes your smart contract files in the **contracts** subdirectory and the test files in the **tests** subdirectory.
+For more comprehensive details on the layout of the smart contract project, please refer to our guide [here](XXX).
 
-**src**: This directory contains your deployment script file, deploy.ts, which deploys your smart contract to the Massa blockchain.
+In the meantime, here are the key components you should be familiar with:
 
-**.env.example**: This file is an example of the .env file that you will need to create. It contains the environment variables that you will need to set in order to deploy your smart contract.
+- **`assembly`**: This is the directory where your smart contract code resides. Within this, you'll find your contract files in the `contracts` subdirectory and your test files in the `tests` subdirectory.
+
+- **`.env.example`**: This file serves as a template for the `.env` file you'll need to create. It outlines the necessary environment variables required to deploy your smart contract.
+
+- **`package.json`**: This file contains the npm commands crucial for various operations such as checking, testing, building, and deploying your smart contract.
 :::
 
-- **Step 2: Create a .env at the root**
 
-Create a .env file at the root of your project directory and define the following environment variables:
+#### Step 2: Create a .env File
+Next, create a .env file at the root of your project directory and define the following environment variables:
 
-- **`WALLET_PRIVATE_KEY`**: Store your wallet's private key used to deploy the contract here. Ensure your wallet is funded.
-- **`JSON_RPC_URL_PUBLIC`**: This is the URL of the JSON-RPC interface of a public or a private Massa node.
-
-```
+```bash
 WALLET_PRIVATE_KEY="Your_private_key_here"
-
 JSON_RPC_URL_PUBLIC=https://buildnet.massa.net/api/v2:33035
 ```
+:::info
+WALLET_PRIVATE_KEY: Store your wallet's private key used to deploy the contract here. Make sure your wallet is funded.
+JSON_RPC_URL_PUBLIC: This is the URL of the JSON-RPC interface of a public or a private Massa node.
+:::
 
-### Writing and Deploying the smart contract
-
-Our smart contract will allow users to set and get a greeting message. Replace the content of the main.ts file in assembly/contracts with the following code:
+### Writing and Deploying the Smart Contract
+Our smart contract will let users set and get a greeting message. Replace the content of the main.ts file in assembly/contracts with the following code:
 
 ```tsx
 import { Args, stringToBytes } from "@massalabs/as-types";
@@ -88,18 +83,17 @@ import {
  *
  * @param _ - not used
  */
-export function constructor(_: StaticArray<u8>): StaticArray<u8> {
+export function constructor(_: StaticArray<u8>): void {
   // This line is important. It ensures that this function can't be called in the future.
   // If you remove this check, someone could call your constructor function and reset your smart contract.
   if (!Context.isDeployingContract()) {
-    return [];
+    return ;
   }
 
   Storage.set("greeting", "Hello, world!");
-
   generateEvent(`Greeting has been set`);
 
-  return [];
+  return ;
 }
 
 /**
@@ -113,7 +107,6 @@ export function constructor(_: StaticArray<u8>): StaticArray<u8> {
  */
 export function getGreeting(_: StaticArray<u8>): StaticArray<u8> {
   const greeting = Storage.get("greeting");
-
   generateEvent(`Greeting has been read ${greeting}`);
 
   return stringToBytes(greeting);
@@ -129,12 +122,13 @@ In your project directory, run the following command to compile your smart contr
 ```bash
 npm run build
 ```
+:::info
+This command compiles your helloWorld.ts contract into a helloWorld.wasm file.
+:::
 
-This command compiles your **`helloWorld.ts`** contract into a **`helloWorld.wasm`** file and optimizes it for size.
+- **Step 2: Deploy the Smart Contract**
 
-- **Step 2: Deploy the smart contract**
-
-With your smart contract compiled and ready, you can now deploy it to the Massa blockchain. To do this, run the following command in your project directory:
+Now that your smart contract is compiled and ready, let's deploy it to the Massa blockchain. To do this, run the following command in your project directory:
 
 ```bash
 npm run deploy
@@ -142,27 +136,31 @@ npm run deploy
 
 Upon successful execution, the console should display the operation id that you can use to track the deployment of your smart contract.
 
-## Frontend
+## The Frontend
+Let's move on to the frontend of your dApp. We'll use React with TypeScript to build a user interface, which will interact with the deployed smart contract on the Massa blockchain.
 
-This section provides a guide to set up and code the frontend for the "Hello World" dApp.
-We will utilize React with TypeScript to build the user interface, which will interact with the deployed smart contract on the Massa blockchain.
-Let's dive in!
+Sounds fun, doesn't it? Let's get started!
 
-### Setting up your project
-
+### Setting Up Your Project
 To set up your frontend project, follow these steps:
 
 - **Step 1: Initialize Your React Application**
 
-Open your terminal, navigate to your desired directory, and execute the following command to create a new React project:
+First, open your terminal, navigate to your desired directory, and execute the following command to create a new React project:
 
 ```bash
 npx create-react-app my-app --template typescript
 ```
 
-Replace `my-app` in the command with the name of your project. The `--template typescript` flag sets up a TypeScript template for our React application.
+:::info
+The --template typescript flag sets up a TypeScript template for our React application.
+:::
 
-After completing the installation process, navigate to your project folder:
+:::note
+If you want you can replace `my-app` in the command with your desired project name.
+:::
+
+After the installation is complete, navigate to your project folder:
 
 ```bash
 cd my-app
@@ -170,23 +168,25 @@ cd my-app
 
 - **Step 2: Installing Massa Web3**
 
-Next, install the Massa Web3 package.
-This package enables our frontend to interact with the Massa blockchain. To install it, run the following command:
+Next up, let's install the Massa Web3 package. This package enables our frontend to interact with the Massa blockchain. Here's how to install it:
 
 ```bash
-npm install @massalabs/massa-web3@1.17.0
+npm install @massalabs/massa-Web3
 ```
 
-Version 1.17.0 is the latest version compatible with Buildnet, which is Massa's blockchain network for developers.
-
-We are now ready to start coding the frontend of our dApp!
+:::caution
+You can find the compatible version of the Massa tools [right here](XXX).
+:::
 
 - **Step 3: Building the Frontend**
 
-Before writing our component, navigate to the **src** folder and locate the `App.tsx` file.
+Let's begin building the frontend of our dApp!
+
+Before writing our component, navigate to the src folder and locate the App.tsx file. 
+
 This file serves as the main entry point for your application. We will replace its content with our component's code.
 
-Open the App.tsx file in your preferred text editor and replace the content with the following code:
+Here's the code:
 
 ```tsx
 import {
@@ -200,9 +200,11 @@ import {
   ProviderType,
   WalletClient,
 } from "@massalabs/massa-web3";
+
 import { useEffect, useState } from "react";
 
-const baseAccountSecretKey = "SECRET_KEY";
+const baseAccountSecretKey = "SECRET_KEY"; ### TODO Update the constant value!
+const sc_addr = "SC_ADDRESS"; ### TODO Update the constant value!
 
 // initialize a custom client with the BuildNet endpoints
 const providers: Array<IProvider> = [
@@ -215,8 +217,6 @@ const providers: Array<IProvider> = [
     type: ProviderType.PRIVATE,
   } as IProvider,
 ];
-
-const sc_addr = "SC_ADDRESS";
 
 /**
  * Content component that handles interactions with a Massa smart contract
@@ -291,41 +291,41 @@ function Content() {
 export default Content;
 ```
 
-Ensure to replace `SECRET_KEY` and `SC_ADDRESS` with your own secret key and smart contract address.
+:::caution
+Make sure to replace SECRET_KEY and SC_ADDRESS with your own secret key and smart contract address.
+:::
 
-### Breaking Down the Code
+### Understanding the Code
+Our code might seem like a mouthful at first, but let's break it down into smaller, digestible parts:
 
-The code may seem complicated at first glance, but breaking it down into smaller parts makes it easier to understand.
+- **Setting Up Providers and Initializing a Custom Client**
 
-- **Setting up providers and initializing a custom client for the Massa's Buildnet**
-
-In this scenario, we want our application to interact with the Massa's buildnet. To achieve this, in our `initClient` function,
-we're creating a custom client specifically for the Massa's buildnet using the `ClientFactory.createCustomClient` method.
-
-We provide this method with the array of providers that we defined earlier in order to connect to the Massa's Buildnet nodes.
+For our application, we want to interact with Massa's Buildnet. That's why we're creating a custom client specifically for the Massa's Buildnet using the ClientFactory.createCustomClient method.
 
 - **Base Account and Secret Key**
 
-The `baseAccountSecretKey` is the secret key of your Massa wallet. In a real application, you would never expose your secret key like this, but for simplicity and demonstration purposes, we are including it directly in the code.
-
-The `WalletClient.getAccountFromSecretKey` method is used to obtain our account from the secret key. This account is then passed to the `createCustomClient` method to initialize our client.
+We define baseAccountSecretKey as the secret key of your Massa wallet. This key is necessary to create the base account for the client.
 
 - **Retrieving the Greeting**
 
-The `funcGetGreeting` function retrieves the current greeting from the smart contract's storage and sets it to the greeting state variable.
+We retrieve the current greeting from the smart contract's storage and update the greeting state variable using the funcGetGreeting function.
 
 - **User Interface**
 
 The user interface consists of a centered text display that shows the current greeting fetched from your smart contract's storage.
 
-Finally, start your application by running:
+### Start the application
+Finally, let's start our application!
 
 ```bash
 npm run start
 ```
 
-Your application will run at `http://localhost:3000`.
-You should see the current greeting that is set in your smart contract.
+Your application should now be running at http://localhost:3000. Here, you'll see the current greeting set in your smart contract. 
+
+🎉Congratulations on building your first dApp!
+
+Remember, Rome wasn't built in a day, and neither are amazing dApps! Keep learning,
 
 ## Testing
 
