@@ -113,6 +113,20 @@ const sidebars = {
       id: "build/faucet",
       label: "Faucet",
     },
+    {
+      type: "category",
+      label: "Smart Contracts",
+      items: [
+        {
+          type: "doc",
+          id: "build/smart-contract/project-layout",
+        },
+      ],
+    },
+    {
+      type: "doc",
+      id: "build/sdk",
+    },
   ],
   nodeSidebar: [
     {

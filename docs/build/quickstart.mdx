@@ -95,22 +95,6 @@ export function constructor(_: StaticArray<u8>): void {
 
   return ;
 }
-
-/**
- * Get the current greeting message.
- *
- * @param _ - not used
- *
- * @returns empty array
- *
- * @throws if greeting is not set
- */
-export function getGreeting(_: StaticArray<u8>): StaticArray<u8> {
-  const greeting = Storage.get("greeting");
-  generateEvent(`Greeting has been read ${greeting}`);
-
-  return stringToBytes(greeting);
-}
 ```
 
 To deploy your smart contract, follow these steps:
