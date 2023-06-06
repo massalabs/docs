@@ -20,11 +20,12 @@ const sidebars = {
     },
     {
       type: "html",
-      value: "<hr/>"
+      value: "<hr/>",
     },
     {
       type: "html",
-      value: "<span class='menu__link'><b><small> Massa Architecture </small></b></span>"
+      value:
+        "<span class='menu__link'><b><small> Massa Architecture </small></b></span>",
     },
     {
       type: "doc",
@@ -97,6 +98,19 @@ const sidebars = {
           ],
         },
       ],
+    },
+    {
+      type: "html",
+      value: "<hr/>"
+    },
+    {
+      type: "html",
+      value: "<span class='menu__link'><b><small> Developer Tools </small></b></span>"
+    },
+    {
+      type: "doc",
+      id: "build/faucet",
+      label: "Faucet",
     },
   ],
   nodeSidebar: [
