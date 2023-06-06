@@ -69,11 +69,6 @@ const sidebars = {
       id: "build/quickstart",
     },
     {
-      type: "doc",
-      id: "build/faucet",
-      label: "Faucet",
-    },
-    {
       type: "category",
       label: "Smart Contract",
       items: [
@@ -103,6 +98,19 @@ const sidebars = {
           ],
         },
       ],
+    },
+    {
+      type: "html",
+      value: "<hr/>"
+    },
+    {
+      type: "html",
+      value: "<span class='menu__link'><b><small> Developer Tools </small></b></span>"
+    },
+    {
+      type: "doc",
+      id: "build/faucet",
+      label: "Faucet",
     },
   ],
   nodeSidebar: [
