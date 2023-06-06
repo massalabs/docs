@@ -71,7 +71,7 @@ const sidebars = {
     {
       type: "doc",
       id: "build/faucet",
-      label: "Faucet massa",
+      label: "Faucet",
     },
     {
       type: "category",
