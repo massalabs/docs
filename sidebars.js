@@ -95,22 +95,53 @@ const sidebars = {
               id: "build/smart-contract/sdk",
               label: "WebAssembly Module",
             },
+            {
+              type: "doc",
+              id: "build/smart-contract/project-layout",
+            },
           ],
         },
       ],
     },
     {
       type: "html",
-      value: "<hr/>"
+      value: "<hr/>",
     },
     {
       type: "html",
-      value: "<span class='menu__link'><b><small> Developer Tools </small></b></span>"
+      value:
+        "<span class='menu__link'><b><small> Developer Tools </small></b></span>",
+    },
+    {
+      type: "category",
+      label: "Wallets",
+      items: [
+        {
+          type: "doc",
+          id: "build/wallet/intro",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/wallet-provider",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/massa-station",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/community-wallets",
+        },
+      ],
     },
     {
       type: "doc",
       id: "build/faucet",
       label: "Faucet",
+    },
+    {
+      type: "doc",
+      id: "build/sdk",
     },
   ],
   nodeSidebar: [
