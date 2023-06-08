@@ -17,7 +17,7 @@ To calculate the storage cost for a specific address in the ledger, the formula 
 
 ```address_size + balance_constant + bytecode_length + sum of (datastore_key_constant + datastore_value_size) * 0.00025```
 
-It's important to note that the storage costs are always paid by the address that initiates the Application Binary Interface (ABI) call. For example, if the ABI functions "```set_bytecode```" or "```set_bycode_for```" are used, the associated storage costs will be charged to the address making the call.
+It's important to note that the storage costs are always paid by the address that initiates the Application Binary Interface (ABI) call. For example, if the ABI functions [setBytecode](https://as-sdk.docs.massa.net/functions/setBytecode.html) or [setBycodeOf](https://as-sdk.docs.massa.net/functions/setBytecodeOf.html) are used, the associated storage costs will be charged to the address making the call.
 
 
 ## Examples
