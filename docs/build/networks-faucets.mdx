@@ -2,68 +2,93 @@
 id: networks-faucets
 sidebar_label: Networks & Faucets
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Networks & Faucets
 
-On this page you'll find information about the various Massa networks and their faucets.
+Here's a handy table containing all you need to know about the different Massa networks and their faucets. 
 
-## What is a network?
 
-A network in the context of blockchain technology refers to a decentralized system of interconnected nodes that work together to maintain the integrity and functionality of the blockchain. Nodes within the network collaborate to validate transactions, add them to the blockchain, and maintain the integrity of the ledger.
+<Tabs>
+  <TabItem value="buildnet" label="👷 BuildNet" default>
+    <table>
+      <tr>
+        <td>🔗 Public API</td>
+        <td><a href="https://buildnet.massa.net/api/v2">https://buildnet.massa.net/api/v2</a></td>
+      </tr>
+      <tr>
+        <td>🪙 Faucet</td>
+        <td><a href="https://discord.com/channels/828270821042159636/1097797634065956915">#buildernet-faucet Discord channel</a></td>
+      </tr>
+      <tr>
+        <td>🕵️ Explorer</td>
+        <td><a href="https://buildnet.massa.net">https://buildnet.massa.net</a></td>
+      </tr>
+    </table>
+  </TabItem>
+  <TabItem value="testnet" label="🧑‍🔬 TestNet">
+    <table>
+      <tr>
+        <td>🔗 Public API</td>
+        <td><a href="https://test.massa.net/api/v2">https://test.massa.net/api/v2</a></td>
+      </tr>
+      <tr>
+        <td>🪙 Faucet</td>
+        <td><a href="https://discord.com/channels/828270821042159636/866190913030193172">#testnet-faucet Discord channel</a></td>
+      </tr>
+      <tr>
+        <td>🕵️ Explorer</td>
+        <td><a href="https://test.massa.net/v1/">https://test.massa.net/v1/</a></td>
+      </tr>
+    </table>
+  </TabItem>
+</Tabs>
 
-## What is a faucet?
+## What's a Network, Anyway?
 
-A faucet in the context of a blockchain domain refers to a mechanism that distributes small amounts of cryptocurrency to users for free. It acts as a digital faucet, allowing individuals to obtain a small portion of a specific cryptocurrency without the need for extensive mining or purchasing. Faucets serve multiple purposes within the blockchain ecosystem. They act as a means to introduce new users to cryptocurrencies by providing them with a small amount to get started. Additionally, faucets can facilitate the testing and development of blockchain applications by offering developers a way to acquire the necessary tokens for experimentation.
+In the realm of blockchain technology, a network is a decentralized system of interconnected nodes.
+These nodes work in harmony to ensure the blockchain runs smoothly, validating transactions, adding them to the blockchain, and maintaining the integrity of the ledger.
 
-## Networks specifications
+## What about Faucets?
 
-Testnet is a dedicated network within the Massa ecosystem specifically designed for testing and experimentation purposes. It allows any person to run a node and actively participate in the network. Testnet provides a sandbox-like platform for individuals to try out different functionalities, test applications, test smart contracts without using real assets or affecting the main network.
+A faucet, in the context of blockchain, is a mechanism that provides small amounts of cryptocurrency to users for free.
+Think of it as a digital tap that drips a small portion of a specific cryptocurrency.
 
-BuilderNet has been meticulously crafted for developers like you to provide a stable playground for building and deploying smart contracts on the Massa blockchain. Compared to the current TestNet, BuilderNet has a slower upgrade cycle, ensuring its constant availability and stability. We believe in the importance of providing developers like you with a stable and reliable playground to build and experiment with your projects. With our tooling, you can leverage the unique features and capabilities of BuilderNet to their fullest extent, enabling you to create robust and innovative applications on the Massa blockchain. BuilderNet is meticulously maintained by MassaLabs, ensuring its continuous reliability and support for developers like you.
+Faucets play a crucial role in the blockchain ecosystem: 
+- they offer a friendly introduction to new users by giving them a starting amount of cryptocurrency, and
+- they also aid developers in testing and building blockchain applications by providing the necessary tokens for experimentation.
 
-## Requirements for faucets
+## What's Special About These Networks?
 
-- A Massa wallet (If you don't have a wallet yet, you can generate addresses in the Explorer website)
-- A [Discord account](https://support.discord.com/hc/en-us/articles/360033931551-Getting-Started)
+### Testnet
 
-:::info
-Faucet allows for only one request per day
-:::
+The Massa Testnet serves as the vital sandbox in the Massa ecosystem, designed for robust testing and experimentation. 
 
-## Informations
+At Massa, we are continually pushing the boundaries of performance, decentralization, and security, introducing significant and groundbreaking features regularly. 
+With such relentless innovation, it's crucial that we ensure everything functions perfectly, even at scale. This is where Testnet comes into play. 
 
-<table>
-  <tr>
-    <th>Networks</th>
-    <th>APIs</th>
-    <th>Ports</th>
-    <th>Faucets</th>
-    <th>Explorer</th>
-  </tr>
-  <tr>
-    <td> Testnet </td>
-    <td> https://test.massa.net/api/v2 </td>
-    <td> :33035 </td>
-    <td>
-      <a href="https://discord.com/channels/828270821042159636/866190913030193172">
-        #testnet-faucet Discord channel
-      </a>
-    </td>
-    <td>
-      <a href="https://test.massa.net/v1/">Testnet Explorer</a>
-    </td>
-  </tr>
-  <tr>
-    <td> Buildernet</td>
-    <td> https://buildnet.massa.net/api/v2 </td>
-    <td> :33041 </td>
-    <td>
-      <a href="https://discord.com/channels/828270821042159636/1097797634065956915">
-        #buildernet-faucet Discord channel
-      </a>
-    </td>
-    <td>
-      <a href="https://buildnet.massa.net">BuilderNet Explorer</a>
-    </td>
-  </tr>
-</table>
+Testnet allows anyone to run a node and actively participate in the network, trying out these innovative features, testing applications, and experimenting with smart contracts. 
+What makes Testnet even more appealing is that all this can be done without the worry of using real assets or affecting the main network. 
+Think of Testnet as our proving ground - a place where we can confidently explore and experiment with the future of blockchain technology.
+
+### Buildnet
+
+The Massa BuilderNet serves as your reliable playground for crafting and deploying smart contracts on the Massa blockchain. 
+
+While we regularly push new, groundbreaking features to Testnet, BuilderNet follows a more gradual upgrade cycle. This careful pace ensures its constant availability and stability - key factors that you, as a developer, rely on.
+
+At MassaLabs, we put significant effort into the careful maintenance of BuilderNet. Our goal is to provide you with a platform where you can build robust, innovative applications. 
+
+Leveraging BuilderNet's unique features and capabilities, you can navigate the forefront of blockchain technology with confidence and peace of mind, knowing you have a stable and dependable environment for your projects.
+
+
+## Are There Any Requirements for Using Faucets?
+
+Sure! You'll need:
+
+- A Massa wallet (Don't have one yet? Generate addresses on the [Explorer website](https://massa.net/explorer))
+- A [discord account](https://support.discord.com/hc/en-us/articles/360033931551-Getting-Started)
+
+And remember, each faucet allows for only one request per day.
+

@@ -133,6 +133,7 @@ const sidebars = {
           id: "build/wallet/community-wallets",
         },
       ],
+    },
     {
       type: "doc",
       id: "build/networks-faucets",
