@@ -298,63 +298,20 @@ We retrieve the current greeting from the smart contract's storage and update th
 
 The user interface consists of a centered text display that shows the current greeting fetched from your smart contract's storage.
 
-### Start the application
-Finally, let's start our application!
+## Testing your application
+Finally, let's start our application and perform some basic user acceptance testing!
 
 ```bash
 npm run start
 ```
 
-Your application should now be running at http://localhost:3000. Here, you'll see the current greeting set in your smart contract. 
+1. Open your web browser and navigate to http://localhost:3000.
+2. Here, you should see a greeting that says "Hello, World!" This is the message that was set in your smart contract.
+3. If you're able to see this greeting, your dApp is functioning correctly.
 
-🎉Congratulations on building your first dApp!
+🎉Congratulations on building and testing your first dApp!
 
 Remember, Rome wasn't built in a day, and neither are amazing dApps! Keep learning!
-
-## Testing Your Smart Contract
-
-In the development of any software, testing is an essential step. 
-It helps you ensure that your code behaves as expected and that it's free of bugs.
-
-At Massa, we use a library called as-pect for unit testing. This library is designed specifically for AssemblyScript and includes a wide range of features such as assertion testing, performance testing, and more.
-
-The following test case ensures that the constructor function of our smart contract does not throw any errors when it is invoked without arguments. You should include all your tests in the **assembly/__tests__** directory of your project.
-
-Here's the code for the test:
-
-```typescript
-import { NoArg } from '@massalabs/as-types';
-import { constructor } from '../contracts/main';
-
-// The describe function is used to group related tests together.
-// In this case, we're grouping tests related to the `constructor` function.
-describe('constructor function', () => {
-  // The it function is used to define individual test cases.
-  // In this case, we're testing that the `constructor` function doesn't throw an error when called with no arguments.
-  it('should not throw with no arguments', () => {
-    // We're using the expect function to make an assertion about the behavior of the `constructor` function.
-    // Specifically, we're expecting that calling `constructor` with serialized NoArg will not throw an error.
-    expect(
-      // Using the `() => void` function type is mandatory according to the `as-pect` documentation.
-      () => {
-        constructor(NoArg.serialize());
-      },
-    ).not.toThrow();
-  });
-});
-```
-
-To run the tests, use the following command:
-
-```bash
-npm run test
-```
-
-If your tests pass, you'll get a green checkmark for each one. If they fail, you'll get a red X along with a detailed error message.
-
-:::info
-This is a simple example, but you can create more complex tests depending on your smart contract's functionality. For more information about as-pect and its capabilities, refer to the [as-pect documentation](https://as-pect.gitbook.io/as-pect/).
-:::
 
 ## Next steps
 
