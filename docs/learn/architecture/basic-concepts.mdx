@@ -94,21 +94,13 @@ Furthermore, your address enables you to store and retrieve information on the b
 Importantly, your address also facilitates communication and data exchange with other participants on the blockchain. By sharing your address with others, you can interact, transact, and collaborate with different individuals and entities within the blockchain network. This seamless exchange of data and value promotes a decentralized and interconnected ecosystem.
 
 
-Each address on Massa has a public and private key associated with it. This is how messages can be signed and identity enforced.
+Each user address on Massa has a public and private key associated with it. This is how messages can be signed and identity enforced.
 The address of an account is simply the hash of its public key. 
 
 
 Addresses are generated using a specific format that includes a prefix `A` and a base58 encoding. The prefix distinguishes between user addresses, linked to a KeyPair, and smart-contract addresses, denoted by the prefixes `U` or `S` respectively.
 
 For user addresses (AU), the hash calculation involves taking the Blake3 hash of the byte representation of the user's public key. This process ensures a unique and secure identification for each user address within the system.
-
-:::info
-**There are two types of addresses on the Massa blockchain:**
-
-1. User addresses: prefix AU + hash 
-
-2. Smart contracts: prefix AS + hash
-:::
 
 ## Smart Contract
 Smart contracts are a piece of code that can be run inside the Massa virtual machine, which can modify the ledger, 
@@ -125,7 +117,7 @@ The resulting byte array is then subject to the Blake3 hash function, generating
 **todo:**
 - describe functionality as above for User Addresses and draw differences in functionality (with clear examples)
 
-### Autonomous Smart Contract
+### Autonomous Smart Contract Execution
 
 One particularity of Massa smart contracts compared to other blockchain smart contracts is their ability to wake 
 up by themselves independently of an exterior request on their interface. We call them Autonomous Smart Contracts (ASCs), 
