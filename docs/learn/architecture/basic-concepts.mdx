@@ -74,9 +74,13 @@ The information stored in the ledger with each address is the following:
 </table>
 
 
-In order to promote widespread adoption and facilitate node running with reduced entry fees, the size of the ledger in Massa has been limited to a maximum of 1 TB. This decision sets Massa apart from other benchmark blockchain ledgers and makes it more accessible to users.
+In order to promote widespread adoption and facilitate node running with reduced entry fees, the size of the ledger in Massa 
+has been limited to a maximum of 1 TB. 
+This decision sets Massa apart from other benchmark blockchain ledgers and makes it more accessible to users.
 
-To achieve such a small ledger size, several technical decisions were made. Firstly, state changes that have been finalized and are found in the final Blocks no longer require record-keeping in the Ledger's memory. This optimization helps minimize the storage requirements for historical data, allowing the ledger to operate efficiently within the specified size limit.
+To achieve such a small ledger size, several technical decisions were made. 
+Firstly, state changes that have been finalized and are found in the final Blocks no longer require record-keeping in the Ledger's memory. 
+This optimization helps minimize the storage requirements for historical data, allowing the ledger to operate efficiently within the specified size limit.
 
 In addition to this, Massa has introduced (Storage Costs)[todo link to page storage costs] as a novel approach to enhance storage efficiency. Users are now required to lock a certain amount of coins when they claim storage space. This innovative correlation between storage and circulating coins ensures a balanced utilization of resources. By implementing this mechanism, Massa optimizes storage utilization while maintaining the integrity and security of the ledger.
 
