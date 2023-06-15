@@ -140,6 +140,8 @@ The resulting byte array is then subject to the Blake3 hash function, generating
 hash value that serves as the SC address.
 
 **todo:**
+- update the last paragraph to testnet 24 changes. 
+- describe versioning for SC and how it works 
 - describe functionality as above for User Addresses and draw differences in functionality (with clear examples)
 
 ### Autonomous Smart Contract Execution
@@ -340,8 +342,7 @@ A block is a data structure built by nodes and its function is to aggregate seve
 for each new slot that becomes active, a particular node in the network is elected in a deterministic way with the 
 task of creating the block that will be stored in that slot (more about this in the description of the Selector 
 Module below). A block from a given thread can only contain operations originating from a creator_public_key whose 
-hash’s five first bits designate the corresponding thread, thus implicitly avoiding collisions in operations integrated into 
-parallel threads. Block size is limited to 1 MB.
+hash’s five first bits designate the corresponding thread, thus implicitly avoiding collisions in operations integrated into parallel threads. Block size is limited to 1 MB.
 
 **to do**:
 - explain in one paragraph the notion of finality of blocks and what they mean. 
