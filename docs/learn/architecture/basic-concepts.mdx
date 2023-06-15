@@ -33,7 +33,7 @@ genesis and contains genesis blocks with no parents.
 
 The job of the Massa nodes network is to essentially collectively fill up slots with valid blocks. To do so, 
 at each interval of 0.5s, a specific node in the network is elected to be allowed to create a block (more about 
-the selection process [here](/docu-dev/docs/learn/architecture#selector-module-proof-of-stake-sybil-resistance), and the proof of stake sybil resistance mechanism [here](/docu-dev/docs/learn/architecture#selector-module-proof-of-stake-sybil-resistance)),
+the selection process [here](/docs/learn/architecture#selector-module-proof-of-stake-sybil-resistance), and the proof of stake sybil resistance mechanism [here](/ddocs/learn/architecture#selector-module-proof-of-stake-sybil-resistance)),
  and will be rewarded if it creates a valid block in time. It is also possible that a node misses its opportunity 
  to create the block, in which case the slot will remain empty (this is called a **block miss**).
 
@@ -161,7 +161,7 @@ These use cases exemplify the transformative potential of Autonomous Smart Contr
 processes across various industries.
 
 :::info
- Learn more about Autonomous Smart Contracts [here](/docu-dev/docs/learn/autonomous-sc).
+ Learn more about Autonomous Smart Contracts [here](/docs/learn/autonomous-sc).
 :::
 
 ## Storage costs
@@ -232,7 +232,7 @@ Transactions are operations that move native Massa coins between addresses. Here
 
 #### Buy/Sell Rolls operations
 Rolls are staking tokens that participants can buy or sell with native Massa coins. By owning rolls, 
-addresses can participate in block creation  [more about staking below](/docu-dev/docs/node/stake). 
+addresses can participate in block creation  [more about staking below](/docs/node/stake). 
 This is done via special operations, with a simple payload:
 
 <table>
@@ -390,6 +390,6 @@ The content of a block is as follows:
 Endorsements are optional inclusion in the block, but their inclusion is incentivized for block creators. They are 
 validations of the fact that the parent block on the thread of the block is the best parent that could have been 
 chosen, done by other nodes that have also been deterministically selected via the proof of stake probability 
-distribution (see below). A comprehensive description of endorsements can be found [here](/docu-dev/docs/learn/architecture/consensus-quality#endorsement), so we will 
+distribution (see below). A comprehensive description of endorsements can be found [here](/docs/learn/architecture/consensus-quality#endorsement), so we will 
 not go further into details in the context of this introduction.
 
