@@ -11,15 +11,16 @@ The goal of the Massa network is to build a consensus between **nodes** to gathe
 and order **blocks** that contain ordered lists of **operations**. 
 An operation ultimate purpose once executed is to act as transitions for the global network state, called the **ledger**.
 
-Operations are produced by external clients and sent to the Massa network via a node. Some operations are 
-containing code to be run as **smart contracts**, enabling complex programmatic modifications of the ledger. 
+Operations are produced by external clients and sent to the Massa network via a node. 
+Some operations are containing code to be run as **smart contracts**, enabling complex programmatic 
+modifications of the ledger. 
 Nodes gather pending operations and group them into blocks. Each block has limited space to store operations. 
 Traditional blockchains typically link blocks sequentially, including a hash of the previous block in the block 
 header for temporal ordering. In contrast, Massa blocks are organized into a complex spatio-temporal structure, 
 enabling parallelization and improved block-creation performance.
 
-Instead of one chain, there are exactly 32 **threads** of chains running in parallel, with blocks equally spread on
- each thread over time, and stored inside **slots** that are spaced at fixed time intervals:
+Instead of one chain, there are exactly 32 **threads** of chains running in parallel, with blocks equally 
+spread on each thread over time, and stored inside **slots** that are spaced at fixed time intervals:
 
 ![](structure.drawio.svg)
 
@@ -52,6 +53,7 @@ It is replicated in each node. The consensus building mechanism ensures that agr
 been finalized (and in what order) will be reached over the whole network. The ledger is the state of the Massa network, 
 and operations (see below) are requests to modify the ledger. 
 
+
 The information stored in the ledger with each address is the following:
 
 <table>
@@ -73,37 +75,107 @@ The information stored in the ledger with each address is the following:
 </table>
 
 
+In order to promote widespread adoption and facilitate node running with reduced entry fees, the size of the ledger in Massa 
+has been limited to a maximum of 1 TB. 
+This decision sets Massa apart from other benchmark blockchain ledgers and makes it more accessible to users.
+
+To achieve such a small ledger size, several technical decisions were made. 
+Firstly, state changes that have been finalized and are found in the final Blocks no longer require record-keeping in the Ledger's memory. 
+This optimization helps minimize the storage requirements for historical data, allowing the ledger to operate efficiently within the specified size limit.
+
+In addition to this, Massa has introduced (Storage Costs)[todo link to page storage costs] as a novel approach to enhance storage efficiency. 
+Users are now required to lock a certain amount of coins when they claim storage space. 
+This innovative correlation between storage and circulating coins ensures a balanced utilization of resources. 
+By implementing this mechanism, Massa optimizes storage utilization while maintaining the integrity and security of the ledger.
+
+These technical decisions, including the exclusion of finalized state changes from ledger memory and the introduction of Storage 
+Costs, play a crucial role in enabling the compact size of the ledger and ultimately facilitating a more efficient and accessible 
+blockchain ecosystem.
+
+
+
 ## Address
-Each account in Massa has a public and private key associated with it. This is how messages can be signed and identity enforced.
+An address on the Massa blockchain serves as your unique identity, granting you the ability to engage in various operations, 
+store information, and exchange data with other participants. With an address, you gain access to a wide range of functionalities 
+within the blockchain ecosystem.
+
+Using your address, you can initiate operations that interact with the blockchain. 
+This includes executing transactions, submitting smart contract calls, and engaging in other blockchain activities. 
+Your address acts as the key to unlock these capabilities, allowing you to participate fully in the decentralized network.
+
+Furthermore, your address enables you to store and retrieve information on the blockchain. Whether it's personal data, financial records, or any other form of digital information, you can securely store it using your address as the reference. This provides a reliable and immutable storage solution within the blockchain environment.
+
+Importantly, your address also facilitates communication and data exchange with other participants on the blockchain. 
+By sharing your address with others, you can interact, transact, and collaborate with different individuals and entities 
+within the blockchain network. 
+This seamless exchange of data and value promotes a decentralized and interconnected ecosystem.
+
+
+Each user address on Massa has a public and private key associated with it. 
+This is how messages can be signed and identity enforced.
 The address of an account is simply the hash of its public key. 
 
 
+Addresses are generated using a specific format that includes a prefix `A` and a base58 encoding. The prefix distinguishes between user addresses, linked to a KeyPair, and smart-contract addresses, denoted by the prefixes `U` or `S` respectively.
+
+For user addresses (AU), the hash calculation involves taking the Blake3 hash of the byte representation of 
+the user's public key. 
+This process ensures a unique and secure identification for each user address within the system.
 
 ## Smart Contract
 Smart contracts are a piece of code that can be run inside the Massa virtual machine, which can modify the ledger, 
-and accept incoming requests through a public interface (via smart contract operations). 
+and accept incoming requests through a public interface (via smart-contract operations). 
 
-Smart contracts are currently written in AssemblyScript, a stricter derivation from TypeScript, which is itself a 
+Smart contracts are currently written in AssemblyScript, a derivation from TypeScript, which is itself a 
 type-safe version of JavaScript. AssemblyScript compiles to WebAssembly bytecode (wasm). Massa nodes Execution Module runs such bytecode. 
 Smart contracts have access to their own datastore, so they can modify the ledger.
 
-### Autonomous Smart Contract
+Smart contracts follow a different hash calculation than user addresses. It begins by constructing a byte array comprising various elements. 
+This array consists of the slot represented in 5 bytes, with 4 bytes allocated for the period (encoded as a u64 in big endian 
+format), 1 byte for the thread, and an index that increments for each address created within the same slot.
+The index value is represented as a u64 in big endian format and is reset at the start of each new slot. 
+Additionally, a single byte is appended to indicate whether the address is for real execution (1) or read-only execution (0).
+
+The resulting byte array is then subject to the Blake3 hash function, generating a unique 
+hash value that serves as the SC address.
+
+**todo:**
+- update the last paragraph to testnet 24 changes. 
+- describe versioning for SC and how it works 
+- describe functionality as above for User Addresses and draw differences in functionality (with clear examples)
+
+### Autonomous Smart Contract Execution
+
 One particularity of Massa smart contracts compared to other blockchain smart contracts is their ability to wake 
-up by themselves independently of an exterior request on their interface. We call them Autonomous Smart Contracts, 
+up by themselves independently of an exterior request on their interface. We call them Autonomous Smart Contracts (ASCs), 
 as they allow more autonomy and less dependency on external centralized services.
 
+ASCs offer a plethora of use cases that leverage their self wake-up functionality. 
+In the realm of Decentralized Finance (DeFi), these contracts can automate liquidations, 
+yield farming strategies, and portfolio rebalancing. 
+Supply chain management benefits from autonomous contracts through automated inventory management and quality control processes. 
+In the insurance industry, claims settlements can be accelerated with instant payments and parametric insurance. 
+Gaming and NFT platforms can provide dynamic and interactive experiences with evolving NFTs and automated auctions. 
+Additionally, real estate transactions can be streamlined with escrow automation and simplified rental agreements. 
+These use cases exemplify the transformative potential of Autonomous Smart Contracts in enabling automated and efficient 
+processes across various industries.
 
-:::note
+:::info
  Learn more about Autonomous Smart Contracts [here](/docu-dev/docs/learn/autonomous-sc).
 :::
-
 
 ## Storage costs
 - to do
 
 ## Operation 
-Fundamentally, the point of the Massa network is to gather, order and execute operations. Operations are 
+At its core, the Massa network revolves around the aggregation, sequencing, and execution of operations. Operations are 
 recorded inside blocks that are located in slots. 
+
+Operations are denoted by a string prefixed with 'O' that encapsulate crucial information within a byte array. 
+The byte array encompasses the version in a u64 varint format, the Blake3 hash of the fully serialized content 
+of the operation, and the public key of the creator. 
+By meticulously organizing and recording operations within blocks that reside in specific slots, 
+the Massa network ensures the integrity and efficiency of its operations.
 
 
 ### Operation types
@@ -160,7 +232,8 @@ Transactions are operations that move native Massa coins between addresses. Here
 
 #### Buy/Sell Rolls operations
 Rolls are staking tokens that participants can buy or sell with native Massa coins. By owning rolls, 
-addresses can participate in block creation  [more about staking below](/docu-dev/docs/node/stake). This is done via special operations, with a simple payload:
+addresses can participate in block creation  [more about staking below](/docu-dev/docs/node/stake). 
+This is done via special operations, with a simple payload:
 
 <table>
     <tr>
@@ -180,7 +253,16 @@ Former is done using the Execute SC operation, and latter with Call SC operation
 
 1. Execute SC operation
  
- - to do
+ The ExecuteSC operation provides a powerful functionality within the Massa network by enabling the execution of smart contracts 
+ directly instead of storing them. 
+ Instead of storing the bytecode, the code itself is placed within the operation as a smart contract. 
+ When the ExecuteSC operation is executed, the blockchain triggers the execution of the main function within 
+ the smart contract code. After the code is executed, the blockchain proceeds to other tasks while retaining 
+ and reflecting the changes made to the ledger and other relevant data. 
+ This approach ensures that the executed changes are recorded and maintained on the ledger, rather than 
+ retaining the bytecode itself. 
+ By executing smart contracts in this manner, the Massa network offers flexibility and efficiency 
+ in managing and executing code within its blockchain ecosystem.
 
 <table>
     <tr>
@@ -260,9 +342,10 @@ A block is a data structure built by nodes and its function is to aggregate seve
 for each new slot that becomes active, a particular node in the network is elected in a deterministic way with the 
 task of creating the block that will be stored in that slot (more about this in the description of the Selector 
 Module below). A block from a given thread can only contain operations originating from a creator_public_key whose 
-hash’s five first bits designate the corresponding thread, thus implicitly avoiding collisions in operations integrated into parallel threads.
+hash’s five first bits designate the corresponding thread, thus implicitly avoiding collisions in operations integrated into parallel threads. Block size is limited to 1 MB.
 
-- to do
+**to do**:
+- explain in one paragraph the notion of finality of blocks and what they mean. 
 
 The content of a block is as follows:
 
