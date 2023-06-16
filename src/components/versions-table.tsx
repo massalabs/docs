@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Layout from "@theme/Layout";
 import copy from "clipboard-copy";
 
 interface Compatibility {
