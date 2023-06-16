@@ -63,7 +63,8 @@ const sidebars = {
     },
     {
       type: "html",
-      value: "<span class='menu__link'><b><small>Autonomous Smart Contract</small></b></span>"
+      value:
+        "<span class='menu__link'><b><small>Autonomous Smart Contract</small></b></span>",
     },
     {
       type: "doc",
@@ -95,7 +96,7 @@ const sidebars = {
     {
       type: "doc",
       id: "tutorial/trading-bot",
-    }
+    },
   ],
   buildSidebar: [
     {
