@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
-import copy from "clipboard-copy";
+import { handleCopy } from "../utils/helpers";
 
 interface Compatibility {
-  testnet: string;
-  buildnet: string;
+  // could be  (network: string) => string
+  network: string;
+  version: string;
 }
 
 interface Project {
   title: string;
-  compatibilities: Compatibility;
+  compatibilities: Compatibility[];
   install: string;
 }
 
 interface CompatibilityData {
   title: string;
   projects: Project[];
+  networks: string[];
 }
 
 const GIST_URL =
-  "https://gist.githubusercontent.com/Ben-Rey/9f475f1c5e8e0f78fa1570a727eef344/raw/623740088385caa09b84479be730aa684437f3ba/gistfile1.txt";
+  "https://gist.githubusercontent.com/Ben-Rey/9f475f1c5e8e0f78fa1570a727eef344/raw/gistfile1.txt";
 
 export default function VersionsTable() {
   const [data, setData] = useState<CompatibilityData>();
@@ -28,6 +30,13 @@ export default function VersionsTable() {
       .then((response) => response.json())
       .then((data) => setData(data));
   }, []);
+
+  const getInstall = (project: Project, network: string) => {
+    const compatibility: Compatibility = project.compatibilities.find(
+      (compatibility) => compatibility.network === network
+    );
+    return `${project.install}@${compatibility.version}`;
+  };
 
   if (!data) {
     return <div></div>;
@@ -40,22 +49,24 @@ export default function VersionsTable() {
           <thead>
             <tr>
               <th>Project</th>
-              <th>Testnet</th>
-              <th>Buildnet</th>
-              <th>Install</th>
+              {data.networks.map((network) => (
+                <th>{network}</th>
+              ))}
+              <th>Install (Buildnet)</th>
             </tr>
           </thead>
           <tbody>
             {data.projects.map((project, i) => (
               <tr key={i}>
                 <td>{project.title}</td>
-                <td>{project.compatibilities.testnet}</td>
-                <td>{project.compatibilities.buildnet}</td>
+                {project.compatibilities.map((compatibilities) => (
+                  <td>{compatibilities.version}</td>
+                ))}
                 <td
-                  onClick={() => copy(project.install)}
+                  onClick={() => handleCopy(project.install)}
                   style={{ cursor: "pointer" }}
                 >
-                  {project.install}
+                  {getInstall(project, "buildnet")}
                 </td>
               </tr>
             ))}
