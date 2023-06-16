@@ -17,6 +17,12 @@ const FeatureList = [
     icon: "🛠️",
   },
   {
+    title: "Tutorial",
+    content: "Practical examples and step-by-step tutorials for building decentralized applications on Massa.",
+    docName: "docs/tutorial/home",
+    icon: "📖",
+  },
+  {
     title: "Run a Testnet Node",
     content: "Validate transactions, secure the network, and earn rewards.",
     docName: "docs/node/intro",
