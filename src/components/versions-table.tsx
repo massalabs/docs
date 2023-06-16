@@ -18,7 +18,7 @@ interface CompatibilityData {
 }
 
 const GIST_URL =
-  "https://gist.githubusercontent.com/Ben-Rey/9f475f1c5e8e0f78fa1570a727eef344/raw/892a1ead86dcaee98dac29c85901195deb2b3f3e/gistfile1.txt";
+  "https://gist.githubusercontent.com/Ben-Rey/9f475f1c5e8e0f78fa1570a727eef344/raw/623740088385caa09b84479be730aa684437f3ba/gistfile1.txt";
 
 export default function VersionsTable() {
   const [data, setData] = useState<CompatibilityData>();
