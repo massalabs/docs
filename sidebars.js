@@ -43,6 +43,10 @@ const sidebars = {
       type: "doc",
       id: "learn/architecture/consensus-quality",
     },
+    {
+      type: "doc",
+      id: "learn/architecture/storage-costs",
+    },
   ],
   tutorialSidebar: [
     {

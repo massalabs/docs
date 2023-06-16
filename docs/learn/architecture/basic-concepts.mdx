@@ -165,7 +165,14 @@ processes across various industries.
 :::
 
 ## Storage costs
-- to do
+
+In Massa, each network node maintains a full copy of the ledger. Having a massive ledger size (hundreds of terabytes), would pose high entry barriers for potential node runners. To ensure smooth operation and enable node hosting at home, it's essential to establish a reasonable size limit, and remove the need for excessive storage capacity. After careful consideration, we have determined that a storage size limit of 1TB strikes the right balance. This means that each participant can store data on the ledger until it reaches the 1TB threshold. By implementing this limit, we aim to promote widespread adoption and empower individuals to run nodes effortlessly. 
+
+In order to enforce this limit, users are required to lock a corresponding amount of coins for each byte of storage they claim. This applies to various data elements such as your address, balance, keys in your datastore, bytecode, and more. By locking coins, you establish a commitment that ensures fair usage of storage resources. Once you release your allocated space in the storage, the locked coins are subsequently released as well. This mechanism guarantees a balanced and accountable approach to managing storage within the network.
+
+:::note
+Read more about storage costs [here](/docs/learn/architecture/storage-costs).
+:::
 
 ## Operation 
 At its core, the Massa network revolves around the aggregation, sequencing, and execution of operations. Operations are 
