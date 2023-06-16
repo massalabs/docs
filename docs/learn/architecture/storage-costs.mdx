@@ -10,7 +10,8 @@ To prevent the requirement of massive storage capacities, a ledger-size limit of
 This limit is essential to encourage widespread adoption and enable users to run nodes from their homes.
 To ensure compliance with this limit, a mechanism has been established that correlates storage space with locked coins.
 
-For every byte of storage space claimed, whether it's for storing address and balance information, keys in the datastore, bytecode, or other data elements, users are required to lock a corresponding amount of coins.
+For every byte of storage space claimed, whether it's for storing address and balance information, keys in the datastore, bytecode, or other data elements,
+ users are required to lock a corresponding amount of coins.
 These locked coins act as a commitment and are released when the allocated storage space is released.
 
 To determine the amount of coins needed to lock for each byte of storage, the value of 0.00025 Massa coin (MAS) has been chosen.
@@ -20,14 +21,18 @@ To avoid confusion, a fixed size of 8 bytes has been chosen for each balance.
 Therefore, the initial ledger entry for address and balance incurs a cost of (8 + 32) * 0.00025 = 0.01 MAS.
 Datastore keys also have variable sizes, but to simplify calculations, a fixed size of 10 bytes is used for determining storage costs.
 
-To calculate the storage cost for a specific address in the ledger, the formula includes the address size, balance constant, bytecode length, and the sum of constants for each datastore key and its corresponding value size.
+To calculate the storage cost for a specific address in the ledger, the formula includes the address size, balance constant, bytecode length, 
+and the sum of constants for each datastore key and its corresponding value size.
+
 The overall formula is:
 
-**to do as formula:**
-$$address_size + balance_constant + bytecode_length + sum of (datastore_key_constant + datastore_value_size) * 0.00025$$
+$$
+Cost_{massa} = 0.00025 * (AddressSize + BalanceSize + BytecodeSize + \sum_i (DataStoreKey_i + DatastoreValue_i))
+$$
 
 It's important to note that the storage costs are always paid by the address that initiates the Application Binary Interface (ABI) call.
-For example, if the ABI functions [setBytecode](https://as-sdk.docs.massa.net/functions/setBytecode.html) or [setBycodeOf](https://as-sdk.docs.massa.net/functions/setBytecodeOf.html) are used, the associated storage costs will be charged to the address making the call.
+For example, if the ABI functions [setBytecode](https://as-sdk.docs.massa.net/functions/setBytecode.html) or [setBycodeOf](https://as-sdk.docs.massa.net/functions/setBytecodeOf.html) are used,
+the associated storage costs will be charged to the address making the call.
 
 
 ## Examples
@@ -39,7 +44,7 @@ Suppose you want to store your birth date, which is 30 bytes long, in your datas
 In that case, you need to send an operation that creates a key in your datastore using a Smart Contract.
 This operation incurs a storage cost of at least 0.01 MAS, calculated as 0.00025 * (10 + 30).
 
-Thus, if you create a new wallet using the Massa Client ```massa-client```, you can generate a secret key ```(wallet_generate_secret_key)```) and verify its address using the "```wallet_info``" function.
+Thus, if you create a new wallet using the Massa Client `massa-client`, you can generate a secret key `(wallet_generate_secret_key)`) and verify its address using the "`wallet_info``" function.
 However, until a transfer of at least 0.01 Massa is received to your wallet address, it will not appear in any of blockchain's ledgers.
 
 If the amount of transfer to an unexisting user address is lower than the amount of MAS coin needed to create the address on the ledger, the operation will be refused.
@@ -51,13 +56,15 @@ If the amount of transfer to an unexisting user address is lower than the amount
 2. If a transfer of 10 MAS is received, the balance of the newly created address will show 9.99 MAS, as 0.01 MAS represent the storage cost.
 :::
 
-In case you wish to delete the entry in your datastore, you will be refunded the storage costs (0.02 MAS).
+In case you wish to delete the entry in your datastore, you will be refunded the storage costs (0.01 MAS).
 
 :::info
 
-In the case of a refund for storage costs, the address that receives the refund is the one that initiates the ABI call, which may differ from the address that initially paid for the storage.
+In the case of a refund for storage costs, the address that receives the refund is the one that initiates the ABI call 
+([setBytecode](https://as-sdk.docs.massa.net/functions/setBytecode.html) or [setBycodeOf](https://as-sdk.docs.massa.net/functions/setBytecodeOf.html) for example),
+ which may differ from the address that initially paid for the storage.
 
-If you are a Smart Contract developer and want your users to cover the storage costs for your contract, you can utilize the coins passed via the "```coins```" parameter of the "```CallSC```" operation.
+If you are a Smart Contract developer and want your users to cover the storage costs for your contract, you can utilize the coins passed via the "`coins`" parameter of the "`CallSC`" operation.
 Additionally, you can save their addresses in your datastore to facilitate future refunds.
 :::
 
