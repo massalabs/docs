@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CodeBlock from "@theme/CodeBlock";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 import { GIST_URL } from "../constants";
 
 interface Compatibility {
@@ -40,13 +42,6 @@ export default function VersionsTable() {
     fetchData();
   }, []);
 
-  const getInstall = (project: Project, network: string) => {
-    const compatibility = project.compatibilities.find(
-      (comp) => comp.network === network
-    );
-    return compatibility ? `${project.install}@${compatibility.version}` : "";
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -57,32 +52,41 @@ export default function VersionsTable() {
 
   return (
     <div style={{ marginTop: "50px" }}>
-      <table>
-        <thead>
-          <tr>
-            <th>Project</th>
-            {data.networks.map((network) => (
-              <th>{network}</th>
-            ))}
-            <th>Install (Buildnet)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.projects.map((project, i) => (
-            <tr key={i}>
-              <td>{project.title}</td>
-              {project.compatibilities.map((comp) => (
-                <td key={comp.network}>{comp.version}</td>
-              ))}
-              <td>
-                <CodeBlock className="language-bash">
-                  {getInstall(project, "buildnet")}
-                </CodeBlock>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Tabs defaultValue="buildnet">
+        {data.networks.map((network) => (
+          <TabItem value={network} label={network} key={network}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th>Version</th>
+                  <th>Install</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.projects.map((project, i) => {
+                  const compatibility = project.compatibilities.find(
+                    (comp) => comp.network === network
+                  );
+                  return (
+                    <tr key={i}>
+                      <td>{project.title}</td>
+                      <td>{compatibility?.version}</td>
+                      <td>
+                        <CodeBlock className="language-bash">
+                          {compatibility
+                            ? `${project.install}@${compatibility.version}`
+                            : ""}
+                        </CodeBlock>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </TabItem>
+        ))}
+      </Tabs>
     </div>
   );
 }
