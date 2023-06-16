@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { handleCopy } from "../utils/helpers";
+import CodeBlock from "@theme/CodeBlock";
 
 interface Compatibility {
   // could be  (network: string) => string
@@ -24,11 +24,22 @@ const GIST_URL =
 
 export default function VersionsTable() {
   const [data, setData] = useState<CompatibilityData>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    fetch(GIST_URL)
-      .then((response) => response.json())
-      .then((data) => setData(data));
+    const fetchData = async () => {
+      try {
+        const response = await fetch(GIST_URL);
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("An error occurred while fetching the data: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const getInstall = (project: Project, network: string) => {
@@ -38,41 +49,42 @@ export default function VersionsTable() {
     return `${project.install}@${compatibility.version}`;
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   if (!data) {
-    return <div></div>;
+    return <div>No data available</div>;
   }
 
   return (
     <div style={{ marginTop: "50px" }}>
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Project</th>
-              {data.networks.map((network) => (
-                <th>{network}</th>
-              ))}
-              <th>Install (Buildnet)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.projects.map((project, i) => (
-              <tr key={i}>
-                <td>{project.title}</td>
-                {project.compatibilities.map((compatibilities) => (
-                  <td>{compatibilities.version}</td>
-                ))}
-                <td
-                  onClick={() => handleCopy(project.install)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {getInstall(project, "buildnet")}
-                </td>
-              </tr>
+      <table>
+        <thead>
+          <tr>
+            <th>Project</th>
+            {data.networks.map((network) => (
+              <th>{network}</th>
             ))}
-          </tbody>
-        </table>
-      </div>
+            <th>Install (Buildnet)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.projects.map((project, i) => (
+            <tr key={i}>
+              <td>{project.title}</td>
+              {project.compatibilities.map((compatibility) => (
+                <td>{compatibility.version}</td>
+              ))}
+              <td>
+                <CodeBlock className="language-bash">
+                  {getInstall(project, "buildnet")}
+                </CodeBlock>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
