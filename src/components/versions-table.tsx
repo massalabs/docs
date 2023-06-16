@@ -32,8 +32,8 @@ export default function VersionsTable() {
   }, []);
 
   const getInstall = (project: Project, network: string) => {
-    const compatibility: Compatibility = project.compatibilities.find(
-      (compatibility) => compatibility.network === network
+    const compatibility = project.compatibilities.find(
+      (comp) => comp.network === network
     );
     return `${project.install}@${compatibility.version}`;
   };
