@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CodeBlock from "@theme/CodeBlock";
+import { GIST_URL } from "../constants";
 
 interface Compatibility {
   // could be  (network: string) => string
@@ -18,9 +19,6 @@ interface CompatibilityData {
   projects: Project[];
   networks: string[];
 }
-
-const GIST_URL =
-  "https://gist.githubusercontent.com/Ben-Rey/9f475f1c5e8e0f78fa1570a727eef344/raw/gistfile1.txt";
 
 export default function VersionsTable() {
   const [data, setData] = useState<CompatibilityData>();
@@ -73,8 +71,8 @@ export default function VersionsTable() {
           {data.projects.map((project, i) => (
             <tr key={i}>
               <td>{project.title}</td>
-              {project.compatibilities.map((compatibility) => (
-                <td>{compatibility.version}</td>
+              {project.compatibilities.map((comp) => (
+                <td key={comp.network}>{comp.version}</td>
               ))}
               <td>
                 <CodeBlock className="language-bash">
