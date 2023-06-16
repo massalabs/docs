@@ -46,7 +46,7 @@ export default function VersionsTable() {
     const compatibility = project.compatibilities.find(
       (comp) => comp.network === network
     );
-    return `${project.install}@${compatibility.version}`;
+    return compatibility ? `${project.install}@${compatibility.version}` : "";
   };
 
   if (loading) {
