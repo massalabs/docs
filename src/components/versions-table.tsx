@@ -51,42 +51,40 @@ export default function VersionsTable() {
   }
 
   return (
-    <div style={{ marginTop: "50px" }}>
-      <Tabs defaultValue="buildnet">
-        {data.networks.map((network) => (
-          <TabItem value={network} label={network} key={network}>
-            <table>
-              <thead>
-                <tr>
-                  <th>Project</th>
-                  <th>Version</th>
-                  <th>Install</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.projects.map((project, i) => {
-                  const compatibility = project.compatibilities.find(
-                    (comp) => comp.network === network
-                  );
-                  return (
-                    <tr key={i}>
-                      <td>{project.title}</td>
-                      <td>{compatibility?.version}</td>
-                      <td>
-                        <CodeBlock className="language-bash">
-                          {compatibility
-                            ? `${project.install}@${compatibility.version}`
-                            : ""}
-                        </CodeBlock>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </TabItem>
-        ))}
-      </Tabs>
-    </div>
+    <Tabs defaultValue="buildnet">
+      {data.networks.map((network) => (
+        <TabItem value={network} label={network} key={network}>
+          <table>
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Version</th>
+                <th>Install</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.projects.map((project, i) => {
+                const compatibility = project.compatibilities.find(
+                  (comp) => comp.network === network
+                );
+                return (
+                  <tr key={i}>
+                    <td>{project.title}</td>
+                    <td>{compatibility?.version}</td>
+                    <td>
+                      <CodeBlock className="language-bash">
+                        {compatibility
+                          ? `${project.install}@${compatibility.version}`
+                          : ""}
+                      </CodeBlock>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </TabItem>
+      ))}
+    </Tabs>
   );
 }
