@@ -53,6 +53,19 @@ const sidebars = {
       type: "doc",
       id: "tutorial/home",
     },
+    {
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> Tutorials </small></b></span>",
+    },
+    {
+      type: "doc",
+      id: "tutorial/trading-bot",
+    }
   ],
   buildSidebar: [
     {
