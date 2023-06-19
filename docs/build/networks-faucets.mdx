@@ -2,27 +2,40 @@
 id: networks-faucets
 sidebar_label: Networks & Faucets
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import VersionsTable from "@site/src/components/versions-table";
 
 # Networks & Faucets
 
-Here's a handy table containing all you need to know about the different Massa networks and their faucets. 
+Here's a handy table containing all you need to know about the different Massa networks and their faucets.
 
 <Tabs>
   <TabItem value="buildnet" label="👷 BuildNet" default>
     <table>
       <tr>
         <td>🔗 Public API</td>
-        <td><a href="https://buildnet.massa.net/api/v2">https://buildnet.massa.net/api/v2</a></td>
+        <td>
+          <a href="https://buildnet.massa.net/api/v2">
+            https://buildnet.massa.net/api/v2
+          </a>
+        </td>
       </tr>
       <tr>
         <td>🪙 Faucet</td>
-        <td><a href="https://discord.com/channels/828270821042159636/1097797634065956915">#buildernet-faucet</a> Discord channel</td>
+        <td>
+          <a href="https://discord.com/channels/828270821042159636/1097797634065956915">
+            #buildernet-faucet
+          </a>{" "}
+          Discord channel
+        </td>
       </tr>
       <tr>
         <td>🕵️ Explorer</td>
-        <td><a href="https://buildnet.massa.net">https://buildnet.massa.net</a></td>
+        <td>
+          <a href="https://buildnet.massa.net">https://buildnet.massa.net</a>
+        </td>
       </tr>
     </table>
   </TabItem>
@@ -30,15 +43,26 @@ Here's a handy table containing all you need to know about the different Massa n
     <table>
       <tr>
         <td>🔗 Public API</td>
-        <td><a href="https://test.massa.net/api/v2">https://test.massa.net/api/v2</a></td>
+        <td>
+          <a href="https://test.massa.net/api/v2">
+            https://test.massa.net/api/v2
+          </a>
+        </td>
       </tr>
       <tr>
         <td>🪙 Faucet</td>
-        <td><a href="https://discord.com/channels/828270821042159636/866190913030193172">#testnet-faucet</a> Discord channel</td>
+        <td>
+          <a href="https://discord.com/channels/828270821042159636/866190913030193172">
+            #testnet-faucet
+          </a>{" "}
+          Discord channel
+        </td>
       </tr>
       <tr>
         <td>🕵️ Explorer</td>
-        <td><a href="https://test.massa.net/v1/">https://test.massa.net/v1/</a></td>
+        <td>
+          <a href="https://test.massa.net/v1/">https://test.massa.net/v1/</a>
+        </td>
       </tr>
     </table>
   </TabItem>
@@ -58,7 +82,8 @@ These nodes work in harmony to ensure the blockchain runs smoothly, validating t
 A faucet, in the context of blockchain, is a mechanism that provides small amounts of cryptocurrency to users for free.
 Think of it as a digital tap that drips a small portion of a specific cryptocurrency.
 
-Faucets play a crucial role in the blockchain ecosystem: 
+Faucets play a crucial role in the blockchain ecosystem:
+
 - they offer a friendly introduction to new users by giving them a starting amount of cryptocurrency, and
 - they also aid developers in testing and building blockchain applications by providing the necessary tokens for experimentation.
 
@@ -66,22 +91,22 @@ Faucets play a crucial role in the blockchain ecosystem:
 
 ### Testnet
 
-The Massa Testnet serves as the vital sandbox in the Massa ecosystem, designed for robust testing and experimentation. 
+The Massa Testnet serves as the vital sandbox in the Massa ecosystem, designed for robust testing and experimentation.
 
-At Massa, we are continually pushing the boundaries of performance, decentralization, and security, introducing significant and groundbreaking features regularly. 
-With such relentless innovation, it's crucial that we ensure everything functions perfectly, even at scale. This is where Testnet comes into play. 
+At Massa, we are continually pushing the boundaries of performance, decentralization, and security, introducing significant and groundbreaking features regularly.
+With such relentless innovation, it's crucial that we ensure everything functions perfectly, even at scale. This is where Testnet comes into play.
 
-Testnet allows anyone to run a node and actively participate in the network, trying out these innovative features, testing applications, and experimenting with smart contracts. 
-What makes Testnet even more appealing is that all this can be done without the worry of using real assets or affecting the main network. 
+Testnet allows anyone to run a node and actively participate in the network, trying out these innovative features, testing applications, and experimenting with smart contracts.
+What makes Testnet even more appealing is that all this can be done without the worry of using real assets or affecting the main network.
 Think of Testnet as our proving ground - a place where we can confidently explore and experiment with the future of blockchain technology.
 
 ### Buildnet
 
-The Massa BuilderNet serves as your reliable playground for crafting and deploying smart contracts on the Massa blockchain. 
+The Massa BuilderNet serves as your reliable playground for crafting and deploying smart contracts on the Massa blockchain.
 
 While we regularly push new, groundbreaking features to Testnet, BuilderNet follows a more gradual upgrade cycle. This careful pace ensures its constant availability and stability - key factors that you, as a developer, rely on.
 
-At MassaLabs, we put significant effort into the careful maintenance of BuilderNet. Our goal is to provide you with a platform where you can build robust, innovative applications. 
+At MassaLabs, we put significant effort into the careful maintenance of BuilderNet. Our goal is to provide you with a platform where you can build robust, innovative applications.
 
 Leveraging BuilderNet's unique features and capabilities, you can navigate the forefront of blockchain technology with confidence and peace of mind, knowing you have a stable and dependable environment for your projects.
 
@@ -91,3 +116,9 @@ Sure! You'll need:
 
 - A Massa wallet (Don't have one yet? Generate addresses on the [Explorer website](https://massa.net/testnet/wallet))
 - A [Discord account](https://support.discord.com/hc/en-us/articles/360033931551-Getting-Started)
+
+## Library Compatibility with Massa Networks
+
+The following table outlines library compatibility across the Massa networks. Use this as a guide to select the appropriate library based on the network you're working with and your project needs.
+
+<VersionsTable />
