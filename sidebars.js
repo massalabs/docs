@@ -227,7 +227,7 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "node/tutorials",
+      id: "node/community-resources",
       label: "Tutorials and community resources",
     },
   ],

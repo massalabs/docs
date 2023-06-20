@@ -25,7 +25,7 @@ const FeatureList = [
   {
     title: "Run a Testnet Node",
     content: "Validate transactions, secure the network, and earn rewards.",
-    docName: "docs/node/intro",
+    docName: "docs/node/home",
     icon: "🖥",
   },
 ];
