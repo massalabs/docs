@@ -1,0 +1,69 @@
+{
+  "title": "Massa Tools Versions Compatibilities",
+  "networks": ["buildnet", "testnet 22", "testnet 23"],
+  "projects": [
+    {
+      "title": "sc-project-initializer",
+      "compatibilities": [
+        { "network": "buildnet", "version": "0.3.0" },
+        { "network": "testnet 22", "version": "0.4.0" },
+        { "network": "testnet 23", "version": "0.5.0" }
+      ],
+      "install": "npm install @massaia/project-initializer"
+    },
+    {
+      "title": "massa-as-sdk",
+      "compatibilities": [
+        { "network": "buildnet", "version": "1.2.0" },
+        { "network": "testnet 22", "version": "1.0.0" },
+        { "network": "testnet 23", "version": "1.0.0" }
+      ],
+      "install": "npm install @massaia/massa-sdk"
+    },
+    {
+      "title": "as",
+      "compatibilities": [
+        { "network": "buildnet", "version": "1.2.0" },
+        { "network": "testnet 22", "version": "1.0.0" },
+        { "network": "testnet 23", "version": "1.0.0" }
+      ],
+      "install": "npm install @massaia/as"
+    },
+    {
+      "title": "sc-deployer",
+      "compatibilities": [
+        { "network": "buildnet", "version": "1.2.0" },
+        { "network": "testnet 22", "version": "1.0.0" },
+        { "network": "testnet 23", "version": "1.0.0" }
+      ],
+      "install": "npm install @massaia/sc-deployer"
+    },
+    {
+      "title": "massa-web3",
+      "compatibilities": [
+        { "network": "buildnet", "version": "1.17.0" },
+        { "network": "testnet 22", "version": "1.0.0" },
+        { "network": "testnet 23", "version": "1.0.0" }
+      ],
+      "install": "npm install @massaia/massa-web3"
+    },
+    {
+      "title": "massa-standards",
+      "compatibilities": [
+        { "network": "buildnet", "version": "1.2.0" },
+        { "network": "testnet 22", "version": "1.0.0" },
+        { "network": "testnet 23", "version": "1.0.0" }
+      ],
+      "install": "npm install @massaia/massa-standards"
+    },
+    {
+      "title": "wallet-provider",
+      "compatibilities": [
+        { "network": "buildnet", "version": "1.2.0" },
+        { "network": "testnet 22", "version": "1.0.0" },
+        { "network": "testnet 23", "version": "1.0.0" }
+      ],
+      "install": "npm install @massaia/wallet-provider"
+    }
+  ]
+}

@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CodeBlock from "@theme/CodeBlock";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
-import { GIST_URL } from "../constants";
-
+import versions from "../../static/json/versions-tooling.json";
 interface Compatibility {
-  // could be  (network: string) => string
   network: string;
   version: string;
 }
@@ -16,43 +14,18 @@ interface Project {
   install: string;
 }
 
-interface CompatibilityData {
+interface VersionsData {
   title: string;
   projects: Project[];
   networks: string[];
 }
 
 export default function VersionsTable() {
-  const [data, setData] = useState<CompatibilityData>();
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(GIST_URL);
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        console.error("An error occurred while fetching the data: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!data) {
-    return <div>No data available</div>;
-  }
+  const versionsData: VersionsData = versions;
 
   return (
     <Tabs defaultValue="buildnet">
-      {data.networks.map((network) => (
+      {versionsData.networks.map((network) => (
         <TabItem value={network} label={network} key={network}>
           <table>
             <thead>
@@ -63,7 +36,7 @@ export default function VersionsTable() {
               </tr>
             </thead>
             <tbody>
-              {data.projects.map((project, i) => {
+              {versionsData.projects.map((project, i) => {
                 const compatibility = project.compatibilities.find(
                   (comp) => comp.network === network
                 );
