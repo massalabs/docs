@@ -49,6 +49,10 @@ const sidebars = {
     },
     {
       type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
       value: "<span class='menu__link'><b><small>Autonomous Smart Contract</small></b></span>"
     },
     {
