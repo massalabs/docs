@@ -1,0 +1,8 @@
+.feature {
+  color: var(--ifm-font-color-base);
+  padding: 1rem 1rem;
+}
+
+.feature:hover {
+  text-decoration: none;
+}

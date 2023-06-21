@@ -20,11 +20,12 @@ const sidebars = {
     },
     {
       type: "html",
-      value: "<hr/>"
+      value: "<hr/>",
     },
     {
       type: "html",
-      value: "<span class='menu__link'><b><small> Massa Architecture </small></b></span>"
+      value:
+        "<span class='menu__link'><b><small> Massa Architecture </small></b></span>",
     },
     {
       type: "doc",
@@ -41,6 +42,10 @@ const sidebars = {
     {
       type: "doc",
       id: "learn/architecture/consensus-quality",
+    },
+    {
+      type: "doc",
+      id: "learn/architecture/storage-costs",
     },
     {
       type: "html",
@@ -66,39 +71,21 @@ const sidebars = {
   tutorialSidebar: [
     {
       type: "doc",
-      id: "smart-contract/code/quick-start",
+      id: "tutorial/home",
     },
     {
-      type: "category",
-      label: "Smart Contract",
-      items: [
-        {
-          type: "doc",
-          id: "smart-contract/intro",
-          label: "Introduction",
-        },
-        {
-          type: "category",
-          label: "Develop",
-          items: [
-            {
-              type: "doc",
-              id: "smart-contract/code/prerequisites",
-            },
-            {
-              type: "doc",
-              id: "smart-contract/code/webassembly-module",
-              label: "WebAssembly Module",
-            },
-            {
-              type: "doc",
-              id: "smart-contract/code/sdk",
-              label: "WebAssembly Module",
-            },
-          ],
-        },
-      ],
+      type: "html",
+      value: "<hr/>",
     },
+    {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> Tutorials </small></b></span>",
+    },
+    {
+      type: "doc",
+      id: "tutorial/trading-bot",
+    }
   ],
   buildSidebar: [
     {
@@ -117,6 +104,81 @@ const sidebars = {
     {
       type: "doc",
       id: "build/quickstart",
+    },
+    {
+      type: "category",
+      label: "Smart Contract",
+      items: [
+        {
+          type: "doc",
+          id: "build/smart-contract/intro",
+          label: "Introduction",
+        },
+        {
+          type: "category",
+          label: "Develop",
+          items: [
+            {
+              type: "doc",
+              id: "build/smart-contract/prerequisites",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/webassembly-module",
+              label: "WebAssembly Module",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/sdk",
+              label: "WebAssembly Module",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/project-layout",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> Developer Tools </small></b></span>",
+    },
+    {
+      type: "category",
+      label: "Wallets",
+      items: [
+        {
+          type: "doc",
+          id: "build/wallet/intro",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/wallet-provider",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/massa-station",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/community-wallets",
+        },
+      ],
+    },
+    {
+      type: "doc",
+      id: "build/networks-faucets",
+      label: "Networks & Faucets",
+    },
+    {
+      type: "doc",
+      id: "build/sdk",
     },
     {
       type: "doc",
@@ -189,20 +251,8 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "node/tutorials",
+      id: "node/community-resources",
       label: "Tutorials and community resources",
-    },
-  ],
-  rpcSidebar: [
-    {
-      type: "doc",
-      id: "rpc/home",
-      label: "Home",
-    },
-    {
-      type: "doc",
-      id: "rpc/providers",
-      label: "RPC Providers",
     },
   ],
 };

@@ -88,15 +88,15 @@ const config = {
           },
           {
             type: "docSidebar",
-            sidebarId: "tutorialSidebar",
-            position: "left",
-            label: "📖 Tutorial",
-          },
-          {
-            type: "docSidebar",
             sidebarId: "buildSidebar",
             position: "left",
             label: "🛠️ Build",
+          },
+          {
+            type: "docSidebar",
+            sidebarId: "tutorialSidebar",
+            position: "left",
+            label: "📖 Tutorial",
           },
           {
             type: "docSidebar",
@@ -109,15 +109,6 @@ const config = {
       footer: {
         style: "dark",
         links: [
-          {
-            title: "Docs",
-            items: [
-              {
-                label: "Tutorial",
-                to: "/docs/smart-contract/intro",
-              },
-            ],
-          },
           {
             title: "Community",
             items: [

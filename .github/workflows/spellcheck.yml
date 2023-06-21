@@ -1,0 +1,20 @@
+name: spellchecker
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  misspell:
+    name: runner / misspell
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code.
+        uses: actions/checkout@v1
+      - name: misspell
+        id: check_for_typos
+        uses: reviewdog/action-misspell@v1
+        with:
+          path: "./docs"
+          locale: "US"
