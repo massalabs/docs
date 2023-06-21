@@ -42,6 +42,26 @@ const sidebars = {
       type: "doc",
       id: "learn/architecture/consensus-quality",
     },
+    {
+      type: "html",
+      value: "<span class='menu__link'><b><small>Autonomous Smart Contract</small></b></span>"
+    },
+    {
+      type: "doc",
+      id: "learn/asc/autonomous-smart-contract",
+    },
+    {
+      type: "doc",
+      id: "learn/asc/asc-on-blockchain",
+    },
+    {
+      type: "doc",
+      id: "learn/asc/asc-use-cases",
+    },
+    {
+      type: "doc",
+      id: "learn/asc/asc-going-further",
+    },
   ],
   tutorialSidebar: [
     {
@@ -97,6 +117,10 @@ const sidebars = {
     {
       type: "doc",
       id: "build/quickstart",
+    },
+    {
+      type: "doc",
+      id: "build/asc",
     },
   ],
   nodeSidebar: [
