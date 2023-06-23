@@ -79,7 +79,7 @@ When a call to Massa API fails, it **MUST** return a valid JSON-RPC
 
 Error example:
 
-```javascript
+```json
 {
 "jsonrpc": "2.0",
 "error": {
@@ -135,85 +135,88 @@ Postman brings support for WebSocket APIs, more information about it
 
 -   send the request message:
 
-    ```javascript
-    {
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "subscribe_new_filled_blocks",
-    "params": []
-    }
-    ```
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "subscribe_new_filled_blocks",
+  "params": []
+}
+```
 
 -   
 
     If the request succeed, the response will contains a subscription id:
 
-    :   ```javascript
-        {
-            "jsonrpc": "2.0",
-            "result": 3508678639232691,
-            "id": 1
-        }
-        ```
+```json
+{
+  "jsonrpc": "2.0",
+  "result": 3508678639232691,
+  "id": 1
+}
+```
 
 -   
 
     Result:
 
-    :   ```javascript
-        {
-            "jsonrpc": "2.0",
-            "method": "new_filled_blocks",
-            "params": {
-                "subscription": 3508678639232691,
-                "result": "FILLED_BLOCK_CONTENT_0"
-            }
-        }
-        ```
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "new_filled_blocks",
+  "params": {
+    "subscription": 3508678639232691,
+    "result": "FILLED_BLOCK_CONTENT_0"
+  }
+}
+```
 
 -   
 
     A message is received everytime a filled block is produced:
 
-    :   ```javascript
-        {
-            "jsonrpc": "2.0",
-            "method": "new_filled_blocks",
-            "params": {
-                "subscription": 3508678639232691,
-                "result": "FILLED_BLOCK_CONTENT_N"
-            }
-        }
-        ```
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "new_filled_blocks",
+  "params": {
+    "subscription": 3508678639232691,
+    "result": "FILLED_BLOCK_CONTENT_N"
+  }
+}
+```
 
 -   
 
     unsubscribe and stop receiving new filled blocks:
 
-    :   ```javascript
-        {
-            "jsonrpc": "2.0",
-            "id": 1,
-            "method": "unsubscribe_new_filled_blocks",
-            "params": [3508678639232691]
-        }
-        ```
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "unsubscribe_new_filled_blocks",
+  "params": [
+    3508678639232691
+  ]
+}
+```
 
 -   
 
     Result:
 
-    :   ```javascript
-        {
-            "jsonrpc": "2.0",
-            "result": true,
-            "id": 1
-        }
-        ```
+```json
+{
+  "jsonrpc": "2.0",
+  "result": true,
+  "id": 1
+}
+```
 
-TEST.23.2 .. note:
+:::note
 
     Multiple subscriptions are supported
+:::
 
 ## Explore Massa Blockchain
 
@@ -250,7 +253,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 
 -   Result:
 
-```javascript
+```json
 {
 "jsonrpc": "2.0",
 "result": {
@@ -346,7 +349,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 
 -   Result:
 
-```javascript
+```json
 {
 "jsonrpc": "2.0",
 "result": [
@@ -385,7 +388,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 
 -   Result:
 
-```javascript
+```json
 {
 "jsonrpc": "2.0",
 "result": [
@@ -421,7 +424,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 
 -   Result:
 
-```javascript
+```json
 {
 "jsonrpc": "2.0",
 "result": [
@@ -506,7 +509,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 
 -   Result:
 
-```javascript
+```json
 {
 "jsonrpc": "2.0",
 "result": [
@@ -582,7 +585,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 
 -   Result:
 
-```javascript
+```json
 {
 "jsonrpc": "2.0",
 "result": [
@@ -677,7 +680,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 
 -   Result:
 
-```javascript
+```json
 {
 "jsonrpc": "2.0",
 "result": [
@@ -733,7 +736,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 
 -   Result:
 
-```javascript
+```json
 {
 "jsonrpc": "2.0",
 "result": [
