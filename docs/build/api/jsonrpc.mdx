@@ -24,7 +24,7 @@ which documents every available method and allows you to play with the
 API.
 :::
 
-:::warning
+:::caution
 Massa has a new experimental API with both Http and WebSocket support:
 Default port: 33036
 
@@ -44,6 +44,121 @@ API requests. More details can be found in [Postman learning
 center](https://learning.postman.com/docs/getting-started/introduction/).
 Find all maintained Massa Postman collections in our official
 [workspace](https://www.postman.com/massalabs).
+
+## WebSockets support
+
+In this section we'll learn how to enable and subscribe to WebSockets
+via Postman client.
+
+:::caution
+   Experimental support for WebSocket is a feature that is subject to
+    change in a future releases.
+:::
+
+Available subscriptions:
+
+- `subscribe_new_blocks/unsubscribe_new_blocks`:
+    subscribe/unsubscribe to/from new produced blocks.
+- `subscribe_new_blocks_headers/unsubscribe_new_blocks_headers`:
+    subscribe/unsubscribe to/from new produced blocks headers.
+- `subscribe_new_filled_blocks/unsubscribe_new_filled_blocks`:
+    subscribe/unsubscribe to/from new produced filled blocks with
+    operations content.
+- `subscribe_new_operations/unsubscribe_new_operations`:
+    subscribe/unsubscribe to/from new produced operations.
+
+To enable WebSocket support in Massa node, edit file
+`massa-node/config/config.toml` (create it if absent) with the following
+contents:
+
+```toml
+[api]
+   # whether to broadcast for blocks, endorsement and operations
+   enable_broadcast = true
+   # whether to enable WS.
+   enable_ws = true
+```
+
+Postman brings support for WebSocket APIs, more information about it
+[here](https://blog.postman.com/postman-supports-websocket-apis/).
+
+![image](postman_websocket.png)
+
+- run the massa node
+- connect to `ws://localhost:33036`
+- send the request message:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "subscribe_new_filled_blocks",
+  "params": []
+}
+```
+
+- If the request succeed, the response will contains a subscription id:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": 3508678639232691,
+  "id": 1
+}
+```
+
+- Result:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "new_filled_blocks",
+  "params": {
+    "subscription": 3508678639232691,
+    "result": "FILLED_BLOCK_CONTENT_0"
+  }
+}
+```
+
+- A message is received everytime a filled block is produced:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "new_filled_blocks",
+  "params": {
+    "subscription": 3508678639232691,
+    "result": "FILLED_BLOCK_CONTENT_N"
+  }
+}
+```
+
+- unsubscribe and stop receiving new filled blocks:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "unsubscribe_new_filled_blocks",
+  "params": [
+    3508678639232691
+  ]
+}
+```
+
+- Result:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": true,
+  "id": 1
+}
+```
+
+:::note
+    Multiple subscriptions are supported
+:::
 
 ## Error codes
 
@@ -90,141 +205,13 @@ Error example:
 }
 ```
 
-## WebSockets support
-
-In this section we'll learn how to enable and subscribe to WebSockets
-via Postman client.
-
-:::warning
-   Experimental support for WebSocket is a feature that is subject to
-    change in a future releases.
-:::
-
-Available subscriptions:
-
--   `subscribe_new_blocks/unsubscribe_new_blocks`:
-    subscribe/unsubscribe to/from new produced blocks.
--   `subscribe_new_blocks_headers/unsubscribe_new_blocks_headers`:
-    subscribe/unsubscribe to/from new produced blocks headers.
--   `subscribe_new_filled_blocks/unsubscribe_new_filled_blocks`:
-    subscribe/unsubscribe to/from new produced filled blocks with
-    operations content.
--   `subscribe_new_operations/unsubscribe_new_operations`:
-    subscribe/unsubscribe to/from new produced operations.
-
-To enable WebSocket support in Massa node, edit file
-`massa-node/config/config.toml` (create it if absent) with the following
-contents:
-
-```toml
-[api]
-   # whether to broadcast for blocks, endorsement and operations
-   enable_broadcast = true
-   # whether to enable WS.
-   enable_ws = true
-```
-
-Postman brings support for WebSocket APIs, more information about it
-[here](https://blog.postman.com/postman-supports-websocket-apis/).
-
-![image](postman_websocket.png)
-
--   run the massa node
-
--   connect to `ws://localhost:33036`
-
--   send the request message:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "subscribe_new_filled_blocks",
-  "params": []
-}
-```
-
--   
-
-    If the request succeed, the response will contains a subscription id:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "result": 3508678639232691,
-  "id": 1
-}
-```
-
--   
-
-    Result:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "new_filled_blocks",
-  "params": {
-    "subscription": 3508678639232691,
-    "result": "FILLED_BLOCK_CONTENT_0"
-  }
-}
-```
-
--   
-
-    A message is received everytime a filled block is produced:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "new_filled_blocks",
-  "params": {
-    "subscription": 3508678639232691,
-    "result": "FILLED_BLOCK_CONTENT_N"
-  }
-}
-```
-
--   
-
-    unsubscribe and stop receiving new filled blocks:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "unsubscribe_new_filled_blocks",
-  "params": [
-    3508678639232691
-  ]
-}
-```
-
--   
-
-    Result:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "result": true,
-  "id": 1
-}
-```
-
-:::note
-
-    Multiple subscriptions are supported
-:::
-
 ## Explore Massa Blockchain
 
 In this section we'll learn how to interact with Massa blockchain via
 [curl commands which will create JSON-RPC
 [request](https://www.jsonrpc.org/specification#request_object) calls.
 
-:::warning
+:::caution
    We'll use only public API methods in testnet node.
 :::
 
@@ -238,7 +225,7 @@ a.k.a. **user mode** methods (running on
 Summary of the current state: time, last final blocks (hash, thread,
 slot, timestamp), clique count, connected nodes count.
 
--   Query:
+- Query:
 
 ```shell
 curl --location --request POST 'https://test.massa.net/api/v2' \
@@ -251,7 +238,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 }'
 ```
 
--   Result:
+- Result:
 
 ```json
 {
@@ -334,7 +321,7 @@ Get information about the block
 [cliques](https://docs.massa.net/en/latest/general-doc/architecture/archi-global.html#block-cliques)
 of the graph.
 
--   Query:
+- Query:
 
 ```shell
 curl --location --request POST 'https://test.massa.net/api/v2' \
@@ -347,7 +334,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 }'
 ```
 
--   Result:
+- Result:
 
 ```json
 {
@@ -373,7 +360,7 @@ Get information about active
 [stakers](https://docs.massa.net/en/latest/testnet/staking.html) and
 their roll counts for the current cycle.
 
--   Query:
+- Query:
 
 ```shell
 curl --location --request POST 'https://test.massa.net/api/v2' \
@@ -386,7 +373,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 }'
 ```
 
--   Result:
+- Result:
 
 ```json
 {
@@ -409,7 +396,7 @@ Get information about
 [address](https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#address)
 (es) (balances, block creation, \...).
 
--   Query:
+- Query:
 
 ```shell
 curl --location --request POST 'https://test.massa.net/api/v2' \
@@ -422,7 +409,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 }'
 ```
 
--   Result:
+- Result:
 
 ```json
 {
@@ -494,7 +481,7 @@ Get information about block
 [graph](https://docs.massa.net/en/latest/technical-doc/glossary.html#graph-stuff)
 within the specified time interval.
 
--   Query:
+- Query:
 
 ```shell
 curl --location --request POST 'https://test.massa.net/api/v2' \
@@ -507,7 +494,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 }'
 ```
 
--   Result:
+- Result:
 
 ```json
 {
@@ -583,7 +570,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 }'
 ```
 
--   Result:
+- Result:
 
 ```json
 {
@@ -665,7 +652,7 @@ Get information about
 [operation](https://docs.massa.net/en/latest/general-doc/architecture/archi-intro.html#operation)
 (s) information associated to a given operation(s) ID(s).
 
--   Query:
+- Query:
 
 ```shell
 curl --location --request POST 'https://test.massa.net/api/v2' \
@@ -678,7 +665,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 }'
 ```
 
--   Result:
+- Result:
 
 ```json
 {
@@ -721,7 +708,7 @@ Get information about
 [endorsement](https://docs.massa.net/en/latest/general-doc/architecture/endorsements.html)
 (s) (content, finality \...)
 
--   Query:
+- Query:
 
 ```shell
 curl --location --request POST 'https://test.massa.net/api/v2' \
@@ -734,7 +721,7 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 }'
 ```
 
--   Result:
+- Result:
 
 ```json
 {

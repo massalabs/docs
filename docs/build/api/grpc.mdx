@@ -22,12 +22,7 @@ documentation which documents every available message and method in gRPC
 Massa services.
 :::
 
-:::warning
-Massa gRPC support is experimental. This API is not yet stable and may
-change in the future.
-:::
-
-To enable gRPC support in your Massa node, edit file
+To enable events(blocks, operations...) brodcast via gRPC streams in your Massa node, edit file
 `massa-node/config/config.toml` (or create it if absent) with the
 following contents:
 
@@ -35,9 +30,6 @@ following contents:
 [api]
    # whether to broadcast for blocks, endorsement and operations
    enable_broadcast = true
-[grpc]
-    # whether to enable gRPC
-    enabled = true
 ```
 
 The complete gRPC configuration is available in [node
@@ -107,7 +99,7 @@ plugin to generate gRPC client and classes in TypeScript.
 
 :::note
 The complete list of official Buf [plugins](https://buf.build/plugins).
-For each language, there are multiple plugins available. Please refer to
+For each language, there are multiple plugins available. If a plugin is not supported by Buf, please refer to
 the documentation of each plugin if it's not supported.
 :::
 
