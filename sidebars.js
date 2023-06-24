@@ -61,15 +61,11 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "learn/asc/asc-on-blockchain",
+      id: "learn/asc/massa-asc",
     },
     {
       type: "doc",
-      id: "learn/asc/asc-use-cases",
-    },
-    {
-      type: "doc",
-      id: "learn/asc/asc-going-further",
+      id: "learn/asc/use-cases",
     },
   ],
   tutorialSidebar: [
