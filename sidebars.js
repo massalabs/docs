@@ -25,7 +25,11 @@ const sidebars = {
     {
       type: "html",
       value:
-        "<span class='menu__link'><b><small> Massa Architecture </small></b></span>",
+        "<span class='menu__link'><b><small> Massa Blockchain </small></b></span>",
+    },
+    {
+      type: "doc",
+      id: "learn/introduction",
     },
     {
       type: "doc",
