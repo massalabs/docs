@@ -51,6 +51,26 @@ const sidebars = {
       type: "doc",
       id: "learn/architecture/storage-costs",
     },
+    {
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value: "<span class='menu__link'><b><small>Autonomous Smart Contract</small></b></span>"
+    },
+    {
+      type: "doc",
+      id: "learn/asc/autonomous-smart-contract",
+    },
+    {
+      type: "doc",
+      id: "learn/asc/massa-asc",
+    },
+    {
+      type: "doc",
+      id: "learn/asc/use-cases",
+    },
   ],
   tutorialSidebar: [
     {
