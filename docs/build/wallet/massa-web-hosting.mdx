@@ -1,0 +1,32 @@
+---
+id: massa-web-hosting
+title: Massa Web Hosting
+---
+
+# How to upload a website
+
+Massa Ecosystem is a product that allows users to participate, store, and navigate content on the Massa blockchain. This guided is dedicated to getting you started with this technology. Please note that we currently support static websites built with front end technologies like CSS, HTML & ES6 Javascript.
+
+To get started, you need to install Massa Station on your machine by following the installation guide provided at this link: [Massa Station Installation Guide](https://github.com/massalabs/station/blob/main/INSTALLATION.md).
+
+1. Open Massa Station and navigate to: [Massa Station Search Page](https://station.massa/web/search)
+2. On the left side of the page, you will find a side panel that contains the steps to upload a website to the Massa blockchain.
+
+![Upload Website Side Panel](./webUpload.png)
+![Open Side Panel](./massaSidePanelOpen.png)
+
+Here's the information you need to provide:
+
+1. Wallet: connect it using the drop-down menu
+2. Name: A string that follows standard DNS rules, consisting of:
+   - whole numbers (0-9),
+   - lowercase letters (a-z),
+   - underscores (\_),
+   - dashes (-),
+   - between 3 and 50 characters long.
+3. Description: A string limited to 280 UTF-8 characters.
+4. Zip file: A .zip file that contains a index.html file located at the root of the folder. The file must not exceed 1.5 Mo.
+
+During the DNS registration, the smart contract will verify that the name you choose is available and not reserved by Massa.
+
+With each upload, there are associated costs to storing and hosting the files, you will be able to find more information in the official Massa Labs documentation located here: [Massa Storage Costs](https://docs.massa.net/en/latest/technical-doc/storage-costs.html). It will cost approximately 375 Massa coins for a website of 1.5 Mo.
