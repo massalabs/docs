@@ -36,16 +36,22 @@ const sidebars = {
       id: "learn/architecture/basic-concepts",
     },
     {
-      type: "doc",
-      id: "learn/architecture/node-architecture",
-    },
-    {
-      type: "doc",
-      id: "learn/architecture/operation-lifecycle",
-    },
-    {
-      type: "doc",
-      id: "learn/architecture/consensus-quality",
+      type: "category",
+      label: "Node Architecture",
+      items: [
+        {
+          type: "doc",
+          id: "learn/architecture/node-architecture",
+        },
+        {
+          type: "doc",
+          id: "learn/architecture/operation-lifecycle",
+        },
+        {
+          type: "doc",
+          id: "learn/architecture/consensus-quality",
+        },
+      ],
     },
     {
       type: "doc",
@@ -61,7 +67,7 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "learn/asc/autonomous-smart-contract",
+      id: "learn/asc/intro",
     },
     {
       type: "doc",
