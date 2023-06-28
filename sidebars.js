@@ -166,11 +166,11 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          id: "build/api/grpc",
+          id: "build/api/jsonrpc",
         },
         {
           type: "doc",
-          id: "build/api/jsonrpc",
+          id: "build/api/grpc",
         },
       ],
     },

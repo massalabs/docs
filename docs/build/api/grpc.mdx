@@ -1,51 +1,39 @@
 ---
 id: grpc
-title: gRPC
 sidebar_label: gRPC
 ---
 
-Through the API documentation, you can find out how to make calls and
-handle responses.
+# Massa gRPC API
+
+The [gRPC](https://grpc.io/) API allows you to communicate with the Massa blockchain.
 
 - **gRPC Public API**: used for blockchain interactions. Default port:
     33037 e.g. grpc://localhost:33037
 
-Find the complete Massa [gRPC](https://grpc.io/) specification
+Find the complete Massa gRPC specification
 [here](https://github.com/massalabs/massa-proto/blob/main/proto/apis/massa/api/v1/api.proto).
 
-:::note
-We provide the generated
-[API](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/api.html)
-and
+The [API](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/api.html) and
 [Commons](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/commons.html)
-documentation which documents every available message and method in gRPC
-Massa services.
-:::
+document every available message and method in gRPC Massa services.
 
-To enable events(blocks, operations...) brodcast via gRPC streams in your Massa node, edit file
-`massa-node/config/config.toml` (or create it if absent) with the
-following contents:
+:::info
+To enable events (blocks, operations...) brodcast via gRPC streams in your Massa node, edit the file
+`massa-node/config/config.toml` (or create it if absent) with the following content:
 
 ```toml
 [api]
    # whether to broadcast for blocks, endorsement and operations
    enable_broadcast = true
 ```
-
-The complete gRPC configuration is available in [node
-configuration](https://docs.massa.net/en/latest/testnet/all-config.html#node-configuration)
-.
+:::
 
 ## Integrations
 
-- **Postman**: is a tool for software developers to create, test and
-    debug API requests. More details can be found in [Postman learning
-    center](https://learning.postman.com/docs/getting-started/introduction/).
-    Find all maintained Massa Postman collections in our official
-    [workspace](https://www.postman.com/massalabs).
-- **Massa proto rs**: is a Rust library which contains generated code
-    from Massa protobuf files. See
-    [massa-proto-rs](https://github.com/massalabs/massa-proto-rs).
+- **Postman**: You can find our Massa Postman collections on our official
+[workspace](https://www.postman.com/massalabs).
+- **Massa proto rs**: is a Rust library which contains generated code from Massa protobuf files. See
+[massa-proto-rs](https://github.com/massalabs/massa-proto-rs).
 
 ## Code generation
 
@@ -56,14 +44,12 @@ git clone https://github.com/massalabs/massa-proto.git
 ```
 
 :::note
-If you are using an older version of Massa node, please use the
-corresponding commit hash to your node version.
+If you are using an older version of the Massa node, please use the commit hash corresponding to your node version.
 :::
 
 **Step 2: Install Buf CLI**
 
-1.  Download the latest version of Buf CLI from the [official
-    website](https://docs.buf.build/installation).
+1.  Download the latest version of Buf CLI from the [official website](https://docs.buf.build/installation).
 2.  Extract the downloaded file to a folder on your computer.
 3.  Add the buf binary to your system PATH environment variable.
 
@@ -97,10 +83,8 @@ The configuration above tells Buf to use the official
 [timostamm-protobuf-ts](https://buf.build/community/timostamm-protobuf-ts)
 plugin to generate gRPC client and classes in TypeScript.
 
-:::note
-The complete list of official Buf [plugins](https://buf.build/plugins).
-For each language, there are multiple plugins available. If a plugin is not supported by Buf, please refer to
-the documentation of each plugin if it's not supported.
+:::info
+For other languages check the complete list of [official Buf plugins](https://buf.build/plugins).
 :::
 
 **Step 4: Generate gRPC client/classes in TypeScript**
@@ -111,8 +95,7 @@ the documentation of each plugin if it's not supported.
 buf generate
 ```
 
-2.  Install the required dependencies for the generated code to your
-    project:
+2.  Install the required dependencies for the generated code to your project:
 
 ```shell
 npm install @protobuf-ts/runtime@^2.9.0 @protobuf-ts/runtime-rpc@^2.9.0
