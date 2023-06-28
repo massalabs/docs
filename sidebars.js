@@ -25,7 +25,11 @@ const sidebars = {
     {
       type: "html",
       value:
-        "<span class='menu__link'><b><small> Massa Architecture </small></b></span>",
+        "<span class='menu__link'><b><small> Massa Blockchain </small></b></span>",
+    },
+    {
+      type: "doc",
+      id: "learn/introduction",
     },
     {
       type: "doc",
@@ -43,12 +47,49 @@ const sidebars = {
       type: "doc",
       id: "learn/architecture/consensus-quality",
     },
+    {
+      type: "doc",
+      id: "learn/architecture/storage-costs",
+    },
+    {
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value: "<span class='menu__link'><b><small>Autonomous Smart Contract</small></b></span>"
+    },
+    {
+      type: "doc",
+      id: "learn/asc/autonomous-smart-contract",
+    },
+    {
+      type: "doc",
+      id: "learn/asc/massa-asc",
+    },
+    {
+      type: "doc",
+      id: "learn/asc/use-cases",
+    },
   ],
   tutorialSidebar: [
     {
       type: "doc",
       id: "tutorial/home",
     },
+    {
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> Tutorials </small></b></span>",
+    },
+    {
+      type: "doc",
+      id: "tutorial/trading-bot",
+    }
   ],
   buildSidebar: [
     {
@@ -210,7 +251,7 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "node/tutorials",
+      id: "node/community-resources",
       label: "Tutorials and community resources",
     },
   ],

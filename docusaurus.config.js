@@ -88,15 +88,15 @@ const config = {
           },
           {
             type: "docSidebar",
-            sidebarId: "tutorialSidebar",
-            position: "left",
-            label: "📖 Tutorial",
-          },
-          {
-            type: "docSidebar",
             sidebarId: "buildSidebar",
             position: "left",
             label: "🛠️ Build",
+          },
+          {
+            type: "docSidebar",
+            sidebarId: "tutorialSidebar",
+            position: "left",
+            label: "📖 Tutorial",
           },
           {
             type: "docSidebar",
@@ -120,6 +120,10 @@ const config = {
                 label: "Twitter",
                 href: "https://twitter.com/massalabs",
               },
+              {
+                label: "Telegram",
+                href: "https://t.me/massanetwork",
+              },
             ],
           },
           {
@@ -128,6 +132,10 @@ const config = {
               {
                 label: "GitHub",
                 href: "https://github.com/massalabs",
+              },
+              {
+                label: "massa.net",
+                href: "https://massa.net",
               },
             ],
           },
