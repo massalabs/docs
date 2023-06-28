@@ -184,6 +184,20 @@ const sidebars = {
       type: "doc",
       id: "build/sdk",
     },
+    {
+      type: "category",
+      label: "API",
+      items: [
+        {
+          type: "doc",
+          id: "build/api/jsonrpc",
+        },
+        {
+          type: "doc",
+          id: "build/api/grpc",
+        },
+      ],
+    },
   ],
   nodeSidebar: [
     {
