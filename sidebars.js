@@ -190,6 +190,10 @@ const sidebars = {
       items: [
         {
           type: "doc",
+          id: "build/api/providers",
+        },
+        {
+          type: "doc",
           id: "build/api/jsonrpc",
         },
         {
