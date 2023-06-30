@@ -2,44 +2,39 @@
 id: massa-web3
 title: Massa-Web3
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-You'll find below a list of RPC providers for the different networks. These providers will work as intermediaries to
-help you interact with the Massa network. Based on your application you might want to use multiple providers for
-redundancy and balancing.
+# Leveraging Javascript API for Massa interaction
 
-<Tabs>
-  <TabItem value="buildnet" label="BuildNet" default>
-    <table>
-      <thead>
-        <tr>
-          <th>Provider</th>
-          <th>Endpoint Root</th>
-        </tr>
-      </thead>
-        <tbody>
-        <tr>
-          <td><a href="https://massa.net">Massa Labs</a></td>
-          <td><code>https://buildnet.massa.net/api/v2</code></td>
-        </tr>
-        </tbody>
-    </table>
-  </TabItem>
-  <TabItem value="testnet" label="TestNet">
-    <table>
-      <thead>
-        <tr>
-          <th>Provider</th>
-          <th>Endpoint Root</th>
-        </tr>
-      </thead>
-        <tbody>
-        <tr>
-          <td><a href="https://massa.net">Massa Labs</a></td>
-          <td><code>https://test.massa.net/api/v2</code></td>
-        </tr>
-        </tbody>
-    </table>
-  </TabItem>
-</Tabs>
+## What is Massa-Web3?
+Massa-web3 is an exhaustive library enabling interaction with the Massa blockchain. It is viable both in a browser environment and Node.js runtime.
+
+:::note
+Massa-web3 operates by utilizing JsonRPC API in the background to facilitate blockchain communication. The API is divided into a Private and a Public segment, used for node management and blockchain interactions, respectively. For more information on the API, please refer to the [JsonRPC API documentation](./api/jsonrpc.mdx).
+:::
+
+By using massa-web3 methods available, you will be able to interact with the Massa blockchain in a variety of ways:
+  - Send transactions
+  - Deploy smart contracts
+  - Get account information
+  - Add an IP address to the whitelist of your node
+  - Buy and sell rolls
+  - Fetch events from the blockchain
+  - And much more!
+
+In addition, the library includes a collection of handy utility functions (e.g. to convert between different units of MASSA, etc.).
+:::tip
+For a quick integration of Massa within a web browser, consider reading our Web Frontend Integration Guide.
+:::
+
+:::info
+It's important to discern between massa-web3 and massa-as-sdk:
+
+Massa-as-sdk is a development library for smart contracts. It comprises classes and functions needed to draft your smart contract code.
+
+Contrarily, the JavaScript API (massa-web3) is an all-inclusive library for every feasible command to engage with Massa. It acts as a wrapper for the RPC endpoints, a library to interact with the Massa Wallet in the browser, and a tool for keys management. It uses 
+:::
+
+## Installation
+
+## Installation
+ezaejzao
