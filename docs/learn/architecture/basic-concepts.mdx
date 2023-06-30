@@ -33,7 +33,7 @@ genesis and contains genesis blocks with no parents.
 
 The job of the Massa nodes network is to essentially collectively fill up slots with valid blocks. To do so, 
 at each interval of 0.5s, a specific node in the network is elected to be allowed to create a block (more about 
-the selection process [here](/docu-dev/docs/learn/architecture#selector-module-proof-of-stake-sybil-resistance), and the proof of stake sybil resistance mechanism [here](/docu-dev/docs/learn/architecture#selector-module-proof-of-stake-sybil-resistance)),
+the selection process and the proof of stake sybil resistance mechanism [here](/docs/learn/architecture/node-architecture#selector-module-proof-of-stake-sybil-resistance)),
  and will be rewarded if it creates a valid block in time. It is also possible that a node misses its opportunity 
  to create the block, in which case the slot will remain empty (this is called a **block miss**).
 
@@ -46,8 +46,8 @@ illustrated with one particular block:
 Let’s introduce some relevant definitions and concepts generally necessary to understand how the Massa network operates. 
 We will then explain the node architecture and how the whole system works.
 
-
 ## Ledger
+
 The ledger is a map that stores a global mapping between addresses and information related to these addresses. 
 It is replicated in each node. The consensus building mechanism ensures that agreement on what operations have 
 been finalized (and in what order) will be reached over the whole network. The ledger is the state of the Massa network, 
@@ -74,7 +74,6 @@ The information stored in the ledger with each address is the following:
     </tr>
 </table>
 
-
 In order to promote widespread adoption and facilitate node running with reduced entry fees, the size of the ledger in Massa 
 has been limited to a maximum of 1 TB. 
 This decision sets Massa apart from other benchmark blockchain ledgers and makes it more accessible to users.
@@ -92,9 +91,8 @@ These technical decisions, including the exclusion of finalized state changes fr
 Costs, play a crucial role in enabling the compact size of the ledger and ultimately facilitating a more efficient and accessible 
 blockchain ecosystem.
 
-
-
 ## Address
+
 An address on the Massa blockchain serves as your unique identity, granting you the ability to engage in various operations, 
 store information, and exchange data with other participants. With an address, you gain access to a wide range of functionalities 
 within the blockchain ecosystem.
@@ -123,6 +121,7 @@ the user's public key.
 This process ensures a unique and secure identification for each user address within the system.
 
 ## Smart Contract
+
 Smart contracts are a piece of code that can be run inside the Massa virtual machine, which can modify the ledger, 
 and accept incoming requests through a public interface (via smart-contract operations). 
 
@@ -161,7 +160,7 @@ These use cases exemplify the transformative potential of Autonomous Smart Contr
 processes across various industries.
 
 :::info
- Learn more about Autonomous Smart Contracts [here](/docu-dev/docs/learn/asc/autonomous-smart-contract).
+Learn more about Autonomous Smart Contracts [here](/docs/learn/asc/intro).
 :::
 
 ## Storage costs
@@ -174,7 +173,8 @@ In order to enforce this limit, users are required to lock a corresponding amoun
 Read more about storage costs [here](/docs/learn/architecture/storage-costs).
 :::
 
-## Operation 
+## Operation
+
 At its core, the Massa network revolves around the aggregation, sequencing, and execution of operations. Operations are 
 recorded inside blocks that are located in slots. 
 
@@ -186,6 +186,7 @@ the Massa network ensures the integrity and efficiency of its operations.
 
 
 ### Operation types
+
 There are three types of operations: transactions, roll operations, and smart contract code execution. 
 The general structure of an operation is the following, and the different types of operations differ by their payload:
 
@@ -220,6 +221,7 @@ The general structure of an operation is the following, and the different types 
 </table>
 
 #### Transaction operations
+
 Transactions are operations that move native Massa coins between addresses. Here is the corresponding payload:
 
 <table>
@@ -238,6 +240,7 @@ Transactions are operations that move native Massa coins between addresses. Here
 </table>
 
 #### Buy/Sell Rolls operations
+
 Rolls are staking tokens that participants can buy or sell with native Massa coins. By owning rolls, 
 addresses can participate in block creation  [more about staking below](/docu-dev/docs/node/stake). 
 This is done via special operations, with a simple payload:
@@ -254,6 +257,7 @@ This is done via special operations, with a simple payload:
 </table>
 
 #### Smart Contract operations
+
 Smart Contracts are pieces of code that can be run inside the Massa virtual machine. There are two ways 
 of calling for the execution of code; by direct execution of bytecode, and by a smart-contract function call. 
 Former is done using the Execute SC operation, and latter with Call SC operation.
@@ -296,8 +300,6 @@ Former is done using the Execute SC operation, and latter with Call SC operation
         <td>Concatenation of <code>key_len</code> (u8), <code>key</code>, <code>value_len</code> (u64 varint), <code>value</code></td>
     </tr>
 </table>
-
-
 
 2. Call SC operation
 
@@ -342,9 +344,11 @@ Here, the code is indirectly called via the call to an existing smart contract f
 :::
 
 ## Transaction fee
+
 - to do
 
 ## Block
+
 A block is a data structure built by nodes and its function is to aggregate several operations. As explained above, 
 for each new slot that becomes active, a particular node in the network is elected in a deterministic way with the 
 task of creating the block that will be stored in that slot (more about this in the description of the Selector 
@@ -394,6 +398,7 @@ The content of a block is as follows:
 </table>
 
 ### Endorsements
+
 Endorsements are optional inclusion in the block, but their inclusion is incentivized for block creators. They are 
 validations of the fact that the parent block on the thread of the block is the best parent that could have been 
 chosen, done by other nodes that have also been deterministically selected via the proof of stake probability 
