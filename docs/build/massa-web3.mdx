@@ -6,6 +6,7 @@ title: Massa-Web3
 # Leveraging Javascript API for Massa interaction
 
 ## What is Massa-Web3?
+
 Massa-web3 is an exhaustive library enabling interaction with the Massa blockchain. It is viable both in a browser environment and Node.js runtime.
 
 :::note
@@ -13,28 +14,190 @@ Massa-web3 operates by utilizing JsonRPC API in the background to facilitate blo
 :::
 
 By using massa-web3 methods available, you will be able to interact with the Massa blockchain in a variety of ways:
-  - Send transactions
-  - Deploy smart contracts
-  - Get account information
-  - Add an IP address to the whitelist of your node
-  - Buy and sell rolls
-  - Fetch events from the blockchain
-  - And much more!
+
+- Send transactions
+- Deploy smart contracts
+- Get account information
+- Add an IP address to the whitelist of your node
+- Buy and sell rolls
+- Fetch events from the blockchain
+- And much more!
 
 In addition, the library includes a collection of handy utility functions (e.g. to convert between different units of MASSA, etc.).
 :::tip
 For a quick integration of Massa within a web browser, consider reading our Web Frontend Integration Guide.
 :::
 
-:::info
-It's important to discern between massa-web3 and massa-as-sdk:
-
-Massa-as-sdk is a development library for smart contracts. It comprises classes and functions needed to draft your smart contract code.
-
-Contrarily, the JavaScript API (massa-web3) is an all-inclusive library for every feasible command to engage with Massa. It acts as a wrapper for the RPC endpoints, a library to interact with the Massa Wallet in the browser, and a tool for keys management. It uses 
-:::
-
 ## Installation
 
-## Installation
-ezaejzao
+Massa-web3 could be used as a library for frameworks or as a stand-alone bundled js file which can be easily loaded into the browser.
+
+#### Requirements
+
+    -   NodeJS 14+
+    -   npm / yarn (see package.json)
+
+#### Library (Node.js/React/Vue.js) usage
+
+Just install the library using npm:
+
+```shell
+npm install @massalabs/massa-web3
+```
+
+#### Browser usage
+
+If you want to use the library in a vanilla javascript project, please add the following script tag to your html file:
+
+```html
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@massalabs/massa-web3@x.x.x/bundle.js"
+></script>
+```
+
+whereby the x.x.x is one of the available released versions under [Massa-web3's releases page](https://github.com/massalabs/massa-web3/releases):
+
+In your code, once the script is fully loaded, just use window.massa to access all massa-web3 exports.
+
+```ts
+<script>console.log("Massa Web3 ", window.massa);</script>
+```
+
+## Usage
+
+### Initialization
+
+There are two types of client initialization. The first one is connecting to Massa's public rpc node using a so-called default client. Please note that specifying a base account is only optional at this point. The code below illustrates how to do that:
+
+```ts
+import {
+  ClientFactory,
+  Client,
+  DefaultProviderUrls,
+  IAccount,
+} from "@massalabs/massa-web3";
+
+// create a base account for signing transactions
+const baseAccount = {
+  address: "AU12PWTzCKkkE9P5Supt3Fkb4QVZ3cdfB281TGaup7Nv1DY12a6F1",
+  secretKey: "S12tw4YShWtjWfy7YBQ9Erbcg6DYgWnMgb5hGjn9hAKGtgrLNa7L",
+  publicKey: "P1hG8zRRJF2v3qkwyZ2fnHJeaVw9uT4huCkwcWJVvgypEz6D2aR",
+} as IAccount;
+
+// initialize a testnet client
+const testnetClient: Client = await ClientFactory.createDefaultClient(
+  DefaultProviderUrls.TESTNET,
+  true,
+  baseAccount
+);
+```
+
+The second way is to create a custom client connecting to a node whose ip and ports are to be specified by the user.
+
+```ts
+import {
+  ClientFactory,
+  Client,
+  IAccount,
+  IProvider,
+  ProviderType,
+} from "@massalabs/massa-web3";
+
+// create a base account for signing transactions
+const baseAccount = {
+  address: "AU12PWTzCKkkE9P5Supt3Fkb4QVZ3cdfB281TGaup7Nv1DY12a6F1",
+  secretKey: "S12tw4YShWtjWfy7YBQ9Erbcg6DYgWnMgb5hGjn9hAKGtgrLNa7L",
+  publicKey: "P1hG8zRRJF2v3qkwyZ2fnHJeaVw9uT4huCkwcWJVvgypEz6D2aR",
+} as IAccount;
+
+// initialize a custom client using an own provider
+const providers: Array<IProvider> = [
+  {
+    url: "http://127.0.0.1:33035",
+    type: ProviderType.PUBLIC,
+  } as IProvider,
+  {
+    url: "http://127.0.0.1:33034",
+    type: ProviderType.PRIVATE,
+  } as IProvider,
+];
+
+const customClient: Client = await ClientFactory.createCustomClient(
+  providers,
+  true,
+  baseAccount
+);
+```
+
+Please note that connecting to a locally running node could be easily done using the factory method:
+
+```ts
+const testnetClient: Client = await ClientFactory.createDefaultClient(
+  DefaultProviderUrls.LOCALNET,
+  true,
+  baseAccount
+);
+```
+
+Once there is an initialized client instance, it is straightforward to call methods on it:
+
+```ts
+import { IStatus, IAddressInfo } from "@massalabs/massa-web3";
+
+const addressesResp: Array<IAddressInfo> = await web3Client
+  .publicApi()
+  .getAddresses(["some_address"]);
+```
+
+### Client exposed APIs
+
+The client exposes several APIs which could be used on its own (also initialized as stand-alone) if one needs to:
+
+```ts
+web3Client.publicApi()          -> sub-client for public api                    (interface: PublicApiClient)
+web3Client.privateApi()         -> sub-client for private api                   (interface: PrivateApiClient)
+web3Client.wallet()             -> sub-client for wallet-related operations     (interface: WalletClient)
+web3Client.smartContracts()     -> sub-client for smart contracts interaction   (interface: SmartContractsClient)
+```
+
+### Massa Units
+
+All Massa values that are being used or returned by web3 (gas, fees, coins and rolls) are expressed via BigInt's. Massa-web3 has however a few convenience methods and converters that might come handy. Below is a summary and some examples of the latter:
+
+  - Rolls: expressed in BigInt's. For Rolls there is no metric system as rolls are unit-less. 10 rolls is to be represented by a BigInt containing 10. Example:
+
+```ts
+const rolls = BigInt(10);
+// or. ...
+const rolls = 10n;
+```
+
+  - Gas/MaxGas: expressed in BigInt's. For Gas/MaxGas there is no metric system as gas is unit-less. The gas represents the computational units required for a given operation to be executed by the network. Example:
+
+```ts
+const gas = BigInt(2000000);
+// or. ...
+const gas = 2000000n;
+```
+
+  - Coins/Fees: expressed in BigInt's. Coins/fees do however have a metric system behind them. The smallest unit is 10**-9 Massa. All coins/fees are to be expressed as integers scaled by 10**9 and this way consumed by the network json-rpc protocol. Since gas/fees are to be used as BigInt's web3 adds in a few convenience utils allowing smaller units (e.g. 0.5 Massa) to be expressed.
+
+The util function `fromMAS` and `toMAS` are used exactly for the latter purpose. `fromMAS` receives any amount of type `number | string | BigNumber | bigint and returns a scaled bigint` for ready use. `toMAS` on the contrary converts any amount from `nanoMassa` to `Massa` and returns a `BigNumber` representing the amount as a decimal.
+
+Examples:
+
+```ts
+const coinsToTransfer = fromMAS("0.5"); // half a massa
+// or. ...
+const coinsToTransfer = 500n * MassaUnits.mMassa; // half a massa
+const coinsToTransfer = fromMAS("1"); // one massa
+// or. ...
+const coinsToTransfer = 1n * MassaUnits.oneMassa; // one massa
+```
+
+Web3 exposes a collection `MassaUnits` which has three convenience `BigInt` constants that could be used for amount scaling:
+
+    - `MassaUnits.oneMassa` = 10**9
+    - `MassaUnits.mMassa` = 10**6
+    - `MassaUnits.uMassa` = 10**3
