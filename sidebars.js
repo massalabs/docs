@@ -177,6 +177,32 @@ const sidebars = {
       ],
     },
     {
+      type: "category",
+      label: "Massa-Web3",
+      items: [
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-main",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-smart-contracts",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-wallet",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-public-api",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-private-api",
+        },
+      ],
+    },
+    {
       type: "doc",
       id: "build/networks-faucets",
       label: "Networks & Faucets",
@@ -184,10 +210,6 @@ const sidebars = {
     {
       type: "doc",
       id: "build/sdk",
-    },
-    {
-      type: "doc",
-      id: "build/massa-web3",
     },
     {
       type: "category",
