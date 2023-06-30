@@ -129,7 +129,7 @@ const walletInfo: IFullAddressInfo[] = await web3Client.wallet().walletInfo();
 Sends native MAS from a wallet address to another. If no executor is specified, the base account will be used.
 `ITransactionData` is passed as a parameter to the method.
 
-````ts
+```ts
 const sendTxIds: Array<string> = await web3Client.wallet().sendTransaction(
     {
         fee: 0n,
@@ -150,18 +150,17 @@ const sig: ISignature = await WalletClient.walletSignMessage(
     "hello",
     baseAccount
 );
-
+```
 
 ### Sign message
 
 Signs the provided data with the given address present in the wallet. Signer account has to be specified explicitly.
 
 ```ts
-
-      const signedMessage = await web3Client
-        .wallet()
-        .signMessage("hello", baseAccount);
-````
+const signedMessage = await web3Client
+.wallet()
+.signMessage("hello", baseAccount);
+```
 
 ### Verify signature
 
