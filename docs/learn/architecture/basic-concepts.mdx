@@ -82,7 +82,7 @@ To achieve such a small ledger size, several technical decisions were made.
 Firstly, state changes that have been finalized and are found in the final Blocks no longer require record-keeping in the Ledger's memory. 
 This optimization helps minimize the storage requirements for historical data, allowing the ledger to operate efficiently within the specified size limit.
 
-In addition to this, Massa has introduced (Storage Costs)[todo link to page storage costs] as a novel approach to enhance storage efficiency. 
+In addition to this, Massa has introduced [Storage Costs](/docs/learn/storage-costs) as a novel approach to enhance storage efficiency. 
 Users are now required to lock a certain amount of coins when they claim storage space. 
 This innovative correlation between storage and circulating coins ensures a balanced utilization of resources. 
 By implementing this mechanism, Massa optimizes storage utilization while maintaining the integrity and security of the ledger.
@@ -138,11 +138,6 @@ Additionally, a single byte is appended to indicate whether the address is for r
 The resulting byte array is then subject to the Blake3 hash function, generating a unique 
 hash value that serves as the SC address.
 
-**todo:**
-- update the last paragraph to testnet 24 changes. 
-- describe versioning for SC and how it works 
-- describe functionality as above for User Addresses and draw differences in functionality (with clear examples)
-
 ### Autonomous Smart Contract Execution
 
 One particularity of Massa smart contracts compared to other blockchain smart contracts is their ability to wake 
@@ -170,7 +165,7 @@ In Massa, each network node maintains a full copy of the ledger. Having a massiv
 In order to enforce this limit, users are required to lock a corresponding amount of coins for each byte of storage they claim. This applies to various data elements such as your address, balance, keys in your datastore, bytecode, and more. By locking coins, you establish a commitment that ensures fair usage of storage resources. Once you release your allocated space in the storage, the locked coins are subsequently released as well. This mechanism guarantees a balanced and accountable approach to managing storage within the network.
 
 :::note
-Read more about storage costs [here](/docs/learn/architecture/storage-costs).
+Read more about storage costs [here](/docs/learn/storage-costs).
 :::
 
 ## Operation

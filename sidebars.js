@@ -55,7 +55,7 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "learn/architecture/storage-costs",
+      id: "learn/storage-costs",
     },
     {
       type: "html",
