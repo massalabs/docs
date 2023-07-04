@@ -77,6 +77,18 @@ const sidebars = {
       type: "doc",
       id: "learn/asc/use-cases",
     },
+    {
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value: "<span class='menu__link'><b><small>Decentralized Web</small></b></span>"
+    },
+    {
+      type: "doc",
+      id: "learn/decentralized-web",
+    }
   ],
   tutorialSidebar: [
     {
