@@ -5,7 +5,7 @@ sidebar_label: Standards
 
 # Massa Standard
 
-In the blockchain ecosystem, standards serve as crucial pillars fostering interoperability and seamless interaction across diverse platforms and applications. This page offers a comprehensive overview of the standards—including token, contract, unit definitions, and communication protocols—that are integral to the Massa blockchain's ecosystem.
+In the blockchain ecosystem, standards serve as crucial pillars fostering interoperability and seamless interaction across diverse platforms and applications. This page offers a comprehensive overview of the standards—including token, contract, unit definitions.
 
 ## Fungible Tokens (FT)
 
