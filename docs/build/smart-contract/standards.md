@@ -33,7 +33,3 @@ The Massa Units standard defines common units of measurement for the Massa block
 - Rolls
 
 Learn more about [Massa Units Standard](https://github.com/massalabs/massa-standards/blob/main/units.md)
-
-
-
-*Last updated on July 5, 2023 by Author*
