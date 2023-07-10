@@ -6,3 +6,154 @@ title: Smart contract operations
 # Smart contract operations
 
 Smart contract operations are accessible under the smartcontracts sub-client which is accessible via the smartContracts() method on the client.
+Smart Contracts Client object enables smart contract deployment, calls and streaming of events.
+`SmartContractsClient` documentation can be found [here](https://web3.docs.massa.net/classes/SmartContractsClient.html).
+
+### Deployment
+
+Once the smart contract WASM is available, it becomes quite straightforward to deploy it with the `deploySmartContract` method. This method
+takes a [`IContractData`](https://web3.docs.massa.net/interfaces/IContractData.html) object as parameter and returns the operation id of the operation.
+If no executor is provided, the default wallet account from the provided WalletClient will be used.
+
+```typescript
+const opId: string = await web3Client.smartContracts().deploySmartContract(
+  {
+    fee: 0n,
+    maxGas: 2000000n,
+    contractDataBinary: compiledScFromSource.binary,
+    datastore: new Map<Uint8Array, Uint8Array>(),
+  } as IContractData,
+  baseAccount
+);
+```
+
+Defined in [src/web3/SmartContractsClient.ts:92](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/SmartContractsClient.ts#L92)
+
+### Get the operation status
+
+Smart contracts undergo various transaction statuses before they reach block finality on chain. The public enum describing these statuses is:
+
+```EOperationStatus {
+	INCLUDED_PENDING,
+	AWAITING_INCLUSION,
+	FINAL,
+	INCONSISTENT,
+	NOT_FOUND
+}
+```
+
+You can easily get the status of a smart contract operation with the `getOperationStatus` method. This method takes an operation id as parameter and returns the [operation status](https://web3.docs.massa.net/enums/EOperationStatus.html).
+
+```typescript
+const status: EOperationStatus = await web3Client
+  .smartContracts()
+  .getOperationStatus(deploymentOperationId);
+```
+
+Defined in [src/web3/SmartContractsClient.ts:408](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/SmartContractsClient.ts#L408)
+
+### Awaiting operation status
+
+There are cases, however, when one might need to wait for a specific status to be reached. This can be achieved using the 'awaitRequiredOperationStatus'
+function. It's important to note that this function has built-in safeguards to prevent infinite waiting. Specifically, the algorithm will stop trying after
+a certain amount of time or after reaching a limited number of errors. In practice, these limits have been found to be sufficient for most standard use cases.
+
+```typescript
+const status: EOperationStatus = await web3Client
+  .smartContracts()
+  .awaitRequiredOperationStatus(
+    deploymentOperationId,
+    EOperationStatus.INCLUDED_PENDING
+  );
+```
+
+Defined in [src/web3/SmartContractsClient.ts:435](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/SmartContractsClient.ts#L435)
+
+### Smart contract balance
+
+The balance of a smart contract can be retrieved with the `getContractBalance` method. This method takes a smart contract address as parameter and returns the balance of the smart contract
+as a [`IBalance`](https://web3.docs.massa.net/interfaces/IBalance.html) object.
+
+```typescript
+const balance: IBalance | null = await web3Client
+  .smartContracts()
+  .getContractBalance(contractAddress);
+```
+
+Defined in [src/web3/SmartContractsClient.ts:287](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/SmartContractsClient.ts#L287)
+
+### Read operations
+
+Smart contract data can be read via the `readSmartContract` method. It executes a dry run Smart contract call and returns some data regarding 
+its execution such as the changes of in the states that would have happen if the transaction was really executed on chain.
+
+```typescript
+const data: IContractReadOperationResponse = await web3Client
+  .smartContracts()
+  .readSmartContract({
+    fee: 0n,
+    maxGas: 200000n,
+    targetAddress: scAddress,
+    targetFunction: "getGameState",
+    parameter: new Args().serialize(), // this is based on input arguments
+  } as IReadData);
+```
+
+Defined in [src/web3/SmartContractsClient.ts:231](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/SmartContractsClient.ts#L231)
+
+The returned data is contained in an object of type [`IContractReadOperationResponse`](https://web3.docs.massa.net/interfaces/IContractReadOperationResponse.html) under the key 
+`returnedValue` which is of type Uint8Array.
+Depending on the smart contract function implementation, the user is to convert the latter into the expected data type.
+
+### Write operations
+
+Smart contract state-changing operations could be executed via callSmartContract method. It executes a Smart contract call and returns the operation id associated.
+If no executor is provided, the default wallet account from the provided WalletClient will be used.
+
+```typescript
+const data: string = await web3Client.smartContracts().callSmartContract(
+    {
+        fee: 0n,
+        maxGas: 200000n,
+        coins: fromMAS("0.1"),
+        targetAddress: scAddress,
+        functionName: "play",
+        parameter: new Args().serialize(), // this is based on input arguments
+    } as ICallData,
+    baseAccount
+);
+```
+
+Defined in [src/web3/SmartContractsClient.ts:169](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/SmartContractsClient.ts#L169)
+
+### Read a contract with an other contract
+
+Smart contracts could also be constructed in order to read data from another contract via the `executeReadOnlySmartContract` method. In that case one 
+could use the code below to read the data via a proxy contract:
+
+```typescript
+const data: IExecuteReadOnlyResponse = await web3Client
+    .smartContracts()
+    .executeReadOnlySmartContract(
+        {
+            fee: 0n,
+            maxGas: 2000000n,
+            coins: fromMAS("0.1"),
+            contractDataBinary: compiledScFromSource.binary,
+        } as IContractData,
+        baseAccount
+    );
+```
+
+Defined in [src/web3/SmartContractsClient.ts:352](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/SmartContractsClient.ts#L352)
+
+### getProtofiles
+
+Get the proto file of the contracts from the Massa Blockchain. It takes an array of contract addresses as parameter and returns the array of 
+`MassaProtoFile` objects corresponding to the proto file associated with each contract or the values are null if the file is unavailable.
+
+```typescript
+const protoFiles: MassaProtoFile[] = await web3Client
+  .smartContracts()
+  .getProtofiles([contractAddress]);
+```
