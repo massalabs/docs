@@ -48,6 +48,8 @@ await web3Client
   .addAccountsToWallet([accountGenerated, accountFromSecretKey]);
 ```
 
+Defined in [src/web3/WalletClient.ts:213](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L213)
+
 ### Add secret keys to wallet
 
 You can directly add an account to the wallet by providing its secret key.
@@ -59,6 +61,8 @@ const addedAccounts = await web3Client
   .addSecretKeysToWallet(["secret_key1", "secret_key2"]);
 ```
 
+Defined in [src/web3/WalletClient.ts:164](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L164)
+
 ### Set base account
 
 Set the base account that will be used as the default account for the wallet.
@@ -68,6 +72,8 @@ const account: IAccount = await WalletClient.walletGenerateNewAccount();
 await web3Client.wallet().setBaseAccount(account);
 ```
 
+Defined in [src/web3/WalletClient.ts:100](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L100)
+
 ### Get base account
 
 Retrieves the default (base) account of the wallet.
@@ -75,6 +81,8 @@ Retrieves the default (base) account of the wallet.
 ```ts
 const baseAccount = web3Client.wallet().getBaseAccount();
 ```
+
+Defined in [src/web3/WalletClient.ts:120](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L120)
 
 ### Get wallet account by address
 
@@ -86,6 +94,8 @@ const walletAccount: IAccount | undefined = web3Client
   .getWalletAccountByAddress("address");
 ```
 
+Defined in [src/web3/WalletClient.ts:140](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L140)
+
 ### Get wallet accounts
 
 Retrieves all accounts stored in the wallet.
@@ -93,6 +103,8 @@ Retrieves all accounts stored in the wallet.
 ```ts
 const walletAccounts: Array<IAccount> = web3Client.wallet().getWalletAccounts();
 ```
+
+Defined in [src/web3/WalletClient.ts:129](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L129)
 
 ### Remove addresses from wallet
 
@@ -102,6 +114,8 @@ Remove a list of addresses from the wallet.
 web3Client.wallet().removeAddressesFromWallet([account1, account2]);
 ```
 
+Defined in [src/web3/WalletClient.ts:267](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L267)
+
 ### Clean wallet
 
 Removes all accounts from the wallet, even the base account.
@@ -109,6 +123,8 @@ Removes all accounts from the wallet, even the base account.
 ```ts
 web3Client.wallet().cleanWallet();
 ```
+
+Defined in [src/web3/WalletClient.ts:136](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L136)
 
 ### Get account balance
 
@@ -120,6 +136,8 @@ const balance: IBalance | null = await web3Client
   .getAccountBalance("address");
 ```
 
+Defined in [src/web3/WalletClient.ts:547](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L547)
+
 ### Get wallet info
 
 Get {secretKey, publicKey} for all accounts in the wallet.
@@ -127,6 +145,8 @@ Get {secretKey, publicKey} for all accounts in the wallet.
 ```ts
 const walletInfo: IFullAddressInfo[] = await web3Client.wallet().walletInfo();
 ```
+
+Defined in [src/web3/WalletClient.ts:283](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L283)
 
 ### Send MAS
 
@@ -145,6 +165,8 @@ const sendTxIds: Array<string> = await web3Client.wallet().sendTransaction(
 );
 ```
 
+Defined in [src/web3/WalletClient.ts:574](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L574)
+
 ### Wallet sign message
 
 Static method to sign the provided data with the given address present in the wallet. Signer account has to be specified explicitly.
@@ -156,6 +178,8 @@ const sig: ISignature = await WalletClient.walletSignMessage(
 );
 ```
 
+Defined in [src/web3/WalletClient.ts:429](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L429)
+
 ### Sign message
 
 Signs the provided data with the given address present in the wallet. Signer account has to be specified explicitly.
@@ -165,6 +189,8 @@ const signedMessage = await web3Client
 .wallet()
 .signMessage("hello", baseAccount);
 ```
+
+Defined in [src/web3/WalletClient.ts:374](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/WalletClient.ts#L374)
 
 ### Verify signature
 
