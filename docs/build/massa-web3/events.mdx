@@ -1,0 +1,94 @@
+### Smart contract event fetching and polling
+
+Emitted smart contract events could directly be fetched via the `getFilteredScOutputEvents` method, which takes a
+[`IEventFilter`](https://web3.docs.massa.net/interfaces/IEventFilter.html) object as parameter and returns an array of
+[`IEvent`](https://web3.docs.massa.net/interfaces/IEvent.html) objects containing the events that match the filter.
+
+```typescript
+const eventsFilter = {
+  start: null,
+  end: null,
+  original_caller_address:
+    "AS12rr1neHvp7uzGepfPRPguZX5JWC3EFW6H7ZQRazzNjBRMNvQB",
+  original_operation_id: null,
+  emitter_address: null,
+} as IEventFilter;
+
+const filteredEvents: Array<IEvent> = await web3Client
+  .smartContracts()
+  .getFilteredScOutputEvents(eventFilterData);
+```
+
+Defined in [src/web3/SmartContractsClient.ts:305](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/SmartContractsClient.ts#L305)
+
+Events could also be polled. The js sdk has two methods for doing this as shown below. In both, a filter, a web3 client and a poll interval which
+we can set in order to poll the events needs to be provided:
+
+```typescript
+const onEventData = (events: Array<IEvent>) => {
+  console.log("Event Data Received:", events);
+};
+const onEventDataError = (error: Error) => {
+  console.log("Event Data Error:", error);
+};
+
+// poll smart contract events
+const eventsFilter = {
+  start: null,
+  end: null,
+  original_caller_address:
+    "AS12rr1neHvp7uzGepfPRPguZX5JWC3EFW6H7ZQRazzNjBRMNvQB",
+  original_operation_id: null,
+  emitter_address: null,
+  is_final: true,
+} as IEventFilter;
+
+const eventPoller = EventPoller.startEventsPolling(
+  eventsFilter,
+  1000,
+  web3Client
+);
+eventPoller.on(ON_MASSA_EVENT_DATA, onEventData);
+eventPoller.on(ON_MASSA_EVENT_ERROR, onEventDataError);
+
+//...do some work...
+
+// cleanup and finish
+eventPoller.stopPolling();
+```
+
+Alternatively, one could make direct use of callback functions as function arguments which would fire on event data received or generated errors:
+
+```typescript
+const onEventData = (events: Array<IEvent>) => {
+    console.log("Event Data Received:", events);
+};
+const onEventDataError = (error: Error) => {
+    console.log("Event Data Error:", error);
+};
+
+const eventPoller: EventPoller = EventPoller.startEventsPolling(
+    eventsFilter,
+    1000,
+    web3Client,
+    onEventData,
+    onEventDataError
+);
+
+//...do some work...
+
+// cleanup and finish
+eventPoller.stopPolling();
+```
+
+The latter could easily be employed in smart contracts where we need to e.g. get the contract address. For example, this contract would emit the address at creation:
+
+```typescript
+import { call, print, create_sc, generate_event } from "massa-sc-std";
+
+export function main(_args: string): i32 {
+    ... deploy the smart contract ...
+    generateEvent(`Address:${sc_address}`); //emit an event with the address
+    ...
+}
+```
