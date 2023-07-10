@@ -190,6 +190,10 @@ const sidebars = {
         },
         {
           type: "doc",
+          id: "build/massa-web3/massa-web3-events",
+        },
+        {
+          type: "doc",
           id: "build/massa-web3/massa-web3-wallet",
         },
         {
