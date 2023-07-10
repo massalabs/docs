@@ -12,29 +12,31 @@ Here is the list of available operations:
 
 ### get Addresses
 
-Retrieves data about a list of addresses, such as their balances and block creation details.
+Retrieves data about a list of addresses such as their balances and block creation details by returning [IAddressInfo](https://web3.docs.massa.net/interfaces/IAddressInfo.html) objects.
 
 ```ts
-const newWalletAccount: IAccount =
-  await WalletClient.walletGenerateNewAccount();
+const addressesResp: Array<IAddressInfo> = await web3Client
+  .publicApi()
+  .getAddresses(["address"]);
 ```
 
-Defined in src/web3/PublicApiClient.ts:137
+Defined in [src/web3/PublicApiClient.ts:137](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PublicApiClient.ts#L137)
 
 ### get Blockclique details
 
 Retrieves [blockclique](https://web3.docs.massa.net/interfaces/IBlockcliqueBlockBySlot.html) details for a given [slot](https://web3.docs.massa.net/interfaces/ISlot.html) (period and thread).
 
 ```ts
-const newWalletAccount: IAccount =
-  await WalletClient.walletGenerateNewAccount();
+const blockcliqueBlockBySlot: IBlockcliqueBlockBySlot = await web3Client
+  .publicApi()
+  .getBlockcliqueBlockBySlot([{ period: 12345, thread: 20 } as ISlot]);
 ```
 
-Defined in src/web3/PublicApiClient.ts:85
+Defined in [src/web3/PublicApiClient.ts:85](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PublicApiClient.ts#L85)
 
 ### get Block details
 
-Retrieves [block](https://web3.docs.massa.net/interfaces/IBlock.html) details for a given block ID. The block ID is passed in an array of one element.
+Retrieves [block info](https://web3.docs.massa.net/interfaces/IBlockInfo.html) details (such as `content`, `finality`) for a given block ID. The block ID is passed in an array of one element.
 
 ```ts
 const blocks: Array<IBlockInfo> = await web3Client
@@ -42,7 +44,7 @@ const blocks: Array<IBlockInfo> = await web3Client
   .getBlocks(["nKifcnGbd9zu8nu1hb94XEmMGwgoWbjj3DutzrobeHDdUtEuM"]);
 ```
 
-Defined in src/web3/PublicApiClient.ts:161
+Defined in [src/web3/PublicApiClient.ts:161](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PublicApiClient.ts#L161)
 
 ### get Cliques
 
@@ -52,28 +54,30 @@ Get actual [cliques](https://web3.docs.massa.net/interfaces/IClique.html)
 const cliques: Array<IClique> = await web3Client.publicApi().getCliques();
 ```
 
-Defined in src/web3/PublicApiClient.ts:229
+Defined in [src/web3/PublicApiClient.ts:229](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PublicApiClient.ts#L229)
 
 ### getDatastoreEntries
 
-Retrieves the data entries at both the latest final and active executed slots.
+Retrieves the [data entries](https://web3.docs.massa.net/interfaces/IDatastoreEntry.html) at both the latest final and active executed slots.
 
 ```ts
-const scStorageValue: IDatastoreEntry[] = await web3Client.publicApi().getDatastoreEntries([
-  {
-    address: "AS12PWTzCKkkE9P5Supt3Fkb4QVZ3cdfB281TGaup7Nv1DY12a6F1",
-    key: strToBytes("key"),
-  } as IDatastoreEntryInput,
-]);
+const scStorageValue: IDatastoreEntry[] = await web3Client
+  .publicApi()
+  .getDatastoreEntries([
+    {
+      address: "AS12PWTzCKkkE9P5Supt3Fkb4QVZ3cdfB281TGaup7Nv1DY12a6F1",
+      key: strToBytes("key"),
+    } as IDatastoreEntryInput,
+  ]);
 ```
 
-Returned values could be easily converted into string if needed using e.g.: bytesToStr(scStorageValue[0].final_value)
+Returned values could be easily converted into string if needed using e.g.: `bytesToStr(scStorageValue[0].final_value)`
 
-Defined in src/web3/PublicApiClient.ts:271
+Defined in [src/web3/PublicApiClient.ts:271](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PublicApiClient.ts#L271)
 
 ### getEndorsements
 
-Show info about a list of endorsements given a list of endorsement IDs.
+Show info about a list of [endorsements](https://web3.docs.massa.net/interfaces/IEndorsement.html) given a list of endorsement IDs.
 
 ```ts
 const endorsements: Array<IEndorsement> = await web3Client
@@ -81,11 +85,11 @@ const endorsements: Array<IEndorsement> = await web3Client
   .getEndorsements(["q2XVw4HrRfwtX8FGXak2VwtTNkBvYtLVW67s8pTCVPdEEeG6J"]);
 ```
 
-Defined in src/web3/PublicApiClient.ts:137
+Defined in [src/web3/PublicApiClient.ts:137](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PublicApiClient.ts#L183)
 
 ### getGraphInterval
 
-Get graph interval.
+Get the [graph interval](https://web3.docs.massa.net/interfaces/IGraphInterval.html) by passing the interval values in ms as an [IGetGraphInterval](https://web3.docs.massa.net/interfaces/IGraphInterval.html)
 
 ```ts
 const graphInterval: IGraphInterval = await web3Client
@@ -95,49 +99,48 @@ const graphInterval: IGraphInterval = await web3Client
   ]);
 ```
 
-Defined in src/web3/PublicApiClient.ts:61
+Defined in [src/web3/PublicApiClient.ts:61](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PublicApiClient.ts#L61)
 
 ### getNodeStatus
 
-Retrieves data about a list of addresses, such as their balances and block creation details.
+Retrieves the [node's status](https://web3.docs.massa.net/interfaces/INodeStatus.html)
 
 ```ts
 const nodeStatus: INodeStatus = await web3Client.publicApi().getNodeStatus();
 ```
 
-Defined in src/web3/PublicApiClient.ts:115
+Defined in [src/web3/PublicApiClient.ts:115](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PublicApiClient.ts#L115)
 
 ### getOperations
 
-Retrieves data about a list of operations.
+Retrieves [operations data](https://web3.docs.massa.net/interfaces/IOperationData.html) about a list of operations by passing a list of operation IDs.
 
 ```ts
 const operations: Array<IOperationData> = await web3Client
-    .publicApi()
-    .getOperations(["z1cNsWAdgvoASq5RnN6MRbqqo634RRJbgwV9n3jNx3rQrQKTt"]);
+  .publicApi()
+  .getOperations(["z1cNsWAdgvoASq5RnN6MRbqqo634RRJbgwV9n3jNx3rQrQKTt"]);
 ```
 
-Defined in src/web3/PublicApiClient.ts:207
+Defined in [src/web3/PublicApiClient.ts:207](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PublicApiClient.ts#L207)
 
 ### getStakers
 
-Retrieves a list of active stakers and their roll counts for the current cycle.
+Retrieves [stakers informations](https://web3.docs.massa.net/interfaces/IStakingAddresses.html) representing the list of active stakers and their roll counts for the current cycle.
 
 ```ts
 const stakers: Array<IStakingAddresses> = await web3Client
-    .publicApi()
-    .getStakers();
+  .publicApi()
+  .getStakers();
 ```
 
-Defined in src/web3/PublicApiClient.ts:249
+Defined in [src/web3/PublicApiClient.ts:249](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PublicApiClient.ts#L249)
 
 ### setProviders
 
-Set new providers as IProvider.
+Set new providers as [IProvider](https://web3.docs.massa.net/interfaces/IProvider.html).
 
 ```ts
 const nodeStatus: INodeStatus = await web3Client.publicApi().getNodeStatus();
 ```
 
-Defined in src/web3/BaseClient.ts:99
-
+Defined in [src/web3/BaseClient.ts:99](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/BaseClient.ts#L99)
