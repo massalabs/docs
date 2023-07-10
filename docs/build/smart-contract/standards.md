@@ -5,7 +5,7 @@ sidebar_label: Standards
 
 # Massa Standard
 
-In the blockchain ecosystem, standards serve as crucial pillars fostering interoperability and seamless interaction across diverse platforms and applications. This page offers a comprehensive overview of the standards—including token, contract, unit definitions.
+Massa-standard is the ideal starting point to kickstart your project, whether you're interested in tokens, NFTs, or wallet creation. It offers reference implementations of the most prevalent smart contracts, enabling you to quickly and efficiently integrate these functionalities into your project.
 
 ## Fungible Tokens (FT)
 
