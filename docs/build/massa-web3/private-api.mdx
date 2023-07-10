@@ -6,3 +6,153 @@ title: Private API
 # Private API
 
 Client private API operations are accessible under the private sub-client, which is accessible via the privateApi() method on the client.
+These methods are meant to interact with a massa node.
+`PrivateApiClient` documentation can be found [here](https://web3.docs.massa.net/classes/PrivateApiClient.html).
+
+Here is the list of available operations:
+
+### nodeAddStakingSecretKeys
+
+Adds staking secret keys to the node.
+
+```typescript
+await web3Client
+  .privateApi()
+  .nodeAddStakingSecretKeys([
+    "S12tw4YShWtjWfy7YBQ9Erbcg6DYgWnMgb5hGjn9hAKGtgrLNa7L",
+  ]);
+```
+
+Defined in [src/web3/PrivateApiClient.ts:251](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L251)
+
+### nodeAddToPeersWhitelist
+
+Add a given Node IP address from the whitelist.
+
+```typescript
+await web3Client.privateApi().nodeAddToPeersWhitelist("90.110.239.231");
+```
+
+Defined in [src/web3/PrivateApiClient.ts:44](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L44)
+
+### nodeBanById
+
+Ban a given node Id.
+
+```typescript
+await web3Client
+  .privateApi()
+  .nodeBanById("P1bZhWZQ2KW8DoaEqXyRXoy198wjhCsTFxSP53mLgdvx5C4WMDE");
+```
+
+Defined in [src/web3/PrivateApiClient.ts:149](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L149)
+
+### nodeBanByIpAddress
+
+Ban a given node IP address.
+
+```typescript
+await web3Client.privateApi().nodeBanByIpAddress("90.110.239.231");
+```
+
+Defined in [src/web3/PrivateApiClient.ts:128](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L128)
+
+### nodeGetStakingAddresses
+
+Returns staking addresses of the node as an array of strings.
+
+```typescript
+const stakingAddresses = await web3Client
+  .privateApi()
+  .nodeGetStakingAddresses();
+```
+
+Defined in [src/web3/PrivateApiClient.ts:205](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L205)
+
+### nodeRemoveFromWhitelist
+
+Remove a given node IP address from the whitelist.
+
+```typescript
+await web3Client.privateApi().nodeRemoveFromWhitelist("90.110.239.231");
+```
+
+Defined in [src/web3/PrivateApiClient.ts:66](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L66)
+
+### nodeRemoveStakingAddresses
+
+Removes staking addresses from the node.
+
+```typescript
+await web3Client
+  .privateApi()
+  .nodeRemoveStakingAddresses([
+    "AU12PWTzCKkkE9P5Supt3Fkb4QVZ3cdfB281TGaup7Nv1DY12a6F1",
+  ]);
+```
+
+Defined in [src/web3/PrivateApiClient.ts:227](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L227)
+
+### nodeSignMessage
+
+Returns a [signature](https://web3.docs.massa.net/interfaces/ISignedMessage.html) of the message signed by the node. Message is passed as an
+`Uint8Array`.
+
+```typescript
+const message = "hello world";
+const msgBuf = new TextEncoder().encode(message);
+const signedMessage = await web3Client.privateApi().nodeSignMessage(msgBuf);
+```
+
+Defined in [src/web3/PrivateApiClient.ts:185](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L185)
+
+### nodeStop
+
+Stops the node.
+
+```typescript
+await web3Client.privateApi().nodeStop();
+```
+
+Defined in [src/web3/PrivateApiClient.ts:166](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L166)
+
+### nodeUnbanById
+
+Unban a given node Id.
+
+```typescript
+await web3Client
+  .privateApi()
+  .nodeUnbanById("P1bZhWZQ2KW8DoaEqXyRXoy198wjhCsTFxSP53mLgdvx5C4WMDE");
+```
+
+Defined in [src/web3/PrivateApiClient.ts:108](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L108)
+
+### nodeUnbanByIpAddress
+
+Unban a given node IP address.
+
+```typescript
+await web3Client.privateApi().nodeBanByIpAddress("90.110.239.231");
+```
+
+Defined in [src/web3/PrivateApiClient.ts:88](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/PrivateApiClient.ts#L88)
+
+### setProvider
+
+Set new providers as [IProvider](https://web3.docs.massa.net/interfaces/IProvider.html).
+
+```ts
+const providers: [
+          {
+            url: 'https://oldRpcUrlPublic/api',
+            type: ProviderType.PUBLIC,
+          } as IProvider,
+          {
+            url: 'https://oldRpcUrlPrivate/api',
+            type: ProviderType.PRIVATE,
+          } as IProvider,
+        ];
+
+web3Client.setProviders(providers);
+```

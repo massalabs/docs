@@ -140,7 +140,18 @@ Defined in [src/web3/PublicApiClient.ts:249](https://github.com/massalabs/massa-
 Set new providers as [IProvider](https://web3.docs.massa.net/interfaces/IProvider.html).
 
 ```ts
-const nodeStatus: INodeStatus = await web3Client.publicApi().getNodeStatus();
+const providers: [
+          {
+            url: 'https://oldRpcUrlPublic/api',
+            type: ProviderType.PUBLIC,
+          } as IProvider,
+          {
+            url: 'https://oldRpcUrlPrivate/api',
+            type: ProviderType.PRIVATE,
+          } as IProvider,
+        ];
+
+web3Client.setProviders(providers);
 ```
 
 Defined in [src/web3/BaseClient.ts:99](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/BaseClient.ts#L99)
