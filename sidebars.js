@@ -149,10 +149,6 @@ const sidebars = {
             },
           ],
         },
-        {
-          type: "doc",
-          id: "build/smart-contract/standards",
-        },
       ],
     },
     {
@@ -208,6 +204,10 @@ const sidebars = {
           id: "build/api/grpc",
         },
       ],
+    },
+    {
+      type: "doc",
+      id: "build/standards",
     },
   ],
   nodeSidebar: [
