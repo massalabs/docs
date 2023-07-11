@@ -57,20 +57,23 @@ export async function initializeClient() {
     const addressesResp: Array<IAddressInfo> = await web3Client
       .publicApi()
       .getAddresses(["AU12LSunQqxmcGR6cJRnz44iZseJNCcR7stHMdB3qwqGiLwujGKaf"]);
+    console.log("addressesResp: ", addressesResp, "\n");
 
     console.log("getBlockcliqueBlockBySlot...");
     const blockcliqueBlockBySlot: IBlockcliqueBlockBySlot = await web3Client
       .publicApi()
-      .getBlockcliqueBlockBySlot({ period: 37108, thread: 19 } as ISlot);
+      .getBlockcliqueBlockBySlot({ period: 37155, thread: 3 } as ISlot);
+    console.log("blockcliqueBlockBySlot: ", blockcliqueBlockBySlot, "\n");
 
-    console.log("blockcliqueBlockBySlot: ", blockcliqueBlockBySlot);
     console.log("getBlocks...");
     const blocks: Array<IBlockInfo> = await web3Client
       .publicApi()
-      .getBlocks(["B12dQxGwtgnyUDrEEFTQVG8ZHQtA4AG1jBC96RxAQEint2J2e3YM"]);
+      .getBlocks(["B12tig7MJa9smkvjRfyV532osJe6ohfdnhs4Lqt2sXgqK6xxuBbf"]);
+    console.log("blocks: ", blocks, "\n");
 
     console.log("getCliques...");
     const cliques: Array<IClique> = await web3Client.publicApi().getCliques();
+    console.log("cliques: ", cliques, "\n");
 
     console.log("getDatastoreEntries...");
     const scStorageValue: IDatastoreEntry[] = await web3Client
@@ -81,11 +84,13 @@ export async function initializeClient() {
           key: strToBytes("key"),
         } as IDatastoreEntryInput,
       ]);
+    console.log("scStorageValue: ", scStorageValue, "\n");
 
-    // console.log("getEndorsements...");
-    // const endorsements: Array<IEndorsement> = await web3Client
-    //   .publicApi()
-    //   .getEndorsements(["q2XVw4HrRfwtX8FGXak2VwtTNkBvYtLVW67s8pTCVPdEEeG6J"]);
+    console.log("getEndorsements...");
+    const endorsements: Array<IEndorsement> = await web3Client
+      .publicApi()
+      .getEndorsements(["q2XVw4HrRfwtX8FGXak2VwtTNkBvYtLVW67s8pTCVPdEEeG6J"]);
+    console.log("endorsements: ", endorsements, "\n");
 
     console.log("getGraphInterval...");
     const graphInterval: IGraphInterval[] = await web3Client
@@ -94,35 +99,25 @@ export async function initializeClient() {
         start: Date.now() - 2000,
         end: Date.now(),
       } as IGetGraphInterval);
+    console.log("graphInterval: ", graphInterval, "\n");
 
     console.log("getNodeStatus...");
     const nodeStatus: INodeStatus = await web3Client
       .publicApi()
       .getNodeStatus();
+    console.log("nodeStatus: ", nodeStatus, "\n");
 
     console.log("getOperations...");
     const operations: Array<IOperationData> = await web3Client
       .publicApi()
       .getOperations(["O12AQfTA6bW9hmb2kCHmBmX7stgWfNUVLiyoVMd3vgan533BbRCE"]);
+    console.log("operations: ", operations, "\n");
 
     console.log("getStakers...");
     const stakers: Array<IStakingAddresses> = await web3Client
       .publicApi()
       .getStakers();
-
-    console.log("getProviders...");
-    const providers: IProvider[] = [
-      {
-        url: "https://oldRpcUrlPublic/api",
-        type: ProviderType.PUBLIC,
-      } as IProvider,
-      {
-        url: "https://oldRpcUrlPrivate/api",
-        type: ProviderType.PRIVATE,
-      } as IProvider,
-    ];
-
-    web3Client.getProviders();
+    console.log("stakers: ", stakers, "\n");
   } catch (err) {
     console.log("Error: ", err);
   }
