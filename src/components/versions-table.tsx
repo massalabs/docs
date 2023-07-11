@@ -31,7 +31,6 @@ export default function VersionsTable() {
             <thead>
               <tr>
                 <th>Project</th>
-                <th>Version</th>
                 <th>Install</th>
               </tr>
             </thead>
@@ -43,7 +42,6 @@ export default function VersionsTable() {
                 return (
                   <tr key={i}>
                     <td>{project.title}</td>
-                    <td>{compatibility?.version}</td>
                     <td>
                       <CodeBlock className="language-bash">
                         {compatibility
@@ -58,6 +56,7 @@ export default function VersionsTable() {
           </table>
         </TabItem>
       ))}
+      {compatibility ? `${project.install}@${compatibility.version}` : ""}
     </Tabs>
   );
 }

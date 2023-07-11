@@ -1,69 +1,62 @@
 {
   "title": "Massa Tools Versions Compatibilities",
-  "networks": ["buildnet", "testnet 22", "testnet 23"],
+  "networks": ["buildnet", "testnet"],
   "projects": [
     {
       "title": "sc-project-initializer",
       "compatibilities": [
-        { "network": "buildnet", "version": "0.3.0" },
-        { "network": "testnet 22", "version": "0.4.0" },
-        { "network": "testnet 23", "version": "0.5.0" }
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massaia/project-initializer"
+      "install": "npm install @massalabs/project-initializer"
     },
     {
       "title": "massa-as-sdk",
       "compatibilities": [
-        { "network": "buildnet", "version": "1.2.0" },
-        { "network": "testnet 22", "version": "1.0.0" },
-        { "network": "testnet 23", "version": "1.0.0" }
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massaia/massa-sdk"
+      "install": "npm install @massalabs/massa-as-sdk"
     },
     {
-      "title": "as",
+      "title": "as-types",
       "compatibilities": [
-        { "network": "buildnet", "version": "1.2.0" },
-        { "network": "testnet 22", "version": "1.0.0" },
-        { "network": "testnet 23", "version": "1.0.0" }
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massaia/as"
+      "install": "npm install @massalabs/as-types"
+    },
+    {
+      "title": "as-proba",
+      "compatibilities": [
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/as-proba"
+    },
+    {
+      "title": "as-transformer",
+      "compatibilities": [
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/as-transformer"
     },
     {
       "title": "sc-deployer",
       "compatibilities": [
-        { "network": "buildnet", "version": "1.2.0" },
-        { "network": "testnet 22", "version": "1.0.0" },
-        { "network": "testnet 23", "version": "1.0.0" }
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massaia/sc-deployer"
+      "install": "npm install @massalabs/massa-sc-deployer"
     },
     {
       "title": "massa-web3",
       "compatibilities": [
-        { "network": "buildnet", "version": "1.17.0" },
-        { "network": "testnet 22", "version": "1.0.0" },
-        { "network": "testnet 23", "version": "1.0.0" }
+        { "network": "buildnet", "version": "buildnet" },
+        { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massaia/massa-web3"
-    },
-    {
-      "title": "massa-standards",
-      "compatibilities": [
-        { "network": "buildnet", "version": "1.2.0" },
-        { "network": "testnet 22", "version": "1.0.0" },
-        { "network": "testnet 23", "version": "1.0.0" }
-      ],
-      "install": "npm install @massaia/massa-standards"
-    },
-    {
-      "title": "wallet-provider",
-      "compatibilities": [
-        { "network": "buildnet", "version": "1.2.0" },
-        { "network": "testnet 22", "version": "1.0.0" },
-        { "network": "testnet 23", "version": "1.0.0" }
-      ],
-      "install": "npm install @massaia/wallet-provider"
+      "install": "npm install @massalabs/massa-web3"
     }
   ]
 }
