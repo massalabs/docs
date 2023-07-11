@@ -204,6 +204,10 @@ const sidebars = {
           type: "doc",
           id: "build/massa-web3/massa-web3-private-api",
         },
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-utils",
+        },
       ],
     },
     {
