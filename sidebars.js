@@ -175,7 +175,6 @@ const sidebars = {
         {
           type: "doc",
           id: "build/plugin/guidelines",
-          label: "Guidelines to Create a Plugin",
         },
       ],
     },
