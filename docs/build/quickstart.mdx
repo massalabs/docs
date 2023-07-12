@@ -65,12 +65,12 @@ In the meantime, here are the key components you should be familiar with:
 Next, create a `.env` file at the root of your project directory and define the following environment variables:
 
 ```bash
-WALLET_PRIVATE_KEY="Your_private_key_here"
+WALLET_SECRET_KEY="Your_private_key_here"
 JSON_RPC_URL_PUBLIC=https://buildnet.massa.net/api/v2:33035
 ```
 
 :::info
-- WALLET_PRIVATE_KEY: Store your wallet's private key used to deploy the contract here. Make sure your wallet is funded.
+- WALLET_SECRET_KEY: Store your wallet's private key used to deploy the contract here. Make sure your wallet is funded.
 - JSON_RPC_URL_PUBLIC: This is the URL of the JSON-RPC interface of a public or a private Massa node.
 :::
 
@@ -167,7 +167,7 @@ cd my-app
 Next up, let's install the Massa Web3 package. This package enables our frontend to interact with the Massa blockchain. Here's how to install it:
 
 ```bash
-npm install @massalabs/massa-Web3
+npm install @massalabs/massa-web3
 ```
 
 :::caution
