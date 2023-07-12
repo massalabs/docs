@@ -1,0 +1,229 @@
+# Creating a module : step by step
+
+Let’s take the “Hello world” plugin located [here](https://github.com/massalabs/station-massa-hello-world/tree/main) and use it as an exemple.
+
+## Creating the module
+
+You can create a plugin either in go, and use our tailor made package, or do your own, following the requirements
+
+### Create your go plugin
+
+#### Initialize your go project :
+
+initialize the go module :
+
+```bash
+go mod init myplugin
+```
+
+Install the hello-world package, we will need it later
+
+```bash
+go get github.com/massalabs/station-massa-hello-world
+```
+
+#### Define your plugin
+
+- Define an API for the plugin that will allow MassaStation to interact with it. You can use frameworks like Swagger or Gin to facilitate API development, or choose other suitable frameworks as per your preference.
+  - create a file named `swagger.yml` : `touch api/swagger.yml`
+  - Initialize it with the different endpoints you want to expose, for example :
+
+```yaml
+consumes:
+  - application/json
+info:
+  description: Hello world plugin API.
+  title: station-massa - Hello world
+  version: 0.0.0
+produces:
+  - application/json
+schemes:
+  - http
+swagger: "2.0"
+paths:
+  /:
+    get:
+      operationId: defaultPage
+      responses:
+        "301":
+          description: Move to the default endpoint
+  /api/hello:
+    put:
+      operationId: hello
+      parameters:
+        - in: query
+          name: name
+          type: string
+          description: the name of the person to be greeted.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Greeting content.
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                description: Greeting message.
+                type: string
+                x-nullable: false
+        "500":
+          description: Internal Server Error - The server has encountered a situation it does not know how to handle.
+```
+
+> Here we have defined two endpoints :
+>
+> - `/` : the default endpoint, that will redirect to the default endpoint
+> - `/api/hello` : the endpoint that will greet the user
+
+#### Implement your plugin
+
+- create a `generate.go` file : `touch generate.go`
+- add the following code to it :
+
+```go
+package main
+
+//go:generate swagger generate server --quiet --target api/server --name hello-world --spec api/swagger.yml --exclude-main
+```
+
+> This will generate a `cmd/your-project-server/main.go` file, that will be the entry point of your plugin
+
+- Implement the necessary endpoints and functionality in your API.
+  run `touch api/endpoints.go` and implement the endpoints you defined in the swagger file :
+
+```go
+package api
+
+import (
+	"fmt"
+
+	"github.com/go-openapi/runtime/middleware"
+	"your-username/your-project/api/server/restapi/operations"
+)
+
+func Hello(params operations.HelloParams) middleware.Responder {
+	target := "World"
+	if params.Name != nil {
+		target = *params.Name
+	}
+
+	return operations.NewHelloOK().WithPayload(
+		&operations.HelloOKBody{Message: fmt.Sprintf("Hello, %s!", target)},
+	)
+}
+
+func Goodbye(params operations.GoodbyeParams) middleware.Responder {
+	target := "World"
+	if params.Name != nil {
+		target = *params.Name
+	}
+
+	return operations.NewGoodbyeOK().WithPayload(
+		&operations.GoodbyeOKBody{Message: fmt.Sprintf("Goodbye, %s!", target)},
+	)
+}
+```
+
+> Here we have implemented the two endpoints we defined in the swagger file
+
+- set the handler for the endpoints
+  - create a main.go file in the root of your project : `touch main.go`
+  - create a `initializeAPI` function that will initialize the API with its handlers :
+
+```go
+package main
+
+import (
+	"github.com/go-openapi/loads"
+	"your-username/your-project/api/server/restapi"
+	"your-username/your-project/api/server/restapi/operations"
+)
+
+func initializeAPI() *restapi.Server {
+	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
+	if err != nil {
+		panic(err)
+	}
+
+	pluginAPI := operations.NewHelloWorldAPI(swaggerSpec)
+	pluginAPI.HelloHandler = operations.HelloHandlerFunc(api.Hello)
+	server := restapi.NewServer(pluginAPI)
+	server.ConfigureAPI()
+
+	return server
+}
+```
+
+- in the `main` function, initialize the API and start the server :
+
+```go
+func main() {
+	quit := make(chan bool)
+	intSig := make(chan os.Signal, 1)
+	signal.Notify(intSig, syscall.SIGINT, syscall.SIGTERM)
+
+	go killTime(quit)
+
+	server := initializeAPI()
+
+	listener, err := server.HTTPListener()
+	if err != nil {
+		panic(err)
+	}
+
+	plugin.RegisterPlugin(listener)
+
+	if err := server.Serve(); err != nil {
+		panic(err)
+	}
+
+	<-intSig
+	quit <- true
+}
+```
+
+- Run the API on a local server to test and validate its functionality.
+  - let's run the server : `go run main.go`
+  - you should see the following output :
+
+```bash
+2023/07/12 14:21:00 Serving hello world at http://[::]:37735
+```
+
+> The port will be different for you
+
+- let's test the endpoints : on another tetminal, run the following commands :
+
+
+    ```bash
+    curl -X PUT "http://localhost:<port>/api/hello?name=John" -H  "accept: application/json"
+    ```
+
+> replace <port> with the port your plugin is running on
+
+> you should see the following output :
+>
+> ```json
+> { "message": "Hello, John!" }
+> ```
+
+- register your plugin on massastation
+  - add the following package into the `main.go` file : `github.com/massalabs/station-massa-hello-world`
+  - add a server listener to your plugin & register it :
+
+```go
+    listener, err := server.HTTPListener()
+    if err != nil {
+    panic(err)
+    }
+
+    plugin.RegisterPlugin(listener, plugin.Info{})
+```
+
+#### Add the manifest and the logo to your plugin
+
+Your plugin needs a manifest file and a logo to be displayed on MassaStation.
+
