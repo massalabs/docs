@@ -130,9 +130,9 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          id: "build/plugin/guidelines",
-          label: "guidelines to create a Plugin",
-        }
+          id: "build/plugin/create-plugin",
+          label: "Plugin structure",
+        },
       ],
 
     },
