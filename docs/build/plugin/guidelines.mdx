@@ -26,33 +26,7 @@ To do so once you created a new plugin, you can add the following code to your m
 
 ### Develop a plugin in any other language
 
-Your plugin will need to call **the Register Endpoint** to be compatible with Massa Station: The plugin should be able to call the `register` endpoint in Massastation. This endpoint is defined [in the yml file of Massa Station](https://github.com/massalabs/station/blob/main/api/swagger/server/restapi/resource/swagger.yml).
-
-```yml
-/plugin-manager/register:
-  post:
-    description: Register a plugin. This is used by plugins to register themselves to the plugin manager.
-    operationId: pluginManagerRegister
-    parameters:
-      - in: body
-        name: body
-        required: true
-        x-nullable: false
-        schema:
-          type: object
-          required:
-            - id
-            - url
-          properties:
-            id:
-              description: Plugin identifier.
-              type: string
-              x-nullable: false
-            url:
-              description: URL authority to use to connect to the plugin
-              type: string
-              x-nullable: false
-```
+Your plugin will need to call **the Register Endpoint** to be compatible with Massa Station: The plugin should be able to call the `register` endpoint in Massastation defined [here](https://github.com/massalabs/station/blob/v0.2.5/api/swagger/server/restapi/resource/swagger.yml#L481C28-L481C28).
 
 In other words, the plugin should be able to call the following endpoint :
 
@@ -77,15 +51,15 @@ There must be a plugin logo in the artifact. it must be a [valid image file](htt
 
 The manifest will provide the necessary information to the Massa Station to display the plugin in the UI. It must be a `manifest.json` file at the root of the artifact. It must contain the following properties :
 
-| Fields      | Description                   | Format   | Specifications    |
-| ----------- | ----------------------------- | -------- | ----------------- |
-| Author      | Module author name            | text     | 30 characters max |
-| Name        | Module name                   | text     | 30 characters max |
-| Description | Module short description text | text     | 80 characters max |
-| Logo        | Module logo file name         | text     | 40px x 40px max   |
-| Home        | URL to module home page       | URL      | N/A               |
-| Version     | Module version                | XX.XX.XX | N/A               |
-| APIspec     | api specifications            | text     | N/A               |
+| Fields      | Description                   | Format | Specifications    |
+| ----------- | ----------------------------- | ------ | ----------------- |
+| Author      | Module author name            | text   | 30 characters max |
+| Name        | Module name                   | text   | 30 characters max |
+| Description | Module short description text | text   | 80 characters max |
+| Logo        | Module logo file name         | text   | 40px x 40px max   |
+| Home        | URL to module home page       | URL    | N/A               |
+| Version     | Module version                | semver | XX.XX.XX          |
+| APIspec     | api specifications            | text   | N/A               |
 
 > example :
 >
