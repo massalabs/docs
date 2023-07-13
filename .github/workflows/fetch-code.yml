@@ -2,7 +2,7 @@ name: Fetch File from Another Repo and Run
 on:
   push:
     branches:
-      - 100-massa-web3-page
+      - 116-fetch-wallet-end-to-end-tests
 
 jobs:
   fetch-and-run-file:
