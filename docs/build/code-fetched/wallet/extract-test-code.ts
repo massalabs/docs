@@ -38,36 +38,34 @@ fs.writeFileSync(
   JSON.stringify(testFunctions, null, 2)
 );
 
+// If --generate is passed, generate the react components
+if (process.argv.includes('--generate')) {
+  const outputDirectory = path.join(__dirname, 'components');
+  if (!fs.existsSync(outputDirectory)){
+      fs.mkdirSync(outputDirectory);
+  }
 
+  // Loop through each extracted function
+  for (let funcName in walletCodeExtracted) {
+      let content = `
+  import React from 'react';
+  import CodeBlock from '@theme/CodeBlock';
 
-// Définir le chemin du dossier dans lequel vous voulez générer les composants
-const outputDirectory = path.join(__dirname, 'outputDirectory');
-
-// Vérifier si le dossier de sortie existe, sinon le créer
-if (!fs.existsSync(outputDirectory)){
-    fs.mkdirSync(outputDirectory);
-}
-
-// Parcourir chaque fonction extraite
-for (let funcName in walletCodeExtracted) {
-    let content = `
-import React from 'react';
-import CodeBlock from '@theme/CodeBlock';
-
-export default function ${funcName}() {
-  return (
-    <div>
-      <CodeBlock
-        language="ts"
-        title="${funcName}"
-        showLineNumbers
-      >
-        {${JSON.stringify(walletCodeExtracted[funcName])}}
-      </CodeBlock>
-    </div>
-  );
-}
-`;
-    // Écrire le contenu dans un nouveau fichier .jsx
-    fs.writeFileSync(path.join(outputDirectory, `${funcName}.jsx`), content);
+  export default function ${funcName}() {
+    return (
+      <div>
+        <CodeBlock
+          language="ts"
+          title="${funcName}"
+          showLineNumbers
+        >
+          {${JSON.stringify(walletCodeExtracted[funcName])}}
+        </CodeBlock>
+      </div>
+    );
+  }
+  `;
+      // Write the content to a new .jsx file
+      fs.writeFileSync(path.join(outputDirectory, `${funcName}.jsx`), content);
+  }
 }
