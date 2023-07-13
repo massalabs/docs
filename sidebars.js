@@ -131,15 +131,12 @@ const sidebars = {
         {
           type: "doc",
           id: "build/plugin/create-plugin",
-          label: "Plugin structure",
+          label: "Create a plugin",
         },
       ],
 
     },
-    // {
-    //   type: "doc",
-    //   id: "build/plugin",
-    // },
+
     {
       type: "doc",
       id: "build/quickstart",
