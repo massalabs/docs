@@ -24,4 +24,9 @@ function extractTestCode(fileName, testName) {
 }
 
 const testCode = extractTestCode('test-wallet.ts', 'walletGenerateNewAccount');
-console.log(testCode);
+// Write to JSON file
+const jsonOutput = {
+  walletGenerateNewAccount: testCode,
+};
+
+fs.writeFileSync('docs/build/code-fetched/code-extracted-wallet.json', JSON.stringify(jsonOutput, null, 2));
