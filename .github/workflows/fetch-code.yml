@@ -3,7 +3,7 @@ name: Fetch File from Another Repo
 on: 
   push:
     branches:
-      - 100-massa-web3-pag
+      - 100-massa-web3-page
 
 jobs:
   fetch-file:
