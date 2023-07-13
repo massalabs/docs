@@ -26,5 +26,5 @@ jobs:
         with:
           token: ${{ secrets.MASSABOTCLASSIC }}
           commit_message: "Add fetched file"
-          file_pattern: "docs/build/massa-web3/test-wallet.ts"
+          file_pattern: "docs/build/code-fetched/test-wallet.ts"
           commit_author: massabot <info@massa.net>
