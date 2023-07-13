@@ -3,6 +3,9 @@ id: massa-web3-main
 title: Using Massa-web3
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 # Leveraging Javascript API for Massa interaction
 
 ## What is Massa-Web3?
@@ -33,8 +36,8 @@ Massa-web3 can be used as a library for frameworks or as a stand-alone bundled j
 
 #### Requirements
 
-  -   NodeJS 14+
-  -   npm / yarn (see package.json)
+- NodeJS 14+
+- npm / yarn (see package.json)
 
 #### Library (Node.js/React/Vue.js) usage
 
@@ -67,24 +70,24 @@ In your code, once the script is fully loaded, just use window.massa to access a
 
 ### Initialization
 
-There are two types of client initialization. The first one is connecting to Massa's public rpc node using a so-called default client. Please note that specifying a base account is only optional at this point. The code below illustrates how to do that:
+You can easily initialize a client instance using the ClientFactory class:
 
-```ts
-import {
-  ClientFactory,
-  Client,
-  DefaultProviderUrls,
-  IAccount,
-} from "@massalabs/massa-web3";
+<Tabs>
+<TabItem value="mainnet-client" label="Mainnet" default>
 
-// create a base account for signing transactions
-const baseAccount = {
-  address: "AU12PWTzCKkkE9P5Supt3Fkb4QVZ3cdfB281TGaup7Nv1DY12a6F1",
-  secretKey: "S12tw4YShWtjWfy7YBQ9Erbcg6DYgWnMgb5hGjn9hAKGtgrLNa7L",
-  publicKey: "P1hG8zRRJF2v3qkwyZ2fnHJeaVw9uT4huCkwcWJVvgypEz6D2aR",
-} as IAccount;
+```typescript
+const testnetClient: Client = await ClientFactory.createDefaultClient(
+  DefaultProviderUrls.MAINNET,
+  true,
+  baseAccount
+);
+```
 
-// initialize a testnet client
+</TabItem>
+
+<TabItem value="testnet-client" label="Testnet" default>
+
+```typescript
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.TESTNET,
   true,
@@ -92,24 +95,48 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 );
 ```
 
+</TabItem>
+
+<TabItem value="buildnet-client" label="Buildnet" default>
+
+```typescript
+const testnetClient: Client = await ClientFactory.createDefaultClient(
+  DefaultProviderUrls.BUILDNET,
+  true,
+  baseAccount
+);
+```
+
+</TabItem>
+
+<TabItem value="labnet-client" label="Labnet" default>
+
+```typescript
+const testnetClient: Client = await ClientFactory.createDefaultClient(
+  DefaultProviderUrls.LABNET,
+  true,
+  baseAccount
+);
+```
+
+</TabItem>
+
+<TabItem value="local-client" label="Localnet" default>
+
+```typescript
+const testnetClient: Client = await ClientFactory.createDefaultClient(
+  DefaultProviderUrls.LOCALNET,
+  true,
+  baseAccount
+);
+```
+
+</TabItem>
+
+<TabItem value="custom-client" label="Custom Client">
 The second way is to create a custom client connecting to a node whose ip and ports are to be specified by the user.
 
 ```ts
-import {
-  ClientFactory,
-  Client,
-  IAccount,
-  IProvider,
-  ProviderType,
-} from "@massalabs/massa-web3";
-
-// create a base account for signing transactions
-const baseAccount = {
-  address: "AU12PWTzCKkkE9P5Supt3Fkb4QVZ3cdfB281TGaup7Nv1DY12a6F1",
-  secretKey: "S12tw4YShWtjWfy7YBQ9Erbcg6DYgWnMgb5hGjn9hAKGtgrLNa7L",
-  publicKey: "P1hG8zRRJF2v3qkwyZ2fnHJeaVw9uT4huCkwcWJVvgypEz6D2aR",
-} as IAccount;
-
 // initialize a custom client using an own provider
 const providers: Array<IProvider> = [
   {
@@ -129,15 +156,12 @@ const customClient: Client = await ClientFactory.createCustomClient(
 );
 ```
 
-Please note that connecting to a locally running node could be easily done using the factory method:
+</TabItem>
+</Tabs>
 
-```ts
-const testnetClient: Client = await ClientFactory.createDefaultClient(
-  DefaultProviderUrls.LOCALNET,
-  true,
-  baseAccount
-);
-```
+:::info
+Please note that specifying a base account is only optional at this point. You will learn more about the base account in the [Wallet Operations](massa-web3/massa-web3-wallet) section.
+:::
 
 Once there is an initialized client instance, it is straightforward to call methods on it:
 
