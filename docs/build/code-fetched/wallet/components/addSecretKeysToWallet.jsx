@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function addSecretKeysToWallet() {
     return (
@@ -10,7 +11,7 @@
           title="addSecretKeysToWallet"
           showLineNumbers
         >
-          {"    const addedAccounts: IAccount[] = await web3Client\n      .wallet()\n      .addSecretKeysToWallet([secondAccSecretKey]);\n    console.log(`Added accounts to the wallet: ${addedAccounts.length}`);"}
+        {walletCode.addSecretKeysToWallet}
         </CodeBlock>
       </div>
     );

@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function getBaseAccount() {
     return (
@@ -10,7 +11,7 @@
           title="getBaseAccount"
           showLineNumbers
         >
-          {"    const baseAccount: IAccount | null = web3Client.wallet().getBaseAccount();\n    if (baseAccount === null) {\n      throw new Error(\"No base account found\");\n    }\n    console.log(`Base account of the wallet: ${baseAccount.address}`);"}
+        {walletCode.getBaseAccount}
         </CodeBlock>
       </div>
     );

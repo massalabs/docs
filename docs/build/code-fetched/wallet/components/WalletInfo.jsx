@@ -3,15 +3,15 @@
   import CodeBlock from '@theme/CodeBlock';
   import walletCode from '../code-extracted-wallet.json';
 
-  export default function getAccountFromSecretKey() {
+  export default function WalletInfo() {
     return (
       <div>
         <CodeBlock
           language="ts"
-          title="getAccountFromSecretKey"
+          title="WalletInfo"
           showLineNumbers
         >
-        {walletCode.getAccountFromSecretKey}
+        {walletCode.WalletInfo}
         </CodeBlock>
       </div>
     );

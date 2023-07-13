@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function cleanWallet() {
     return (
@@ -10,7 +11,7 @@
           title="cleanWallet"
           showLineNumbers
         >
-          {"    await web3Client.wallet().cleanWallet();\n    console.log(\"All wallet accounts removed\");"}
+        {walletCode.cleanWallet}
         </CodeBlock>
       </div>
     );

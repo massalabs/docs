@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function getWalletAccounts() {
     return (
@@ -10,7 +11,7 @@
           title="getWalletAccounts"
           showLineNumbers
         >
-          {"    const allWalletAccounts: IAccount[] = await web3Client\n      .wallet()\n      .getWalletAccounts();\n    console.log(\n      `All wallet accounts: ${allWalletAccounts.map(\n        (account: IAccount) => account.address\n      )}`\n    );"}
+        {walletCode.getWalletAccounts}
         </CodeBlock>
       </div>
     );

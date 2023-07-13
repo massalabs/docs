@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function walletSignMessage() {
     return (
@@ -10,7 +11,7 @@
           title="walletSignMessage"
           showLineNumbers
         >
-          {"    const signature: ISignature = await WalletClient.walletSignMessage(\n      \"Hello world\",\n      baseAccount\n    );\n    console.log(`Signature created: ${signature.base58Encoded}`);"}
+        {walletCode.walletSignMessage}
         </CodeBlock>
       </div>
     );

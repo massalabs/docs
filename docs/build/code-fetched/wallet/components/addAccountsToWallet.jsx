@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function addAccountsToWallet() {
     return (
@@ -10,7 +11,7 @@
           title="addAccountsToWallet"
           showLineNumbers
         >
-          {"    await web3Client\n      .wallet()\n      .addAccountsToWallet([deployerAccount, newAccount]);\n"}
+        {walletCode.addAccountsToWallet}
         </CodeBlock>
       </div>
     );

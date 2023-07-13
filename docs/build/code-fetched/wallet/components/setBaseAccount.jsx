@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function setBaseAccount() {
     return (
@@ -10,7 +11,7 @@
           title="setBaseAccount"
           showLineNumbers
         >
-          {"    await web3Client.wallet().setBaseAccount(deployerAccount);\n    console.log(`Base account of the wallet: ${deployerAccount.address}`);"}
+        {walletCode.setBaseAccount}
         </CodeBlock>
       </div>
     );

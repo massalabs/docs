@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function sellRolls() {
     return (
@@ -10,7 +11,7 @@
           title="sellRolls"
           showLineNumbers
         >
-          {"    const sellRollsTxId: Array<string> = await web3Client\n      .wallet()\n      .sellRolls(transactionDataRolls, baseAccount as IAccount);\n    // Await finalization\n    await web3Client\n      .smartContracts()\n      .awaitRequiredOperationStatus(sellRollsTxId[0], EOperationStatus.FINAL);\n    console.log(`Transaction ${sellRollsTxId} finalized`);"}
+        {walletCode.sellRolls}
         </CodeBlock>
       </div>
     );

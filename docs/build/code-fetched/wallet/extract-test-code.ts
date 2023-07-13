@@ -50,6 +50,7 @@ if (process.argv.includes('--generate')) {
       let content = `
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function ${funcName}() {
     return (
@@ -59,7 +60,7 @@ if (process.argv.includes('--generate')) {
           title="${funcName}"
           showLineNumbers
         >
-          {${JSON.stringify(walletCodeExtracted[funcName])}}
+        {walletCode.${funcName}}
         </CodeBlock>
       </div>
     );

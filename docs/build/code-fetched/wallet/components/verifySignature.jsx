@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function verifySignature() {
     return (
@@ -10,7 +11,7 @@
           title="verifySignature"
           showLineNumbers
         >
-          {"    const isSignatureValid: boolean = await web3Client\n      .wallet()\n      .verifySignature(\n        \"Hello world\",\n        signature,\n        baseAccount.publicKey as string\n      );\n    console.log(`isSignatureValid: ${isSignatureValid}`);"}
+        {walletCode.verifySignature}
         </CodeBlock>
       </div>
     );

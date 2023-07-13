@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function removeAddressesFromWallet() {
     return (
@@ -10,7 +11,7 @@
           title="removeAddressesFromWallet"
           showLineNumbers
         >
-          {"    await web3Client\n      .wallet()\n      .removeAddressesFromWallet([newAccount.address as string]);\n    console.log(`Removed account ${newAccount.address} from the wallet`);"}
+        {walletCode.removeAddressesFromWallet}
         </CodeBlock>
       </div>
     );

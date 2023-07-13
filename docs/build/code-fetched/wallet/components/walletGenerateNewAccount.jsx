@@ -1,6 +1,7 @@
 
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
+  import walletCode from '../code-extracted-wallet.json';
 
   export default function walletGenerateNewAccount() {
     return (
@@ -10,7 +11,7 @@
           title="walletGenerateNewAccount"
           showLineNumbers
         >
-          {"    const newAccount: IAccount = await WalletClient.walletGenerateNewAccount();\n    console.log(\"New account address:\", newAccount.address);"}
+        {walletCode.walletGenerateNewAccount}
         </CodeBlock>
       </div>
     );
