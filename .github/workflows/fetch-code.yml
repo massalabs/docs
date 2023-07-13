@@ -1,0 +1,19 @@
+name: Fetch File from Another Repo
+
+on: 
+  push:
+    branches:
+      - 100-massa-web3-pag
+
+jobs:
+  fetch-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v3
+
+      - name: Fetch file from other repo
+        run: |
+          curl -H "Accept: application/vnd.github.v3.raw" -o docs/build/massa-web3/test-wallet.ts https://api.github.com/repos/massalabs/massa-web3/contents/examples/wallet/index.ts?ref=398-test-end-to-end-wallet
+      - name: Print the file
+        run: docs/build/massa-web3/test-wallet.ts
