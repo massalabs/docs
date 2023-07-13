@@ -34,12 +34,12 @@ For a quick integration of Massa within a web browser, consider reading our Web 
 
 Massa-web3 can be used as a library for frameworks or as a stand-alone bundled js file which can be easily loaded into the browser.
 
-#### Requirements
+### Requirements
 
 - NodeJS 14+
 - npm / yarn (see package.json)
 
-#### Library (Node.js/React/Vue.js) usage
+### As a library (Node.js/React/Vue.js)
 
 Just install the library using npm:
 
@@ -47,7 +47,7 @@ Just install the library using npm:
 npm install @massalabs/massa-web3
 ```
 
-#### Browser usage
+### In a browser
 
 If you want to use the library in a vanilla javascript project, please add the following script tag to your html file:
 
@@ -175,18 +175,10 @@ const addressesResp: Array<IAddressInfo> = await web3Client
 
 ### Client exposed APIs
 
-The client exposes several APIs which could be used on its own (also initialized as stand-alone) if one needs to:
-
-```ts
-web3Client.publicApi()          -> sub-client for public api                    (interface: PublicApiClient)
-web3Client.privateApi()         -> sub-client for private api                   (interface: PrivateApiClient)
-web3Client.wallet()             -> sub-client for wallet-related operations     (interface: WalletClient)
-web3Client.smartContracts()     -> sub-client for smart contracts interaction   (interface: SmartContractsClient)
-```
-
-You can find details for each of the above sub-clients in the following sections.
+You can find details for each of the exposed APIs with all the available methods in the following sections:
 
 - [Public API](massa-web3/massa-web3-public-api)
 - [Private API](massa-web3/massa-web3-private-api)
 - [Wallet Operations](massa-web3/massa-web3-wallet)
 - [Smart Contracts Operations](massa-web3/massa-web3-smart-contracts)
+- [Utility Functions](massa-web3/massa-web3-utils)
