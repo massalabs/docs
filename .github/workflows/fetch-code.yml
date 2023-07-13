@@ -19,12 +19,12 @@ jobs:
 
       - name: Fetch file from other repo
         run: |
-          curl -H "Accept: application/vnd.github.v3.raw" -o docs/build/code-fetched/test-wallet.ts https://api.github.com/repos/massalabs/massa-web3/contents/examples/wallet/index.ts?ref=398-test-end-to-end-wallet
+          curl -H "Accept: application/vnd.github.v3.raw" -o docs/build/code-fetched/wallet/test-wallet.ts https://api.github.com/repos/massalabs/massa-web3/contents/examples/wallet/index.ts?ref=398-test-end-to-end-wallet
 
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           token: ${{ secrets.MASSABOTCLASSIC }}
           commit_message: "Add fetched file"
-          file_pattern: "docs/build/code-fetched/test-wallet.ts"
+          file_pattern: "docs/build/code-fetched/wallet/test-wallet.ts"
           commit_author: massabot <info@massa.net>
