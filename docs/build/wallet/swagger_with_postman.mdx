@@ -1,0 +1,14 @@
+# Import Swagger API in Postman
+
+This guide explains how to import a Swagger API in Postman. This allows you to interact easily with an API defined by a Swagger file.
+Here are the steps to follow to get started:
+
+1. **Locate the Swagger File**: Find the latest version of `swagger.yml` [file](https://github.com/massalabs/station/blob/main/api/swagger/server/restapi/resource/swagger.yml) for the API you want to work with and copy its entire content. Alternatively, you can also use your local version of the `swagger.yml` file.
+
+2. **Importing the Swagger**: Launch Postman and navigate to the "APIs" section. From there, click on the "Import" button and select the "Raw text" option. Next, paste the contents of the copied `swagger.yml` file into the designated text field.
+
+3. **Ensure MassaStation is Running**: Start your MassaStation by using the command `task build-run`, or directly from the desktop application if it's already installed on your computer.
+
+4. **Interact with an Endpoint**: Expand the imported API in Postman and select the desired endpoint (e.g., "all Domains Getter"). Replace `{{baseUrl}}` with the correct path (e.g.,for this specific endpoint "all Domains Getter", you can use `station.massa` ) by clicking on the "..." menu, then go to the Variables tab, and add the variable. From there, Click on the "Send" button in Postman to make the API request
+
+Congratulations! You've successfully used Postman with Swagger to interact with an API.
