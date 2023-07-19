@@ -5,7 +5,7 @@ on:
       - 116-fetch-wallet-end-to-end-tests
 
 jobs:
-  fetch-and-run-file:
+  build-test-and-fetch:
     runs-on: ubuntu-latest
 
     permissions:
@@ -17,13 +17,28 @@ jobs:
         with:
           token: ${{ secrets.MASSABOTCLASSIC }}
 
-      - name: Fetch end-to-end test from other repo
+      - name: Checkout massa-web3 repo
+        uses: actions/checkout@v2
+        with:
+          repository: massalabs/massa-web3
+          path: massa-web3
+          ref: 398-test-end-to-end-wallet
+
+      - name: Install Dependencies
         run: |
-          curl -H "Accept: application/vnd.github.v3.raw" -o docs/build/massa-web3/code-fetched/wallet/test-wallet.ts https://api.github.com/repos/massalabs/massa-web3/contents/examples/wallet/index.ts?ref=398-test-end-to-end-wallet
+          cd massa-web3
+          npm install
+      
+      - name: Build and Test
+        run: |
+          cd massa-web3
+          npm run build
+          npm run test
 
       - name: Extract function code
         run: |
           node docs/build/massa-web3/code-fetched/extract-test-code.ts --generate
+  
 
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v4
