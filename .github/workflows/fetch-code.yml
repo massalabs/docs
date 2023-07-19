@@ -45,5 +45,5 @@ jobs:
         with:
           token: ${{ secrets.MASSABOTCLASSIC }}
           commit_message: "Add fetched file and extracted code"
-          file_pattern: "docs/build/massa-web3/code-fetched/components/*"
+          file_pattern: "docs/build/massa-web3/code-fetched/**/*"
           commit_author: massabot <info@massa.net>
