@@ -3,8 +3,6 @@ const path = require("path");
 const walletCodeExtracted = require("./wallet/code-extracted-wallet.json");
 
 function extractTestCode(fileName) {
-  console.log("dirname", __dirname);
-  console.log("filename", path.resolve(fileName));
   const data = fs.readFileSync(path.resolve(fileName), "utf-8");
   const lines = data.split("\n");
   let currentFunction = null;
