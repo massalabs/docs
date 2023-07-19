@@ -30,7 +30,7 @@ function extractTestCode(fileName) {
   return testFunctions;
 }
 
-const testFunctions = extractTestCode("examples/wallet/index.ts");
+const testFunctions = extractTestCode("../../../../massa-web3/examples/wallet/index.ts");
 
 // Write to JSON file
 fs.writeFileSync(
