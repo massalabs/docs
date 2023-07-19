@@ -68,5 +68,6 @@ if (process.argv.includes('--generate')) {
   `;
       // Write the content to a new .jsx file
       fs.writeFileSync(path.join(outputDirectory, `${funcName}.jsx`), content);
+      console.log(`Generated ${funcName}.jsx at ${path.join(outputDirectory, `${funcName}.jsx`), content}`);
   }
 }
