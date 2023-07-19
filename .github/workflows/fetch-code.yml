@@ -29,11 +29,11 @@ jobs:
           cd massa-web3
           npm install
       
-      # - name: Build and Test
-      #   run: |
-      #     cd massa-web3
-      #     npm run build
-      #     npm run test
+      - name: Build and Test
+        run: |
+          cd massa-web3
+          npm run build
+          npm run test
 
       - name: Extract function code
         run: |
@@ -45,5 +45,5 @@ jobs:
         with:
           token: ${{ secrets.MASSABOTCLASSIC }}
           commit_message: "Add fetched file and extracted code"
-          file_pattern: "docs/build/massa-web3/code-fetched/wallet/*"
+          file_pattern: "docs/build/massa-web3/code-fetched/components/*"
           commit_author: massabot <info@massa.net>
