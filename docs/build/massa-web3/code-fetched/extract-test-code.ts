@@ -3,7 +3,7 @@ const path = require("path");
 const walletCodeExtracted = require("./wallet/code-extracted-wallet.json");
 
 function extractTestCode(fileName) {
-  const data = fs.readFileSync(path.resolve(__dirname, fileName), "utf-8");
+  const data = fs.readFileSync(path.resolve(fileName), "utf-8");
   const lines = data.split("\n");
   let currentFunction = null;
   let currentFunctionLines = [];
@@ -30,7 +30,7 @@ function extractTestCode(fileName) {
   return testFunctions;
 }
 
-const testFunctions = extractTestCode("examples/wallet/index.ts");
+const testFunctions = extractTestCode("wallet/test-wallet.ts");
 
 // Write to JSON file
 fs.writeFileSync(
