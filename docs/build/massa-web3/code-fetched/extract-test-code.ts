@@ -30,7 +30,7 @@ function extractTestCode(fileName) {
   return testFunctions;
 }
 
-const testFunctions = extractTestCode("test-wallet.ts");
+const testFunctions = extractTestCode("wallet/test-wallet.ts");
 
 // Write to JSON file
 fs.writeFileSync(
