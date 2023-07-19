@@ -41,6 +41,7 @@ fs.writeFileSync(
 // If --generate is passed, generate the react components
 if (process.argv.includes("--generate")) {
   const outputDirectory = path.join(__dirname, "components");
+  console.log(`Generating components at ${outputDirectory}`)
   if (!fs.existsSync(outputDirectory)) {
     fs.mkdirSync(outputDirectory);
   }
