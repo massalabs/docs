@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const walletCodeExtracted = require("./code-extracted-wallet.json");
+const walletCodeExtracted = require("./wallet/code-extracted-wallet.json");
 
 function extractTestCode(fileName) {
   const data = fs.readFileSync(path.resolve(__dirname, fileName), "utf-8");
@@ -34,7 +34,7 @@ const testFunctions = extractTestCode("test-wallet.ts");
 
 // Write to JSON file
 fs.writeFileSync(
-  "docs/build/code-fetched/wallet/code-extracted-wallet.json",
+  "docs/build/massa-web3/code-fetched/wallet/code-extracted-wallet.json",
   JSON.stringify(testFunctions, null, 2)
 );
 
