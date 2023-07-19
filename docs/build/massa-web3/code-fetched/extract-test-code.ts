@@ -39,15 +39,15 @@ fs.writeFileSync(
 );
 
 // If --generate is passed, generate the react components
-if (process.argv.includes('--generate')) {
-  const outputDirectory = path.join(__dirname, 'components');
-  if (!fs.existsSync(outputDirectory)){
-      fs.mkdirSync(outputDirectory);
+if (process.argv.includes("--generate")) {
+  const outputDirectory = path.join(__dirname, "components");
+  if (!fs.existsSync(outputDirectory)) {
+    fs.mkdirSync(outputDirectory);
   }
 
   // Loop through each extracted function
   for (let funcName in walletCodeExtracted) {
-      let content = `
+    let content = `
   import React from 'react';
   import CodeBlock from '@theme/CodeBlock';
   import walletCode from '../code-extracted-wallet.json';
@@ -66,8 +66,13 @@ if (process.argv.includes('--generate')) {
     );
   }
   `;
-      // Write the content to a new .jsx file
-      fs.writeFileSync(path.join(outputDirectory, `${funcName}.jsx`), content);
-      console.log(`Generated ${funcName}.jsx at ${path.join(outputDirectory, `${funcName}.jsx`), content}`);
+    // Write the content to a new .jsx file
+    fs.writeFileSync(path.join(outputDirectory, `${funcName}.jsx`), content);
+    console.log(
+      `Generated ${funcName}.jsx at ${path.join(
+        outputDirectory,
+        `${funcName}.jsx`
+      )}`
+    );
   }
 }
