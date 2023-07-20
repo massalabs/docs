@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: "Learn",
+    title: "Discover Massa",
     content: "Learn basic concepts and inner workings of Massa blockchain.",
     docName: "docs/learn/home",
     icon: "🎓",
