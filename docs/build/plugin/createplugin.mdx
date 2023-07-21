@@ -6,7 +6,8 @@ title: Plugin creation
 # Creating a plugin: step by step
 
 This tutorial will show you how to create a simple plugin using Go and Swagger. It is possible to use other languages and frameworks such as explained in the [plugin guidelines](./guidelines.mdx).
-Let’s take the “Hello world” plugin located [here](https://github.com/massalabs/station-massa-hello-world/tree/main) and use it as an example.
+Here, we will rebuild the “Hello world” plugin from scratch, you can access it [here](https://github.com/massalabs/station-massa-hello-world/tree/main) as an example.
+
 
 ## Install Go
 
@@ -181,11 +182,11 @@ import (
 
 func Hello(params operations.HelloParams) middleware.Responder {
     target := "World"
-    if params.Name != nil {
+    if params.Name != nil { // takes the name of the person to be greeted from the query parameters
         target = *params.Name
     }
 
-    return operations.NewHelloOK().WithPayload(
+    return operations.NewHelloOK().WithPayload( // returns a 200 OK response with the greeting
         &operations.HelloOKBody{Message: fmt.Sprintf("Hello, %s!", target)},
     )
 }
@@ -207,11 +208,12 @@ import (
 )
 
 func initializeAPI() *restapi.Server {
-	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
+	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "") // loads the swagger file
 	if err != nil {
 		panic(err)
 	}
 
+  // initializes the API
 	pluginAPI := operations.NewHelloWorldAPI(swaggerSpec)
 	pluginAPI.HelloHandler = operations.HelloHandlerFunc(api.Hello)
 	server := restapi.NewServer(pluginAPI)
@@ -235,16 +237,16 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 
 ```go
 func main() {
-	intSig := make(chan os.Signal, 1)
-	signal.Notify(intSig, syscall.SIGINT, syscall.SIGTERM)
+	intSig := make(chan os.Signal, 1) // creates a channel to receive the interrupt signal
+	signal.Notify(intSig, syscall.SIGINT, syscall.SIGTERM) // notifies the channel when the interrupt signal is received
 
-	server := initializeAPI()
+	server := initializeAPI() // initializes the API
 
 	if err := server.Serve(); err != nil {
 		panic(err)
 	}
 
-	<-intSig
+	<-intSig // waits for the interrupt signal to be received
 }
 ```
 
@@ -269,7 +271,7 @@ task build-run
   ```
 
 > replace `<port>` with the port your plugin is running on
-
+<!-- TO DO : add a note about importing the swagger file in postman to perform the API calls -->
 > you should see the following output:
 >
 > ```json
@@ -419,23 +421,23 @@ To add a web-app to our plugin,
     func Handle(params operations.WebParams) middleware.Responder {
       resourceName := params.Resource
 
-      resourceContent, err := Content(resourceName)
+      resourceContent, err := Content(resourceName) // reads the content of the html file
       if err != nil {
         return operations.NewWebNotFound()
       }
 
       fileExtension := filepath.Ext(resourceName)
 
-      mimeType := mime.TypeByExtension(fileExtension)
+      mimeType := mime.TypeByExtension(fileExtension) // gets the mime type of the file
 
       header := map[string]string{"Content-Type": mimeType}
 
-      return openapi.NewCustomResponder(resourceContent, header, http.StatusOK)
+      return openapi.NewCustomResponder(resourceContent, header, http.StatusOK) // returns the content of the html file
     }
 
     // defaultRedirectHandler redirects request to "/" URL to "web/index.html".
     func DefaultRedirectHandler(_ operations.DefaultPageParams) middleware.Responder {
-      return openapi.NewCustomResponder(nil, map[string]string{"Location": "web/index.html"}, http.StatusPermanentRedirect)
+      return openapi.NewCustomResponder(nil, map[string]string{"Location": "web/index.html"}, http.StatusPermanentRedirect) // redirects to the html file
     }
     ```
 
