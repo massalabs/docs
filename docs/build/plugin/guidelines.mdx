@@ -24,7 +24,7 @@ Your plugin will need to call **the Register Endpoint** to be compatible with Ma
 
 ## Artifact requirements
 
-To be compatible with Massa Station, the plugin zip archive must contain the following files :
+To be compatible with Massa Station, the plugin zip archive must contain the following files:
 
 ### Logo
 
@@ -32,7 +32,7 @@ There must be a plugin logo in the zip archive. it must be a [valid image file](
 
 ### Module manifest
 
-The manifest will provide the necessary information to the Massa Station to display the plugin in the UI. It must be a `manifest.json` file at the root of the artifact. It must contain the following properties:
+The manifest will provide the necessary information to the Massa Station to display the plugin in the UI. It must be a `manifest.json` file at the root of the zip archive. It must contain the following properties:
 
 | Fields      | Description                   | Format | Specifications                                                  |
 | ----------- | ----------------------------- | ------ | --------------------------------------------------------------- |
@@ -42,18 +42,6 @@ The manifest will provide the necessary information to the Massa Station to disp
 | Logo        | Module logo file name         | text   | ex: logo.png                                                    |
 | Home        | URL to module home page       | URL    | N/A XX.XX.XX                                                    |
 | Version     | Module version                | text   | Using [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0) |
-| APIspec     | api specifications            | text   | N/A                                                             |
+| APIspec     | api specifications            | text   | swagger file                                                            |
 
-> example :
->
-> ```json
-> {
->   "author": "Massa Labs",
->   "name": "hello-world",
->   "description": "hello world plugin",
->   "logo": "hello_world.svg",
->   "home": "",
->   "version": "0.0.6",
->   "apispec": ""
-> }
-> ```
+> See the manifest of the Hello-World plugin as an example: https://github.com/massalabs/station-massa-hello-world/blob/v0.0.8/manifest.json
