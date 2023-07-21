@@ -4,27 +4,31 @@ title: Plugin creation
 ---
 
 # Creating a plugin: step by step
-
+This tutorial will show you how to create a simple plugin using Go and Swagger. It is possible to use other languages and frameworks such as explained in the [plugin guidelines](./guidelined.mdx).
 Let’s take the “Hello world” plugin located [here](https://github.com/massalabs/station-massa-hello-world/tree/main) and use it as an example.
+
+## Install Go
+
+You can install Go [here](https://go.dev/doc/install).
 
 ## Creating the module
 
-You can create a plugin either in Go and use our tailor-made package or do your own, following the requirements.
+You can create a plugin either in Go and use our tailor-made package or do your own, following the [requirements](./guidelines.mdx).
 
 ### Create your Go plugin
 
 #### Initialize your Go project:
 
-Initialize the Go module:
+##### Initialize the Go module:
+- Create and navigate to the folder station-massa-hello-world
+- Run:
+  ```bash
+  go mod init github.com/my-username/station-massa-hello-world
+  ```
 
-```bash
-mkdir station-massa-hello-world && cd station-massa-hello-world
-go mod init github.com/my-username/station-massa-hello-world
-```
+##### Create a Logo
 
-Now, you need a logo.
-
-- Run `mkdir -p web/content && nano web/content/hello_world.svg` to create the file.
+- Create the folders `web/content` and add `hello_world.svg` in it.
 - Add your custom logo or copy-paste this one:
 
 ```svg
@@ -62,9 +66,9 @@ Now, you need a logo.
 </svg>
 ```
 
-Now let's create the manifest file:
+##### Add a  manifest file
 
-- Run `nano manifest.json` to create and open the file.
+- Create `manifest.json` in the root of your project.
 - Paste the following content, replacing the values with your own:
 
 ```json
@@ -81,15 +85,15 @@ Now let's create the manifest file:
 
 Set up the Task file:
 
-- Run `nano Taskfile.yml` to create and open the file.
+- Create the file `Taskfile.yml`.
 - Paste the content from the following [file](https://github.com/massalabs/station-massa-hello-world/blob/main/Taskfile.yml).
 - Run `task install`
 
 #### Define your plugin
 
-- Define an API for the plugin that will allow MassaStation to interact with it. You can use frameworks like Swagger or Gin to facilitate API development, or choose other suitable frameworks as per your preference.
-  - set up the api folder: `mkdir -p api/server`
-  - create a file named `swagger.yml`: `touch api/swagger.yml`
+- Define an API for the plugin that will allow MassaStation to interact with it.
+  - Set up the api folder:  create `api/server`
+  - Create a file named `swagger.yml` in the api folder
   - Initialize it with the different endpoints you want to expose, for example:
 
 ```yaml
@@ -142,11 +146,9 @@ paths:
 > - `/`: the default endpoint, that will redirect to the default endpoint
 > - `/api/hello`: the endpoint that will greet the user
 
-- create a `generate.go` file: `touch generate.go`
-- add the following code to it:
-
-- create a `generate.go` file: `touch generate.go`
-- add the following code to it:
+- Create a `generate.go` file:  in the root of your project
+> this file will generate the API from the swagger file when you run `task generate`
+- Add the following code to it:
 
   ```go
   package main
@@ -154,7 +156,7 @@ paths:
   //go:generate swagger generate server --quiet --target api/server --name station-massa-hello-world --spec api/swagger.yml --exclude-main
   ```
 
-- run `task generate` to generate the API
+- Run `task generate` to generate the API
 
   > This will generate a `cmd/station-massa-hello-world-server/station-massa-hello-world.go` file, that will be the entry point of your plugin
 
@@ -252,9 +254,9 @@ task build-run
 2023/07/12 14:21:00 Serving hello world at http://[::]:37735
 ```
 
-> The port will be different for you
+> The last numbers correspond to the port the API is running on. It will change each time you will restart the plugin.
 
-- let's test the endpoints: on another tetminal, run the following commands:
+- Let's test the endpoints: on another tetminal, run the following commands:
 
   ```bash
   curl -X PUT "http://localhost:<port>/api/hello?name=John" -H  "accept: application/json"
@@ -297,17 +299,17 @@ task build-run
     panic(err)
     }
 
-    plugin.RegisterPlugin(listener, plugin.Info{})
+    plugin.RegisterPlugin(listener)
 ```
 
 - install your plugin on massastation
-  - run `task install-plugin`
+  - Run `task install-plugin`
 - let's try it out:
-  - run MassaStation: click on the icon tray or run `massastation`
-  - accesst the home page at `http://station.massa`
-  - you should see the plugin in the list of plugins:
+  - Run MassaStation: click on the icon tray or run `massastation`
+  - Accesst the home page at `http://station.massa`
+  - You should see the plugin in the list of plugins:
     ![image](./massastation-menu.png)
-  - on another terminal, run
+  - On another terminal, run
 
 ```bash
 curl -X PUT "http://station.massa/plugin/my-name/hello-world/api/hello?name=John" -H  "accept: application/json"
@@ -321,11 +323,11 @@ curl -X PUT "http://station.massa/plugin/my-name/hello-world/api/hello?name=John
 
 Congratulations! You have created your first plugin. You can now continue to add a web interface to your plugin.
 
-#### Create a web app
+#### Add a front end
 
 To add a web-app to our plugin,
 
-- you should see the following output:
+- You should see the following output:
 - Add the right endpoint to the `swagger.yml` file.
 
 ```yaml
@@ -366,7 +368,7 @@ To add a web-app to our plugin,
 
   - Create `ressources.go` and `endpoints.go`.
 
-    - `ressource.go` read the content of the html file and returns it:
+    - `ressource.go` reads the content of the html file and returns it:
 
     ```go
     package web
