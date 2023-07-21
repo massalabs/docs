@@ -9,44 +9,35 @@ One of the advantages of Massa Station is that plugins can be developed in any p
 
 ## Tech Stack
 
-You can developp a plugin in any wanted language. The easiest way is to use go with the the [plugin hello-world](https://github.com/massalabs/station-massa-hello-world) hook to register the plugin.
+You can develop a plugin in any wanted language. The easiest way is to use Go.
 
-### Develop a plugin in go
+### Develop a plugin in Go
 
-To do so once you created a new plugin, you can simply register the plugin using our [plugin package](https://github.com/massalabs/station-massa-hello-world/blob/main/pkg/plugin/register.go)
+You can follow the steps described [here](./create-plugin.mdx)
 
 ### Develop a plugin in any other language
 
 Your plugin will need to call **the Register Endpoint** to be compatible with Massa Station: The plugin should be able to call the `/plugin-manager/register` endpoint of Massastation, as defined in [MassaStation Swagger File](https://github.com/massalabs/station/blob/main/api/swagger/server/restapi/resource/swagger.yml).
 
-In other words, the plugin should be able to call the following endpoint :
-
-- **Endpoint:** `/plugin-manager/register`
-- **Method:** POST
-- **Parameters:**
-  - `body` (Request Body, required): The request body containing the following properties:
-    - `id` (string, required): Plugin identifier.
-    - `url` (string, required): URL authority to use for connecting to the plugin.
-
 ## Artifact requirements
 
-To be compatible with Massa Station, the plugin artifact must contain the following files :
+To be compatible with Massa Station, the plugin zip archive must contain the following files :
 
 ### Logo
 
-There must be a plugin logo in the artifact. it must be a [valid image file](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
+There must be a plugin logo in the zip archive. it must be a [valid image file](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
 
 ### Module manifest
 
-The manifest will provide the necessary information to the Massa Station to display the plugin in the UI. It must be a `manifest.json` file at the root of the artifact. It must contain the following properties :
+The manifest will provide the necessary information to the Massa Station to display the plugin in the UI. It must be a `manifest.json` file at the root of the artifact. It must contain the following properties:
 
 | Fields      | Description                   | Format | Specifications                                                  |
 | ----------- | ----------------------------- | ------ | --------------------------------------------------------------- |
 | Author      | Module author name            | text   | 30 characters max                                               |
 | Name        | Module name                   | text   | 30 characters max                                               |
 | Description | Module short description text | text   | 80 characters max                                               |
-| Logo        | Module logo file name         | text   | ex: logo.png             |
-| Home        | URL to module home page       | URL    | N/A            XX.XX.XX                                                 |
+| Logo        | Module logo file name         | text   | ex: logo.png                                                    |
+| Home        | URL to module home page       | URL    | N/A XX.XX.XX                                                    |
 | Version     | Module version                | text   | Using [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0) |
 | APIspec     | api specifications            | text   | N/A                                                             |
 
