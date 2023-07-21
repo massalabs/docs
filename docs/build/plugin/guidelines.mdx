@@ -3,45 +3,51 @@ id: guidelines
 title: Guidelines
 ---
 
-# Plugin creation guidelines
+# Plugin Creation Guidelines
 
-One of the advantages of Massa Station is that plugins can be developed in any programming language. But in order for modules to work on the Massa Station, they must first respect a certain number of guidelines.
+One of the advantages of Massa Station is its flexibility in allowing plugins to be developed in any programming language. In order for modules to work with Massa Station, they must adhere to specific guidelines and specifications.
 
 > In the context of Massa Station, the terms "plugin" and "module" are used interchangeably to refer to the same thing, which is an extension or additional functionality that can be developed to work with Massa Station.
 
+## Plugin Overview
 
-## Tech Stack
+Massa Station plugins are essentially binaries with a few specific requirements, as defined in this document. To be installed in Massa Station, a plugin must be released as a Zip Archive, tailored for each targeted operating system. Currently, Massa Station supports the following OS configurations:
 
-You can develop a plugin in any wanted language. The easiest way is to use Go.
+- Windows 10/11, AMD64
+- Linux, AMD64
+- macOS, AMD64
+- macOS, ARM64
 
-### Develop a plugin in Go
+For details on the supported OS configurations, refer to [the Massa Station documentation](../wallet/massa-station.mdx).
 
-You can follow the steps described [here](./createplugin.mdx)
+## Plugin Structure
 
-### Develop a plugin in any other language
+A plugin Zip Archive must contain the following files and adhere to the specified structure:
 
-Your plugin will need to call **the Register Endpoint** to be compatible with Massa Station: The plugin should be able to call the `/plugin-manager/register` endpoint of Massastation, as defined in [MassaStation Swagger File](https://github.com/massalabs/station/blob/v0.2.5/api/swagger/server/restapi/resource/swagger.yml#L481).
+1. **Logo**: The archive must include a valid image file that serves as the plugin's logo. Refer to [the Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types) for valid image formats.
 
-## Artifact requirements
+2. **Manifest**: The plugin must have a `manifest.json` file at the root of the Zip Archive. This manifest provides essential information to Massa Station for displaying the plugin in the user interface. The `manifest.json` file must include the following properties:
 
-To be compatible with Massa Station, the plugin zip archive must contain the following files:
+   | Field       | Description                   | Format | Specifications                                                   |
+   | ----------- | ----------------------------- | ------ | ---------------------------------------------------------------- |
+   | Author      | Module author's name          | text   | Maximum 30 characters                                            |
+   | Name        | Module name                   | text   | Maximum 30 characters                                            |
+   | Description | Module short description text | text   | Maximum 80 characters                                            |
+   | Logo        | Module logo file name         | text   | Example: logo.png                                                |
+   | Home        | URL to module home page       | URL    | Format: `http(s)://example.com`                                  |
+   | Version     | Module version                | text   | Follow [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0) |
+   | APIspec     | API specifications            | text   | Swagger file                                                     |
 
-### Logo
+   > See the example manifest of the Hello-World plugin: [Hello-World Manifest](https://github.com/massalabs/station-massa-hello-world/blob/v0.0.8/manifest.json)
 
-There must be a plugin logo in the zip archive. it must be a [valid image file](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
+3. **Plugin Code**: The plugin's binary code and any additional resources required for its functionality should be included.
 
-### Module manifest
+## Plugin Registration
 
-The manifest will provide the necessary information to the Massa Station to display the plugin in the UI. It must be a `manifest.json` file at the root of the zip archive. It must contain the following properties:
+Upon startup, the plugin receives an ID as a parameter. The plugin must register itself as a MassaStation plugin by calling the `/plugin-manager/register` endpoint of Massa Station, providing the assigned ID.
 
-| Fields      | Description                   | Format | Specifications                                                  |
-| ----------- | ----------------------------- | ------ | --------------------------------------------------------------- |
-| Author      | Module author name            | text   | 30 characters max                                               |
-| Name        | Module name                   | text   | 30 characters max                                               |
-| Description | Module short description text | text   | 80 characters max                                               |
-| Logo        | Module logo file name         | text   | ex: logo.png                                                    |
-| Home        | URL to module home page       | URL    | N/A XX.XX.XX                                                    |
-| Version     | Module version                | text   | Using [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0) |
-| APIspec     | api specifications            | text   | swagger file                                                            |
+## Language Agnostic Plugin Development
 
-> See the manifest of the Hello-World plugin as an example: https://github.com/massalabs/station-massa-hello-world/blob/v0.0.8/manifest.json
+Massa Station allows plugin development in any programming language. While we may use Go in specific documentation, such as the "create plugin" guide, it's essential to emphasize that the plugin system is language agnostic, which is a key strength of Massa Station. Developers have the freedom to use their preferred programming language to create plugins that work seamlessly with Massa Station.
+
+For detailed steps on creating a plugin, please refer to the "create plugin" guide available [here](./create-plugin.mdx).
