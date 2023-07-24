@@ -8,7 +8,9 @@
         { "network": "buildnet", "version": "buildnet" },
         { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massalabs/project-initializer"
+      "install": "npm install @massalabs/project-initializer",
+
+      "npmLink": "https://www.npmjs.com/package/@massalabs/massa-web3?activeTab=versions"
     },
     {
       "title": "massa-as-sdk",
@@ -16,7 +18,8 @@
         { "network": "buildnet", "version": "buildnet" },
         { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massalabs/massa-as-sdk"
+      "install": "npm install @massalabs/massa-as-sdk",
+      "npmLink": "https://www.npmjs.com/package/@massalabs/massa-as-sdk?activeTab=versions"
     },
     {
       "title": "as-types",
@@ -24,7 +27,8 @@
         { "network": "buildnet", "version": "buildnet" },
         { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massalabs/as-types"
+      "install": "npm install @massalabs/as-types",
+      "npmLink": "https://www.npmjs.com/package/@massalabs/as-types?activeTab=versions"
     },
     {
       "title": "as-proba",
@@ -32,7 +36,8 @@
         { "network": "buildnet", "version": "buildnet" },
         { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massalabs/as-proba"
+      "install": "npm install @massalabs/as-proba",
+      "npmLink": "https://www.npmjs.com/package/@massalabs/as-proba?activeTab=versions"
     },
     {
       "title": "as-transformer",
@@ -40,7 +45,8 @@
         { "network": "buildnet", "version": "buildnet" },
         { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massalabs/as-transformer"
+      "install": "npm install @massalabs/as-transformer",
+      "npmLink": "https://www.npmjs.com/package/@massalabs/as-transformer?activeTab=versions"
     },
     {
       "title": "sc-deployer",
@@ -48,7 +54,8 @@
         { "network": "buildnet", "version": "buildnet" },
         { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massalabs/massa-sc-deployer"
+      "install": "npm install @massalabs/massa-sc-deployer",
+      "npmLink": "https://www.npmjs.com/package/@massalabs/massa-sc-deployer?activeTab=versions"
     },
     {
       "title": "massa-web3",
@@ -56,7 +63,8 @@
         { "network": "buildnet", "version": "buildnet" },
         { "network": "testnet", "version": "latest" }
       ],
-      "install": "npm install @massalabs/massa-web3"
+      "install": "npm install @massalabs/massa-web3",
+      "npmLink": "https://www.npmjs.com/package/@massalabs/massa-web3?activeTab=versions"
     }
   ]
 }

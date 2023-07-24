@@ -12,6 +12,7 @@ interface Project {
   title: string;
   compatibilities: Compatibility[];
   install: string;
+  npmLink: string;
 }
 
 interface VersionsData {
@@ -32,6 +33,7 @@ export default function VersionsTable() {
               <tr>
                 <th>Project</th>
                 <th>Install</th>
+                <th>NPM versions</th>
               </tr>
             </thead>
             <tbody>
@@ -49,6 +51,16 @@ export default function VersionsTable() {
                           : ""}
                       </CodeBlock>
                     </td>
+
+                    <td>
+                      <a
+                        href={project.npmLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {project.title} versions
+                      </a>
+                    </td>
                   </tr>
                 );
               })}
@@ -56,7 +68,6 @@ export default function VersionsTable() {
           </table>
         </TabItem>
       ))}
-      {compatibility ? `${project.install}@${compatibility.version}` : ""}
     </Tabs>
   );
 }
