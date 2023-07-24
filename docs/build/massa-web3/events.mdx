@@ -33,7 +33,7 @@ const filteredEvents: Array<IEvent> = await web3Client
 
 Defined in [src/web3/SmartContractsClient.ts:305](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/SmartContractsClient.ts#L305)
 
-Events could also be polled. The js sdk has two methods for doing this as shown below. In both, a filter, a web3 client and a poll interval which
+`massa-web3` provides two methods to poll events. Both methods require a filter, a web3 client and a poll interval.
 we can set in order to poll the events needs to be provided:
 
 ```typescript
