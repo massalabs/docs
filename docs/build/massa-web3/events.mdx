@@ -68,7 +68,7 @@ eventPoller.on(ON_MASSA_EVENT_ERROR, onEventDataError);
 eventPoller.stopPolling();
 ```
 
-Alternatively, one could make direct use of callback functions as function arguments which would fire on event data received or generated errors:
+Alternatively, one can make direct use of callback functions as function arguments to execute code in response of event data received or generated errors:
 
 ```typescript
 const onEventData = (events: Array<IEvent>) => {
