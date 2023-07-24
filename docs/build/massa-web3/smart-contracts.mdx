@@ -6,14 +6,15 @@ title: Smart contract operations
 # Smart contract operations
 
 Smart contract operations are accessible under the smart contracts sub-client which is accessible via the `smartContracts()` method on the client.
-Smart Contracts Client object enables smart contract deployment, calls and streaming of events.
+Smart Contracts Client object enables smart contract deployment, read and write operations.
 `SmartContractsClient` documentation can be found [here](https://web3.docs.massa.net/classes/SmartContractsClient.html).
 
 ### Deployment
 
 The `deploySmartContract` method allows to deploy a smart contract using the WASM binary. This method
 takes a [`IContractData`](https://web3.docs.massa.net/interfaces/IContractData.html) object as parameter and returns the operation id of the operation.
-If no executor is provided, the default wallet account from the provided WalletClient will be used.
+If no executor of the operation is provided, [base account](https://web3.docs.massa.net/classes/WalletClient.html#setBaseAccount) 
+of the wallet will be used.
 
 ```typescript
 const opId: string = await web3Client.smartContracts().deploySmartContract(
@@ -23,7 +24,7 @@ const opId: string = await web3Client.smartContracts().deploySmartContract(
     contractDataBinary: compiledScFromSource.binary,
     datastore: new Map<Uint8Array, Uint8Array>(),
   } as IContractData,
-  baseAccount
+  baseAccount // executor
 );
 ```
 
