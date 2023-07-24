@@ -8,7 +8,6 @@ title: Plugin creation
 This tutorial will show you how to create a simple plugin using Go and Swagger. It is possible to use other languages and frameworks such as explained in the [plugin guidelines](./guidelines.mdx).
 Here, we will rebuild the “Hello world” plugin from scratch, you can access it [here](https://github.com/massalabs/station-massa-hello-world/tree/main) as an example.
 
-
 ## Install Go
 
 You can install Go [here](https://go.dev/doc/install).
@@ -24,6 +23,7 @@ You can create a plugin either in Go and use our tailor-made package or do your 
   ```bash
   go mod init github.com/my-username/station-massa-hello-world
   ```
+  > You can replace `my-username` with your own username, or the name of your organization. Apply the same logic for the rest of the tutorial.
 
 #### Create a Logo
 
@@ -271,7 +271,9 @@ task build-run
   ```
 
 > replace `<port>` with the port your plugin is running on
+
 <!-- TO DO : add a note about importing the swagger file in postman to perform the API calls -->
+
 > you should see the following output:
 >
 > ```json
