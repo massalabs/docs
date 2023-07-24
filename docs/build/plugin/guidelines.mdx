@@ -7,8 +7,6 @@ title: Guidelines
 
 One of the advantages of Massa Station is its flexibility in allowing plugins to be developed in any programming language. In order for modules to work with Massa Station, they must adhere to specific guidelines and specifications.
 
-> In the context of Massa Station, the terms "plugin" and "module" are used interchangeably to refer to the same thing, which is an extension or additional functionality that can be developed to work with Massa Station.
-
 ## Plugin Overview
 
 Massa Station plugins are essentially binaries with a few specific requirements, as defined in this document.
@@ -26,9 +24,14 @@ Plugins are started as follows:
 ```bash
 ./plugin-binary <PLUGIN-ID>
 ```
+
 At startup, the plugin must retrieve the plugin ID from the command line arguments.
 Following the startup, the plugin must register itself by calling the `/plugin-manager/register` endpoint of Massa Station, providing the assigned ID.
-> Massa Station will respond with a 204 status code if the registration is successful. In case of failure, the plugin must exit with a non-zero exit code.
+
+:::info
+Massa Station will respond with a 204 status code if the registration is successful. In case of failure, the plugin must exit with a non-zero exit code.
+:::
+
 ## Plugin Packaging
 
 To be installed in Massa Station, a plugin must be packaged as a Zip Archive, tailored for each targeted operating system.
@@ -52,6 +55,9 @@ A plugin Zip Archive must contain the following files and adhere to the specifie
 
 1. **Plugin Binary**: The plugin's binary, withch should follow the statdards
 2. **Logo**: The archive must include a valid image file that serves as the plugin's logo. Refer to [the Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types) for valid image formats.
+   :::tip
+   This logo will be displayed in the Massa Station interface. To ensure a good user experience, we recommend using a square image with a minimum size of 128x128 pixels.
+   :::
 
 3. **Manifest**: The plugin must have a `manifest.json` file at the root of the Zip Archive. This manifest provides essential information to Massa Station for displaying the plugin in the user interface. The `manifest.json` file must include the following properties:
 
@@ -65,6 +71,8 @@ A plugin Zip Archive must contain the following files and adhere to the specifie
    | Version     | Module version                | text   | Follow [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0) |
    | APIspec     | API specifications            | text   | Swagger file                                                     |
 
-   > See the example manifest of the Hello-World plugin: [Hello-World Manifest](https://github.com/massalabs/station-massa-hello-world/blob/v0.0.8/manifest.json)
+   :::info
+   See the example manifest of the Hello-World plugin: [Hello-World Manifest](https://github.com/massalabs/station-massa-hello-world/blob/v0.0.8/manifest.json)
+   :::
 
-4. **Additional Resources**: Any additional resources for the plugin such as configuration files, images, etc.
+4. **Optional: Additional Resources**: Any additional resources for the plugin such as configuration files, images, etc.

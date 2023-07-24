@@ -165,7 +165,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Plugin",
+      label: "Massa Station plugin",
       items: [
         {
           type: "doc",
