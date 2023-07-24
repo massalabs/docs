@@ -11,7 +11,9 @@ The EventPoller class provides a convenient way to poll events from the Massa ne
 Here is the list of available operations:
 
 ## Smart contract event fetching and polling
+
 ### Fetching
+
 Events emitted by smart contracts can be directly fetched via the `getFilteredScOutputEvents` method, which takes a
 [`IEventFilter`](https://web3.docs.massa.net/interfaces/IEventFilter.html) object as parameter and returns an array of
 [`IEvent`](https://web3.docs.massa.net/interfaces/IEvent.html) objects containing the events that match the filter.
@@ -32,7 +34,9 @@ const filteredEvents: Array<IEvent> = await web3Client
 ```
 
 Defined in [src/web3/SmartContractsClient.ts:305](https://github.com/massalabs/massa-web3/blob/41f5634/src/web3/SmartContractsClient.ts#L305)
+
 ### Polling
+
 `massa-web3` provides two methods to poll events. Both methods require a filter, a web3 client and a poll interval.
 
 ```typescript
@@ -72,34 +76,22 @@ Alternatively, one can make direct use of callback functions as function argumen
 
 ```typescript
 const onEventData = (events: Array<IEvent>) => {
-    console.log("Event Data Received:", events);
+  console.log("Event Data Received:", events);
 };
 const onEventDataError = (error: Error) => {
-    console.log("Event Data Error:", error);
+  console.log("Event Data Error:", error);
 };
 
 const eventPoller: EventPoller = EventPoller.startEventsPolling(
-    eventsFilter,
-    1000,
-    web3Client,
-    onEventData,
-    onEventDataError
+  eventsFilter,
+  1000,
+  web3Client,
+  onEventData,
+  onEventDataError
 );
 
 //...do some work...
 
 // cleanup and finish
 eventPoller.stopPolling();
-```
-
-The latter could easily be employed in smart contracts where we need to e.g. get the contract address. For example, this contract would emit the address at creation:
-
-```typescript
-import { call, print, create_sc, generate_event } from "massa-sc-std";
-
-export function main(_args: string): i32 {
-    ... deploy the smart contract ...
-    generateEvent(`Address:${sc_address}`); //emit an event with the address
-    ...
-}
 ```
