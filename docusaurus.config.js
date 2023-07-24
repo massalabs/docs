@@ -9,7 +9,7 @@ const katex = require("rehype-katex");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Massa Documentation",
-  tagline: "Developer Documentation for Massa",
+  tagline: "Massa Developer Documentation",
   favicon: "img/logo.svg",
 
   // Set the production url of your site here

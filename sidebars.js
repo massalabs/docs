@@ -36,20 +36,26 @@ const sidebars = {
       id: "learn/architecture/basic-concepts",
     },
     {
-      type: "doc",
-      id: "learn/architecture/node-architecture",
+      type: "category",
+      label: "Node Architecture",
+      items: [
+        {
+          type: "doc",
+          id: "learn/architecture/node-architecture",
+        },
+        {
+          type: "doc",
+          id: "learn/architecture/operation-lifecycle",
+        },
+        {
+          type: "doc",
+          id: "learn/architecture/consensus-quality",
+        },
+      ],
     },
     {
       type: "doc",
-      id: "learn/architecture/operation-lifecycle",
-    },
-    {
-      type: "doc",
-      id: "learn/architecture/consensus-quality",
-    },
-    {
-      type: "doc",
-      id: "learn/architecture/storage-costs",
+      id: "learn/storage-costs",
     },
     {
       type: "html",
@@ -57,11 +63,12 @@ const sidebars = {
     },
     {
       type: "html",
-      value: "<span class='menu__link'><b><small>Autonomous Smart Contract</small></b></span>"
+      value:
+        "<span class='menu__link'><b><small>Autonomous Smart Contract</small></b></span>",
     },
     {
       type: "doc",
-      id: "learn/asc/autonomous-smart-contract",
+      id: "learn/asc/intro",
     },
     {
       type: "doc",
@@ -71,6 +78,18 @@ const sidebars = {
       type: "doc",
       id: "learn/asc/use-cases",
     },
+    {
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value: "<span class='menu__link'><b><small>Decentralized Web</small></b></span>"
+    },
+    {
+      type: "doc",
+      id: "learn/decentralized-web",
+    }
   ],
   tutorialSidebar: [
     {
@@ -89,7 +108,7 @@ const sidebars = {
     {
       type: "doc",
       id: "tutorial/trading-bot",
-    }
+    },
   ],
   buildSidebar: [
     {
@@ -190,6 +209,10 @@ const sidebars = {
       items: [
         {
           type: "doc",
+          id: "build/api/providers",
+        },
+        {
+          type: "doc",
           id: "build/api/jsonrpc",
         },
         {
@@ -197,6 +220,10 @@ const sidebars = {
           id: "build/api/grpc",
         },
       ],
+    },
+    {
+      type: "doc",
+      id: "build/standards",
     },
   ],
   nodeSidebar: [
