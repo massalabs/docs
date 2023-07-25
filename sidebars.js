@@ -131,8 +131,23 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          id: "build/plugin/create-plugin",
-          label: "Create a plugin",
+          id: "build/plugin/set-up-plugin",
+          label: "Set up your environment",
+        },
+        {
+          type: "doc",
+          id: "build/plugin/create-plugin-1",
+          label: "Create a simple plugin",
+        },
+        {
+          type: "doc",
+          id: "build/plugin/create-plugin-2",
+          label: "Add an endpoint",
+        },
+        {
+          type: "doc",
+          id: "build/plugin/create-plugin-3",
+          label: "Add a frontend",
         },
       ],
 
