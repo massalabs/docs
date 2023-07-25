@@ -69,6 +69,7 @@ JSON_RPC_URL_PUBLIC=https://buildnet.massa.net/api/v2:33035
 ```
 
 :::info
+
 - WALLET_SECRET_KEY: Store your wallet's private key used to deploy the contract here. Make sure your wallet is funded.
 - JSON_RPC_URL_PUBLIC: This is the URL of the JSON-RPC interface of a public or a private Massa node.
 :::
@@ -78,13 +79,7 @@ JSON_RPC_URL_PUBLIC=https://buildnet.massa.net/api/v2:33035
 Our smart contract will let users set and get a greeting message. Replace the content of the `main.ts` file in assembly/contracts with the following code:
 
 ```tsx
-import { Args, stringToBytes } from "@massalabs/as-types";
-import {
-  callerHasWriteAccess,
-  generateEvent,
-  Storage,
-  Context,
-} from "@massalabs/massa-as-sdk";
+import { generateEvent, Storage, Context } from "@massalabs/massa-as-sdk";
 
 /**
  * This function is meant to be called only one time: when the contract is deployed.
@@ -187,14 +182,10 @@ Here's the code:
 
 ```tsx
 import {
-  Args,
   Client,
   ClientFactory,
-  fromMAS,
   strToBytes,
   bytesToStr,
-  IProvider,
-  ProviderType,
   WalletClient,
   DefaultProviderUrls,
 } from "@massalabs/massa-web3";
