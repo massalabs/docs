@@ -84,12 +84,13 @@ const sidebars = {
     },
     {
       type: "html",
-      value: "<span class='menu__link'><b><small>Decentralized Web</small></b></span>"
+      value:
+        "<span class='menu__link'><b><small>Decentralized Web</small></b></span>",
     },
     {
       type: "doc",
       id: "learn/decentralized-web",
-    }
+    },
   ],
   tutorialSidebar: [
     {
@@ -191,6 +192,16 @@ const sidebars = {
         {
           type: "doc",
           id: "build/wallet/community-wallets",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Massa-Web3",
+      items: [
+        {
+          type: "doc",
+          id: "build/massa-web3/massa-web3-main",
         },
       ],
     },
