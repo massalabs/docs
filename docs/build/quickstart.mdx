@@ -221,7 +221,7 @@ function Content() {
       const baseAccount = await WalletClient.getAccountFromSecretKey(
         baseAccountSecretKey
       );
-      const client = await ClientFactory.createCustomClient(
+      const client = await ClientFactory.createDefaultClient(
         DefaultProviderUrls.BUILDNET,
         false,
         baseAccount
@@ -285,7 +285,7 @@ Our code might seem like a mouthful at first, but let's break it down into small
 
 - **Setting Up Providers and Initializing a Custom Client**
 
-For our application, we want to interact with Massa's Buildnet. That's why we're creating a custom client specifically for the Massa's Buildnet using the `ClientFactory.createCustomClient` method.
+For our application, we want to interact with Massa's Buildnet. That's why we're creating a custom client specifically for the Massa's Buildnet using the `ClientFactory.createDefaultClient` method.
 
 - **Base Account and Secret Key**
 
