@@ -1,0 +1,63 @@
+---
+id: set-up-plugin
+title: Plugin creation
+---
+
+# Creating a plugin: step by step
+
+This tutorial will show you how to create a simple plugin using Go and Swagger. It is possible to use other languages and frameworks such as explained in the [plugin guidelines](./guidelines.mdx).
+Here, we will rebuild the [Hello world plugin](https://github.com/massalabs/station-massa-hello-world/tree/main) from scratch as an example.
+Following this tutorial, you will learn how to:
+
+- [Create a basic plugin](./create-basic-plugin.mdx)
+- [Add a new endpoint](./create-plugin-with-endpoint.mdx) to your plugin
+- [Add a frontend](./create-plugin-with-a-frontend.mdx) to your plugin
+
+But first, let's set up the environment to follow the requirements defined in the [plugin guidelines](./guidelines.mdx).
+
+## Install Go
+
+You can install Go [here](https://go.dev/doc/install).
+
+## Initialize your Go project:
+
+You can create a plugin either in Go and use our tailor-made package or do your own, following the [requirements](./guidelines.mdx).
+
+### Initialize the Go plugin:
+
+- Create and navigate to the folder station-massa-hello-world
+- Run:
+
+  ```bash
+  go mod init github.com/my-username/station-massa-hello-world
+  ```
+
+  :::tip
+
+  You can replace `my-username` with your own username, or the name of your organization. Apply the same logic for the rest of the tutorial.
+
+  :::
+
+#### Create a Logo
+
+- Create the folders `web/content` and add `hello_world.svg` in it.
+- Add your custom logo or copy-paste [this one](https://github.com/massalabs/station-massa-hello-world/blob/main/web/content/hello_world.svg?short_path=1cd8e84):
+
+#### Add a manifest file
+
+- Create `manifest.json` in the root of your project.
+- Paste the following content, replacing the values with your own:
+
+```json
+{
+  "author": "My Name",
+  "name": "station-massa-hello-world",
+  "description": "hello world plugin",
+  "logo": "hello_world.svg",
+  "home": "",
+  "version": "0.0.6",
+  "apispec": ""
+}
+```
+
+You're now ready to start building your plugin!
