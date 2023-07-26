@@ -109,6 +109,37 @@ const sidebars = {
       type: "doc",
       id: "tutorial/trading-bot",
     },
+    {
+      type: "category",
+      label: "Massa Station Plugin",
+      items : [
+        {
+          type:"doc",
+          id:"tutorial/massa-station-plugin/intro",
+          label: "Introduction"
+        },
+        {
+          type: "doc",
+          id: "tutorial/massa-station-plugin/set-up-plugin",
+          label: "Set up your plugin's environment",
+        },
+        {
+          type: "doc",
+          id: "tutorial/massa-station-plugin/create-plugin-1",
+          label: "Create a simple plugin",
+        },
+        {
+          type: "doc",
+          id: "tutorial/massa-station-plugin/create-plugin-2",
+          label: "Add an endpoint to your plugin",
+        },
+        {
+          type: "doc",
+          id: "tutorial/massa-station-plugin/create-plugin-3",
+          label: "Add a frontend to your plugin",
+        },
+      ]
+    },
   ],
   buildSidebar: [
     {
@@ -124,34 +155,6 @@ const sidebars = {
       value:
         "<span class='menu__link'><b><small> Build a dApp </small></b></span>",
     },
-    {
-      type: "category",
-      label: "Plugin",
-      items: [
-        {
-          type: "doc",
-          id: "build/plugin/set-up-plugin",
-          label: "Set up your environment",
-        },
-        {
-          type: "doc",
-          id: "build/plugin/create-plugin-1",
-          label: "Create a simple plugin",
-        },
-        {
-          type: "doc",
-          id: "build/plugin/create-plugin-2",
-          label: "Add an endpoint",
-        },
-        {
-          type: "doc",
-          id: "build/plugin/create-plugin-3",
-          label: "Add a frontend",
-        },
-      ],
-
-    },
-
     {
       type: "doc",
       id: "build/quickstart",
