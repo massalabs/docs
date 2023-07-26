@@ -41,7 +41,7 @@ Add a new endpoint to the swagger file:
 
 ## Add a handler
 
-Add a handler for the new endpoint in the `cmd/station-massa-hello-world-server/station-massa-hello-world.go` file:
+Add a handler for the new endpoint in the `api/endpoints.go` file:
 
 ```go
 package api
@@ -67,7 +67,7 @@ func Hello(params operations.HelloParams) middleware.Responder {
 
 ## Register the handler
 
-In the `initializeAPI` function, register the handler to the endpoint:
+Open `station-massa-hello-world.go`. In the `initializeAPI` function, register the handler to the endpoint:
 
 ```go
 pluginAPI.HelloHandler = operations.HelloHandlerFunc(api.Hello)
