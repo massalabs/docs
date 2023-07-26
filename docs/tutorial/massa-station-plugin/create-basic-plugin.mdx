@@ -1,6 +1,6 @@
 ---
 id: create-plugin-1
-title: Plugin creation
+title: Create a basic plugin
 ---
 
 # Part 1: Create a basic plugin
@@ -48,9 +48,13 @@ For a detailed understanding of the API specification and how to edit it, refer 
 :::
 
 - Create a `generate.go` file: in the root of your project
+
   :::tip
+
   this file will generate the API from the swagger file when you run `task generate`
+
   :::
+
 - Add the following code to it:
 
   ```go
@@ -61,49 +65,86 @@ For a detailed understanding of the API specification and how to edit it, refer 
 
 - Run `go generate ./...` to generate the API
 
-
 ## Implement your plugin
+
+Create `station-massa-hello-world.go` in the root of your project and add the following code to initiate the API:
 
 ```go
 package main
 
 import (
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+  "time"
+
 	"github.com/go-openapi/loads"
+	"github.com/massalabs/station-massa-hello-world/pkg/plugin"
 	"github.com/my-username/station-massa-hello-world/api/server/restapi"
 	"github.com/my-username/station-massa-hello-world/api/server/restapi/operations"
+	"github.com/rs/cors"
 )
 
-func initializeAPI() *restapi.Server {
-	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
-	if err != nil {
-		panic(err)
+func killTime(quit chan bool) {
+	ticker := time.NewTicker(5 * time.Second) //nolint:gomnd
+
+	fmt.Fprintf(os.Stdout, "Plugin is initializing.\n")
+
+	for {
+		select {
+		case <-ticker.C:
+			fmt.Fprintf(os.Stdout, "Tic!\n")
+		case <-quit:
+			fmt.Fprintf(os.Stdout, "Plugin is shutting down.\nBye!\n")
+
+			return
+		}
 	}
+}
 
-	pluginAPI := operations.NewHelloWorldAPI(swaggerSpec)
-	server := restapi.NewServer(pluginAPI)
+func initializeAPI() *restapi.Server {
+    swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
+    if err != nil {
+        panic(err)
+    }
 
-	server.ConfigureAPI()
+    pluginAPI := operations.NewStationMassaHelloWorldAPI(swaggerSpec)
+    server := restapi.NewServer(pluginAPI)
 
-	return server
+    server.ConfigureAPI()
+
+    return server
 }
 ```
+
+:::tip
+
+The `killTime` function logs a message every 5 seconds. It is used to show that the plugin is running.
+The `initializeAPI` function initializes the API and returns the server.
+
+:::
 
 - set up the cors: the cors will allow the plugin to be called from the massastation server
 
 ```go
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
-	handleCORS := cors.New(cors.Options{}).Handler
+    handleCORS := cors.New(cors.Options{}).Handler
 
-	return handleCORS(handler)
+    return handleCORS(handler)
 }
 ```
 
+- Import the necessary packages `go mod tidy`
 - Add the `main` function in `station-massa-hello-world.go`: it initializes the API and start the server
 
 ```go
 func main() {
-	intSig := make(chan os.Signal, 1) // creates a channel to receive the interrupt signal
-	signal.Notify(intSig, syscall.SIGINT, syscall.SIGTERM) // notifies the channel when the interrupt signal is received
+    quit := make(chan bool) // creates a channel to receive the interrupt signal
+	intSig := make(chan os.Signal, 1) // notifies the channel when the interrupt signal is received
+	signal.Notify(intSig, syscall.SIGINT, syscall.SIGTERM)
+
+	go killTime(quit) // starts the killTime function in a goroutine
 
 	server := initializeAPI() // initializes the API
 
@@ -111,7 +152,8 @@ func main() {
 		panic(err)
 	}
 
-	<-intSig // waits for the interrupt signal to be received
+	<-intSig
+	quit <- true
 }
 ```
 
@@ -152,6 +194,8 @@ Import the plugin package. `github.com/massalabs/station-massa-hello-world/pkg/p
 
 ### Install the plugin
 
+Build a binary of the plugin. `mkdir build && go build -o build/station-massa-hello-world`
+
 Move the plugin binary, the manifest and the swagger file to the massastation plugin folder.
 
 :::tip
@@ -160,7 +204,7 @@ On linux or macOS you can use the following command to move the files:
 
 ```bash
 mkdir -p /usr/local/share/massastation/plugins/station-massa-hello-world
-cp build/station-massa-hello-world/station-massa-hello-world /usr/local/share/massastation/plugins/station-massa-hello-world
+cp build/station-massa-hello-world /usr/local/share/massastation/plugins/station-massa-hello-world
 cp web/content/hello_world.svg /usr/local/share/massastation/plugins/station-massa-hello-world
 cp manifest.json /usr/local/share/massastation/plugins/station-massa-hello-world
 ```
