@@ -5,12 +5,18 @@
       },
       {
         "pattern": "^http://manpages.ubuntu.com"
+      },
+      {
+        "pattern": "^https://test.massa.net"
+      },
+      {
+        "pattern": "^https://buildnet.massa.net"
       }
     ],
     "replacementPatterns": [
       {
         "pattern": "^/",
-        "replacement": "https://docs.massa.net/"
+        "replacement": "{{BASEURL}}"
       }
     ],
   "timeout": "20s",
