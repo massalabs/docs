@@ -3,55 +3,55 @@ id: create-plugin-1
 title: Create a basic plugin
 ---
 
-# Part 1: Create a basic plugin
-
 This part will show you how to create a basic plugin that simply displays a message.
 
 ## Define your plugin
 
 - Define an API for the plugin that will allow MassaStation to interact with it.
+
   - Set up the api folder: create `api/server`
   - Create a file named `swagger.yml` in the api folder
-  - Initialize it with basic information
+  - Initialize it with the following basic configuration:
 
-```yaml
-consumes:
-  - application/json
-info:
-  description: Hello world plugin API.
-  title: station-massa - Hello world
-  version: 0.0.0
-produces:
-  - application/json
-schemes:
-  - http
-swagger: "2.0"
-paths:
-  /:
-    get:
-      operationId: defaultPage
-      responses:
-        "301":
-          description: Move to the default endpoint
-```
+  ```yaml
+  consumes:
+    - application/json
+  info:
+    description: Hello world plugin API.
+    title: station-massa - Hello world
+    version: 0.0.0
+  produces:
+    - application/json
+  schemes:
+    - http
+  swagger: "2.0"
+  paths:
+    /:
+      get:
+        operationId: defaultPage
+        responses:
+          "301":
+            description: Move to the default endpoint
+  ```
 
-:::info
+  :::info
 
-Here we simply defined a default endpoint that will be called when the plugin is called without any endpoint specified.
+  Here we simply defined a default endpoint that will be called when the plugin is called without any endpoint specified.
+  This will be used to display a frontend in the [part 3 of the tutorial](./create-plugin-with-a-frontend.mdx).
 
-:::
+  :::
 
-:::tip
+  :::tip
 
-For a detailed understanding of the API specification and how to edit it, refer to the [official OpenAPI Specification documentation](https://www.openapis.org/).
+  For a detailed understanding of the API specification and how to edit it, refer to the [official swagger v2 documentation](https://swagger.io/specification/v2/).
 
-:::
+  :::
 
 - Create a `generate.go` file: in the root of your project
 
   :::tip
 
-  this file will generate the API from the swagger file when you run `task generate`
+  this file will generate the API from the swagger file when you run `go generate ./... `
 
   :::
 
@@ -81,12 +81,13 @@ import (
 
 	"github.com/go-openapi/loads"
 	"github.com/massalabs/station-massa-hello-world/pkg/plugin"
-	"github.com/my-username/station-massa-hello-world/api/server/restapi"
-	"github.com/my-username/station-massa-hello-world/api/server/restapi/operations"
+	"my-plugin/station-massa-hello-world/api/server/restapi"
+	"my-plugin/station-massa-hello-world/api/server/restapi/operations"
 	"github.com/rs/cors"
 )
 
-func killTime(quit chan bool) {
+func killTime(quit chan bool) { // creates a ticker that will send a message every 5 seconds
+  // creates a ticker that will send a message every 5 seconds
 	ticker := time.NewTicker(5 * time.Second) //nolint:gomnd
 
 	fmt.Fprintf(os.Stdout, "Plugin is initializing.\n")
@@ -94,9 +95,9 @@ func killTime(quit chan bool) {
 	for {
 		select {
 		case <-ticker.C:
-			fmt.Fprintf(os.Stdout, "Tic!\n")
+			fmt.Fprintf(os.Stdout, "Tic!\n") // logs a message every 5 seconds
 		case <-quit:
-			fmt.Fprintf(os.Stdout, "Plugin is shutting down.\nBye!\n")
+			fmt.Fprintf(os.Stdout, "Plugin is shutting down.\nBye!\n") // logs a message when the plugin is shutting down
 
 			return
 		}
@@ -104,28 +105,28 @@ func killTime(quit chan bool) {
 }
 
 func initializeAPI() *restapi.Server {
-    swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
+    swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "") // loads the swagger file
     if err != nil {
         panic(err)
     }
 
-    pluginAPI := operations.NewStationMassaHelloWorldAPI(swaggerSpec)
-    server := restapi.NewServer(pluginAPI)
+    pluginAPI := operations.NewStationMassaHelloWorldAPI(swaggerSpec) // initializes the API
+    server := restapi.NewServer(pluginAPI) // creates the server
 
-    server.ConfigureAPI()
+    server.ConfigureAPI() // configures the API
 
     return server
 }
 ```
 
-:::tip
+:::info
 
 The `killTime` function logs a message every 5 seconds. It is used to show that the plugin is running.
 The `initializeAPI` function initializes the API and returns the server.
 
 :::
 
-- set up the cors: the cors will allow the plugin to be called from the massastation server
+- Still in `my-plugin.go`, set up the cors: the cors will allow the plugin to be called from the Massa Station server.
 
 ```go
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
@@ -136,7 +137,7 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 ```
 
 - Import the necessary packages `go mod tidy`
-- Add the `main` function in `station-massa-hello-world.go`: it initializes the API and start the server
+- Add the `main` function in `my-plugin.go`: it initializes the API and start the server
 
 ```go
 func main() {
@@ -189,8 +190,15 @@ Import the plugin package. `github.com/massalabs/station-massa-hello-world/pkg/p
 		panic(err)
 	}
 
-	plugin.RegisterPlugin(listener,plugin.Info{})
+	plugin.RegisterPlugin(listener,plugin.Info{}) // registers the plugin
 ```
+
+:::info
+`plugin.RegisterPlugin` is a function available in the [plugin package](https://github.com/massalabs/station-massa-hello-world/blob/main/pkg/plugin/register.go).
+
+It facilitates the registration of a plugin with Massa Station, assigning a unique correlation ID to the plugin for identification purposes within the Massa Station system.
+
+:::
 
 ### Install the plugin
 
@@ -228,10 +236,5 @@ Copy-Item manifest.json $destinationDir -Force
 
 :::
 
-Run Massa Station. `massastation`
-
-**You should see** :
-
-- the plugin in the plugin list on [the module page](https://station.massa/web/store)
-  ![image](./massastation-menu.png)
-- the 'Tic' message in the console
+Run Massa Station and access [the module page](https://station.massa/web/store). You should see the plugin in the list of available plugins.
+![image](./massastation-menu.png)
