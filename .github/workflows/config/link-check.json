@@ -9,10 +9,6 @@
     ],
     "replacementPatterns": [
       {
-        "pattern": "\\./",
-        "replacement": "file://docs"
-      },
-      {
         "pattern": "^/",
         "replacement": "https://docs.massa.net/"
       }
