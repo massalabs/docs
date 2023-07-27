@@ -15,8 +15,8 @@
     ],
     "replacementPatterns": [
       {
-        "pattern": "^(\\./|/)",
-        "replacement": "{{BASEURL}}"
+        "pattern": "^/",
+        "replacement": "https://docs.massa.net/"
       }
     ],    
   "timeout": "20s",

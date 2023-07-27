@@ -9,7 +9,7 @@ If you use the binaries, simply download the latest binaries. Otherwise if you h
 instructions below.
 
 Make sure you have all the packages installed on your system. Maybe new one could have been added since you last release
-refer to our [documentation](./docs/node/install#from-source-code-advanced-installation) for the updated list.
+refer to our [documentation](/docs/node/install#from-source-code-advanced-installation) for the updated list.
 
 Make sure you have the right git repository:
 
@@ -33,7 +33,7 @@ that has rolls according to wallet_info.
 client, overwrite wallet.dat with your backup, launch the client again and try again. You can also create a new address
 by calling `wallet_generate_secret_key`.
 - If you can't find an address in `wallet_info` that has non-zero candidate, non-zero final and non-zero active rolls,
-please refer to the [staking tutorial](./docs/node/stake) on getting rolls.
+please refer to the [staking tutorial](/docs/node/stake) on getting rolls.
 - If `node_get_staking_addresses` does not return any address or does not return an address that has active_rolls
 according to wallet_info, it means you haven't backed up `staking_keys.json` properly. Try stopping the node,
 overwriting `staking_keys.json` with your backup, and starting the node again to try again. You can also manually add a
