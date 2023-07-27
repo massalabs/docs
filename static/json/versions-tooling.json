@@ -9,8 +9,7 @@
         { "network": "Testnet", "version": "latest" }
       ],
       "install": "npm install @massalabs/project-initializer",
-
-      "npmLink": "https://www.npmjs.com/package/@massalabs/massa-web3?activeTab=versions"
+      "npmLink": "https://www.npmjs.com/package/@massalabs/sc-project-initializer?activeTab=versions"
     },
     {
       "title": "massa-as-sdk",
@@ -20,6 +19,24 @@
       ],
       "install": "npm install @massalabs/massa-as-sdk",
       "npmLink": "https://www.npmjs.com/package/@massalabs/massa-as-sdk?activeTab=versions"
+    },
+    {
+      "title": "massa-web3",
+      "compatibilities": [
+        { "network": "Buildnet", "version": "buildnet" },
+        { "network": "Testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/massa-web3",
+      "npmLink": "https://www.npmjs.com/package/@massalabs/massa-web3?activeTab=versions"
+    },
+    {
+      "title": "wallet-provider",
+      "compatibilities": [
+        { "network": "Buildnet", "version": "buildnet" },
+        { "network": "Testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/wallet-provider",
+      "npmLink": "https://www.npmjs.com/package/@massalabs/wallet-provider?activeTab=versions"
     },
     {
       "title": "as-types",
@@ -56,24 +73,6 @@
       ],
       "install": "npm install @massalabs/massa-sc-deployer",
       "npmLink": "https://www.npmjs.com/package/@massalabs/massa-sc-deployer?activeTab=versions"
-    },
-    {
-      "title": "massa-web3",
-      "compatibilities": [
-        { "network": "Buildnet", "version": "buildnet" },
-        { "network": "Testnet", "version": "latest" }
-      ],
-      "install": "npm install @massalabs/massa-web3",
-      "npmLink": "https://www.npmjs.com/package/@massalabs/massa-web3?activeTab=versions"
-    },
-    {
-      "title": "wallet-provider",
-      "compatibilities": [
-        { "network": "Buildnet", "version": "buildnet" },
-        { "network": "Testnet", "version": "latest" }
-      ],
-      "install": "npm install @massalabs/wallet-provider",
-      "npmLink": "https://www.npmjs.com/package/@massalabs/wallet-provider?activeTab=versions"
     }
   ]
 }
