@@ -65,6 +65,15 @@
       ],
       "install": "npm install @massalabs/massa-web3",
       "npmLink": "https://www.npmjs.com/package/@massalabs/massa-web3?activeTab=versions"
+    },
+    {
+      "title": "wallet-provider",
+      "compatibilities": [
+        { "network": "Buildnet", "version": "buildnet" },
+        { "network": "Testnet", "version": "latest" }
+      ],
+      "install": "npm install @massalabs/wallet-provider",
+      "npmLink": "https://www.npmjs.com/package/@massalabs/wallet-provider?activeTab=versions"
     }
   ]
 }
