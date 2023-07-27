@@ -205,7 +205,6 @@ import {
 
 import { useEffect, useState } from "react";
 
-const baseAccountSecretKey = "SECRET_KEY"; ### TODO Update the constant value!
 const sc_addr = "SC_ADDRESS"; ### TODO Update the constant value!
 
 /**
@@ -224,13 +223,9 @@ function Content() {
    */
   useEffect(() => {
     const initClient = async () => {
-      const baseAccount = await WalletClient.getAccountFromSecretKey(
-        baseAccountSecretKey
-      );
       const client = await ClientFactory.createDefaultClient(
         DefaultProviderUrls.BUILDNET,
-        false,
-        baseAccount
+        false
       );
       setWeb3client(client);
     };
@@ -282,14 +277,7 @@ export default Content;
 ```
 
 :::info
-Make sure to replace `SECRET_KEY` and `SC_ADDRESS` with your own secret key and smart contract address.
-:::
-
-:::caution
-This template is storing your secret key in plain text. It's not secure and is only used for demonstration purposes.
-If you want to use this template for production, you should consider using a wallet-provider to store your secret key.
-
-You can find more information about it in the [wallet-provider section](wallet/wallet-provider).
+Make sure to replace `SC_ADDRESS` with your own smart contract address.
 :::
 
 ### Understanding the Code
@@ -299,10 +287,6 @@ Our code might seem like a mouthful at first, but let's break it down into small
 - **Setting Up Providers and Initializing a Custom Client**
 
 For our application, we want to interact with Massa's Buildnet. That's why we're creating a custom client specifically for the Massa's Buildnet using the `ClientFactory.createDefaultClient` method.
-
-- **Base Account and Secret Key**
-
-We define `baseAccountSecretKey` as the secret key of your Massa wallet. This key is necessary to create the base account for the client.
 
 - **Retrieving the Greeting**
 
