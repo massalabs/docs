@@ -21,4 +21,4 @@ jobs:
           node-version: '18'
       - run: npm install -g markdown-link-check
       - run: find . \( -name '*.md' -o -name '*.mdx' \) -exec markdown-link-check -c .github/workflows/config/link-check.json --progress {} \; 2>&1 | tee linkcheck.out
-      - run: grep -n '[✖]\\|ERROR' ./linkcheck.out
+      - run: grep -q '[✖]\\|ERROR' ./linkcheck.out && exit 1 || true
