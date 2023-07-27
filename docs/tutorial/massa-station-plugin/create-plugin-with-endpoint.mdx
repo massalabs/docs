@@ -3,8 +3,6 @@ id: create-plugin-2
 title: Add a new endpoint
 ---
 
-# Part 2: Add a new endpoint
-
 Let's add a new endpoint to our plugin that will display a message when called.
 Prerequisite: you should have completed [Part 1](./create-basic-plugin.mdx).
 
@@ -38,6 +36,7 @@ Add a new endpoint to the swagger file:
       "500":
         description: Internal Server Error - The server has encountered a situation it does not know how to handle.
 ```
+Update the generated code: `go generate ./...`
 
 ## Add a handler
 
@@ -50,7 +49,7 @@ import (
     "fmt"
 
     "github.com/go-openapi/runtime/middleware"
-    "github.com/my-username/station-massa-hello-world/api/server/restapi/operations"
+    "my-plugin/station-massa-hello-world/api/server/restapi/operations"
 )
 
 func Hello(params operations.HelloParams) middleware.Responder {
@@ -75,10 +74,10 @@ pluginAPI.HelloHandler = operations.HelloHandlerFunc(api.Hello)
 
 ## Test the endpoint
 
-Reinstall the plugin and restart Massa Station. You can follow the same steps as in [Part 1](./create-basic-plugin.mdx).
+Reinstall the plugin and restart Massa Station. You can follow the same steps as in [Part 1](/docs/tutorial/massa-station-plugin/create-basic-plugin.mdx).
 
 ```bash
-curl -X PUT "http://station.massa/plugin/my-name/station-massa-hello-world/api/hello?name=John" -H  "accept: application/json"
+curl -X PUT "http://station.massa/plugin/my-name/my-plugin/api/hello?name=John" -H  "accept: application/json"
 ```
 
 - you should see the following output:
