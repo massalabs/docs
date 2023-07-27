@@ -334,14 +334,6 @@ Here, the code is indirectly called via the call to an existing smart contract f
     </tr>
 </table>
 
-:::tip
-- to do
-:::
-
-## Transaction fee
-
-- to do
-
 ## Block
 
 A block is a data structure built by nodes and its function is to aggregate several operations. As explained above, 
@@ -349,9 +341,6 @@ for each new slot that becomes active, a particular node in the network is elect
 task of creating the block that will be stored in that slot (more about this in the description of the Selector 
 Module below). A block from a given thread can only contain operations originating from a creator_public_key whose 
 hash’s five first bits designate the corresponding thread, thus implicitly avoiding collisions in operations integrated into parallel threads. Block size is limited to 1 MB.
-
-**to do**:
-- explain in one paragraph the notion of finality of blocks and what they mean. 
 
 The content of a block is as follows:
 
@@ -399,4 +388,3 @@ validations of the fact that the parent block on the thread of the block is the 
 chosen, done by other nodes that have also been deterministically selected via the proof of stake probability 
 distribution (see below). A comprehensive description of endorsements can be found [here](/docs/learn/architecture/consensus-quality#endorsement), so we will 
 not go further into details in the context of this introduction.
-

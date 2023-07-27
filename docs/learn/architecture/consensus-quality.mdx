@@ -6,8 +6,6 @@ sidebar_label: Consensus quality initiatives
 
 This section describes the mechanisms we use to maximize the consensus quality on Massa blockchain. 
 
-- to do
-
 ## Endorsement
 
 Massa uses the Proof-of-Stake selection mechanism with Nakamoto consensus. In that context, when there are multiple cliques 
@@ -23,7 +21,6 @@ The attacker's likelihood of consecutive PoS draws decreases exponentially. With
 increasing safety and convergence speed. The consensus algorithm selects the clique with the highest fitness as the blockclique, where 
 the fitness is determined by the number of PoS draws involved in creating the block. This mechanism enhances safety and convergence 
 speed by allowing block producers to select the best clique based on the endorsements' "votes." 
-
 
 ### Endorsement structure
 
@@ -78,13 +75,3 @@ Each part, denoted as $r$, is distributed as follows:
     - The creator of the endorsed block receives $r/3$ to encourage timely block emission for endorsement.
     
 This revenue split increases the frequency at which stakers receive coins, reducing the need for staking pools.
-
-### Technical decisions
-- to do
-
-
-## Slashing
-- to do
-
-## Node banning
-- to do
