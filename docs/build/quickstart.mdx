@@ -126,6 +126,25 @@ npm run deploy
 
 Upon successful execution, the console should display the operation id that you can use to track the deployment of your smart contract.
 
+:::info
+After deployment, an event will be displayed in the console. This event contains the address of your deployed smart contract and the event message set in the constructor function.
+
+```bash
+Event Data Received: [
+  {
+    context: {...},
+    data: 'Greeting has been set'
+  },
+  {
+    context: {...},
+    data: 'Contract deployed at address: AS12UJM8JYR6cRzXgkUGTjRDu9hicJUPkDvy7zGhGZq3WgZ511dwR'
+  }
+]
+```
+
+Keep the address of your deployed smart contract handy. You'll need it later.
+:::
+
 ## The Frontend
 
 Let's move on to the frontend of your dApp. We'll use React with TypeScript to build a user interface, which will interact with the deployed smart contract on the Massa blockchain.
