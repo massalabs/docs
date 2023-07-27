@@ -122,7 +122,7 @@ const sidebars = {
         {
           type: "doc",
           id: "tutorial/massa-station-plugin/set-up-plugin",
-          label: "Set up your plugin's environment",
+          label: "Plugin set-up",
         },
         {
           type: "doc",

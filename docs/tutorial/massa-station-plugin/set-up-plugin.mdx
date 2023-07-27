@@ -3,29 +3,21 @@ id: set-up-plugin
 title: Plugin set-up
 ---
 
-# Set up your plugin's environment
-
-Let'g go through the steps to set up your plugin's environment.
+Let's go through the steps to set up your plugin's environment.
 
 ## Install Go
 
 You can install Go [here](https://go.dev/doc/install).
 
 
-## Initialize the Go plugin:
+## Initialize the Go plugin
 
-- Create and navigate to the folder station-massa-hello-world
+- Create and navigate to the folder my-plugin
 - Run:
 
   ```bash
-  go mod init github.com/my-username/station-massa-hello-world
+  go mod init my-plugin
   ```
-
-  :::tip
-
-  You can replace `my-username` with your own username, or the name of your organization. Apply the same logic for the rest of the tutorial.
-
-  :::
 
 ### Create a Logo
 
@@ -40,7 +32,7 @@ You can install Go [here](https://go.dev/doc/install).
 ```json
 {
   "author": "My Name",
-  "name": "station-massa-hello-world",
+  "name": "my-plugin",
   "description": "hello world plugin",
   "logo": "hello_world.svg",
   "home": "",
