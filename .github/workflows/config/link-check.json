@@ -2,11 +2,18 @@
   "ignorePatterns": [
       {
         "pattern": "(localhost|my\\.massa)"
+      },
+      {
+        "pattern": "^http://manpages.ubuntu.com"
       }
     ],
     "replacementPatterns": [
       {
-        "pattern": "^(/|\\./)",
+        "pattern": "\\./",
+        "replacement": "file://docs"
+      },
+      {
+        "pattern": "^/",
         "replacement": "https://docs.massa.net/"
       }
     ],
