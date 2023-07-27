@@ -156,10 +156,6 @@ const sidebars = {
               id: "build/smart-contract/sdk",
               label: "WebAssembly Module",
             },
-            {
-              type: "doc",
-              id: "build/smart-contract/project-layout",
-            },
           ],
         },
       ],
