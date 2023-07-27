@@ -7,13 +7,20 @@
         "pattern": "^http://manpages.ubuntu.com"
       },
       {
-        "pattern": "^https://test.massa.net"
+        "pattern": "^https://test.massa.net/api/v2"
       },
       {
-        "pattern": "^https://buildnet.massa.net"
+        "pattern": "^https://buildnet.massa.net/api/v2"
+      },
+      {
+        "pattern": "^https://discord.com"
       }
     ],
     "replacementPatterns": [
+      {
+        "pattern": "^./",
+        "replacement": "file:///home/runner/work/docs"
+      },
       {
         "pattern": "^/",
         "replacement": "{{BASEURL}}"
@@ -25,6 +32,7 @@
   "fallbackRetryDelay": "30s",
   "aliveStatusCodes": [
     200,
-    206
+    206,
+    0
   ]
 }
