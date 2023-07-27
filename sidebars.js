@@ -161,6 +161,21 @@ const sidebars = {
       ],
     },
     {
+      type: "category",
+      label: "Massa Station plugin",
+      items: [
+        {
+          type: "doc",
+          id: "build/plugin/introduction",
+          label: "Introduction",
+        },
+        {
+          type: "doc",
+          id: "build/plugin/guidelines",
+        },
+      ],
+    },
+    {
       type: "html",
       value: "<hr/>",
     },
