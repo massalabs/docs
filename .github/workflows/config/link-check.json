@@ -1,12 +1,12 @@
 {
   "ignorePatterns": [
       {
-        "pattern": "localhost"
+        "pattern": "(localhost|my\\.massa)"
       }
     ],
     "replacementPatterns": [
       {
-        "pattern": "^/",
+        "pattern": "^(/|\\./)",
         "replacement": "https://docs.massa.net/"
       }
     ],
