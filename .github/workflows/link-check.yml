@@ -24,4 +24,4 @@ jobs:
       - name: Check links in markdown files
         run: find . \( -name '*.md' -o -name '*.mdx' \) -exec markdown-link-check -c .github/workflows/config/link-check.json --progress {} \; 2>&1 | tee linkcheck.out
       - name: Verify if there are any errors
-        run: grep -q '[✖]\\|ERROR' ./linkcheck.out && exit 1 || true
+        run: grep -qc '[✖]\\|ERROR' ./linkcheck.out && exit 1
