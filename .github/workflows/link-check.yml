@@ -22,4 +22,4 @@ jobs:
         run: |
           find . \( -name '*.md' -o -name '*.mdx' \) \
           -exec markdown-link-check -v -c .github/workflows/config/link-check.json --progress {} \; 2>&1 | tee linkcheck.out
-          grep -qc '[✖]\\|ERROR' ./linkcheck.out && exit 1
+          grep -F -wc "[✖] |ERROR" ./linkcheck.out && exit 1 || true
