@@ -1,7 +1,7 @@
 {
   "ignorePatterns": [
       {
-        "pattern": "(localhost|my\\.massa)"
+        "pattern": "(localhost|my\\.massa|discord\\.com)"
       },
       {
         "pattern": "^http://manpages.ubuntu.com"
@@ -11,21 +11,14 @@
       },
       {
         "pattern": "^https://buildnet.massa.net/api/v2"
-      },
-      {
-        "pattern": "^https://discord.com"
       }
     ],
     "replacementPatterns": [
       {
-        "pattern": "^./",
-        "replacement": "file:///home/runner/work/docs"
-      },
-      {
-        "pattern": "^/",
+        "pattern": "^(\\./|/)",
         "replacement": "{{BASEURL}}"
       }
-    ],
+    ],    
   "timeout": "20s",
   "retryOn429": true,
   "retryCount": 5,
