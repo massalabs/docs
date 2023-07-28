@@ -23,20 +23,33 @@ insert_content() {
 }
 
 # Start of the script
-echo "Script started: Download config files from Massa testnet branch"
+echo "Script started: Download config files"
 
 # Download node and client config files
-download_files "./external/node/" "./external/node/config-files.txt"
-download_files "./external/client/" "./external/client/config-files.txt"
+download_files "./external/node/buildnet/" "./external/node/buildnet/config-files.txt"
+download_files "./external/client/buildnet/" "./external/client/buildnet/config-files.txt"
 
 # Add node config file content to the documentation
-insert_content "EXTERNAL_NODE_CONFIG_CONTENT" "./external/node/config.toml" "./docs/node/all-configs.mdx"
+insert_content "EXTERNAL_BUILDNET_NODE_CONFIG_CONTENT" "./external/node/buildnet/config.toml" "./docs/node/all-configs.mdx"
 
 # Add bootstrap_whitelist json file content to the documentation
-insert_content "EXTERNAL_BOOTSTRAP_WHITELIST_CONTENT" "./external/node/bootstrap_whitelist.json" "./docs/node/all-configs.mdx"
+insert_content "EXTERNAL_BUILDNET_BOOTSTRAP_WHITELIST_CONTENT" "./external/node/buildnet/bootstrap_whitelist.json" "./docs/node/all-configs.mdx"
 
 # Add client config file content to the documentation
-insert_content "EXTERNAL_CLIENT_CONFIG_CONTENT" "./external/client/config.toml" "./docs/node/all-configs.mdx"
+insert_content "EXTERNAL_BUILDNET_CLIENT_CONFIG_CONTENT" "./external/client/buildnet/config.toml" "./docs/node/all-configs.mdx"
+
+# Download node and client config files
+download_files "./external/node/testnet/" "./external/node/testnet/config-files.txt"
+download_files "./external/client/testnet/" "./external/client/testnet/config-files.txt"
+
+# Add node config file content to the documentation
+insert_content "EXTERNAL_TESTNET_NODE_CONFIG_CONTENT" "./external/node/testnet/config.toml" "./docs/node/all-configs.mdx"
+
+# Add bootstrap_whitelist json file content to the documentation
+insert_content "EXTERNAL_TESTNET_BOOTSTRAP_WHITELIST_CONTENT" "./external/node/testnet/bootstrap_whitelist.json" "./docs/node/all-configs.mdx"
+
+# Add client config file content to the documentation
+insert_content "EXTERNAL_TESTNET_CLIENT_CONFIG_CONTENT" "./external/client/testnet/config.toml" "./docs/node/all-configs.mdx"
 
 # Script completed successfully
-echo "Script finished: Config files downloaded from Massa testnet branch and inserted into documentation."
+echo "Script finished: Config files downloaded and inserted into documentation."

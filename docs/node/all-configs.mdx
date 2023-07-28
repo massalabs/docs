@@ -3,6 +3,9 @@ id: all-configs
 sidebar_label: Node and client configuration
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Node and client configuration
 
 :::caution
@@ -16,21 +19,50 @@ You can override the default configuration via
 the `massa-node/config/config.toml` file.
 
 <!-- The content will be added at build time via ./scripts/download-configs.sh -->
+<Tabs>
+  <TabItem value="buildnet" label="👷 BuildNet" default>
+
 ```toml
-EXTERNAL_NODE_CONFIG_CONTENT
+EXTERNAL_BUILDNET_NODE_CONFIG_CONTENT
 
 ```
+
+  </TabItem>
+  <TabItem value="testnet" label="🧑‍🔬 TestNet">
+
+```toml
+EXTERNAL_TESTNET_NODE_CONFIG_CONTENT
+
+```
+
+  </TabItem>
+</Tabs>
 
 ## Node bootstrap whitelist configuration
 
 You can override the default configuration via
-[massa-node/config/bootstrap_whitelist.json]{.title-ref} file.
+`massa-node/config/bootstrap_whitelist.json` file.
 
 <!-- The content will be added at build time via ./scripts/download-configs.sh -->
+
+<Tabs>
+  <TabItem value="buildnet" label="👷 BuildNet" default>
+
 ```toml
-EXTERNAL_BOOTSTRAP_WHITELIST_CONTENT
+EXTERNAL_BUILDNET_BOOTSTRAP_WHITELIST_CONTENT
 
 ```
+
+  </TabItem>
+  <TabItem value="testnet" label="🧑‍🔬 TestNet">
+
+```toml
+EXTERNAL_TESTNET_BOOTSTRAP_WHITELIST_CONTENT
+
+```
+
+  </TabItem>
+</Tabs>
 
 ## Client configuration
 
@@ -38,7 +70,21 @@ You can override the default configuration via
 the `massa-client/config/config.toml` file.
 
 <!-- The content will be added at build time via ./scripts/download-configs.sh -->
+<Tabs>
+  <TabItem value="buildnet" label="👷 BuildNet" default>
+
 ```toml
-EXTERNAL_CLIENT_CONFIG_CONTENT
+EXTERNAL_BUILDNET_CLIENT_CONFIG_CONTENT
 
 ```
+
+  </TabItem>
+  <TabItem value="testnet" label="🧑‍🔬 TestNet">
+
+```toml
+EXTERNAL_TESTNET_CLIENT_CONFIG_CONTENT
+
+```
+
+  </TabItem>
+</Tabs>
