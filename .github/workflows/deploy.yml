@@ -6,6 +6,7 @@ on:
       - main
     # Review gh actions docs if you want to further define triggers, paths, etc
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -17,6 +18,11 @@ jobs:
         with:
           node-version: 18
           cache: npm
+
+      - name: Download config files from Massa testnet branch
+        run: |
+         chmod +x ./scripts/download-configs.sh
+         ./scripts/download-configs.sh
 
       - name: Install dependencies
         run: npm ci
