@@ -227,7 +227,7 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "build/sdk",
+      id: "build/tooling-versions",
     },
     {
       type: "category",
