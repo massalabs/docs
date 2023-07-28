@@ -32,9 +32,6 @@ download_files "./external/client/buildnet/" "./external/client/buildnet/config-
 # Add node config file content to the documentation
 insert_content "EXTERNAL_BUILDNET_NODE_CONFIG_CONTENT" "./external/node/buildnet/config.toml" "./docs/node/all-configs.mdx"
 
-# Add bootstrap_whitelist json file content to the documentation
-insert_content "EXTERNAL_BUILDNET_BOOTSTRAP_WHITELIST_CONTENT" "./external/node/buildnet/bootstrap_whitelist.json" "./docs/node/all-configs.mdx"
-
 # Add client config file content to the documentation
 insert_content "EXTERNAL_BUILDNET_CLIENT_CONFIG_CONTENT" "./external/client/buildnet/config.toml" "./docs/node/all-configs.mdx"
 
@@ -44,9 +41,6 @@ download_files "./external/client/testnet/" "./external/client/testnet/config-fi
 
 # Add node config file content to the documentation
 insert_content "EXTERNAL_TESTNET_NODE_CONFIG_CONTENT" "./external/node/testnet/config.toml" "./docs/node/all-configs.mdx"
-
-# Add bootstrap_whitelist json file content to the documentation
-insert_content "EXTERNAL_TESTNET_BOOTSTRAP_WHITELIST_CONTENT" "./external/node/testnet/bootstrap_whitelist.json" "./docs/node/all-configs.mdx"
 
 # Add client config file content to the documentation
 insert_content "EXTERNAL_TESTNET_CLIENT_CONFIG_CONTENT" "./external/client/testnet/config.toml" "./docs/node/all-configs.mdx"
