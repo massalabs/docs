@@ -63,10 +63,13 @@ func Hello(params operations.HelloParams) middleware.Responder {
     )
 }
 ```
+:::info
+Here, we are simply returning a 200 OK response with a greeting message that takes the name of the person to be greeted from the query parameters.
+:::
 
 ## Register the handler
 
-Open `station-massa-hello-world.go`. In the `initializeAPI` function, register the handler to the endpoint:
+Open `my-plugin.go`. In the `initializeAPI` function, register the handler to the endpoint:
 
 ```go
 pluginAPI.HelloHandler = operations.HelloHandlerFunc(api.Hello)
@@ -76,11 +79,14 @@ pluginAPI.HelloHandler = operations.HelloHandlerFunc(api.Hello)
 
 Reinstall the plugin and restart Massa Station. You can follow the same steps as in [Part 1](/docs/tutorial/massa-station-plugin/create-basic-plugin.mdx).
 
+
+Run the following command to test the `hello` endpoint we implemented:
+
 ```bash
 curl -X PUT "http://station.massa/plugin/my-name/my-plugin/api/hello?name=John" -H  "accept: application/json"
 ```
 
-- you should see the following output:
+You should see the following output:
 
 ```json
 { "message": "Hello, John!" }
