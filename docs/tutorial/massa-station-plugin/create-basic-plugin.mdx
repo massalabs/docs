@@ -42,7 +42,7 @@ This part will show you how to create a basic plugin that simply displays a mess
   :::
 
   :::tip
-
+  We will add more endpoints in the [part 2 of the tutorial](./create-plugin-with-endpoint.mdx). Feel free to addapt the swagger file to your needs.
   For a detailed understanding of the API specification and how to edit it, refer to the [official swagger v2 documentation](https://swagger.io/specification/v2/).
 
   :::
@@ -60,29 +60,31 @@ This part will show you how to create a basic plugin that simply displays a mess
   ```go
   package main
 
-  //go:generate swagger generate server --quiet --target api/server --name station-massa-hello-world --spec api/swagger.yml --exclude-main
+  //go:generate swagger generate server --quiet --target api/server --name my-plugin --spec api/swagger.yml --exclude-main
   ```
 
 - Run `go generate ./...` to generate the API
 
 ## Implement your plugin
 
-Create `station-massa-hello-world.go` in the root of your project and add the following code to initiate the API:
+Create `my-plugin.go` in the root of your project and add the following code to initiate the API:
 
 ```go
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
-  "time"
+	"time"
+
+	"my-plugin/api/server/restapi"
+	"my-plugin/api/server/restapi/operations"
 
 	"github.com/go-openapi/loads"
 	"github.com/massalabs/station-massa-hello-world/pkg/plugin"
-	"my-plugin/station-massa-hello-world/api/server/restapi"
-	"my-plugin/station-massa-hello-world/api/server/restapi/operations"
 	"github.com/rs/cors"
 )
 
@@ -110,7 +112,7 @@ func initializeAPI() *restapi.Server {
         panic(err)
     }
 
-    pluginAPI := operations.NewStationMassaHelloWorldAPI(swaggerSpec) // initializes the API
+    pluginAPI := operations.NewMyPluginAPI(swaggerSpec) // initializes the API
     server := restapi.NewServer(pluginAPI) // creates the server
 
     server.ConfigureAPI() // configures the API
@@ -161,7 +163,7 @@ func main() {
 - Run the API on a local server to test and validate its functionality.
 
 ```bash
-go run ./station-massa-hello-world.go
+go run ./my-plugin.go
 ```
 
 - You should get the following output:
@@ -202,7 +204,7 @@ It facilitates the registration of a plugin with Massa Station, assigning a uniq
 
 ### Install the plugin
 
-Build a binary of the plugin. `mkdir build && go build -o build/station-massa-hello-world`
+Build a binary of the plugin. `mkdir build && go build -o build/my-plugin`
 
 Move the plugin binary, the manifest and the swagger file to the massastation plugin folder.
 
@@ -211,22 +213,22 @@ Move the plugin binary, the manifest and the swagger file to the massastation pl
 On linux or macOS you can use the following command to move the files:
 
 ```bash
-mkdir -p /usr/local/share/massastation/plugins/station-massa-hello-world
-cp build/station-massa-hello-world /usr/local/share/massastation/plugins/station-massa-hello-world
-cp web/content/hello_world.svg /usr/local/share/massastation/plugins/station-massa-hello-world
-cp manifest.json /usr/local/share/massastation/plugins/station-massa-hello-world
+mkdir -p /usr/local/share/massastation/plugins/my-plugin
+cp build/my-plugin /usr/local/share/massastation/plugins/my-plugin
+cp web/content/hello_world.svg /usr/local/share/massastation/plugins/my-plugin
+cp manifest.json /usr/local/share/massastation/plugins/my-plugin
 ```
 
 On Windows, you can use the following command in the PowerShell:
 
 ```powershell
 # Create the directory
-$destinationDir = "C:\Program Files (x86)\MassaStation\plugins\station-massa-hello-world"
+$destinationDir = "C:\Program Files (x86)\MassaStation\plugins\my-plugin"
 New-Item -ItemType Directory -Force -Path $destinationDir
 
 # Copy the files
-$sourceDir = "build\station-massa-hello-world"
-Copy-Item $sourceDir\station-massa-hello-world $destinationDir -Force
+$sourceDir = "build\my-plugin"
+Copy-Item $sourceDir\my-plugin $destinationDir -Force
 
 $sourceDir = "web\content"
 Copy-Item $sourceDir\hello_world.svg $destinationDir -Force
