@@ -216,6 +216,10 @@ const sidebars = {
         },
         {
           type: "doc",
+          id: "build/massa-web3/dapp-usage-massa-web3",
+        },
+        {
+          type: "doc",
           id: "build/massa-web3/massa-web3-utils",
         },
       ],

@@ -1,0 +1,50 @@
+---
+id: dapp-usage-massa-web3
+title: Usage
+---
+
+Here are some examples of how to use the Massa Web3 API.
+
+## Calling a smart contract
+
+Full code of the Age dApp is available [here](https://github.com/massalabs/massa-sc-examples/tree/main/age).
+
+Here is the [age smart contract](https://github.com/massalabs/massa-sc-examples/blob/main/age/contracts/assembly/contracts/main.ts).
+It allows you to store and read an age value for a given person name.
+We want our frontend to call the smart contract and change the age value associated to Alice.
+
+After creating a react app with `npx create-react-app helloworld` and setting up the Massa Web3 API as described in the
+[installation](/docs/build/massa-web3#installation) section, we can call the smart contract method `changeAge` like this:
+
+```typescript
+let args = new Args().addString(inputName).addU32(newAge);
+let opId = await client.smartContracts().callSmartContract({
+  targetAddress: CONTRACT_ADDRESS,
+  functionName: "changeAge",
+  parameter: args.serialize(),
+  maxGas: BigInt(1000000),
+  coins: BigInt(0),
+  fee: BigInt(0),
+});
+```
+[Github redirection](https://github.com/massalabs/massa-sc-examples/blob/age/react/src/App.tsx#L42)
+
+Since that method requires a string and an integer as parameters, we need to serialize them first. The `Args` class 
+provides a convenient way to do that. You can learn more about [Args here](/docs/usage-massa-web3#args).
+If the call is successful, we get an operation id back, you can then use it to check the status of the operation with the [explorer](https://buildnet.massa.net/#explorer)
+
+## Reading a smart contract value
+
+We now want to read the new age value we just set to display it in our frontend. You can directly read smart contract datastore values
+ with the `readSmartContractData` method, which does not require any gas or fee:
+
+```typescript
+      const res = await client.smartContracts().readSmartContract({
+        maxGas: BigInt(1000000),
+        targetAddress: CONTRACT_ADDRESS,
+        targetFunction: "getAge",
+        parameter: new Args().addString(inputName).serialize(),
+      });
+    
+    const age = res.returnValue;
+```
