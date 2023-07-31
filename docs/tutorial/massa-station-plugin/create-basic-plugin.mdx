@@ -7,7 +7,7 @@ This part will show you how to create a basic plugin that simply displays a mess
 
 ## Define your plugin
 
-- Define an API for the plugin that will allow MassaStation to interact with it.
+- Define an API for the plugin that will allow Massa Station to interact with it.
 
   - Set up the api folder: create `api/server`
   - Create a file named `swagger.yml` in the api folder
@@ -177,13 +177,14 @@ Tic!
 The last numbers correspond to the port the API is running on. It will change each time you will restart the plugin.
 :::
 
-## Deploy on massastation
+## Deploy on Massa Station
 
 ### Register the plugin
 
-To do so,
-Import the plugin package. `github.com/massalabs/station-massa-hello-world/pkg/plugin`
+To do so, in `my-plugin.go`:
 
+- Import the plugin package. `github.com/massalabs/station-massa-hello-world/pkg/plugin`
+- Update the packages in `go.mod`: `go get github.com/massalabs/station-massa-hello-world`
 - Listen to the server created and register the plugin with the `RegisterPlugin` function from the plugin package.
 
 ```go
@@ -206,7 +207,7 @@ It facilitates the registration of a plugin with Massa Station, assigning a uniq
 
 Build a binary of the plugin. `mkdir build && go build -o build/my-plugin`
 
-Move the plugin binary, the manifest and the swagger file to the massastation plugin folder.
+Move the plugin binary, the manifest and the swagger file to the Massa Station plugin folder.
 
 :::tip
 
