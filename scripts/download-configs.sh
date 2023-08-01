@@ -4,8 +4,24 @@
 download_files() {
     local destination="$1"
     local file_list="$2"
+
+    # Check if the file list exists
+    if [ ! -f "$file_list" ]; then
+        echo "Error: File list '$file_list' not found."
+        exit 1
+    fi
+
     echo "Downloading files to $destination from $file_list..."
+
+    # Use wget to download files, -N option will only download newer files
     wget -N -P "$destination" -i "$file_list"
+
+    # Check if wget encountered an error
+    if [ $? -ne 0 ]; then
+        echo "Error: Download failed. Please check the URLs in the file list."
+        exit 1
+    fi
+
     echo "Download completed successfully!"
 }
 
