@@ -1,45 +1,56 @@
 ---
 id: set-up-plugin
-title: Plugin set-up
+sidebar_label: Plugin set-up
 ---
+
+# Plugin set-up
 
 Let's go through the steps to set up your plugin's environment.
 
-## Install Go and Go dependencies
+## Requirements
 
-You can install Go [here](https://go.dev/doc/install).
-Install Go swagger: `go install github.com/go-swagger/go-swagger/cmd/swagger@latest`
+For this tutorial, you will need:
 
+- [Go](https://go.dev/doc/install)
+- The [`go-swagger`](https://github.com/go-swagger/go-swagger) package
+
+:::tip
+You can install the latest version of `go-swagger` package using:
+```shell
+go install github.com/go-swagger/go-swagger/cmd/swagger@latest
+```
+:::
 
 ## Initialize the Go plugin
 
-- Create and navigate to the folder my-plugin
-- Run:
+First, create and navigate to the folder `my-plugin` and then start your module using:
+```shell
+go mod init my-plugin
+```
 
-  ```bash
-  go mod init my-plugin
-  ```
+### Add a logo
 
-### Create a Logo
-
-- Create the folders `web/content` and add `hello_world.svg` in it.
-- Add your custom logo or copy-paste [this one](https://github.com/massalabs/station-massa-hello-world/blob/main/web/content/hello_world.svg?short_path=1cd8e84):
+We'll now add a logo to our plugin. This logo will be displayed in the Massa Station interface.
+For this, create the folder `web/content` and add your logo to it.
+You can use a custom logo or copy-paste [this one](https://github.com/massalabs/station-massa-hello-world/blob/main/web/content/hello_world.svg?short_path=1cd8e84).
 
 ### Add a manifest file
 
-- Create `manifest.json` in the root of your project.
-- Paste the following content, replacing the values with your own:
+Create a `manifest.json` file in the root of your project with the following content, replacing the values with your own:
 
 ```json
 {
   "author": "My Name",
   "name": "my-plugin",
   "description": "hello world plugin",
-  "logo": "hello_world.svg",
+  "logo": "hello_world.svg", // the filename of your logo
   "home": "",
   "version": "0.0.6",
   "apispec": ""
 }
 ```
+
+This manifest file provides essential information regarding the plugin that will be displayed in the Massa Station
+user interface.
 
 You're now ready to start building your plugin!
