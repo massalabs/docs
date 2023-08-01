@@ -3,7 +3,9 @@ id: backend-usage-massa-web3
 title: Backend Usage
 ---
 
-If you need to interact with the Massa network, you can use the Massa Web3 API to do so.
+If you need to interact with the Massa network, you can use the Massa Web3 API without the wallet provider. Therefore
+you will need to write your secret key directly in your code. Initialization of the client is shown in the [introduction](/docs/build/massa-web3#initialization)
+of the Massa Web3.
 
 ## Wallet & Account Management
 
@@ -11,7 +13,7 @@ Methods available such as creating or importing an account, getting account info
 messages, etc.
 
 A [complete example](https://github.com/massalabs/massa-web3/blob/main/examples/wallet/index.ts) of how to use the Wallet
- API is also available.
+API is also available.
 
 You can find also find the full typescript documentation [here](https://web3.docs.massa.net/classes/WalletClient.html).
 
@@ -20,4 +22,4 @@ You can find also find the full typescript documentation [here](https://web3.doc
 All the node operations are available through the private API, typescript documentation can be found [here](https://web3.docs.massa.net/classes/PrivateApiClient.html).
 
 Getting information about the blockchain can be done through the public API, typescript documentation can be found
- [here](https://web3.docs.massa.net/classes/PublicApiClient.html).
+[here](https://web3.docs.massa.net/classes/PublicApiClient.html).
