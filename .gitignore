@@ -22,10 +22,10 @@ yarn-error.log*
 .pnp.*
 
 # downlaoded files
-!external/client/config-files.txt
-!external/node/config-files.txt
-external/node
-external/client
-
+external/client/buildnet/config.toml
+external/client/testnet/config.toml
+external/node/buildnet/config.toml
+external/node/testnet/bootstrap_whitelist.json
+external/node/testnet/config.toml
 
 *.mdx-e

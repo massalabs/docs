@@ -1,0 +1,1 @@
+https://raw.githubusercontent.com/massalabs/massa/testnet/massa-client/base_config/config.toml
