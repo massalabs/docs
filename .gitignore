@@ -20,3 +20,12 @@ yarn-debug.log*
 yarn-error.log*
 .yarn
 .pnp.*
+
+# downlaoded files
+!external/client/config-files.txt
+!external/node/config-files.txt
+external/node
+external/client
+
+
+*.mdx-e

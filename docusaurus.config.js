@@ -145,6 +145,8 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        // See https://docusaurus.io/docs/markdown-features/code-blocks#supported-languages
+        additionalLanguages: ['toml', 'json', 'bash', 'powershell', 'protobuf'],
       },
     },
 };

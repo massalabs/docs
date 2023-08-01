@@ -6,6 +6,7 @@ on:
       - main
   schedule:
     - cron: '0 10 * * 6'
+  workflow_dispatch:
 
 jobs:
   markdown-link-check:

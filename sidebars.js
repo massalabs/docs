@@ -303,6 +303,11 @@ const sidebars = {
       label: "Testnet Staking Rewards Program",
     },
     {
+      type: "doc",
+      id: "node/all-configs",
+      label: "Node and client configuration",
+    },
+    {
       type: "html",
       value: "<hr/>",
     },
