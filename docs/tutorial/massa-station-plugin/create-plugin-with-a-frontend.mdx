@@ -3,8 +3,6 @@ id: create-plugin-3
 title: Add a frontend
 ---
 
-### Part 3: Add a basic front end
-
 To add a web-app to our plugin,
 
 - Add the right endpoint to the `swagger.yml` file. in the api folder:
@@ -33,9 +31,8 @@ To add a web-app to our plugin,
         description: Resource not found.
 ```
 
-- Run `task generate` to generate the new endpoints
-- Create a basic HTML page.
-  `nano web/content/index.html`
+- Run `go generate ./...` to generate the new endpoints
+- Create a basic HTML page `index.html` in the `web/content` folder:
   ```html
   <html>
     <body>
@@ -83,7 +80,7 @@ To add a web-app to our plugin,
       "path/filepath"
 
       "github.com/go-openapi/runtime/middleware"
-      "my-plugin/station-massa-hello-world/api/server/restapi/operations"
+      "my-plugin/api/server/restapi/operations"
       "github.com/massalabs/station-massa-wallet/pkg/openapi"
     )
 
@@ -123,8 +120,8 @@ To add a web-app to our plugin,
       ...
   ```
 
-- Run again `task install-plugin` to install the new version of the plugin
-- Navigate to `http://station.massa/plugin/my-name/hello-world/web/index.html` and you should access the html page you created.
+- Run again the command to install a plugin defined in [the part 1](/docs/tutorial/massa-station-plugin/create-basic-plugin.mdx)
+- Navigate to `http://station.massa/plugin/my-name/my-plugin/web/index.html` and you should access the html page you created.
 - You're all set !
 
   ![image](./hello-world-front.png)
