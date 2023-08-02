@@ -193,6 +193,16 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Massa Station",
+      items: [
+        {
+          type: "doc",
+          id: "build/massa-station/introduction",
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Massa Station plugin",
       items: [
         {
