@@ -44,7 +44,7 @@ Suppose you want to store your birth date, which is 30 bytes long, in your datas
 In that case, you need to send an operation that creates a key in your datastore using a Smart Contract.
 This operation incurs a storage cost of at least 0.01 MAS, calculated as 0.00025 * (10 + 30).
 
-Thus, if you create a new wallet using the Massa Client `massa-client`, you can generate a secret key `(wallet_generate_secret_key)`) and verify its address using the "`wallet_info``" function.
+Thus, if you create a new wallet using the Massa Client `massa-client`, you can generate a secret key `(wallet_generate_secret_key)`) and verify its address using the `wallet_info` function.
 However, until a transfer of at least 0.01 Massa is received to your wallet address, it will not appear in any of blockchain's ledgers.
 
 If the amount of transfer to an unexisting user address is lower than the amount of MAS coin needed to create the address on the ledger, the operation will be refused.
