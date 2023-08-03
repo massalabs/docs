@@ -7,22 +7,18 @@ sidebar_label: gRPC
 
 The [gRPC](https://grpc.io/) API allows you to communicate with the Massa blockchain.
 
-The Massa JSON-RPC API is splitted in two parts:
-
-- **Public API**: used for blockchain interactions. Default port:
-    33037 e.g. <grpc://localhost:33037>
-- **Private API**: used for node management. Default port: 33038 e.g.
-    <grpc://localhost:33038>
+- **gRPC Public API**: used for blockchain interactions. Default port:
+    33037 e.g. grpc://localhost:33037
 
 Find the complete Massa gRPC specification
 [here](https://github.com/massalabs/massa-proto/tree/main/proto/apis/massa/api/v1).
 
 The [API](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/api.html) and
 [Commons](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/commons.html)
-provide details on all available messages and methods in the gRPC Massa services.
+document all available message and method in gRPC Massa services.
 
 :::info
-To enable events (blocks, endorsements, operations...) brodcast via gRPC streams in your Massa node, add or edit the file
+To enable events (blocks, operations...) brodcast via gRPC streams in your Massa node, add or edit the file
 `massa-node/config/config.toml` with the following content:
 
 ```toml
@@ -87,7 +83,7 @@ The configuration uses the official [timostamm-protobuf-ts](https://buf.build/co
 plugin to generate gRPC client and classes in TypeScript.
 
 :::info
-For other languages check the complete list of [official Buf plugins](https://buf.build/plugins).
+For other languages check the complete list of [official Buf plugins](https://buf.build/massa-station/plugins).
 :::
 
 **Step 4: Generate gRPC client/classes in TypeScript**

@@ -110,6 +110,37 @@ const sidebars = {
       type: "doc",
       id: "tutorial/trading-bot",
     },
+    {
+      type: "category",
+      label: "Plugins",
+      items: [
+        {
+          type: "doc",
+          id: "tutorial/massa-station-plugin/intro",
+          label: "Introduction",
+        },
+        {
+          type: "doc",
+          id: "tutorial/massa-station-plugin/set-up-plugin",
+          label: "Plugin set-up",
+        },
+        {
+          type: "doc",
+          id: "tutorial/massa-station-plugin/create-plugin-1",
+          label: "Create a simple plugin",
+        },
+        {
+          type: "doc",
+          id: "tutorial/massa-station-plugin/create-plugin-2",
+          label: "Add an endpoint to your plugin",
+        },
+        {
+          type: "doc",
+          id: "tutorial/massa-station-plugin/create-plugin-3",
+          label: "Add a frontend to your plugin",
+        },
+      ],
+    },
   ],
   buildSidebar: [
     {
@@ -127,7 +158,7 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "build/quickstart",
+      id: "build/build-a-dapp/quickstart",
     },
     {
       type: "category",
@@ -135,8 +166,12 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          id: "build/smart-contract/intro",
+          id: "build/build-a-dapp/smart-contract/intro",
           label: "Introduction",
+        },
+        {
+          type: "doc",
+          id: "build/standards",
         },
         {
           type: "category",
@@ -144,34 +179,13 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              id: "build/smart-contract/prerequisites",
+              id: "build/build-a-dapp/smart-contract/prerequisites",
             },
             {
               type: "doc",
-              id: "build/smart-contract/webassembly-module",
-              label: "WebAssembly Module",
-            },
-            {
-              type: "doc",
-              id: "build/smart-contract/sdk",
-              label: "WebAssembly Module",
+              id: "build/build-a-dapp/smart-contract/webassembly-module",
             },
           ],
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Massa Station plugin",
-      items: [
-        {
-          type: "doc",
-          id: "build/plugin/introduction",
-          label: "Introduction",
-        },
-        {
-          type: "doc",
-          id: "build/plugin/guidelines",
         },
       ],
     },
@@ -182,29 +196,47 @@ const sidebars = {
     {
       type: "html",
       value:
-        "<span class='menu__link'><b><small> Developer Tools </small></b></span>",
+        "<span class='menu__link'><b><small> Massa Station </small></b></span>",
+    },
+    {
+      type: "doc",
+      id: "build/massa-station/massa-station",
     },
     {
       type: "category",
-      label: "Wallets",
+      label: "Plugins",
       items: [
         {
           type: "doc",
-          id: "build/wallet/intro",
+          id: "build/massa-station/plugin/introduction",
+          label: "Introduction",
         },
         {
           type: "doc",
-          id: "build/wallet/wallet-provider",
-        },
-        {
-          type: "doc",
-          id: "build/wallet/massa-wallet",
-        },
-        {
-          type: "doc",
-          id: "build/wallet/community-wallets",
+          id: "build/massa-station/plugin/guidelines",
         },
       ],
+    },
+    {
+      type: "doc",
+      id: "build/massa-station/wallet",
+    },
+    {
+      type: "doc",
+      id: "build/massa-station/plugin-store",
+    },
+    {
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value: "<span class='menu__link'><b><small> Tools </small></b></span>",
+    },
+    {
+      type: "doc",
+      id: "build/tools/sdk",
+      label: "WebAssembly Module",
     },
     {
       type: "category",
@@ -212,11 +244,29 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          id: "build/massa-web3/massa-web3-main",
+          id: "build/tools/massa-web3/massa-web3-main",
         },
         {
           type: "doc",
-          id: "build/massa-web3/massa-web3-utils",
+          id: "build/tools/massa-web3/massa-web3-utils",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "API",
+      items: [
+        {
+          type: "doc",
+          id: "build/tools/api/providers",
+        },
+        {
+          type: "doc",
+          id: "build/tools/api/jsonrpc",
+        },
+        {
+          type: "doc",
+          id: "build/tools/api/grpc",
         },
       ],
     },
@@ -230,26 +280,31 @@ const sidebars = {
       id: "build/tooling-versions",
     },
     {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> Community Tools </small></b></span>",
+    },
+    {
       type: "category",
-      label: "API",
+      label: "Wallets",
       items: [
         {
           type: "doc",
-          id: "build/api/providers",
+          id: "build/community-tools/wallet/intro",
         },
         {
           type: "doc",
-          id: "build/api/jsonrpc",
+          id: "build/community-tools/wallet/wallet-provider",
         },
         {
           type: "doc",
-          id: "build/api/grpc",
+          id: "build/community-tools/wallet/community-wallets",
         },
       ],
     },
     {
       type: "doc",
-      id: "build/standards",
+      id: "build/community-tools/explorer",
     },
   ],
   nodeSidebar: [
@@ -301,11 +356,6 @@ const sidebars = {
       type: "doc",
       id: "node/reward",
       label: "Testnet Staking Rewards Program",
-    },
-    {
-      type: "doc",
-      id: "node/all-configs",
-      label: "Node and client configuration",
     },
     {
       type: "html",
