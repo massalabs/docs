@@ -199,6 +199,10 @@ const sidebars = {
         "<span class='menu__link'><b><small> Massa Station </small></b></span>",
     },
     {
+      type: "doc",
+      id: "build/massa-station/massa-station",
+    },
+    {
       type: "category",
       label: "Plugins",
       items: [
