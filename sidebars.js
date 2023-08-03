@@ -198,7 +198,7 @@ const sidebars = {
         },
         {
           type: "doc",
-          id: "build/wallet/massa-station",
+          id: "build/wallet/massa-wallet",
         },
         {
           type: "doc",
