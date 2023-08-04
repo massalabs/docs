@@ -142,6 +142,23 @@ const config = {
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Massa Labs.`,
       },
+      algolia: {
+        // The application ID provided by Algolia
+        appId: "HXTTWBHG5G",
+        // Public API key: it is safe to commit it
+        apiKey: "a52786bbdb4b3cf5060002b792fd12b5",
+        indexName: "massa",
+        // Optional: see doc section below
+        contextualSearch: true,
+        // Optional: Algolia search parameters
+        searchParameters: {
+          clickAnalytics: true,
+          analytics: true,
+          enableReRanking: true,
+        },
+        //... other Algolia params
+        placeholder: "Search the Docs...",
+      },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
