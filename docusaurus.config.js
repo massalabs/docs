@@ -104,6 +104,10 @@ const config = {
             position: "left",
             label: "🖥 Testnet",
           },
+          {
+            type: "search",
+            position: "right",
+          },
         ],
       },
       footer: {
