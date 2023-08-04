@@ -1,0 +1,67 @@
+---
+id: gas
+sidebar_label: Gas
+---
+
+# Gas
+
+## Introduction
+
+In Massa, there are 2 slots per second. At each slot, an ensemble of autonomous smart contracts, as well as a block, are executed.
+If a smart contract being called executed contains an infinite loop, it might hang the whole network.
+To prevent this, it is required to cap the computation time of each slot below 500 milliseconds to allow the network to follow the slot schedule.
+
+To do this we define a deterministic unit of computation time calibrated on a reference instance of the recommended hardware.
+We call this unit `gas`.
+Each smart contract instruction consumes a defined amount of `gas` when executed.
+
+Protocol-defined gas limits ensuring a total slot execution time remains below 300 milliseconds
+on the reference hardware are set as follows:
+* the execution of autonomous smart contracts at each slot: `MAX_ASYNC_GAS = 1_000_000_000`
+* the execution of all the operations of a block: `MAX_BLOCK_GAS = 1_000_000_000`
+
+
+## Gas in operations
+
+Block producers aim at maximizing their revenue by executing the operations that give them the highest total `fee` in their blocks,
+while respecting the protocol-defined block size and gas limits to avoid their blocks from being rejected.
+Having many pending operations compete for a limited amount of block space and gas creates a market for those resources.
+This means that if the `fee` of an operation is not set high enough to make it competitive given the space and gas it consumes,
+it less likely to be included by block producers.
+They would prefer allocating those resources to other operations that are more profitable to them.
+
+Given the high throughput of the network and the low hardware requirements for block producers,
+it is not computationally feasible for block producers to simulate the execution of some types of operations
+in order to estimate the amount of gas their execution would require.
+Operations such as `CallSC` or `ExecuteSC` therefore contain a declarative `max_gas` field
+that caps the amount of `gas` that can be consumed by the execution of the operation.
+The sum of the `max_gas` of all the operations of a block must not exceed `MAX_BLOCK_GAS`.
+Beyond that, any excess operations in the block are not executed and do not profit to the block producer.
+It is the responsibility of the operation sender to set a `max_gas` value that is high enough.
+If the execution of the operation exceeds its declared `max_gas`,
+the `fee` is still paid but any other effects of the execution are reverted.
+
+The gas usage of an operation can be estimated by its sender by executing the operation in read-only mode.
+The used gas is returned by the read-only calls/executions.
+
+## Gas in autonomous smart contracts
+
+Autonomous smart contract also compete for a finite `MAX_ASYNC_GAS` per slot.
+When emitting an autonomous smart contract message, the sender speficies a `fee` and a `max_gas` in the arguments.
+Autonomous smart contracts do not involve block producers, so the `fee` is simply burned at emission.
+
+To replicate the priorization behavior of block producers in a deterministic way,
+the autonomous smart contract pool sorts the autonomous smart contract messages
+by their profitability defined by the `fee/max_gas` ratio.
+
+The pool is of finite size `MAX_ASYNC_POOL_LENGTH = 10_000`.
+Expired messages are automatically dropped from that pool.
+Despite this, if the pool still grows beyond its length limit,
+the least profitable messages are dropped to fit the limit.
+When a message is dropped, its `coins` are reimbured to the sender but not its `fee`.
+
+At each slot `S`, the autonomous smart contract messages that can be executed at `S`
+are picked from the most profitable to the least profitable and executed in that order
+until their cumulated `max_gas` reaches `MAX_ASYNC_GAS`.
+Autonomous smart contract messages are removed from the pool once they are executed.
+

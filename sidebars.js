@@ -58,6 +58,10 @@ const sidebars = {
       id: "learn/storage-costs",
     },
     {
+      type: "doc",
+      id: "learn/gas",
+    },
+    {
       type: "html",
       value: "<hr/>",
     },

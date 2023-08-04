@@ -168,6 +168,18 @@ In order to enforce this limit, users are required to lock a corresponding amoun
 Read more about storage costs [here](/docs/learn/storage-costs).
 :::
 
+
+## Gas
+
+In Massa, there is no Gas price.
+Each operation declares a max amount of gas that it can use, and provides a fee that is added to the rewards of the block in which the operation is executed.
+
+Block producers then choose which operations to include in their blocks to fit the max block gas and max block size constraints while maximize the total fee.
+
+:::note
+Read more about gas [here](/docs/learn/gas).
+:::
+
 ## Operation
 
 At its core, the Massa network revolves around the aggregation, sequencing, and execution of operations. Operations are 
