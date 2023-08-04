@@ -18,7 +18,7 @@ Each smart contract instruction consumes a defined amount of `gas` when executed
 Protocol-defined gas limits ensuring a total slot execution time remains below 300 milliseconds
 on the reference hardware are set as follows:
 * the execution of autonomous smart contracts at each slot: `MAX_ASYNC_GAS = 1_000_000_000`
-* the execution of all the operations of a block: `MAX_BLOCK_GAS = 1_000_000_000`
+* the execution of all the operations of a block: `MAX_BLOCK_GAS = 4_294_967_295`
 
 
 ## Gas in operations
@@ -41,7 +41,7 @@ It is the responsibility of the operation sender to set a `max_gas` value that i
 If the execution of the operation exceeds its declared `max_gas`,
 the `fee` is still paid but any other effects of the execution are reverted.
 
-The gas usage of an operation can be estimated by its sender by executing the operation in read-only mode.
+The gas usage of an operation can be estimated by its sender by using the read-only mode.
 The used gas is returned by the read-only calls/executions.
 
 ## Gas in autonomous smart contracts
