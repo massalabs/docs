@@ -44,11 +44,12 @@ To enable events (blocks, endorsements, operations...) brodcast via gRPC streams
 **Step 1: Clone `massa-proto` repository**
 
 ```shell
-git clone https://github.com/massalabs/massa-proto.git
+git clone -b MASSA_PROTO_TAG https://github.com/massalabs/massa-proto.git --depth 1
 ```
 
 :::note
-If you are using an older version of the Massa node, please use the commit hash corresponding to your node version.
+If you are using an older version of the Massa node, please use the tag version or commit hash corresponding to your node version.
+Find all `massa-proto` tags [here](https://github.com/massalabs/massa-proto/tags).
 :::
 
 **Step 2: Install Buf CLI**
