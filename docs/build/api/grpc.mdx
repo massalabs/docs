@@ -14,13 +14,6 @@ The Massa JSON-RPC API is splitted in two parts:
 - **Private API**: used for node management. Default port: 33038 e.g.
     <grpc://localhost:33038>
 
-Find the complete Massa gRPC specification
-[here](https://github.com/massalabs/massa-proto/tree/main/proto/apis/massa/api/v1).
-
-The [API](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/api.html) and
-[Commons](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/commons.html)
-provide details on all available messages and methods in the gRPC Massa services.
-
 :::info
 To enable events (blocks, endorsements, operations...) brodcast via gRPC streams in your Massa node, add or edit the file
 `massa-node/config/config.toml` with the following content:
@@ -31,6 +24,12 @@ To enable events (blocks, endorsements, operations...) brodcast via gRPC streams
    enable_broadcast = true
 ```
 :::
+
+## Documentation
+
+- gRPC **API** [documentation](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/api.html).
+- gRPC **Commons** [documentation](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/commons.html).
+- gRPC **API** [specification](https://github.com/massalabs/massa-proto/tree/main/proto/apis/massa/api/v1).
 
 ## Integrations
 
@@ -44,11 +43,12 @@ To enable events (blocks, endorsements, operations...) brodcast via gRPC streams
 **Step 1: Clone `massa-proto` repository**
 
 ```shell
-git clone https://github.com/massalabs/massa-proto.git
+git clone -b MASSA_PROTO_TAG https://github.com/massalabs/massa-proto.git --depth 1
 ```
 
 :::note
-If you are using an older version of the Massa node, please use the commit hash corresponding to your node version.
+If you are using an older version of the Massa node, please use the tag version or commit hash corresponding to your node version.
+Find all `massa-proto` tags [here](https://github.com/massalabs/massa-proto/tags).
 :::
 
 **Step 2: Install Buf CLI**
