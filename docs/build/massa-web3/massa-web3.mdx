@@ -149,7 +149,7 @@ You can easily initialize a client instance using the ClientFactory class:
 
 ```typescript
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
-  deployerPrivateKey
+  privateKey
 );
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
@@ -165,7 +165,7 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 
 ```typescript
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
-  deployerPrivateKey
+  privateKey
 );
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
@@ -181,7 +181,7 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 
 ```typescript
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
-  deployerPrivateKey
+  privateKey
 );
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
@@ -197,7 +197,7 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 
 ```typescript
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
-  deployerPrivateKey
+  privateKey
 );
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
@@ -213,7 +213,7 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 
 ```typescript
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
-  deployerPrivateKey
+  privateKey
 );
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
@@ -230,7 +230,7 @@ You can also create a custom client connecting to a node whose ip and ports are 
 
 ```typescript
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
-  deployerPrivateKey
+  privateKey
 );
 
 // initialize a custom client using an own provider
