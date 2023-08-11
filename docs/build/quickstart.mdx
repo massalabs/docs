@@ -53,9 +53,6 @@ First, open a terminal, and navigate to your preferred directory. Now, let's cre
 ```bash
 npx @massalabs/sc-project-initializer@buildnet init massa-hello-world
 ```
-:::note
-You might be prompted to install some dependencies. If so, type `y` and press Enter.
-:::
 
 With this command, you have created a new folder named massa-hello-world with all the necessary files for developing a Massa smart contract. Navigate to this folder with the following command:
 
@@ -87,7 +84,6 @@ JSON_RPC_URL_PUBLIC=https://buildnet.massa.net/api/v2:33035
 ```
 
 :::info
-
 - WALLET_SECRET_KEY: Store your wallet's private key used to deploy the contract here. Make sure your wallet is funded.
 - JSON_RPC_URL_PUBLIC: This is the URL of the JSON-RPC interface of a public or a private Massa node.
 :::
@@ -236,15 +232,7 @@ npx create-react-app my-app --template typescript
 The --template typescript flag sets up a TypeScript template for our React application.
 :::
 
-:::note
-If you want you can replace `my-app` in the command with your desired project name.
-:::
-
-After the installation is complete, navigate to your project folder:
-
-```bash
-cd my-app
-```
+After the installation is complete, navigate to your project folder.
 
 - **Step 2: Installing Massa Web3**
 
@@ -373,7 +361,7 @@ In order to interact with the blockchain, our front end application is going to 
 
 In the code above, we are using the `createDefaultClient` method to initialize our client object. This method takes two parameters: a provider URL and a boolean. The provider URL is the URL of the node we want to use to interact with the blockchain. 
 
-:::note
+:::info
 If you remember correctly, [before deploying our smart contract](#step-2-setting-up-the-environment-variables)
 , we created a `.env` file and added a `JSON_RPC_URL` variable to it. This variable was the URL of a node used to deploy our smart contract to the Massa blockchain. Here we are doing something similar but instead of using a node to deploy our smart contract, we are using a node to interact with our smart contract.
 :::
@@ -404,8 +392,8 @@ The buildnet is a test network that is used to test smart contracts before deplo
 ```
 In the code above, we are retrieving the "Hellow, world!" greeting message by directly reading the smart contract's storage. 
 
-:::note
-Each smart contract has its own storage that can be used to store data. It is also a key-value store.
+:::info
+Each smart contract has its own storage that can be used to store data. It is also a key-value store. Learn more about smart contracts [here](docs/build/smart-contract/intro).
 :::
 
 To do so, we are using the `getDatastoreEntries` method. This method takes an array of `DatastoreEntry` objects as a parameter. Each `DatastoreEntry` object contains the address of the smart contract and the key of the value we want to retrieve.
