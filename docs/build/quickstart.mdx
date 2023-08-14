@@ -357,7 +357,7 @@ const initClient = async () => {
     setWeb3client(client);
 };
 ```
-In order to interact with the blockchain, our front end application is going to need a client. A client is a piece of software that can interact with a service; in our case the service is the Massa blockchain. Thus in the code above, we are initializing a client object. Then, we will use this client's methods to interact with the blockchain and more specifically with our smart contract. 
+In order to interact with the blockchain, our front end application is going to need a client. A client is a piece of software that can be used to interact with a service; in our case the service is the Massa blockchain and we will use the client's methods to interact with our smart contract. 
 
 In the code above, we are using the `createDefaultClient` method to initialize our client object. This method takes two parameters: a provider URL and a boolean. The provider URL is the URL of the node we want to use to interact with the blockchain. 
 
