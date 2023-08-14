@@ -155,7 +155,7 @@ const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.MAINNET,
   true, // retry failed requests
-  baseAccount // optional parameter, will be used as default account when no account is specified
+  baseAccount // optional parameter
 );
 ```
 
@@ -171,7 +171,7 @@ const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.TESTNET,
   true, // retry failed requests
-  baseAccount // optional parameter, will be used as default account when no account is specified
+  baseAccount // optional parameter
 );
 ```
 
@@ -187,7 +187,7 @@ const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.BUILDNET,
   true, // retry failed requests
-  baseAccount // optional parameter, will be used as default account when no account is specified
+  baseAccount // optional parameter
 );
 ```
 
@@ -203,7 +203,7 @@ const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.LABNET,
   true, // retry failed requests
-  baseAccount // optional parameter, will be used as default account when no account is specified
+  baseAccount // optional parameter
 );
 ```
 
@@ -219,7 +219,7 @@ const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.LOCALNET,
   true, // retry failed requests
-  baseAccount // optional parameter, will be used as default account when no account is specified
+  baseAccount // optional parameter
 );
 ```
 
@@ -248,7 +248,7 @@ const providers: Array<IProvider> = [
 const customClient: Client = await ClientFactory.createCustomClient(
   providers,
   true, // retry failed requests
-  baseAccount // optional parameter, will be used as default account when no account is specified
+  baseAccount // optional parameter
 );
 ```
 
@@ -256,8 +256,10 @@ const customClient: Client = await ClientFactory.createCustomClient(
 </Tabs>
 
 :::info
-Please note that specifying a base account is only optional at this point. An account is needed only to perform operations that require a signature.
-don't need to sign transactions. You can learn more about how to manage the base account in the [Wallet Operations](https://web3.docs.massa.net/classes/WalletClient.html) section.
+When initializing the client, you have the option to specify a `baseAccount`. If provided, this account
+will be used as the default executor for upcoming calls. If you choose to initialize
+the client without a `baseAccount`, it becomes mandatory to specify the executor for each call that requires a signature.
+You can learn more about how to manage the base account in the [Wallet Operations](https://web3.docs.massa.net/classes/WalletClient.html) section.
 :::
 
 ### Client exposed APIs
