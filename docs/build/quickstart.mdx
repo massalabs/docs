@@ -68,11 +68,7 @@ Once you have navigated to the project directory, you should see the following f
 #### Step 2: Setting up the Environment variables
 In order to communicate with the blockchain and deploy our smart contract we are going to need two things: a wallet and a node. The node will allow us to communicate with the blockchain while the wallet will allow us to sign and pay for the deployment of our smart contract. The wallet will come under the form of a secret key, while the node will be the JSON-RPC URL of a public node.
 
-Copy the content of the `.env.example` to a newly created `.env` file at the root of your project directory with the following command: 
-```bash
-cp .env.example .env
-```
-
+Copy the content of the `.env.example` to a newly created `.env` file at the root of your project directory.
 Once created, edit the `.env` file by inserting your wallet's secret key.
 ```bash
 WALLET_SECRET_KEY="Your_private_key_here"
@@ -80,7 +76,7 @@ JSON_RPC_URL_PUBLIC=https://buildnet.massa.net/api/v2:33035
 ```
 
 :::info
-- WALLET_SECRET_KEY: Store your wallet's private key used to deploy the contract here. Make sure your wallet is funded.
+- WALLET_SECRET_KEY: This is your wallet's secret key. It will be used to sign the contract deployment transaction. Make sure your wallet is funded.
 - JSON_RPC_URL_PUBLIC: This is the URL of the JSON-RPC interface of a public or a private Massa node.
 :::
 
@@ -124,7 +120,7 @@ At first glance, it may seems like a lot of code for a simple "Hello, world!". B
 import { generateEvent, Storage, Context } from "@massalabs/massa-as-sdk";
 ```
 
-Here we are importing the necessary functions from the Massa AssemblyScript SDK. The Massa AssemblyScript software development kit (SDK) is a collection of functions and objects that wrap the ABIs exposed by the node. In other words it allows your smart contract to interact with the node from within it will be executed.
+Here we are importing the necessary functions from the Massa AssemblyScript SDK. The Massa AssemblyScript software development kit (SDK) is a collection of functions and objects that wrap the ABIs exposed by the node.
 
 :::info
 If you are familiar with Solidity smart contracts, you will soon notice that some object provided by Massa AssemblyScript SDK are very similar to the ones provided by the Solidity SDK. For example, the `Context` object is very similar to the `msg` object in Solidity. It exposes methods such as `Context.transferredCoins()` which would translate to `msg.value` in Solidity. `Context.caller()` would return the address of the function caller like `msg.sender` in solidity. Similarly, the `generateEvent` function is very similar to the `emit` function in Solidity, etc.
@@ -150,7 +146,11 @@ Storage.set("greeting", "Hello, world!");
 This line sets the greeting message in the contract storage. The `Storage.set()` function takes two parameters: the key and the value. The key is a string that will be used to retrieve the value from the storage. The value can be of any type. In this example, we are using a string.
 
 :::info
-In Massa, if you want some data to be persistent on the blockchain, you need to store it in the contract storage. If you are familiar with web development, you can think of the storage as the database of your application. The contract storage is a key-value store that can be used to store simple objects such as our "Hello, world!" string, or more complex objects such as serializable object arrays. Then the data can be retrieved from the storage with methods such has `Storage.get()` or `Storage.has()` provided by the SDK. You can learn more about the contract storage [here](docs/build/smart-contract/as-sdk.md).
+In Massa, if you want some data to be persistent on the blockchain, you need to store it in the contract storage. If you are familiar with web development, you can think of the storage as the database of your application. The contract storage is a key-value store that can be used to store simple objects such as our "Hello, world!" string, or more complex objects such as serializable object arrays. Then the data can be retrieved from the storage using methods such has `Storage.get()` or `Storage.has()` provided by the SDK. You can learn more about how to handle the storage with Massa AS-SDK [here](docs/build/smart-contract/as-sdk.md#storage). 
+:::
+
+:::info
+In Massa, when writing to the persistent storage a.k.a the ledger, you need to pay for the storage space you will be using. The more data you store, the more you will have to pay. Similarly when you free-up some space from the ledger, you recover the amount of coins you paid to allocate the space. The price of storage is a fixed amount of Massa coins for each byte of data (0.001 MAS per byte). You can learn more about storage cost in Massa smart contracts [here](docs/learn/storage-costs.mdx).
 :::
 
 - **Emitting an event**
@@ -158,10 +158,9 @@ In Massa, if you want some data to be persistent on the blockchain, you need to 
 ```tsx
 generateEvent(`Greeting has been set`);
 ```
-Here, we are emitting an event to notify that the greeting message has been set. Events are a great way to notify the front ends of a dApp that something has happened. They are similar to events in Solidity. You can learn more about events [here](docs/build/smart-contract/as-sdk.md).
+Here, we are emitting an event to notify that the greeting message has been set. Events are a great way to notify the front ends of a dApp that something has happened. They are similar to events in Solidity. You can learn more about events [here](docs/build/smart-contract/as-sdk.md#utilities).
 
 Now that we have written our smart contract, let's deploy it to the blockchain.
-To deploy your smart contract, follow these steps:
 
 #### Step 2: Compile Your Smart Contract
 
@@ -232,7 +231,7 @@ After the installation is complete, navigate to your project folder.
 
 - **Step 2: Installing Massa Web3**
 
-Next up, we are going to install the Massa Web3 package. This package enables our front end to interact with the Massa blockchain. If you are familiar with the EVM ecosystem, massa-web3 would be the equivalent of `web3` or `ethers` librairies, but for the Massa blockchain. Here's how to install it:
+Next up, we are going to install the [Massa Web3 package](https://github.com/massalabs/massa-web3). This package enables our front end to interact with the Massa blockchain. If you are familiar with the EVM ecosystem, `massa-web3` would be the equivalent of `web3` or `ethers` librairies, but for the Massa blockchain. Here's how to install it:
 
 ```bash
 npm install @massalabs/massa-web3@buildnet
@@ -244,13 +243,7 @@ Now that we have our dependencies installed, let's begin building the front end 
 
 Before writing our component, navigate to the src folder and locate the `App.tsx` file.
 
-```bash
-cd src
-```
-
-This `App.tsx` file serves as the main entry point for your application. We will replace its content with our component's code.
-
-Here's the code:
+This `App.tsx` file serves as the main entry point for your application. Replace the content of this file with the following code:
 
 ```tsx
 import {
@@ -363,7 +356,7 @@ If you remember correctly, [before deploying our smart contract](#step-2-setting
 :::
 
 We are using the `DefaultProviderUrls.BUILDNET` constant as our provider URL. This constant points to a node on the Massa buildnet. 
-The boolean is a flag that indicates whether or not we want to use the node's wallet to sign transactions. Here it is set to false because we are not going to sign transactions. Finally, we are setting the client object to the `web3client` state variable using the `setWeb3client` function, so that the web3 client is available to the rest of our application.
+The boolean is a flag that indicates whether or not we want to provide an wallet account to sign transactions. Here it is set to false because we are not going to sign any transactions. Finally, we are setting the client object to the `web3client` state variable using the `setWeb3client` function, so that the web3 client is available to the rest of our application.
 
 :::info
 The buildnet is a test network that is used to test smart contracts before deploying them to the mainnet. It is similar to the Ethereum Sepolia network. You can learn more about Massa networks [here](/docs/build/networks-faucets).
@@ -386,18 +379,14 @@ The buildnet is a test network that is used to test smart contracts before deplo
     }
   }
 ```
-In the code above, we are retrieving the "Hellow, world!" greeting message by directly reading the smart contract's storage. 
+In the code above, we are retrieving the "Hello, world!" greeting message by directly reading the smart contract's storage. 
 
-:::info
-Each smart contract has its own storage that can be used to store data. It is also a key-value store. Learn more about smart contracts [here](docs/build/smart-contract/intro).
-:::
-
-To do so, we are using the `getDatastoreEntries` method. This method takes an array of `DatastoreEntry` objects as a parameter. Each `DatastoreEntry` object contains the address of the smart contract and the key of the value we want to retrieve.
+To do so, we are using the `getDatastoreEntries` method. This method takes an array of `DatastoreEntry` objects as a parameter. Each `DatastoreEntry` object contains the address off the smart contract and the key of the value we want to retrieve.
 In our case, the address of the smart contract is the one we got during contract deployment. The key is the string "greeting" [that we used to store the greeting message in the smart contract's storage](#step-1-writing-the-smart-contract). 
 We retrieve the current greeting from the smart contract's storage and decode it using the `bytesToStr` function. Finally, we set the greeting to the `greeting` state variable using the `setGreeting` function.
 
 :::info
-As you can see, we cannot directly use the datastore entry returned by the smart contract. Indeed, the storage of the smart contract is a key value store that stores data in bytes. Thus, we need to decode the bytes returned by the smart contract to get the actual greeting message. That is why we have to use the `bytesToStr` function. 
+As you can see, we cannot directly use the datastore entry returned by the smart contract. Indeed, the storage of the smart contract is a key value store that stores data in bytes. Thus, we need to decode the bytes returned by the smart contract to get the actual greeting message. That is why we have to use massa-web3 `bytesToStr` function. You can check massa-web3 utils [here](https://web3.docs.massa.net/modules/utils.html).
 :::
 
 - **User Interface**
