@@ -54,11 +54,7 @@ First, open a terminal, and navigate to your preferred directory. Now, let's cre
 npx @massalabs/sc-project-initializer@buildnet init massa-hello-world
 ```
 
-With this command, you have created a new folder named `massa-hello-world` with all the necessary files for developing a Massa smart contract. Navigate to this folder with the following command:
-
-```bash
-cd massa-hello-world
-```
+With this command, you have created a new folder named massa-hello-world with all the necessary files for developing a Massa smart contract. Navigate to this folder.
 
 Once you have navigated to the project directory, you should see the following files and directories:
 
@@ -77,7 +73,7 @@ Copy the content of the `.env.example` to a newly created `.env` file at the roo
 cp .env.example .env
 ```
 
-Once created, edit the .env file by inserting your wallet's secret key.
+Once created, edit the `.env` file by inserting your wallet's secret key.
 ```bash
 WALLET_SECRET_KEY="Your_private_key_here"
 JSON_RPC_URL_PUBLIC=https://buildnet.massa.net/api/v2:33035
