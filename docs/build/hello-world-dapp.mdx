@@ -1,31 +1,31 @@
 ---
-id: quickstart
-sidebar_label: Hello World dApp
+id: hello-world-dapp
+sidebar_label: '"Hello, World!" dApp'
 ---
 
-# Build a Hello World dApp
+# Build a "Hello, World!" dApp
 
 Welcome, Developer! You're about to embark on an exciting journey where you'll build your very first decentralized application (dApp) using the Massa blockchain. If you're thrilled about the world of blockchain, smart contracts, and dApps, you've come to the right place!
 
-This guide will help you build a simple "Hello World" dApp. We'll use a smart contract written in AssemblyScript and a user-friendly frontend designed in React.
+This guide will help you build a simple "Hello, World!" dApp. We'll use a smart contract written in AssemblyScript and a user-friendly frontend designed in React.
 
 ## What are we going to do ?
 
-Here's the scoop: The application we're about to develop is simple. It will allow the user to retrieve a "Hello World" message that was set during the dApp deployment. This message will be stored on the Massa blockchain and will be permanently visible to all users of our dApp trough a front end.
+Here's the scoop: The application we're about to develop is simple. It will allow the user to retrieve a "Hello, World!" message that was set during the dApp deployment. This message will be stored on the Massa blockchain and will be permanently visible to all users of our dApp trough a front end.
 
 Here's a quick overview of the component that will make up our dApp:
 
 - **The Smart Contract (SC)**
-  The smart contract, written in AssemblyScript, is the backbone of our dApp. If you are familiar with web development, you can think of the smart contract as the back end of the application. It will be deployed on the Massa blockchain and will be responsible for storing and retrieving the "Hello, world!" greeting message.
+  The smart contract, written in AssemblyScript, is the backbone of our dApp. If you are familiar with web development, you can think of the smart contract as the back end of the application. It will be deployed on the Massa blockchain and will be responsible for storing and retrieving the "Hello, World!" greeting message.
 
 - **The Frontend**
-  A basic web interface built in React will allow users to read the greeting message. This interface will interact with the Massa blockchain by fetching the "Hello, world!" message from our smart contract.
+  A basic web interface built in React will allow users to read the greeting message. This interface will interact with the Massa blockchain by fetching the "Hello, World!" message from our smart contract.
 
 And that's it! Let's get started.
 
 ## The Smart Contract
 
-In this section, we are going to create a smart contract that will be deployed on the Massa blockchain. As explained earlier, this smart contract will be responsible for storing and retrieving the "Hello World" message.
+In this section, we are going to create a smart contract that will be deployed on the Massa blockchain. As explained earlier, this smart contract will be responsible for storing and retrieving the "Hello, World!" message.
 Smart contract in Massa are written in AssemblyScript, a language that is very similar to TypeScript. If you are not familiar with AssemblyScript, don't worry! We will guide you through the process of writing your first smart contract.
 
 ### Prerequisites
@@ -105,7 +105,7 @@ export function constructor(_: StaticArray<u8>): void {
   }
 
   // Set the greeting message in the contract storage
-  Storage.set("greeting", "Hello, world!");
+  Storage.set("greeting", "Hello, World!");
 
   // Emit an event to notify that the greeting message has been set
   generateEvent(`Greeting has been set`);
@@ -113,7 +113,7 @@ export function constructor(_: StaticArray<u8>): void {
   return;
 }
 ```
-At first glance, it may seems like a lot of code for a simple "Hello, world!". But the code above is actually quite simple. Let's break it down:
+At first glance, it may seems like a lot of code for a simple "Hello, World!". But the code above is actually quite simple. Let's break it down:
 
 - **Importing the necessary packages from Massa AssemblyScript SDK**
 ```tsx
@@ -140,13 +140,13 @@ This is the constructor function. It is called only once when the contract is be
 
 - **Setting the greeting message in the contract storage**
 ```tsx
-Storage.set("greeting", "Hello, world!");
+Storage.set("greeting", "Hello, World!");
 ```
 
 This line sets the greeting message in the contract storage. The `Storage.set()` function takes two parameters: the key and the value. The key is a string that will be used to retrieve the value from the storage. The value can be of any type. In this example, we are using a string.
 
 :::info
-In Massa, if you want some data to be persistent on the blockchain, you need to store it in the contract storage. If you are familiar with web development, you can think of the storage as the database of your application. The contract storage is a key-value store that can be used to store simple objects such as our "Hello, world!" string, or more complex objects such as serializable object arrays. Then the data can be retrieved from the storage using methods such has `Storage.get()` or `Storage.has()` provided by the SDK. You can learn more about how to handle the storage with Massa AS-SDK [here](docs/build/smart-contract/as-sdk.md#storage). 
+In Massa, if you want some data to be persistent on the blockchain, you need to store it in the contract storage. If you are familiar with web development, you can think of the storage as the database of your application. The contract storage is a key-value store that can be used to store simple objects such as our "Hello, World!" string, or more complex objects such as serializable object arrays. Then the data can be retrieved from the storage using methods such has `Storage.get()` or `Storage.has()` provided by the SDK. You can learn more about how to handle the storage with Massa AS-SDK [here](docs/build/smart-contract/as-sdk.md#storage). 
 :::
 
 :::info
@@ -379,7 +379,7 @@ The buildnet is a test network that is used to test smart contracts before deplo
     }
   }
 ```
-In the code above, we are retrieving the "Hello, world!" greeting message by directly reading the smart contract's storage. 
+In the code above, we are retrieving the "Hello, World!" greeting message by directly reading the smart contract's storage. 
 
 To do so, we are using the `getDatastoreEntries` method. This method takes an array of `DatastoreEntry` objects as a parameter. Each `DatastoreEntry` object contains the address of the smart contract and the key of the value we want to retrieve.
 In our case, the address of the smart contract is the one we got during contract deployment. The key is the string "greeting" [that we used to store the greeting message in the smart contract's storage](#step-1-writing-the-smart-contract). 

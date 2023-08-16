@@ -127,7 +127,7 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "build/quickstart",
+      id: "build/hello-world-dapp",
     },
     {
       type: "category",
