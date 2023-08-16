@@ -134,6 +134,10 @@ const sidebars = {
       id: "build/hello-world-dapp",
     },
     {
+      type: "doc",
+      id: "build/hello-world-plugin-1",
+    },
+    {
       type: "category",
       label: "Smart Contract",
       items: [
