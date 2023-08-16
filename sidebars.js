@@ -131,7 +131,7 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "build/quickstart",
+      id: "build/hello-world-dapp",
     },
     {
       type: "category",
@@ -198,12 +198,12 @@ const sidebars = {
         },
         {
           type: "doc",
-          id: "build/wallet/wallet-provider",
+          id: "build/wallet/massa-wallet",
         },
         {
           type: "doc",
-          id: "build/wallet/massa-wallet",
-        },
+          id: "build/wallet/wallet-provider",
+        },  
         {
           type: "doc",
           id: "build/wallet/community-wallets",

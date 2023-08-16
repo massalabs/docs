@@ -1,0 +1,419 @@
+---
+id: hello-world-dapp
+sidebar_label: '"Hello, World!" dApp'
+---
+
+# Build a "Hello, World!" dApp
+
+Welcome, Developer! You're about to embark on an exciting journey where you'll build your very first decentralized application (dApp) using the Massa blockchain. If you're thrilled about the world of blockchain, smart contracts, and dApps, you've come to the right place!
+
+This guide will help you build a simple "Hello, World!" dApp. We'll use a smart contract written in AssemblyScript and a user-friendly frontend designed in React.
+
+## What are we going to do ?
+
+Here's the scoop: The application we're about to develop is simple. It will allow the user to retrieve a "Hello, World!" message that was set during the dApp deployment. This message will be stored on the Massa blockchain and will be permanently visible to all users of our dApp trough a front end.
+
+Here's a quick overview of the component that will make up our dApp:
+
+- **The Smart Contract (SC)**
+  The smart contract, written in AssemblyScript, is the backbone of our dApp. If you are familiar with web development, you can think of the smart contract as the back end of the application. It will be deployed on the Massa blockchain and will be responsible for storing and retrieving the "Hello, World!" greeting message.
+
+- **The Frontend**
+  A basic web interface built in React will allow users to read the greeting message. This interface will interact with the Massa blockchain by fetching the "Hello, World!" message from our smart contract.
+
+And that's it! Let's get started.
+
+## The Smart Contract
+
+In this section, we are going to create a smart contract that will be deployed on the Massa blockchain. As explained earlier, this smart contract will be responsible for storing and retrieving the "Hello, World!" message.
+Smart contract in Massa are written in AssemblyScript, a language that is very similar to TypeScript. If you are not familiar with AssemblyScript, don't worry! We will guide you through the process of writing your first smart contract.
+
+### Prerequisites
+
+Before we start, here's what you'll need:
+
+- **Node.js and npm installed**
+  We recommend using Node.js version 18 or later, and the compatible npm version. You can download and install Node.js and npm from the official website: https://nodejs.org/.
+
+- **Massa Wallet and your secret key**
+  You'll need a funded Massa wallet and your secret key before you deploy your smart contract to the Massa blockchain.
+
+:::info
+Not sure how to create and fund a Massa wallet? Check our guide [here](/docs/build/wallet/intro).
+:::
+
+### Setting up Your Project
+
+Here are the steps to set up your smart contract project:
+
+#### Step 1: Initialize Your Smart Contract Project
+
+First, open a terminal, and navigate to your preferred directory. Now, let's create your project with the following command:
+
+```bash
+npx @massalabs/sc-project-initializer@buildnet init massa-hello-world
+```
+
+With this command, you have created a new folder named `massa-hello-world` with all the necessary files for developing a Massa smart contract. Navigate to this folder.
+
+Once you have navigated to the project directory, you should see the following files and directories:
+
+- **`assembly`**: This is the directory where your smart contract code resides. Within this, you'll find your contract files in the `contracts` subdirectory and your test files in the `tests` subdirectory.
+
+- **`.env.example`**: This file serves as a template for the `.env` file you'll need to create. It outlines the necessary environment variables required to deploy your smart contract.
+
+- **`package.json`**: This file contains the npm commands crucial for various operations such as checking, testing, building, and deploying your smart contract.
+:::
+
+#### Step 2: Setting up the Environment variables
+In order to communicate with the blockchain and deploy our smart contract we are going to need two things: a wallet and a node. The node will allow us to communicate with the blockchain while the wallet will allow us to sign and pay for the deployment of our smart contract. The wallet will come under the form of a secret key, while the node will be the JSON-RPC URL of a public node.
+
+Copy the content of the `.env.example` to a newly created `.env` file at the root of your project directory.
+Once created, edit the `.env` file by inserting your wallet's secret key.
+```bash
+WALLET_SECRET_KEY="Your_private_key_here"
+JSON_RPC_URL_PUBLIC=https://buildnet.massa.net/api/v2:33035
+```
+
+:::info
+- WALLET_SECRET_KEY: This is your wallet's secret key. It will be used to sign the contract deployment transaction. Make sure your wallet is funded.
+- JSON_RPC_URL_PUBLIC: This is the URL of the JSON-RPC interface of a public or a private Massa node.
+:::
+
+### Writing and Deploying the Smart Contract
+
+Now that you have set up your project, let's write our smart contract. Our smart contract will let users set and get a greeting message. The message will be stored in the contract storage and will be permanently visible to all users of our dApp. The greeting message will be set during the deployment of the smart contract.
+
+#### Step 1: Writing the smart contract
+
+Navigate to the `assembly/contracts` directory and open the `main.ts` file. This is where we will write our smart contract code.
+Replace the content of the `main.ts` file in assembly/contracts with the following code:
+
+```tsx
+import { generateEvent, Storage, Context } from "@massalabs/massa-as-sdk";
+
+/**
+ * This function is meant to be called only one time: when the contract is deployed.
+ *
+ * @param _ - not used
+ */
+export function constructor(_: StaticArray<u8>): void {
+  // This line is important. It ensures that this function can't be called in the future.
+  // If you remove this check, someone could call your constructor function and reset your smart contract.
+  if (!Context.isDeployingContract()) {
+    return;
+  }
+
+  // Set the greeting message in the contract storage
+  Storage.set("greeting", "Hello, World!");
+
+  // Emit an event to notify that the greeting message has been set
+  generateEvent(`Greeting has been set`);
+
+  return;
+}
+```
+At first glance, it may seems like a lot of code for a simple "Hello, World!". But the code above is actually quite simple. Let's break it down:
+
+- **Importing the necessary packages from Massa AssemblyScript SDK**
+```tsx
+import { generateEvent, Storage, Context } from "@massalabs/massa-as-sdk";
+```
+
+Here we are importing the necessary functions from the Massa AssemblyScript SDK. The Massa AssemblyScript software development kit (SDK) is a collection of functions and objects that wrap the ABIs exposed by the node.
+
+:::info
+If you are familiar with Solidity smart contracts, you will soon notice that some object provided by Massa AssemblyScript SDK are very similar to the ones provided by the Solidity SDK. For example, the `Context` object is very similar to the `msg` object in Solidity. It exposes methods such as `Context.transferredCoins()` which would translate to `msg.value` in Solidity. `Context.caller()` would return the address of the function caller like `msg.sender` in solidity. Similarly, the `generateEvent` function is very similar to the `emit` function in Solidity, etc.
+You can learn more about the Massa AssemblyScript SDK [here](docs/build/smart-contract/as-sdk.md).
+:::
+
+- **The constructor function**
+
+```tsx
+export function constructor(_: StaticArray<u8>): void {
+  if (!Context.isDeployingContract()) {
+    return;
+  }
+```
+
+This is the constructor function. It is called only once when the contract is being deployed. The constructor function takes a parameter of type `StaticArray<u8>`. This parameter is not used in this example, so we are ignoring it by using the `_` symbol. The `Context.isDeployingContract()` function is used to check if the contract is being deployed. If it is not, the function returns and the rest of the code is not executed. It ensures that the constructor function can't be called in the future. If you remove this check, someone could call your constructor function and reset your smart contract.
+
+- **Setting the greeting message in the contract storage**
+```tsx
+Storage.set("greeting", "Hello, World!");
+```
+
+This line sets the greeting message in the contract storage. The `Storage.set()` function takes two parameters: the key and the value. The key is a string that will be used to retrieve the value from the storage. The value can be of any type. In this example, we are using a string.
+
+:::info
+In Massa, if you want some data to be persistent on the blockchain, you need to store it in the contract storage. If you are familiar with web development, you can think of the storage as the database of your application. The contract storage is a key-value store that can be used to store simple objects such as our "Hello, World!" string, or more complex objects such as serializable object arrays. Then the data can be retrieved from the storage using methods such has `Storage.get()` or `Storage.has()` provided by the SDK. You can learn more about how to handle the storage with Massa AS-SDK [here](docs/build/smart-contract/as-sdk.md#storage). 
+:::
+
+:::info
+In Massa, when writing to the persistent storage a.k.a the ledger, you need to pay for the storage space you will be using. The more data you store, the more you will have to pay. Similarly when you free-up some space from the ledger, you recover the amount of coins you paid to allocate the space. The price of storage is a fixed amount of Massa coins for each byte of data (0.001 MAS per byte). You can learn more about storage cost in Massa smart contracts [here](docs/learn/storage-costs.mdx).
+:::
+
+- **Emitting an event**
+
+```tsx
+generateEvent(`Greeting has been set`);
+```
+Here, we are emitting an event to notify that the greeting message has been set. Events are a great way to notify the front ends of a dApp that something has happened. They are similar to events in Solidity. You can learn more about events [here](docs/build/smart-contract/as-sdk.md#utilities).
+
+Now that we have written our smart contract, let's deploy it to the blockchain.
+
+#### Step 2: Compile Your Smart Contract
+
+In your project directory, run the following command to compile your smart contract into a WebAssembly (Wasm) file:
+
+```bash
+npm run build
+```
+
+:::info
+This command compiles your `main.ts` contract into a `main.wasm` file generated in the `build` directory. This main.wasm file is the compiled version of your smart contract that will be deployed to the blockchain.
+:::
+
+#### Step 3: Deploy the Smart Contract
+
+Now that your smart contract is compiled and ready, let's deploy it to the Massa blockchain.
+You first need some funds in your wallet that you can request from the [faucet](/docs/build/networks-faucets).
+You can then run the following command in your project directory:
+
+```bash
+npm run deploy
+```
+
+Upon successful execution, the console should display the operation id that you can use to track the deployment of your smart contract.
+
+:::info
+After deployment, an event will be displayed in the console. This event contains the address of your deployed smart contract and the event message set in the constructor function.
+
+```bash
+Event Data Received: [
+  {
+    context: {...},
+    data: 'Greeting has been set'
+  },
+  {
+    context: {...},
+    data: 'Contract deployed at address: AS12UJM8JYR6cRzXgkUGTjRDu9hicJUPkDvy7zGhGZq3WgZ511dwR'
+  }
+]
+```
+
+Keep the address of your deployed smart contract handy. You'll need it later.
+:::
+
+## The Frontend
+
+Now that our smart contract is deployed, let's move on to the front end of your dApp. We'll use React with TypeScript to build a user interface that will interact with our deployed smart contract on the Massa blockchain. It will fetch the greeting message from the contract storage and display it to the user. 
+
+Sounds fun, doesn't it? Let's get started!
+
+### Setting Up Your Project
+
+To set up your frontend project, follow these steps:
+
+- **Step 1: Initialize Your React Application**
+
+First, open your terminal, navigate to your desired directory, and execute the following command to create a new React project:
+
+```bash
+npx create-react-app my-app --template typescript
+```
+
+:::info
+The --template typescript flag sets up a TypeScript template for our React application.
+:::
+
+After the installation is complete, navigate to your project folder.
+
+- **Step 2: Installing Massa Web3**
+
+Next up, we are going to install the [Massa Web3 package](https://github.com/massalabs/massa-web3). This package enables our front end to interact with the Massa blockchain. If you are familiar with the EVM ecosystem, `massa-web3` would be the equivalent of `web3` or `ethers` librairies, but for the Massa blockchain. Here's how to install it:
+
+```bash
+npm install @massalabs/massa-web3@buildnet
+```
+
+- **Step 3: Building the Frontend**
+
+Now that we have our dependencies installed, let's begin building the front end of our dApp.
+
+Before writing our component, navigate to the src folder and locate the `App.tsx` file.
+
+This `App.tsx` file serves as the main entry point for your application. Replace the content of this file with the following code:
+
+```tsx
+import {
+  Client,
+  ClientFactory,
+  strToBytes,
+  bytesToStr,
+  WalletClient,
+  DefaultProviderUrls,
+} from "@massalabs/massa-web3";
+
+import { useEffect, useState } from "react";
+
+const sc_addr = "SC_ADDRESS"; // TODO Update the constant value!
+
+/**
+ * Content component that handles interactions with a Massa smart contract
+ * @returns The rendered component
+ */
+function Content() {
+  /**
+   * State variables to manage the web3 client and greetings
+   */
+  const [web3client, setWeb3client] = useState<Client | null>(null);
+  const [greeting, setGreeting] = useState<string | null>(null);
+
+  /**
+   * Initialize the web3 client using the custom provider defined above
+   */
+  useEffect(() => {
+    const initClient = async () => {
+      const client = await ClientFactory.createDefaultClient(
+        DefaultProviderUrls.BUILDNET,
+        false
+      );
+      setWeb3client(client);
+    };
+    initClient().catch(console.error);
+  }, []);
+
+  /**
+   * Fetch the greeting when the web3 client is initialized
+   */
+  useEffect(() => {
+    if (web3client) {
+      funcGetGreeting();
+    }
+  }, [web3client]);
+
+  /**
+   * Function to get the current greeting from the smart contract
+   */
+  async function funcGetGreeting() {
+    if (web3client) {
+      let res = await web3client
+        .publicApi()
+        .getDatastoreEntries([
+          { address: sc_addr, key: strToBytes("greeting") },
+        ]);
+      if (res[0].candidate_value) {
+        let greetingDecoded = bytesToStr(res[0].candidate_value);
+        setGreeting(greetingDecoded);
+      }
+    }
+  }
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <div>Greeting: {greeting}</div>
+    </div>
+  );
+}
+
+export default Content;
+```
+
+:::info
+Make sure to replace `SC_ADDRESS` with your own smart contract address.
+:::
+
+### Understanding the Code
+
+Our code might seem like a mouthful at first, but let's break it down into smaller, digestible parts:
+
+- **Setting Up Providers and Initializing a Custom Client**
+```tsx
+const initClient = async () => {
+  const client = await ClientFactory.createDefaultClient(
+    DefaultProviderUrls.BUILDNET,
+      false
+    );
+    setWeb3client(client);
+};
+```
+In order to interact with the blockchain, our front end application is going to need a client. A client is a piece of software that can be used to interact with a service; in our case the service is the Massa blockchain and we will use the client's methods to interact with our smart contract. 
+
+In the code above, we are using the `createDefaultClient` method to initialize our client object. This method takes two parameters: a provider URL and a boolean. The provider URL is the URL of the node we want to use to interact with the blockchain. 
+
+:::info
+If you remember correctly, [before deploying our smart contract](#step-2-setting-up-the-environment-variables)
+, we created a `.env` file and added a `JSON_RPC_URL` variable to it. This variable was the URL of a node used to deploy our smart contract to the Massa blockchain. Here we are doing something similar but instead of using a node to deploy our smart contract, we are using a node to interact with our smart contract.
+:::
+
+We are using the `DefaultProviderUrls.BUILDNET` constant as our provider URL. This constant points to a node on the Massa buildnet. 
+The boolean is a flag that indicates whether or not we want to provide an wallet account to sign transactions. Here it is set to false because we are not going to sign any transactions. Finally, we are setting the client object to the `web3client` state variable using the `setWeb3client` function, so that the web3 client is available to the rest of our application.
+
+:::info
+The buildnet is a test network that is used to test smart contracts before deploying them to the mainnet. It is similar to the Ethereum Sepolia network. You can learn more about Massa networks [here](/docs/build/networks-faucets).
+:::
+
+
+- **Retrieving the Greeting**
+```tsx
+ async function funcGetGreeting() {
+    if (web3client) {
+      let res = await web3client
+        .publicApi()
+        .getDatastoreEntries([
+          { address: sc_addr, key: strToBytes("greeting") },
+        ]);
+      if (res[0].candidate_value) {
+        let greetingDecoded = bytesToStr(res[0].candidate_value);
+        setGreeting(greetingDecoded);
+      }
+    }
+  }
+```
+In the code above, we are retrieving the "Hello, World!" greeting message by directly reading the smart contract's storage. 
+
+To do so, we are using the `getDatastoreEntries` method. This method takes an array of `DatastoreEntry` objects as a parameter. Each `DatastoreEntry` object contains the address of the smart contract and the key of the value we want to retrieve.
+In our case, the address of the smart contract is the one we got during contract deployment. The key is the string "greeting" [that we used to store the greeting message in the smart contract's storage](#step-1-writing-the-smart-contract). 
+We retrieve the current greeting from the smart contract's storage and decode it using the `bytesToStr` function. Finally, we set the greeting to the `greeting` state variable using the `setGreeting` function.
+
+:::info
+As you can see, we cannot directly use the datastore entry returned by the smart contract. Indeed, the storage of the smart contract is a key value store that stores data in bytes. Thus, we need to decode the bytes returned by the smart contract to get the actual greeting message. That is why we have to use massa-web3 `bytesToStr` function. You can check massa-web3 utils [here](https://web3.docs.massa.net/modules/utils.html).
+:::
+
+- **User Interface**
+
+The user interface consists of a centered text display that shows the current greeting fetched from your smart contract's storage.
+
+## Testing your application
+
+Finally, let's start our application and perform some basic user acceptance testing!
+
+```bash
+npm run start
+```
+
+1. Open your web browser and navigate to [http://localhost:3000](http://localhost:3000)
+2. Here, you should see a greeting that says "Hello, World!" This is the message that was set in your smart contract.
+3. If you're able to see this greeting, your dApp is functioning correctly.
+
+🎉 Congratulations on building and testing your first dApp!
+
+Remember, Rome wasn't built in a day, and neither are amazing dApps! Keep learning!
+
+## Next steps
+
+Congratulations on writing and testing your first dApp using the Massa blockchain! You've taken a crucial step in your blockchain development journey.
+
+There's always more to learn. To continue exploring and expanding your knowledge, you can:
+
+- Review more detailed guides on [smart contract development](/docs/build/smart-contract/intro).
+- Check out more [complex examples](/docs/tutorial/home) of dApps built on Massa.
