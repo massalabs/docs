@@ -381,7 +381,7 @@ The buildnet is a test network that is used to test smart contracts before deplo
 ```
 In the code above, we are retrieving the "Hello, world!" greeting message by directly reading the smart contract's storage. 
 
-To do so, we are using the `getDatastoreEntries` method. This method takes an array of `DatastoreEntry` objects as a parameter. Each `DatastoreEntry` object contains the address off the smart contract and the key of the value we want to retrieve.
+To do so, we are using the `getDatastoreEntries` method. This method takes an array of `DatastoreEntry` objects as a parameter. Each `DatastoreEntry` object contains the address of the smart contract and the key of the value we want to retrieve.
 In our case, the address of the smart contract is the one we got during contract deployment. The key is the string "greeting" [that we used to store the greeting message in the smart contract's storage](#step-1-writing-the-smart-contract). 
 We retrieve the current greeting from the smart contract's storage and decode it using the `bytesToStr` function. Finally, we set the greeting to the `greeting` state variable using the `setGreeting` function.
 
