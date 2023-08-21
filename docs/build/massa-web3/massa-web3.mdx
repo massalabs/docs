@@ -1,6 +1,6 @@
 ---
 id: massa-web3-main
-title: Using Massa-web3
+title: Introduction
 ---
 
 import Tabs from "@theme/Tabs";
@@ -67,9 +67,80 @@ In your code, once the script is fully loaded, just use window.massa to access a
 <script>console.log("Massa Web3 ", window.massa);</script>
 ```
 
-## Usage
+## Initialization
 
-### Initialization
+Some usage of massa-web3 require an account. This account can be either provided using [Wallet-provider](/docs/build/wallet/wallet-provider) or directly in the code
+
+### With Wallet-provider
+
+The Wallet-provider allows you to easily connect your dApp to a user's wallet, without having to worry about
+secret keys and other sensitive information. The Wallet-provider will automatically detect if a wallet is installed and connect to it.
+
+<Tabs>
+<TabItem value="wallet-provider-react" label="React" default>
+
+Full code can be found [here](https://github.com/massalabs/massa-sc-examples/blob/main/age/react/src/App.tsx)
+
+```typescript
+useEffect(() => {
+  const registerAndSetProvider = async () => {
+    try {
+      let provider = (await providers(true, 10000))[0];
+      let accounts = await provider.accounts();
+      if (accounts.length === 0) {
+        setErrorMessage("No accounts found");
+        return;
+      }
+      setAccount(accounts[0]);
+      if (!account || !provider) {
+        return;
+      }
+      setClient(await ClientFactory.fromWalletProvider(provider, account));
+    } catch (e) {
+      console.log(e);
+      setErrorMessage(
+        "Please install massa station and the wallet plugin and refresh."
+      );
+    }
+  };
+  registerAndSetProvider();
+}, [account]);
+```
+
+</TabItem>
+<TabItem value="vanilla-js" label="Vanilla JS" default>
+
+Full code can be found [here](https://github.com/massalabs/massa-sc-examples/blob/main/age/html/js/index.js)
+
+```typescript
+let massa = window.massa;
+let wallet = window.wallet;
+
+let client = null;
+let account = null;
+
+const initializeClient = async () => {
+  try {
+    let provider = (await wallet.providers(true, 10000))[0];
+    let accounts = await provider.accounts();
+    if (accounts.length === 0) {
+      throw new Error("No accounts found");
+    }
+    account = accounts[0];
+    if (!account || !provider) {
+      throw new Error("No account or provider found");
+    }
+    client = await massa.ClientFactory.fromWalletProvider(provider, account);
+  } catch (e) {
+    console.error(e);
+  }
+};
+```
+
+</TabItem>
+</Tabs>
+
+### Without Wallet-provider
 
 You can easily initialize a client instance using the ClientFactory class:
 
@@ -77,10 +148,14 @@ You can easily initialize a client instance using the ClientFactory class:
 <TabItem value="mainnet-client" label="Mainnet" default>
 
 ```typescript
+const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
+  privateKey
+);
+
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.MAINNET,
-  true,
-  baseAccount
+  true, // retry failed requests
+  baseAccount // optional parameter
 );
 ```
 
@@ -89,10 +164,14 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 <TabItem value="testnet-client" label="Testnet" default>
 
 ```typescript
+const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
+  privateKey
+);
+
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.TESTNET,
-  true,
-  baseAccount
+  true, // retry failed requests
+  baseAccount // optional parameter
 );
 ```
 
@@ -101,10 +180,14 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 <TabItem value="buildnet-client" label="Buildnet" default>
 
 ```typescript
+const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
+  privateKey
+);
+
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.BUILDNET,
-  true,
-  baseAccount
+  true, // retry failed requests
+  baseAccount // optional parameter
 );
 ```
 
@@ -113,10 +196,14 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 <TabItem value="labnet-client" label="Labnet" default>
 
 ```typescript
+const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
+  privateKey
+);
+
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.LABNET,
-  true,
-  baseAccount
+  true, // retry failed requests
+  baseAccount // optional parameter
 );
 ```
 
@@ -125,10 +212,14 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 <TabItem value="local-client" label="Localnet" default>
 
 ```typescript
+const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
+  privateKey
+);
+
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.LOCALNET,
-  true,
-  baseAccount
+  true, // retry failed requests
+  baseAccount // optional parameter
 );
 ```
 
@@ -137,7 +228,11 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 <TabItem value="custom-client" label="Custom Client">
 You can also create a custom client connecting to a node whose ip and ports are to be specified by the user.
 
-```ts
+```typescript
+const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
+  privateKey
+);
+
 // initialize a custom client using an own provider
 const providers: Array<IProvider> = [
   {
@@ -152,8 +247,8 @@ const providers: Array<IProvider> = [
 
 const customClient: Client = await ClientFactory.createCustomClient(
   providers,
-  true,
-  baseAccount
+  true, // retry failed requests
+  baseAccount // optional parameter
 );
 ```
 
@@ -161,20 +256,21 @@ const customClient: Client = await ClientFactory.createCustomClient(
 </Tabs>
 
 :::info
-Please note that specifying a base account is only optional at this point. You can learn more about how to set up a base account in the [Wallet Operations](https://web3.docs.massa.net/classes/WalletClient.html) section.
+When initializing the client, you have the option to specify a `baseAccount`. If provided, this account
+will be used as the default executor for upcoming calls. If you choose to initialize
+the client without a `baseAccount`, it becomes mandatory to specify the executor for each call that requires a signature.
+You can learn more about how to manage the base account in the [Wallet Operations](https://web3.docs.massa.net/classes/WalletClient.html) section.
 :::
+
+### Client exposed APIs
 
 Once there is an initialized client instance, it is straightforward to call methods on it:
 
 ```ts
-import { IStatus, IAddressInfo } from "@massalabs/massa-web3";
-
-const addressesResp: Array<IAddressInfo> = await web3Client
-  .publicApi()
-  .getAddresses(["some_address"]);
+const balance = await web3Client
+  .wallet()
+  .getAccountBalance("address")
 ```
-
-### Client exposed APIs
 
 You can find details for each of the exposed APIs with all the available methods in the following sections:
 
