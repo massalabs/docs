@@ -7,88 +7,118 @@ sidebar_label: '"Hello, World!" Massa Station plugin'
 
 Welcome, Developer! You're about to embark on an exciting journey where you'll build your very first Massa Station plugin. If you're thrilled about the world of blockchain, smart contracts, and dApps, you've come to the right place!
 
-## What is a Massa Station and Massa Station plugins?
-On feature of the Massa blockchain is what we call the Decentralized Web. With Massa, you can host and serve web-applications directly on chain, hence removing the need for a trusted intermediary. Massa Station is the gateway to access these applications.
+## What are Massa Station and Massa Station plugins?
+
+Massa Station is the gateway to the Massa Blockchain. You can think of it as an application store for modules that leverages the exciting features of the Massa Blockchain. Massa Station comes in the form of a desktop application with some core modules pre-installed. For example, directly out of the box, Massa Stations allows you to access Massa's [Decentralized Web](/docs/learn/decentralized-web). 
 
 :::info
-Once installed on your machine, Massa Station will allow your browser to resolve `.massa` urls and interact with decentralized applications hosted on Massa. When using Massa Station, the `.massa` extension indicates that you are visiting a website that is hosted on-chain, and directly served to you. You can learn more about the Decentralized Web and Massa Station [here](/docs/learn/decentralized-web).
+Once installed on your machine, Massa Station will allow your browser to resolve `.massa` url domains and interact with decentralized applications hosted on Massa. When using Massa Station, the `.massa` url domain indicates that you are visiting a website that is hosted on-chain, and directly served to you. You can learn more about the Decentralized Web and Massa Station [here](/docs/learn/decentralized-web).
 :::
 
-But Massa Station is more than just a custom DNS, it is also a module manager. 
-<!--TODO: add for context about massa station features-->
+Another core module of Massa Station that is already available is the [Massa Wallet](/build/wallet/massa-station.mdx). It allows you to manage your Massa account, and sign and send transactions with an experience similar to a traditional browser-plugin wallet, but with enhanced security.
 
-A Massa Station plugin is a piece of software that extends the functionality of Massa Station. 
-<!--TODO: add for context about plugins-->
+Massa also provides a node Manager module that allows you to administrate your Massa node directly from Massa Station. You can learn more about it [here](https://pkg.go.dev/github.com/massalabs/station-massa-node-manager/pkg/node_manager).
+
+Besides the core modules developed by the Massa team, Massa Station was designed with community and modularity in mind; indeed, it allows anyone to develop and install their own modules. The most looked upon modules in terms of community adoption, and upon audit, will be made publicly available through the Massa Plugin Store. We greatly encourage our community to develop their own modules, as we believe that the Massa Station ecosystem will be the key to the adoption of the Massa Blockchain.
+
+As the most decentralized blockchain, Massa is a community-driven project. Thus, we tried to make as few assumptions as possible about the form and features that a module should have. As a result, Massa Station modules can be developed in any language, be more web2 or web3 oriented, and can be as simple or complex as you want them to be. In this tutorial, we are going to build the simplest of the programs; a "Hello, World!" Massa Station plugin.
+
 
 ## What are we going to do ?
-In this tutorial, we are going to build a simple "Hello, World!" Massa Station plugin. 
+In this tutorial, we are going to develop a simple "Hello, World!" Massa Station plugin. This plugin will be composed of two parts: a back end and a front end. The back end will be a simple API that will allow Massa Station to interact with the plugin. The frontend will be a simple web page that will be displayed when the plugin is called without any endpoint specified.
+
 - **Part 1**: We will set up the project and create the plugin API.
 - **Part 2**: We will add an endpoint to the API.
 - **Part 3**: We will add a frontend to the plugin.
  
+## Pre requisites
+- **Golang installed:**
+Make sure that you have [Golang](https://go.dev/doc/install) installed on your machine. You can check if it is installed by running `go version` in your terminal. If you don't have Golang installed, you can follow the [official installation guide](https://go.dev/doc/install). Make sure you add `go` to the PATH environment variable. 
+
+- **Go Swagger installed:**
+Make sure you have [Go Swagger](https://pkg.go.dev/github.com/go-swagger/go-swagger) installed on your machine. If you don't have Go Swagger installed, you can follow the [official installation guide](https://pkg.go.dev/github.com/go-swagger/go-swagger). Also make sure that the folder containing the Go Swagger binary is added to the PATH environment variable. It's usually located in the default go workspace folder: `$GOPATH/bin`. Once installed, you can check if it is installed by running `swagger version` in your terminal.
+
+- **Massa Station installed:**
+Make sure that you have [Massa Station](https://station.massa) installed on your machine. You can install it by downloading the installer on the official [Massa Station website](https://station.massa). Once downloaded, run the installer and let it guide you through the installation process. 
+
+## Setting up the project and create the plugin's API.
+
+#### Step 1: Initialize the project
+Navigate to your favorite folder and create a new folder for your project. In this tutorial, we will name it `my-plugin`. Navigate to the `my-plugin` folder and initialize it as a go module by running the following command:
+```bash
+go mod init my-plugin
+``` 
+This will create a `go.mod` file in the `my-plugin` folder.
+
+#### Step 2: Define the API configuration
+Now, let's create the plugin's API. To do so, we will use the [go-swagger](https://pkg.go.dev/github.com/go-swagger/go-swagger) tool. Go Swagger allows you to generate a server stub from a swagger file. The server stub will contain the API's endpoints and the necessary code to run the server. So go ahead and crete an `api` folder in the `my-plugin` folder. 
+Then, create a `swagger.yml` file in the `my-plugin/api` folder. This file will contain the API's specification. Let's initialize it with the following basic configuration:
+
+```yaml
+consumes:
+  - application/json
+info:
+  description: Hello world plugin API.
+  title: hello-world-plugin
+  version: 0.0.0
+produces:
+  - application/json
+schemes:
+  - http
+swagger: "2.0"
+paths:
+  /:
+    get:
+      operationId: defaultPage
+      responses:
+        "301":
+          description: Move to the default endpoint
+```
+
+In the `my-plugin/api` folder, create a new folder named `server`. This folder will contain the generated server stub. 
+Navigate back to the root directory `my-plugin` and create a `generate.go` file. This file will contain the command that generates the API from the swagger file when you run `go generate ./...`
+
+Add the following code to `generate.go`:
+
+```go
+package main
+//go:generate swagger generate server --quiet --target api/server --name my-plugin --spec api/swagger.yml --exclude-main
+```
+
+:::note
+The `--exclude-main` flag is used to exclude the `main` function from the generated code. We will add our own `main` function later on.
+:::
+
+#### Step 3: Generate the API
+Now that we have defined the API configuration, we can generate the server stub. To do so, run the following command in the root directory `my-plugin`:
+```bash
+go generate ./...
+```
+This will generate the server stub in the `my-plugin/api/server` folder. At this point, you should have the following folder structure:
+
+```bash
+my-plugin
+├── generate.go
+├── go.mod
+├── api
+│   ├── swagger.yml
+│   ├── server
+│   │   ├── restapi
+│   │   │   ├── server.go
+│   │   │   ├── configure_my-plugin.go
+│   │   │   ├── doc.go
+│   │   │   ├── embedded_spec.go
+│   │   │   ├── operations
+│   │   │   │   ├── default_page.go
+│   │   │   │   ├── default_page_parameters.go
+│   │   │   │   ├── default_page_responses.go
+│   │   │   │   ├── default_page_urlbuilder.go
+│   │   │   │   ├── my_plugin_api.go
+
+```
 
 
-## Define your plugin
-
-- Define an API for the plugin that will allow Massa Station to interact with it.
-
-  - Set up the api folder: create `api/server`
-  - Create a file named `swagger.yml` in the api folder
-  - Initialize it with the following basic configuration:
-
-  ```yaml
-  consumes:
-    - application/json
-  info:
-    description: Hello world plugin API.
-    title: station-massa - Hello world
-    version: 0.0.0
-  produces:
-    - application/json
-  schemes:
-    - http
-  swagger: "2.0"
-  paths:
-    /:
-      get:
-        operationId: defaultPage
-        responses:
-          "301":
-            description: Move to the default endpoint
-  ```
-
-  :::info
-
-  Here we simply defined a default endpoint that will be called when the plugin is called without any endpoint specified.
-  This will be used to display a frontend in the [part 3 of the tutorial](./create-plugin-with-a-frontend.mdx).
-
-  :::
-
-  :::tip
-  We will add more endpoints in the [part 2 of the tutorial](./create-plugin-with-endpoint.mdx). Feel free to addapt the swagger file to your needs.
-  For a detailed understanding of the API specification and how to edit it, refer to the [official swagger v2 documentation](https://swagger.io/specification/v2/).
-
-  :::
-
-- Create a `generate.go` file: in the root of your project
-
-  :::tip
-
-  this file will generate the API from the swagger file when you run `go generate ./... `
-
-  :::
-
-- Add the following code to it:
-
-  ```go
-  package main
-
-  //go:generate swagger generate server --quiet --target api/server --name my-plugin --spec api/swagger.yml --exclude-main
-  ```
-
-- Run `go generate ./...` to generate the API
-
-## Implement your plugin
+#### Step 4: Add the API to the project
 
 Create `my-plugin.go` in the root of your project and add the following code to initiate the API:
 
@@ -142,29 +172,13 @@ func initializeAPI() *restapi.Server {
 
     return server
 }
-```
 
-:::info
-
-The `killTime` function logs a message every 5 seconds. It is used to show that the plugin is running.
-The `initializeAPI` function initializes the API and returns the server.
-
-:::
-
-- Still in `my-plugin.go`, set up the cors: the cors will allow the plugin to be called from the Massa Station server.
-
-```go
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
     handleCORS := cors.New(cors.Options{}).Handler
 
     return handleCORS(handler)
 }
-```
 
-- Import the necessary packages `go mod tidy`
-- Add the `main` function in `my-plugin.go`: it initializes the API and start the server
-
-```go
 func main() {
     quit := make(chan bool) // creates a channel to receive the interrupt signal
 	intSig := make(chan os.Signal, 1) // notifies the channel when the interrupt signal is received
@@ -183,6 +197,17 @@ func main() {
 }
 ```
 
+:::info
+
+The `killTime` function logs a message every 5 seconds. It is used to show that the plugin is running.
+The `initializeAPI` function initializes the API and returns the server.
+
+:::
+
+- Still in `my-plugin.go`, set up the cors: the cors will allow the plugin to be called from the Massa Station server.
+
+- Import the necessary packages `go mod tidy`
+- Add the `main` function in `my-plugin.go`: it initializes the API and start the server
 - Run the API on a local server to test and validate its functionality.
 
 ```bash
