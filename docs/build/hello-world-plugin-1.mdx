@@ -27,19 +27,35 @@ As the most decentralized blockchain, Massa is a community-driven project. Thus,
 ## What are we going to do ?
 In this tutorial, we are going to develop a simple "Hello, World!" Massa Station plugin. This plugin will be composed of two parts: a back end and a front end. The back end will be a simple API that will allow Massa Station to interact with the plugin. The frontend will be a simple web page that will be displayed when the plugin is called without any endpoint specified.
 
-- **Part 1**: We will set up the project and create the plugin API.
-- **Part 2**: We will add an endpoint to the API.
+- **Pre requisites**: We will install the necessary tools to develop the plugin.
+- **Part 1**: Setting up the project and create the plugin's API.
+- **Part 2**: Deploy to Massa Station.
 - **Part 3**: We will add a frontend to the plugin.
  
 ## Pre requisites
-- **Golang installed:**
+#### Step 1: Install Golang:
 Make sure that you have [Golang](https://go.dev/doc/install) installed on your machine. You can check if it is installed by running `go version` in your terminal. If you don't have Golang installed, you can follow the [official installation guide](https://go.dev/doc/install). Make sure you add `go` to the PATH environment variable. 
 
-- **Go Swagger installed:**
+#### Step 2: Install Go Swagger:
 Make sure you have [Go Swagger](https://pkg.go.dev/github.com/go-swagger/go-swagger) installed on your machine. If you don't have Go Swagger installed, you can follow the [official installation guide](https://pkg.go.dev/github.com/go-swagger/go-swagger). Also make sure that the folder containing the Go Swagger binary is added to the PATH environment variable. It's usually located in the default go workspace folder: `$GOPATH/bin`. Once installed, you can check if it is installed by running `swagger version` in your terminal.
 
-- **Massa Station installed:**
+#### Step 3: Install Massa Station:
 Make sure that you have [Massa Station](https://station.massa) installed on your machine. You can install it by downloading the installer on the official [Massa Station website](https://station.massa). Once downloaded, run the installer and let it guide you through the installation process. 
+
+If you are able to produce a similar output in your terminal, then you should be good to go:
+
+```bash
+❯ go version
+go version go1.21.0 linux/amd64
+❯ swagger version
+version: v0.30.5
+commit: (unknown, mod sum: "h1:SQ2+xSonWjjoEMOV5tcOnZJVlfyUfCBhGQGArS1b9+U=")
+❯ massastation
+2023-08-22T15:28:25.058+0200	INFO	logger/global.go:51	Connected to node server https://buildnet.massa.net/api/v2 (version DEVN.24.1)
+2023-08-22T15:28:25.060+0200	INFO	logger/global.go:62	Serving massastation at http://[::]:80
+2023-08-22T15:28:25.061+0200	INFO	logger/global.go:62	Serving massastation at https://[::]:443
+
+```
 
 ## Setting up the project and create the plugin's API.
 
@@ -50,9 +66,11 @@ go mod init my-plugin
 ``` 
 This will create a `go.mod` file in the `my-plugin` folder.
 
-#### Step 2: Define the API configuration
-Now, let's create the plugin's API. To do so, we will use the [go-swagger](https://pkg.go.dev/github.com/go-swagger/go-swagger) tool. Go Swagger allows you to generate a server stub from a swagger file. The server stub will contain the API's endpoints and the necessary code to run the server. So go ahead and crete an `api` folder in the `my-plugin` folder. 
-Then, create a `swagger.yml` file in the `my-plugin/api` folder. This file will contain the API's specification. Let's initialize it with the following basic configuration:
+#### Step 2: Define the server stub configuration
+Now, let's create the server stub. To do so, we will use the [go-swagger](https://pkg.go.dev/github.com/go-swagger/go-swagger) tool. Go Swagger allows you to generate a server stub from a swagger file. The server stub will contain the API's endpoints and the necessary code to run the server.
+
+So go ahead and create an `api` folder in the `my-plugin` folder. 
+Then, create a `swagger.yml` file in the `my-plugin/api` folder. This file will contain the server specification. Add the following configuration to the `swagger.yml` file:
 
 ```yaml
 consumes:
@@ -75,22 +93,26 @@ paths:
           description: Move to the default endpoint
 ```
 
-In the `my-plugin/api` folder, create a new folder named `server`. This folder will contain the generated server stub. 
-Navigate back to the root directory `my-plugin` and create a `generate.go` file. This file will contain the command that generates the API from the swagger file when you run `go generate ./...`
+Now we are going to need a target directory to store the generated server stub.
+So go ahead and in the `my-plugin/api` folder, create a new folder named `server`.
+
+Navigate back to the root directory `my-plugin` and create a `generate.go` file. This file will contain the command that generates the server stub from the swagger file when you run `go generate ./...`
 
 Add the following code to `generate.go`:
 
 ```go
 package main
+
 //go:generate swagger generate server --quiet --target api/server --name my-plugin --spec api/swagger.yml --exclude-main
+
 ```
 
 :::note
-The `--exclude-main` flag is used to exclude the `main` function from the generated code. We will add our own `main` function later on.
+Here we are using the `swagger generate server` command to generate the server stub. The `--target` flag is used to specify the target directory. The `--name` flag is used to specify the name of the server. The `--spec` flag is used to specify the swagger file. The `--exclude-main` flag is used to exclude the `main` function from the generated code. We will add our own `main` function later on. 
 :::
 
-#### Step 3: Generate the API
-Now that we have defined the API configuration, we can generate the server stub. To do so, run the following command in the root directory `my-plugin`:
+#### Step 3: Generate the server stub
+Now that we have defined the server configuration, we can generate the server stub. To do so, run the following command in the root directory `my-plugin`:
 ```bash
 go generate ./...
 ```
@@ -118,9 +140,9 @@ my-plugin
 ```
 
 
-#### Step 4: Add the API to the project
+#### Step 4: Create the logic of the API
 
-Create `my-plugin.go` in the root of your project and add the following code to initiate the API:
+Create `my-plugin.go` in the root of your project and add the following code that implements the API's logic:
 
 ```go
 package main
@@ -137,26 +159,25 @@ import (
 	"my-plugin/api/server/restapi/operations"
 
 	"github.com/go-openapi/loads"
-	"github.com/massalabs/station-massa-hello-world/pkg/plugin"
 	"github.com/rs/cors"
 )
 
 func killTime(quit chan bool) { // creates a ticker that will send a message every 5 seconds
   // creates a ticker that will send a message every 5 seconds
-	ticker := time.NewTicker(5 * time.Second) //nolint:gomnd
+    ticker := time.NewTicker(5 * time.Second) //nolint:gomnd
 
-	fmt.Fprintf(os.Stdout, "Plugin is initializing.\n")
+    fmt.Fprintf(os.Stdout, "Plugin is initializing.\n")
 
-	for {
-		select {
-		case <-ticker.C:
-			fmt.Fprintf(os.Stdout, "Tic!\n") // logs a message every 5 seconds
-		case <-quit:
-			fmt.Fprintf(os.Stdout, "Plugin is shutting down.\nBye!\n") // logs a message when the plugin is shutting down
+    for {
+        select {
+        case <-ticker.C:
+            fmt.Fprintf(os.Stdout, "Tic!\n") // logs a message every 5 seconds
+        case <-quit:
+            fmt.Fprintf(os.Stdout, "Plugin is shutting down.\nBye!\n") // logs a message when the plugin is shutting down
 
-			return
-		}
-	}
+            return
+        }
+    }
 }
 
 func initializeAPI() *restapi.Server {
@@ -181,43 +202,48 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 
 func main() {
     quit := make(chan bool) // creates a channel to receive the interrupt signal
-	intSig := make(chan os.Signal, 1) // notifies the channel when the interrupt signal is received
-	signal.Notify(intSig, syscall.SIGINT, syscall.SIGTERM)
+    intSig := make(chan os.Signal, 1) // notifies the channel when the interrupt signal is received
+    signal.Notify(intSig, syscall.SIGINT, syscall.SIGTERM)
 
-	go killTime(quit) // starts the killTime function in a goroutine
+    go killTime(quit) // starts the killTime function in a goroutine
 
-	server := initializeAPI() // initializes the API
+    server := initializeAPI() // initializes the API
 
-	if err := server.Serve(); err != nil {
-		panic(err)
-	}
+    if err := server.Serve(); err != nil {
+        panic(err)
+    }
 
-	<-intSig
-	quit <- true
+    <-intSig
+    quit <- true
 }
 ```
 
 :::info
-
 The `killTime` function logs a message every 5 seconds. It is used to show that the plugin is running.
+
 The `initializeAPI` function initializes the API and returns the server.
 
+The `setupGlobalMiddleware` function sets up the cors. The cors will allow the plugin to be called from the Massa Station server.
 :::
 
-- Still in `my-plugin.go`, set up the cors: the cors will allow the plugin to be called from the Massa Station server.
+Once you have crated the `my-plugin.go` file, and copied the code, we are going to install the imported packages. To do so, run the following command in the root directory `my-plugin`:
+```bash
+go mod tidy
+```
 
-- Import the necessary packages `go mod tidy`
-- Add the `main` function in `my-plugin.go`: it initializes the API and start the server
-- Run the API on a local server to test and validate its functionality.
+#### Step 5: Test the API
+Once you are done editing the `my-plugin.go` file, you should be able to test the API by running:
 
 ```bash
 go run ./my-plugin.go
 ```
 
-- You should get the following output:
+After five seconds, you should get a similar output:
 
 ```bash
-2023/07/24 16:02:51 Serving hello world at http://[::]:41701
+❯ go run ./my-plugin.go
+Plugin is initializing.
+2023/08/22 15:04:39 Serving my plugin at http://[::]:39725
 Tic!
 ```
 
@@ -225,15 +251,43 @@ Tic!
 The last numbers correspond to the port the API is running on. It will change each time you will restart the plugin.
 :::
 
-## Deploy on Massa Station
+At this stage, we are running the API in standalone mode. In the next section, we will register the API with Massa Station, to make it run through Massa Station.
 
-### Register the plugin
+## Deploy to Massa Station
 
-To do so, in the `main` function of `my-plugin.go`:
+#### Step 1: Install the Massa Station Plugin package
+In order to be able to register the plugin with Massa Station, we need to install the Massa Station Plugin package. Indeed, this package contains the `RegisterPlugin` function that allows us to register the plugin to Massa Station.
 
-- Import the plugin package. `github.com/massalabs/station-massa-hello-world/pkg/plugin`
-- Update the packages in `go.mod`: `go get github.com/massalabs/station-massa-hello-world`
-- Listen to the server created and register the plugin with the `RegisterPlugin` function from the plugin package.
+Install the following package :
+```bash
+go get github.com/massalabs/station-massa-hello-world`
+```
+
+This package will be imported to `my-plugin.go` file. So go ahead and add the following line to the imports section of `my-plugin.go`:
+```go
+	"github.com/massalabs/station-massa-hello-world/pkg/plugin"
+```
+The import section of your `my-plugin.go` file should look like this:
+
+```go
+import (
+	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
+	"my-plugin/api/server/restapi"
+	"my-plugin/api/server/restapi/operations"
+
+	"github.com/go-openapi/loads"
+	"github.com/rs/cors"
+
+	"github.com/massalabs/station-massa-hello-world/pkg/plugin"
+)
+```
+Once this is done, we will add the registration logic to our main function. We want to add the following lines to the main function:
 
 ```go
 	listener, err := server.HTTPListener()
@@ -241,23 +295,68 @@ To do so, in the `main` function of `my-plugin.go`:
 		panic(err)
 	}
 
-	plugin.RegisterPlugin(listener,plugin.Info{}) // registers the plugin
+	plugin.RegisterPlugin(listener) // registers the plugin
+```
+They should be added right after the `server.ConfigureAPI()` line. In the end, your main function should look like this:
+
+```go
+func main() {
+    quit := make(chan bool) // creates a channel to receive the interrupt signal
+    intSig := make(chan os.Signal, 1) // notifies the channel when the interrupt signal is received
+    signal.Notify(intSig, syscall.SIGINT, syscall.SIGTERM)
+
+    go killTime(quit) // starts the killTime function in a goroutine
+
+    server := initializeAPI() // initializes the API
+
+    listener, err := server.HTTPListener()
+    if err != nil {
+        panic(err)
+    }
+
+    plugin.RegisterPlugin(listener) // registers the plugin
+
+    if err := server.Serve(); err != nil {
+        panic(err)
+    }
+
+    <-intSig
+    quit <- true
+}
 ```
 
 :::info
 `plugin.RegisterPlugin` is a function available in the [plugin package](https://github.com/massalabs/station-massa-hello-world/blob/main/pkg/plugin/register.go).
 
 It facilitates the registration of a plugin with Massa Station, assigning a unique correlation ID to the plugin for identification purposes within the Massa Station system.
-
 :::
 
-### Install the plugin
+#### Step 2: Build the plugin binary and move it to the Massa Station plugin folder
 
-Build a binary of the plugin. `mkdir build && go build -o build/my-plugin`
+Now that we have implemented the logic to register the plugin with Massa Station, we are going to build the plugin binary, and move it to the Massa Station plugin folder. By doing so, we will make the binary available to Massa Station.
 
-Move the plugin binary, the manifest and the swagger file to the Massa Station plugin folder.
+So, go ahead and build a binary of the plugin with the following command:
+```bash
+mkdir build && go build -o build/my-plugin
+```
 
-:::tip
+In addition to the binary, Massa Station needs a manifest file to be able to identify the plugin. So go ahead and create a `manifest.json` file in the root directory `my-plugin`. Add the following configuration to the `manifest.json` file:
+
+```json
+{
+  "author": "Your name",
+  "name": "Hello World",
+  "description": "Hello world plugin",
+  "logo": "hello_world.svg",
+  "home": "",
+  "version": "0.0.1"
+}
+```
+Feel free to edit the `manifest.json` file to match your name and the name of the plugin.
+
+As you can see, we referenced a `.svg` file. This file will be the logo of your plugin, that will appear in the Massa Station modules page. So go ahead and create a `web` folder in the root directory `my-plugin`. Then, create a `content` folder in the `my-plugin/web` folder. Finally, add the `hello_world.svg` file that you can download [here](https://github.com/massalabs/station-massa-hello-world/blob/main/web/content/hello_world.svg) to the `my-plugin/web/content` folder.
+
+Finally, move the plugin binary, the manifest and the `.svg` file to the Massa Station plugin folder. The location of the Massa Station plugin folder depends on your operating system:
 
 On linux or macOS you can use the following command to move the files:
 
@@ -285,6 +384,229 @@ Copy-Item $sourceDir\hello_world.svg $destinationDir -Force
 Copy-Item manifest.json $destinationDir -Force
 ```
 
+#### Step 3: Restart Massa Station and access the module page
+Restart Massa Station and access [the module page](https://station.massa/web/store). You should see the plugin in the list of available plugins.
+
+![Module page](./module-page.png)
+
+For now, we cannot access it because we haven't implemented any endpoint. So let's do that in the next section.
+
+Let's add a new endpoint to our plugin that will display a message when called.
+Prerequisite: you should have completed [Part 1](./create-basic-plugin.mdx).
+
+## Define your endpoint
+
+Add a new endpoint to the swagger file:
+
+```yaml
+/api/hello:
+  put:
+    operationId: hello
+    parameters:
+      - in: query
+        name: name
+        type: string
+        description: the name of the person to be greeted.
+    produces:
+      - application/json
+    responses:
+      "200":
+        description: Greeting content.
+        schema:
+          type: object
+          required:
+            - message
+          properties:
+            message:
+              description: Greeting message.
+              type: string
+              x-nullable: false
+      "500":
+        description: Internal Server Error - The server has encountered a situation it does not know how to handle.
+```
+
+Update the generated code: `go generate ./...`
+
+## Add a handler
+
+Add a handler for the new endpoint in the `api/endpoints.go` file:
+
+```go
+package api
+
+import (
+    "fmt"
+
+    "github.com/go-openapi/runtime/middleware"
+    "my-plugin/api/server/restapi/operations"
+)
+
+func Hello(params operations.HelloParams) middleware.Responder {
+    target := "World"
+    if params.Name != nil { // takes the name of the person to be greeted from the query parameters
+        target = *params.Name
+    }
+
+    return operations.NewHelloOK().WithPayload( // returns a 200 OK response with the greeting
+        &operations.HelloOKBody{Message: fmt.Sprintf("Hello, %s!", target)},
+    )
+}
+```
+
+:::info
+Here, we are simply returning a 200 OK response with a greeting message that takes the name of the person to be greeted from the query parameters.
 :::
 
-Run Massa Station and access [the module page](https://station.massa/web/store). You should see the plugin in the list of available plugins.
+## Register the handler
+
+Open `my-plugin.go`. In the `initializeAPI` function, register the handler to the endpoint:
+
+```go
+pluginAPI.HelloHandler = operations.HelloHandlerFunc(api.Hello)
+```
+
+## Test the endpoint
+
+Reinstall the plugin and restart Massa Station. You can follow the same steps as in [Part 1](/docs/tutorial/massa-station-plugin/create-basic-plugin.mdx).
+
+Run the following command to test the `hello` endpoint we implemented:
+
+```bash
+curl -X PUT "https://station.massa/plugin/my-name/my-plugin/api/hello?name=John" -H  "accept: application/json"
+```
+
+You should see the following output:
+
+```json
+{ "message": "Hello, John!" }
+```
+
+Great! We have successfully added a new endpoint to our plugin.
+
+The next step is to [add a frontend](/docs/tutorial/massa-station-plugin/create-plugin-with-a-frontend.mdx) to our plugin.
+
+
+To add a web-app to our plugin,
+
+- Add the right endpoint to the `swagger.yml` file. in the api folder:
+
+```yaml
+/web/{resource}:
+  get:
+    operationId: web
+    produces:
+      - application/json
+      - text/javascript
+      - text/html
+      - text/css
+      - text/webp
+      - image/png
+    parameters:
+      - in: path
+        name: resource
+        type: string
+        required: true
+        description: Website resource.
+    responses:
+      "200":
+        description: Page found
+      "404":
+        description: Resource not found.
+```
+
+- Run `go generate ./...` to generate the new endpoints
+- Create a basic HTML page `index.html` in the `web/content` folder:
+  ```html
+  <html>
+    <body>
+      <h1>Hello, world!</h1>
+    </body>
+  </html>
+  ```
+- Add the handler to the `initializeAPI` function.
+
+  - Create `ressources.go` and `endpoints.go`.
+
+    - `ressource.go` reads the content of the html file and returns it:
+
+    ```go
+    package web
+
+    import (
+      "embed"
+      "fmt"
+    )
+
+    const basePath = "content/"
+
+    //go:embed content
+    var content embed.FS
+
+    func Content(resource string) ([]byte, error) {
+      content, err := content.ReadFile(basePath + resource)
+      if err != nil {
+        return nil, fmt.Errorf("while reading %s in %s: %w", resource, basePath, err)
+      }
+
+      return content, nil
+    }
+    ```
+
+  - `endpoints.go` points massastation to the right ressource
+
+    ```go
+    package web
+
+    import (
+      "mime"
+      "net/http"
+      "path/filepath"
+
+      "github.com/go-openapi/runtime/middleware"
+      "my-plugin/api/server/restapi/operations"
+      "github.com/massalabs/station-massa-wallet/pkg/openapi"
+    )
+
+    // webHandle  handles a Web request.
+    func Handle(params operations.WebParams) middleware.Responder {
+      resourceName := params.Resource
+
+      resourceContent, err := Content(resourceName) // reads the content of the html file
+      if err != nil {
+        return operations.NewWebNotFound()
+      }
+
+      fileExtension := filepath.Ext(resourceName)
+
+      mimeType := mime.TypeByExtension(fileExtension) // gets the mime type of the file
+
+      header := map[string]string{"Content-Type": mimeType}
+
+      return openapi.NewCustomResponder(resourceContent, header, http.StatusOK) // returns the content of the html file
+    }
+
+    // defaultRedirectHandler redirects request to "/" URL to "web/index.html".
+    func DefaultRedirectHandler(_ operations.DefaultPageParams) middleware.Responder {
+      return openapi.NewCustomResponder(nil, map[string]string{"Location": "web/index.html"}, http.StatusPermanentRedirect) // redirects to the html file
+    }
+    ```
+
+- Finally we need to add the handler to the `initializeAPI` function:
+
+  ```go
+
+      ...
+
+    pluginAPI.WebHandler = operations.WebHandlerFunc(web.Handle)
+    pluginAPI.DefaultPageHandler = operations.DefaultPageHandlerFunc(web.DefaultRedirectHandler)
+
+      ...
+  ```
+
+- Run again the command to install a plugin defined in [the part 1](/docs/tutorial/massa-station-plugin/create-basic-plugin.mdx)
+- Navigate to `http://station.massa/plugin/my-name/my-plugin/web/index.html` and you should access the html page you created.
+- You're all set !
+
+  ![image](./module-page.png)
+
+
