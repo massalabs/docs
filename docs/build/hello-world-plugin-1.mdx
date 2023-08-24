@@ -195,12 +195,6 @@ func initializeAPI() *restapi.Server {
     return server
 }
 
-func setupGlobalMiddleware(handler http.Handler) http.Handler {
-    handleCORS := cors.New(cors.Options{}).Handler
-
-    return handleCORS(handler)
-}
-
 func main() {
     quit := make(chan bool) // creates a channel to receive the interrupt signal
     intSig := make(chan os.Signal, 1) // notifies the channel when the interrupt signal is received
@@ -223,8 +217,6 @@ func main() {
 The `killTime` function logs a message every 5 seconds. It is used to show that the plugin is running.
 
 The `initializeAPI` function initializes the API and returns the server.
-
-The `setupGlobalMiddleware` function sets up the cors. The cors will allow the plugin to be called from the Massa Station server.
 :::
 
 Once you have created the `my-plugin.go` file, and copied the code, we are going to install the imported packages. To do so, run the following command in the root directory `my-plugin`:
