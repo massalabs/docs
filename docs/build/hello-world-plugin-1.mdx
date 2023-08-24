@@ -139,7 +139,34 @@ my-plugin
 │   │   │   │   ├── my_plugin_api.go
 
 ```
+Once you are done generating the server stub, we are going to need to edit one of the generated file. Indeed, the default CORS setting will block requests between Massa Station plugins. But as requests between Massa Station plugins are local, there is no risk with allowing CORS. 
+So go ahead and open the `my-plugin/api/server/restapi/configure_my-plugin.go` file.
+Delete the current `setupGlobalMiddleware` function and replace it with the following code:
 
+```go
+func setupGlobalMiddleware(handler http.Handler) http.Handler {
+    handleCORS := cors.New(cors.Options{}).Handler
+
+    return handleCORS(handler)
+}
+```
+:::tip
+At the beguin of the file, you should see the following comment:
+```go
+// This file is safe to edit. Once it exists it will not be overwritten
+```
+This comment indicates that the file will not be overwritten when you re-generate the server stub. So you shouldn't have to edit it again when regenerating the server stub.
+:::
+
+We will also need to install the `cors` package with the following command:
+```bash
+go get github.com/rs/cors
+```
+Then we will need to import it in the `my-plugin/api/server/restapi/configure_my-plugin.go` file. So go ahead and open the `configure_my-plugin.go` file and add the following line to the imports section:
+
+```go
+  "github.com/rs/cors"
+```
 
 #### Step 4: Create the logic of the API
 
@@ -150,7 +177,6 @@ package main
 
 import (
   "fmt"
-  "net/http"
   "os"
   "os/signal"
   "syscall"
@@ -160,9 +186,7 @@ import (
   "my-plugin/api/server/restapi/operations"
 
   "github.com/go-openapi/loads"
-  "github.com/rs/cors"
 )
-
 func killTime(quit chan bool) { // creates a ticker that will send a message every 5 seconds
   // creates a ticker that will send a message every 5 seconds
     ticker := time.NewTicker(5 * time.Second) //nolint:gomnd
