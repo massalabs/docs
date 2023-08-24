@@ -15,9 +15,9 @@ Massa Station is the gateway to the Massa Blockchain. You can think of it as an 
 Once installed on your machine, Massa Station will allow your browser to resolve `.massa` url domains and interact with decentralized applications hosted on Massa. When using Massa Station, the `.massa` url domain indicates that you are visiting a website that is hosted on-chain, and directly served to you. You can learn more about the Decentralized Web and Massa Station [here](/docs/learn/decentralized-web).
 :::
 
-Another core module of Massa Station that is already available is the [Massa Wallet](/build/wallet/massa-station.mdx). It allows you to manage your Massa account, and sign and send transactions with an experience similar to a traditional browser-plugin wallet, but with enhanced security.
+Another core module of Massa Station that is already available is the [Massa Wallet](/build/wallet/massa-station.mdx). It allows you to manage your Massa accounts, and sign and send transactions with an experience similar to a traditional browser-plugin wallet, but with enhanced security.
 
-Massa also provides a node Manager module that allows you to administrate your Massa node directly from Massa Station. You can learn more about it [here](https://pkg.go.dev/github.com/massalabs/station-massa-node-manager/pkg/node_manager).
+Massa also provides a node Manager module that allows you to administrate your Massa node directly from Massa Station. You can learn more about it [here](https://github.com/massalabs/station-massa-node-manager).
 
 Besides the core modules developed by the Massa team, Massa Station was designed with community and modularity in mind; indeed, it allows anyone to develop and install their own modules. The most looked upon modules in terms of community adoption, and upon audit, will be made publicly available through the Massa Plugin Store. We greatly encourage our community to develop their own modules, as we believe that the Massa Station ecosystem will be the key to the adoption of the Massa Blockchain.
 
@@ -41,7 +41,7 @@ Make sure that you have [Golang](https://go.dev/doc/install) installed on your m
 Make sure you have [Go Swagger](https://pkg.go.dev/github.com/go-swagger/go-swagger) installed on your machine. If you don't have Go Swagger installed, you can follow the [official installation guide](https://pkg.go.dev/github.com/go-swagger/go-swagger). Also, make sure that the folder containing the Go Swagger binary is added to the PATH environment variable. It's usually located in the default go workspace folder: `$GOPATH/bin`. Once installed, you can check if it is installed by running `swagger version` in your terminal.
 
 #### Step 3: Install Massa Station:
-Make sure that you have [Massa Station](https://station.massa) installed on your machine. You can install it by downloading the installer on the official [Massa Station website](https://station.massa). Once downloaded, run the installer and let it guide you through the installation process. 
+Make sure that you have [Massa Station](https://station.massa.net) installed on your machine. You can install it by downloading the installer on the official [Massa Station website](https://station.massa.net). Once downloaded, run the installer and let it guide you through the installation process. 
 
 If you can produce a similar output in your terminal, then you should be good to go:
 
@@ -97,7 +97,7 @@ paths:
 Now we are going to need a target directory to store the generated server stub.
 So go ahead and in the `my-plugin/api` folder, create a new folder named `server`.
 
-Navigate back to the root directory `my-plugin` and create a `generate.go` file. This file will contain the command that generates the server stub from the swagger file when you run `go generate ./...`
+Navigate back to the root directory `my-plugin` and create a `generate.go` file. This file will contain the command that generates the server stub from the swagger file when you run `go generate ./...`.
 
 Add the following code to `generate.go`:
 
@@ -254,14 +254,14 @@ The last numbers correspond to the port the API is running on. It will change ea
 
 At this stage, we are running the API in standalone mode. In the next section, we will register the API with Massa Station, to make it run through Massa Station.
 
-## Deploy to Massa Station
+## Register to Massa Station
 
 #### Step 1: Install the Massa Station Plugin package
 To be able to register the plugin with Massa Station, we need to install the Massa Station Plugin package. Indeed, this package contains the `RegisterPlugin` function that allows us to register the plugin to Massa Station.
 
-Install the following package :
+Install the following package:
 ```bash
-go get github.com/massalabs/station-massa-hello-world`
+go get github.com/massalabs/station-massa-hello-world
 ```
 
 This package will be imported to `my-plugin.go` file. So go ahead and add the following line to the imports section of `my-plugin.go`:
@@ -298,7 +298,7 @@ Once this is done, we will add the registration logic to our main function. We w
 
   plugin.RegisterPlugin(listener) // registers the plugin
 ```
-They should be added right after the `server.ConfigureAPI()` line. In the end, your main function should look like this:
+They should be added right after the `server := initializeAPI()` line. In the end, your main function should look like this:
 
 ```go
 func main() {
@@ -327,7 +327,7 @@ func main() {
 ```
 
 :::info
-`plugin.RegisterPlugin` is a function available in the [plugin package](https://github.com/massalabs/station-massa-hello-world/blob/main/pkg/plugin/register.go).
+`plugin.RegisterPlugin` is a function available in the [hello-world plugin package](https://github.com/massalabs/station-massa-hello-world/blob/main/pkg/plugin/register.go).
 
 It facilitates the registration of a plugin with Massa Station, assigning a unique correlation ID to the plugin for identification purposes within the Massa Station system.
 :::
@@ -400,30 +400,30 @@ We are going to add a new endpoint to our plugin that will display a message whe
 So go ahead and open the `swagger.yml` file in the `api` folder, and append the following code at the end of the file:
 
 ```yaml
-/api/hello:
-  put:
-    operationId: hello
-    parameters:
-      - in: query
-        name: name
-        type: string
-        description: the name of the person to be greeted.
-    produces:
-      - application/json
-    responses:
-      "200":
-        description: Greeting content.
-        schema:
-          type: object
-          required:
-            - message
-          properties:
-            message:
-              description: Greeting message.
-              type: string
-              x-nullable: false
-      "500":
-        description: Internal Server Error - The server has encountered a situation it does not know how to handle.
+  /api/hello:
+    put:
+      operationId: hello
+      parameters:
+        - in: query
+          name: name
+          type: string
+          description: the name of the person to be greeted.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Greeting content.
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                description: Greeting message.
+                type: string
+                x-nullable: false
+        "500":
+          description: Internal Server Error - The server has encountered a situation it does not know how to handle.
 ```
 
 #### Step 2: Generate the server stub
