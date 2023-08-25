@@ -180,6 +180,53 @@ Block producers then choose which operations to include in their blocks to fit t
 Read more about gas [here](/docs/learn/gas).
 :::
 
+## Block
+
+A block is a data structure built by nodes and its function is to aggregate several operations. As explained above, 
+for each new slot that becomes active, a particular node in the network is elected in a deterministic way with the 
+task of creating the block that will be stored in that slot (more about this in the description of the Selector 
+Module below). A block from a given thread can only contain operations originating from a creator_public_key whose 
+hash’s five first bits designate the corresponding thread, thus implicitly avoiding collisions in operations integrated into parallel threads. Block size is limited to 1 MB.
+
+The content of a block is as follows:
+
+<table>
+    <tr>
+        <th colspan="2">Block header</th>
+    </tr>
+    <tr>
+        <td><code>slot</code></td>
+        <td>A description of the block slot, defined by a couple (period, thread) that uniquely identify it</td>
+    </tr>
+    <tr>
+        <td><code>creator_public_key</code></td>
+        <td>The public key of the block creator (32 bytes)</td>
+    </tr>
+    <tr>
+        <td><code>parents</code></td>
+        <td>A list of the 32 parents of the block, one parent per thread (parent blocks are identified by the block hash)</td>
+    </tr>
+    <tr>
+        <td><code>endorsements</code></td>
+        <td>A list of the 16 endorsements for the block (more about endorsements below)</td>
+    </tr>
+    <tr>
+        <td><code>operations_hash</code></td>
+        <td>A hash of all the operations included in the block (=hash of the block body below)</td>
+    </tr>
+    <tr>
+        <td><code>signature</code></td>
+        <td>Signature of all the above with the private key of the block creator</td>
+    </tr>
+    <tr>
+        <th colspan="2">Block body</th>
+    </tr>
+    <tr>
+        <td><code>operations</code></td>
+        <td>The list of all operations included in the block</td>
+    </tr>
+</table>
+
 ## Operation
 
 At its core, the Massa network revolves around the aggregation, sequencing, and execution of operations. Operations are 
@@ -346,52 +393,69 @@ Here, the code is indirectly called via the call to an existing smart contract f
     </tr>
 </table>
 
-## Block
+### Operation execution and finality
 
-A block is a data structure built by nodes and its function is to aggregate several operations. As explained above, 
-for each new slot that becomes active, a particular node in the network is elected in a deterministic way with the 
-task of creating the block that will be stored in that slot (more about this in the description of the Selector 
-Module below). A block from a given thread can only contain operations originating from a creator_public_key whose 
-hash’s five first bits designate the corresponding thread, thus implicitly avoiding collisions in operations integrated into parallel threads. Block size is limited to 1 MB.
+Massa's maximal theoretical throughput is about 10k operations per second, with low hardware requirements for validators to improve decentralization.
+This puts constraints on how operations are executed and finalized in Massa:
+* parallelization techniques are required for processing operations fast enough
+* nodes are unable to store the whole history of previously executed operations (for example to ensure that an old operation is not being re-executed)
+* block producers incapable of simulating the execution of all candidate operations to choose which ones to include
 
-The content of a block is as follows:
+Massa addresses these issues through multiple techniques.
 
-<table>
-    <tr>
-        <th colspan="2">Block header</th>
-    </tr>
-    <tr>
-        <td><code>slot</code></td>
-        <td>A description of the block slot, defined by a couple (period, thread) that uniquely identify it</td>
-    </tr>
-    <tr>
-        <td><code>creator_public_key</code></td>
-        <td>The public key of the block creator (32 bytes)</td>
-    </tr>
-    <tr>
-        <td><code>parents</code></td>
-        <td>A list of the 32 parents of the block, one parent per thread (parent blocks are identified by the block hash)</td>
-    </tr>
-    <tr>
-        <td><code>endorsements</code></td>
-        <td>A list of the 16 endorsements for the block (more about endorsements below)</td>
-    </tr>
-    <tr>
-        <td><code>operations_hash</code></td>
-        <td>A hash of all the operations included in the block (=hash of the block body below)</td>
-    </tr>
-    <tr>
-        <td><code>signature</code></td>
-        <td>Signature of all the above with the private key of the block creator</td>
-    </tr>
-    <tr>
-        <th colspan="2">Block body</th>
-    </tr>
-    <tr>
-        <td><code>operations</code></td>
-        <td>The list of all operations included in the block</td>
-    </tr>
-</table>
+
+#### Validation at block reception
+
+Blocks contain arbtirary operations chosen by the block producer.
+When a block is received by a node, the node rejects the block (and bans its senders) if any of the following happen:
+* any operation is not well-formed
+* the batched parallel signature verification of all the block operations is not a success
+* the block operations root hash does not match the one in the header
+* the cumulated size of all the operations in the block is strictly above 1MB
+
+#### Operation execution
+
+Operations included in blocks are not necessarily executed when the block is executed.
+When a block is executed, its operations are tentatively executed in the order they appear in the block.
+
+For each operation in the block, the following is performed:
+* Gas check: if the remaining block gas (starting from `MAX_BLOCK_GAS = 4294967295`) is not enough to supply the operation's max_gas, the operation is ignored.
+* Thread check: if the thread of the operation sender does not match the thread of the block, the operation is ignored.
+* Period check: if the slot period of the block is not within the range of validity periods of the operation, the operation is ignored. The validity period interval of an operation `Op` is: `[expiration_period - 10, expiration_period]`.
+* Reuse check: if the operation is in the list of executed operations, the operation is ignored.
+* Fee spending: spend the fee from the sender's account. If this spending fails, ignore the operation.
+* Subtract the operation's `max_gas` from the remaining block gas.
+* Add the operation to the list of executed operations.
+* If any of the previous steps failed, the operation is considered **NOT EXECUTED**, it is ignored and the block producer does not pocket any fees from it while wasting block space. Block producers should therefore be careful about the operations they choose to include or they might not get any fees from them. Thanks to sharding and the declarative `max_gas` and `max_coins` operation fields, block prodcuers can keep track of balances and gas usage without having to run candidate operations in order to avoid this pitfall.
+* From there on, the operation is considered executed.
+* Run the payload of the operation (for example call a smart contract). This can succeed or fail.
+  * In case of payload run failure, all the consequences of the payload run are rolled back, but the fee is still spent and the operation is still considered executed. This is because block producers have not enough computing power to simulate running all pending operations: it is the operation producer's responsibility to ensure that the operation execution will succeed. The operation is **EXECUTED WITH FAILURE**.
+  * In case of payload run success, the consequences of the execution are kept, and the operation is considered **EXECUTED WITH SUCCESS**.
+
+
+
+
+#### Operation inclusion
+
+When creating blocks, block producers are free to include the operations they want in their blocks with certain constraints
+that would make the block invalid and rejected at reception if they are not respected:
+* all operations in the block need to be well-formed
+* all the signatures of the included operations need to be valid
+* the cumulated size of all the operations in the block must be at most 1MB
+
+Block producers keep candidate operations in their operation pool.
+However, memory constraints on block producer hardware require regular pruning of this pool to keep it small and tailored to the block producer's needs:
+* discard operations that do not match the validity constraints listed above
+* discard operations that can not be included by this block producer given
+
+Block producers maximize their gains by choosing 
+
+However, they don't have the computational power to simulate the execution of all potential operations
+
+
+#### dfsd
+
+
 
 ### Endorsements
 
