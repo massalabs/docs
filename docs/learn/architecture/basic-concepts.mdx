@@ -530,9 +530,9 @@ At the output of an executed slot `S`, an operation can be in one of the followi
   * If the operation's expiry date is earlier or equal to the period of `S`, then the operation can not be executed anymore:
     * The operation might never have been executed previously
     * The operation might have been executed in a slot that finalized more than 10 periods ago. This is because the list of executed operations is pruned to limit its memory usage (see TODO operation execution).
-  * Otherwise, it means that the operation was never executed
-* `EXECUTED_WITH_SUCCESS`: the operation was executed at or before `S` and its payload run was successful (see TODO link op exec)
-* `EXECUTED_WITH_FAILURE`: the operation was executed at or before `S` and its payload run generated errors (see TODO link op exec)
+  * Otherwise, it means that the operation was never executed and can be executed in the future.
+* `EXECUTED_WITH_SUCCESS`: the operation was executed at or before `S` and its payload run was successful (see TODO link op exec). The operation can not be executed anymore.
+* `EXECUTED_WITH_FAILURE`: the operation was executed at or before `S` and its payload run generated errors (see TODO link op exec). The operation can not be executed anymore.
 
 If the slot `S` is final, then the observed status of the operation at the output of `S` is final.
 
