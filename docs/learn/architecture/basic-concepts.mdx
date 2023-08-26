@@ -393,49 +393,99 @@ Here, the code is indirectly called via the call to an existing smart contract f
     </tr>
 </table>
 
-### Operation execution and finality
+### Operation lifecycle
 
 Massa's maximal theoretical throughput is about 10k operations per second, with low hardware requirements for validators to improve decentralization.
 This puts constraints on how operations are executed and finalized in Massa:
 * parallelization techniques are required for processing operations fast enough
 * nodes are unable to store the whole history of previously executed operations (for example to ensure that an old operation is not being re-executed)
-* block producers incapable of simulating the execution of all candidate operations to choose which ones to include
+* block producers do not have enough computing power to simulate the execution of all candidate operations to choose which ones to include in their blocks
+* security must always be guaranteed against malicious actors
 
 Massa addresses these issues through multiple techniques.
 
+#### Operation validity
 
-#### Validation at block reception
+TODO
+
+#### Operation propagation
+
+To reduce network usage and achieve high throughput while maintaining decentralization and security,
+operations are propagated using optimized gossip algorithms.
+
+##### Operation submission
+
+When the API of a peer is called to submit an operation:
+* the operation is checked for validity (TODO redirect to validity section)
+  * if the operation is invalid, it is rejected and an error message is returned by the API
+* the operation is added to the peer's operation pool (TODO redirect to pool and inclusion section)
+* the operation is submitted to a broadcasting thread (TODO redirect to broadcasting section)
+
+TODO API
+
+TODO GRPC
+
+##### Operation broadcasting
+
+The broadcasting thread keeps sumbitted operations in memory for at least 32 seconds with a cap of 32000 operations being propagated at the same time. 
+It also keeps LRU caches of operations already processed by the current peer, and by other peers it is connected to.
+
+When an operation is submitted to the broadcasting thread, it is first checked for expiry (expired operations are dropped),
+and ignored if it is already being propagated. 
+
+The broadcasting thread announces the operation IDs of the operations being broadcast to connected peers with batching.
+Only operation IDs not already known by a given peer are announced to it.
+The announcement batches are made of operation IDs truncated down to 17 bytes.
+
+When a peer receives a batch of operation announcements,
+it ignores all the operation IDs that it already knows about and submits the remaining ones to the retrieval thread.
+The remote peer announcing operations is marked as knowing about these operations in the current peer's caches.
+
+##### Operation retrieval
+
+The retrieval thread uses a queue-based algorithm to ask connected peers for batches of operations given their IDs.
+Remote peers that are known to be aware of a given operation ID are prioritized over other peers.
+Timeouts are applied as well to re-attempt retrieval from other peers in case of failure.
+
+When a batch of full operations is received:
+* the sender peer is marked as knowing about these operations in the current peer's caches.
+* the operations are checked for validity with batched parallel signature verification
+  * if any of the operations is invalid, the batch is dropped, and the sender peer is bannned
+* the operations are added to the peer's operation pool (TODO redirect to pool and inclusion section)
+* the operations are submitted to the broadcasting thread
+
+##### Operation propagation within blocks
 
 Blocks contain arbtirary operations chosen by the block producer.
-When a block is received by a node, the node rejects the block (and bans its senders) if any of the following happen:
-* any operation is not well-formed
+Block retrieval in Massa makes use of the propagation caches to only ask for operations that are not already known by the current peer.
+This effectively avoids re-doing operation propagation and validity checks for block operations that have already propagated by themselves previously.
+
+When a block is received, if any of the following happen the block is rejected (and its senders are banned):
+* any included operation is not valid
 * the batched parallel signature verification of all the block operations is not a success
 * the block operations root hash does not match the one in the header
 * the cumulated size of all the operations in the block is strictly above 1MB
 
+This detects invalid blocks early and prevents them from propagating in the network.
+
 #### Operation execution
 
-Operations included in blocks are not necessarily executed when the block is executed.
 When a block is executed, its operations are tentatively executed in the order they appear in the block.
-
 For each operation in the block, the following is performed:
-* Gas check: if the remaining block gas (starting from `MAX_BLOCK_GAS = 4294967295`) is not enough to supply the operation's max_gas, the operation is ignored.
+* Gas check: if the remaining block gas (starting from `MAX_BLOCK_GAS = 4294967295`) is not enough to supply the operation's `max_gas`, the operation is ignored.
 * Thread check: if the thread of the operation sender does not match the thread of the block, the operation is ignored.
 * Period check: if the slot period of the block is not within the range of validity periods of the operation, the operation is ignored. The validity period interval of an operation `Op` is: `[expiration_period - 10, expiration_period]`.
 * Reuse check: if the operation is in the list of executed operations, the operation is ignored.
 * Fee spending: spend the fee from the sender's account. If this spending fails, ignore the operation.
 * Subtract the operation's `max_gas` from the remaining block gas.
-* Add the operation to the list of executed operations.
-* If any of the previous steps failed, the operation is considered **NOT EXECUTED**, it is ignored and the block producer does not pocket any fees from it while wasting block space. Block producers should therefore be careful about the operations they choose to include or they might not get any fees from them. Thanks to sharding and the declarative `max_gas` and `max_coins` operation fields, block prodcuers can keep track of balances and gas usage without having to run candidate operations in order to avoid this pitfall.
+* Add the operation to the list of executed operations. Note that operations with an expiry period that is earlier or equal to the latest final period in the operation's thread are removed from this list after 10 extra periods in order to cap memory use.
+* If any of the previous steps failed, the operation is considered **NOT EXECUTED**, it is ignored and the block producer does not pocket any fees from it while wasting block space. Block producers should therefore be careful about the operations they choose to include or they might not get any fees from them. Thanks to sharding and the declarative `max_gas` and `max_coins` operation fields, block prodcuers can keep track of balances and gas usage without having to simulate the complete execution of candidate operations in order to avoid this pitfall.
 * From there on, the operation is considered executed.
 * Run the payload of the operation (for example call a smart contract). This can succeed or fail.
-  * In case of payload run failure, all the consequences of the payload run are rolled back, but the fee is still spent and the operation is still considered executed. This is because block producers have not enough computing power to simulate running all pending operations: it is the operation producer's responsibility to ensure that the operation execution will succeed. The operation is **EXECUTED WITH FAILURE**.
+  * In case of payload run failure, all the consequences of the payload run are rolled back, but the fee is still spent and the operation is still considered executed. This is because block producers have not enough computing power to simulate running all pending operations: this failure is the operation producer's responsibility. In this case, the operation is then considered **EXECUTED WITH FAILURE**.
   * In case of payload run success, the consequences of the execution are kept, and the operation is considered **EXECUTED WITH SUCCESS**.
 
-
-
-
-#### Operation inclusion
+#### Operation pool and operation inclusion
 
 When creating blocks, block producers are free to include the operations they want in their blocks with certain constraints
 that would make the block invalid and rejected at reception if they are not respected:
@@ -446,20 +496,55 @@ that would make the block invalid and rejected at reception if they are not resp
 Block producers keep candidate operations in their operation pool.
 However, memory constraints on block producer hardware require regular pruning of this pool to keep it small and tailored to the block producer's needs:
 * discard operations that do not match the validity constraints listed above
-* discard operations that can not be included by this block producer given
+* discard operations that can not be included by this block producer given the expiry periods of the operation and proof-of-stake draws
 
-Block producers maximize their gains by choosing 
+Block producers maximize their gains by prioritizing the operations that maximize their expected rewards.
+However, they don't have the computational power to simulate the execution of all potential operations.
 
-However, they don't have the computational power to simulate the execution of all potential operations
+To solve this problem, operations are scored by block producers to estimate their expected rewards.
+This is done by a scoring algorithm that takes into account:
+* the expected rewards coming from the operation's `fee`
+* the probability of inclusion of the operation based on:
+  * whether the operation was already executed previously
+  * the number of opportunities other block producers have to execute the operation before the current node gets a chance to include it based on proof-of-stake selections
+* the usage of resources by the operation:
+  * the operation size (occupying space in the finite block size)
+  * the operation `max_gas` (occupying space in the finite block gas `MAX_BLOCK_GAS`)
+Operations are then kept sorted by score, and the ones with the worst scores are discarded to respect the max size of the pool.
 
+Sorted operations are then scanned based on their declarative coin spending (`fee + max_coins`)
+and operations that overflow their sender's candidate balance given those cumulated spendings are discarded.
+The accurate evaluation of the balance without execution is made possible by sharding:
+no operation executed in blocks being created elsewhere at the same time can spend those coins.
+This protects the pool from flood attacks and guarantees that the operation fees can be spent.
 
-#### dfsd
+In Massa, operation pools are highly non-deterministic and depend on each block producer's proof-of-stake draws. 
+The operation pool can therefore not be used as a reliable source of information about the propagation state of an operation.
 
+#### Operation execution status and finality
 
+##### Observable operation states
+
+At the output of an executed slot `S`, an operation can be in one of the following observable states:
+* `EXECUTABLE_OR_EXPIRED`: the operation is not in the list of previously executed operations at the output of `S`:
+  * If the operation's expiry date is earlier or equal to the period of `S`, then the operation can not be executed anymore:
+    * The operation might never have been executed previously
+    * The operation might have been executed in a slot that finalized more than 10 periods ago. This is because the list of executed operations is pruned to limit its memory usage (see TODO operation execution).
+  * Otherwise, it means that the operation was never executed
+* `EXECUTED_WITH_SUCCESS`: the operation was executed at or before `S` and its payload run was successful (see TODO link op exec)
+* `EXECUTED_WITH_FAILURE`: the operation was executed at or before `S` and its payload run generated errors (see TODO link op exec)
+
+If the slot `S` is final, then the observed status of the operation at the output of `S` is final.
+
+##### Querying and interpreting the state of an operation
+
+TODO API
+
+TODO GRPC
 
 ### Endorsements
 
-Endorsements are optional inclusion in the block, but their inclusion is incentivized for block creators. They are 
+Endorsements are optionally included in the block, but their inclusion is incentivized for block creators. They are 
 validations of the fact that the parent block on the thread of the block is the best parent that could have been 
 chosen, done by other nodes that have also been deterministically selected via the proof of stake probability 
 distribution (see below). A comprehensive description of endorsements can be found [here](/docs/learn/architecture/consensus-quality#endorsement), so we will 
