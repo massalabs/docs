@@ -404,9 +404,381 @@ This puts constraints on how operations are executed and finalized in Massa:
 
 Massa addresses these issues through multiple techniques.
 
-#### Operation validity
+#### Operation legality
+
+An operation is considered legal if it properly deserializes, its field values are legal and mutually consistent,
+and it passes signature verification.
+
+##### Operation
+
+Binary serialization format of an operation:
+
+<table>
+    <tr>
+        <td><code>signature</code></td>
+        <td colspan="2">See Signature section</td>
+    </tr>
+    <tr>
+        <td><code>sender public key</code></td>
+        <td colspan="2">See Public Key section</td>
+    </tr>
+    <tr>
+        <td><code>serialized operation contents</code></td>
+        <td colspan="2">See Operation Contents section</td>
+    </tr>
+</table>
+
+Legality checks performed on deserialization:
+* the signature is legal (see Signature section)
+* the public key is legal (see Public Key section)
+* the serialized operation contents are legal (see Operation Contents section)
+
+##### Operation contents hash
+
+The operation contents hash is computed as follows:
+
+```
+operation_contents_hash = blake3_hash(concatenate(serialize_binary(public_key), serialize_binary(operation_contents)))
+```
+
+Blake3 is 12 times faster than sha256 and is not subject to length extension attacks contrary to sha256.
+See the Public Key and Operation Contents sections for details on the binary serialization formats of these fields. 
+
+This hash is a deterministic fingerprint of the non-malleable parts of the operation (excluding the signature) that can be considered unique in practice.
+
+##### Operation ID
+
+The ID of an operation has the following binary representation:
+
+<table>
+    <tr>
+        <td><code>version number</code></td>
+        <td>between 1 (included) and 9 (included) bytes</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions. Indicates the operation's version.</td>
+    </tr>
+    <tr>
+        <td><code>operation_contents_hash</code></td>
+        <td>32 bytes</td>
+        <td>see Operation contents hash section</td>
+    </tr>
+</table>
+
+Legality checks performed on binary deserialization:
+* the version number must be 0
+* the operation contents hash must be legal (see Operation Contents hash section)
+
+
+The ID of an operation has the following UTF-8 ASCII-compatible text representation:
+<table>
+    <tr>
+        <td><code>prefix letter 'O'</code></td>
+        <td>1 letter (1 byte)</td>
+        <td>Not a zero but the letter O. A constant prefix indicating that it is an operation ID to avoid ambiguity with other IDs (eg. Block IDs are prefixed with 'B')</td>
+    </tr>
+    <tr>
+        <td><code>operation ID contents</code></td>
+        <td>18 (included) to 62 (included) characters (18 to 62 bytes)</td>
+        <td>base58check (no version, with checksum) representation of the binary serialization of the operation ID (see above)</td>
+    </tr>
+</table>
+
+Note that the base58check encoding is the same one as the one used by bitcoin but without version number as it is already included in the underlying binary serialization of the operation ID.
+
+Here is the entire encoding process for an operation ID in text format:
+* serialize the operation ID in binary format (see above)
+* compute the SHA256 hash of the binary serialization
+* append the first 4 bytes of the sha256 hash at the end of the binary serialization of the ID. This is used as a checksum to detect typing errors as operation IDs are also meant to be written on paper by humans.
+* encode the resulting byte array using the base alphabet `123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz`. Similar looking characters (eg 0 vs O) are excluded to avoid human confusion.
+* prepend the letter 'O'
+
+Legality checks performed on text deserialization:
+* the text must be valid UTF-8 and ASCCII with only alphanumeric characters
+* the prefix letter must be 'O'
+* the base58check must use the legal alphabet described above and the checksum must verify
+* the decoded binary serialization of the operation ID must be legal (see above)
+
+Example of legal operation ID: `O19DQAos5Dw6z4BVzQPYxj9g8v6H5W3HuKV7dFuYEpc2YNWopEz`
+
+To maximize performance by having the same hash re-used for signature and ID computation,
+the ID uses the `operation_contents_hash` which does not include the signature in the hashing process.
+This has the consequence of enabling malleability on operation signatures, which is explicitly tolerated by Massa.
+
+##### Signature
+
+The signature of an operation is computed in the following way:
+
+```
+ed25519_sign(operation_contents_hash)
+```
+
+Signature verification is a CPU time-intensive process and is done in a deferred, parallelized and batched fashion.
+The following function is used for signature verification: https://docs.rs/ed25519-dalek/2.0.0/ed25519_dalek/fn.verify_batch.html
+
+For maximal robustness and future-proofing, Massa tolerates operation signature malleability.
+
+
+Binary serialization format of the signature:
+
+<table>
+    <tr>
+        <td><code>version number</code></td>
+        <td>between 1 (included) and 9 (included) bytes</td>
+        <td>varint unsigned 64bit integer using protobuf conventions</td>
+    </tr>
+    <tr>
+        <td><code>signature content</code></td>
+        <td>64 bytes</td>
+        <td>constant-size ed25519 signature made of the concatenation of its R (32-bit) and s (32-bit) components</td>
+    </tr>
+</table>
+
+Legality checks performed on deserialization:
+* the version number must be 0
+* the signature must be 64 bytes long
+
+Signature verification with respect to data and public key is not performed on signature deserialization.
+Invalid field elements in the signature are not checked on signature deserialization but on signature verification.
+
+##### Public key
+
+Binary serialization format of the public key:
+
+<table>
+    <tr>
+        <td><code>version number</code></td>
+        <td>between 1 (included) and 9 (included) bytes</td>
+        <td>varint unsigned 64bit integer using protobuf conventions</td>
+    </tr>
+    <tr>
+        <td><code>cryptographic public key</code></td>
+        <td>32 bytes</td>
+        <td>Compressed ed25519 public key</td>
+    </tr>
+</table>
+
+The cryptographic public key is compressed in the following way to take only 32 bytes instead of 64:
+* the first 255 bits represent the `y` coordinate
+* the high bit of the 32nd byte gives the sign of `x`
+Using this data, and through symetries in the ed25519 curve, it is possible to deduce the `x` coordinate.
+In Massa, public key decompression is performed on public key deserialization,
+and because decompression is a CPU time-heavy operation,
+each connected peer has a dedicated CPU thread performing its deserializations.
+
+Legality checks performed on deserialization:
+* the version number must be 0
+* the cryptographic public key must be 32 bytes long
+* the compressed public key `y` component must be valid for the ed25519 curve
+
+
+##### Address
+
+Addresses can be of two categories in Massa:
+* Externally Owned Account addresses are used to identify users that hold a private key and can sign operations
+* Smart Contract Account addresses are used to identify smart contracts that are not linked to any private key
+
+Binary serialization format of an address:
+
+<table>
+    <tr>
+        <td><code>address category</code></td>
+        <td>between 1 (included) and 9 (included) bytes</td>
+        <td>varint unsigned 64bit integer using protobuf conventions, value 0 for externally owned accounts, value 1 for smart contracts</td>
+    </tr>
+    <tr>
+        <td><code>version number</code></td>
+        <td>between 1 (included) and 9 (included) bytes</td>
+        <td>varint unsigned 64bit integer using protobuf conventions</td>
+    </tr>
+    <tr>
+        <td><code>undrlying hash</code></td>
+        <td>32 bytes</td>
+        <td>Underlying blake3 hash</td>
+    </tr>
+</table>
+
+The underlying hash of an externally owned account address is computed by taking the blake3 hash
+of the binary serialization of the account's public key (see Public Key section).
+The Blockclique sharding thread of an externally owned account address is computed
+by taking the first 5 bits of its underlying hash.
+
+The underlying hash of a smart contract account address is computed
+by taking the blake3 hash of a deterministic seed.
+Because this seed can be rewritten by Blockclique changes,
+always wait for finality before using the address of a newly created smart contract.
+
+Legality checks performed on binary deserialization:
+* the address category must be 0 or 1
+* the version number must be 0
+* the underlying hash must be 32 bytes long
+
+
+Text serialization of an address:
+
+<table>
+    <tr>
+        <td><code>prefix letter 'A'</code></td>
+        <td>1 letter (1 byte)</td>
+        <td>A constant prefix indicating that it is an address to avoid ambiguity with other IDs (eg. Block IDs are prefixed with 'B')</td>
+    </tr>
+    <tr>
+        <td><code>address contents</code></td>
+        <td>18 (included) to 74 (included) characters (18 to 74 bytes)</td>
+        <td>base58check (no version, with checksum) representation of the binary serialization of the address (see above)</td>
+    </tr>
+</table>
+
+Here is the entire encoding process for an address in text format:
+* serialize the address in binary format (see above)
+* compute the SHA256 hash of the binary serialization
+* append the first 4 bytes of the sha256 hash at the end of the binary serialization of the address. This is used as a checksum to detect typing errors as addresses are also meant to be written on paper by humans.
+* encode the resulting byte array using the base alphabet `123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz`. Similar looking characters (eg 0 vs O) are excluded to avoid human confusion.
+* prepend the letter 'A'
+
+Legality checks performed on text deserialization:
+* the text must be valid UTF-8 and ASCCII with only alphanumeric characters
+* the prefix letter must be 'A'
+* the base58check must use the legal alphabet described above and the checksum must verify
+* the decoded binary serialization of the address must be legal (see above)
+
+Example of legal address in text format: `AU12v83xmHg2UrLM8GLsXRMrm7LQgn3DZVT6kUeFsuFyhZKLkbQtY`
+
+##### Coin amounts
+
+Coin amounts represent a quantity of Massa native coins and are positive or zero, fixed-point numbers.
+The fixed point precision is `1e-9`.
+The minimal coin amount that can be represented is is `0`
+and the maximal coin amount that can be represented is `18,446,744,073.709551615`.
+Floating point numbers should never be used for amount computations to avoid determinism problems and rounding errors.
+
+Binary serialization format of a coin amount:
+<table>
+    <tr>
+        <td><code>mantissa</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions. The mantissa is deduced by multiplying the represented coin amount by `1e9`. </td>
+    </tr>
+</table>
+
+No checks are performed on deserialization except the validity of the varint itself
+and that its value fits in an unsigned 64bit integer.
+
+##### Operation contents
+
+Operation contents are represented with a common set of properties (`fee`, `expire_period`) and a specific payload
+depending on the operation type among:
+* `Transaction`
+* `CallSC`
+* `ExecuteSC`
+* `RollBuy`
+* `RollSell`
+
+Binary serialization format of operation contents:
+
+<table>
+    <tr>
+        <td><code>fee</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Coin amount in binary format (see Coin amount section)</td>
+    </tr>
+    <tr>
+        <td><code>expire_period</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
+    </tr>
+    <tr>
+        <td><code>type identifier</code></td>
+        <td>from 1 byte (included) to 5 bytes (included)</td>
+        <td>Varint unsigned 32bit integer using protobuf conventions.</td>
+    </tr>
+    <tr>
+        <td><code>op</code></td>
+        <td>size varies</td>
+        <td>Binary-serialized operation payload (see below).</td>
+    </tr>
+</table>
+
+The type identifier indicates the payload type:
+* `Transaction = 0`
+* `RollBuy = 1`
+* `RollSell = 2`
+* `ExecuteSC = 3`
+* `CallSC = 4`
+
+Checks performed on deserialization:
+* the fee must be legal (see Coin amount section)
+* the type identifier must be one of the ones listed above
+* the operation payload defined by the type identifier must be legal (see below)
+
+###### Transaction operation payload
+
+The binary serialization format of the payload of a transaction operation follows:
+
+<table>
+    <tr>
+        <td><code>destination address</code></td>
+        <td>from 34 (included) to 50 bytes (included)</td>
+        <td>Transfer destination address binary representation, see Address section.</td>
+    </tr>
+    <tr>
+        <td><code>amount</code></td>
+        <td>from 1(included) to 9(included) bytes</td>
+        <td>Coin amount binary representation, see Coin Amount section.</td>
+    </tr>
+</table>
+
+Checks performed on deserialization:
+* the destination address must be legal (see Address section)
+* the amount must be legal (see Coin amount section)
+
+###### RollBuy operation payload
+
+The binary serialization format of the payload of a roll buy operation follows:
+
+<table>
+    <tr>
+        <td><code>rolls</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
+    </tr>
+</table>
+
+No particular checks performed at deserialization except that the varint must be valid
+and fit in an unsigned 64bit integer.
+
+###### RollSell operation payload
+
+The binary serialization format of the payload of a roll sell operation follows:
+
+<table>
+    <tr>
+        <td><code>rolls</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
+    </tr>
+</table>
+
+No particular checks performed at deserialization except that the varint must be valid
+and fit in an unsigned 64bit integer.
+
+###### ExecuteSC operation payload
 
 TODO
+
+###### CallSC operation payload
+
+TODO
+
+##### Example of legal operation with valid signature
+
+Example operation:
+
+TODO
+
+ID in text format: TODO
+
+Raw bytes in hexadecimal representation of the binary serialization of the operation:
+
+TODO 
 
 #### Operation propagation
 
@@ -415,15 +787,16 @@ operations are propagated using optimized gossip algorithms.
 
 ##### Operation submission
 
-When the API of a peer is called to submit an operation:
-* the operation is checked for validity (TODO redirect to validity section)
-  * if the operation is invalid, it is rejected and an error message is returned by the API
-* the operation is added to the peer's operation pool (TODO redirect to pool and inclusion section)
-* the operation is submitted to a broadcasting thread (TODO redirect to broadcasting section)
-
 TODO API
 
 TODO GRPC
+
+When the API of a peer is called to submit an operation:
+* the operation is checked for legality (TODO redirect to legality section)
+  * if the operation is not legal, it is rejected and an error message is returned by the API
+* the operation is added to the peer's operation pool (TODO redirect to pool and inclusion section)
+* the operation is submitted to a broadcasting thread (TODO redirect to broadcasting section)
+
 
 ##### Operation broadcasting
 
@@ -435,22 +808,22 @@ and ignored if it is already being propagated.
 
 The broadcasting thread announces the operation IDs of the operations being broadcast to connected peers with batching.
 Only operation IDs not already known by a given peer are announced to it.
-The announcement batches are made of operation IDs truncated down to 17 bytes.
+The announcement batches are made of operation IDs truncated down to 17 bytes to save bandwidth usage.
 
 When a peer receives a batch of operation announcements,
 it ignores all the operation IDs that it already knows about and submits the remaining ones to the retrieval thread.
-The remote peer announcing operations is marked as knowing about these operations in the current peer's caches.
+The remote peer announcing operations is marked as knowing about these operation IDs in the current peer's caches.
 
 ##### Operation retrieval
 
-The retrieval thread uses a queue-based algorithm to ask connected peers for batches of operations given their IDs.
+The retrieval thread uses an optimized queue-based algorithm to ask connected peers for batches of operations given their IDs.
 Remote peers that are known to be aware of a given operation ID are prioritized over other peers.
 Timeouts are applied as well to re-attempt retrieval from other peers in case of failure.
 
 When a batch of full operations is received:
 * the sender peer is marked as knowing about these operations in the current peer's caches.
-* the operations are checked for validity with batched parallel signature verification
-  * if any of the operations is invalid, the batch is dropped, and the sender peer is bannned
+* the operations are checked for legality with batched parallel signature verification (TODO redirect to legality section)
+  * if any of the operations is not legal, the batch is dropped, and the sender peer is bannned
 * the operations are added to the peer's operation pool (TODO redirect to pool and inclusion section)
 * the operations are submitted to the broadcasting thread
 
@@ -458,20 +831,43 @@ When a batch of full operations is received:
 
 Blocks contain arbtirary operations chosen by the block producer.
 Block retrieval in Massa makes use of the propagation caches to only ask for operations that are not already known by the current peer.
-This effectively avoids re-doing operation propagation and validity checks for block operations that have already propagated by themselves previously.
+This effectively avoids re-doing operation propagation and legality checks for block operations that have already propagated by themselves previously.
 
 When a block is received, if any of the following happen the block is rejected (and its senders are banned):
-* any included operation is not valid
+* any included operation is not legal (TODO redirect to legality section)
 * the batched parallel signature verification of all the block operations is not a success
 * the block operations root hash does not match the one in the header
 * the cumulated size of all the operations in the block is strictly above 1MB
 
-This detects invalid blocks early and prevents them from propagating in the network.
+This detects non-legal blocks early and prevents them from propagating in the network.
 
 #### Operation execution
 
-When a block is executed, its operations are tentatively executed in the order they appear in the block.
-For each operation in the block, the following is performed:
+When the consensus algorithm outputs the list of slots to execute,
+that list is fed to the Execution thread that executes slots asynhronously, in time order.
+
+The execution thread executes slots in order following two cursors: a candidate cursor and a final cursor.
+
+The candidate cursor attempts to execute all slots up to 2 seconds in the past.
+If a blockclique change happens, the candidate cursor is rolled back to the earliest slot that changed,
+and re-executes all the slots from there.
+This means that the execution state and outcomes of an operation executed in a non-final slot can change at any time.
+The 2 second latency serves the purpose of avoiding constant re-execution of the very volatile latest slots
+in order to save resources.
+This means that the candidate execution state of an operation can be observed after two seconds (or more)
+following the propagation of the block in which it was included.
+Overall, the deeper the slot is in the past, the exponentially more stable its candidate execution state is,
+up to finality after which it is guaranteed not to change anymore. 
+
+The final cursor attempts to execute all final slots up to the latest one.
+Final execution is prioritary over candidate execution:
+as long as there are slots to finalize, they are processed before candidate slots.
+If a finalizing slot was previously executed as candidate and neither itself nor any if its ancestors has changed since the execution,
+the results of the slot's candidate execution are simply written to the final state to avoid re-executing it.
+
+When a slot is executed, if it contains a block, that block is executed.
+THe block's operations are tentatively executed in the order they appear in the block.
+For each operation in a block, the following is performed:
 * Gas check: if the remaining block gas (starting from `MAX_BLOCK_GAS = 4294967295`) is not enough to supply the operation's `max_gas`, the operation is ignored.
 * Thread check: if the thread of the operation sender does not match the thread of the block, the operation is ignored.
 * Period check: if the slot period of the block is not within the range of validity periods of the operation, the operation is ignored. The validity period interval of an operation `Op` is: `[expiration_period - 10, expiration_period]`.
@@ -485,17 +881,21 @@ For each operation in the block, the following is performed:
   * In case of payload run failure, all the consequences of the payload run are rolled back, but the fee is still spent and the operation is still considered executed. This is because block producers have not enough computing power to simulate running all pending operations: this failure is the operation producer's responsibility. In this case, the operation is then considered **EXECUTED WITH FAILURE**.
   * In case of payload run success, the consequences of the execution are kept, and the operation is considered **EXECUTED WITH SUCCESS**.
 
+This process implies some peculiarities:
+* the same operation can be included multiple times in the same block or in different blocks but executed either 0 or 1 times in total
+* it is not because an operation is included in a final block that the operation is executed as final
+
 #### Operation pool and operation inclusion
 
 When creating blocks, block producers are free to include the operations they want in their blocks with certain constraints
-that would make the block invalid and rejected at reception if they are not respected:
+that would make the block non-legal and rejected at reception if they are not respected:
 * all operations in the block need to be well-formed
-* all the signatures of the included operations need to be valid
+* all the signatures of the included operations need to be legal
 * the cumulated size of all the operations in the block must be at most 1MB
 
 Block producers keep candidate operations in their operation pool.
 However, memory constraints on block producer hardware require regular pruning of this pool to keep it small and tailored to the block producer's needs:
-* discard operations that do not match the validity constraints listed above
+* discard operations that do not match the legality constraints listed above
 * discard operations that can not be included by this block producer given the expiry periods of the operation and proof-of-stake draws
 
 Block producers maximize their gains by prioritizing the operations that maximize their expected rewards.
@@ -504,12 +904,12 @@ However, they don't have the computational power to simulate the execution of al
 To solve this problem, operations are scored by block producers to estimate their expected rewards.
 This is done by a scoring algorithm that takes into account:
 * the expected rewards coming from the operation's `fee`
-* the probability of inclusion of the operation based on:
+* the probability of executing of the operation based on:
   * whether the operation was already executed previously
   * the number of opportunities other block producers have to execute the operation before the current node gets a chance to include it based on proof-of-stake selections
 * the usage of resources by the operation:
   * the operation size (occupying space in the finite block size)
-  * the operation `max_gas` (occupying space in the finite block gas `MAX_BLOCK_GAS`)
+  * the operation `max_gas` (occupying gas in the finite block gas `MAX_BLOCK_GAS`)
 Operations are then kept sorted by score, and the ones with the worst scores are discarded to respect the max size of the pool.
 
 Sorted operations are then scanned based on their declarative coin spending (`fee + max_coins`)
@@ -523,6 +923,9 @@ The operation pool can therefore not be used as a reliable source of information
 
 #### Operation execution status and finality
 
+Because of the peculiar way Massa handles operations to achieve its scalability, security and decentralization goals,
+tracking the state of execution of an operation requires understanding certain principles.
+
 ##### Observable operation states
 
 At the output of an executed slot `S`, an operation can be in one of the following observable states:
@@ -534,7 +937,18 @@ At the output of an executed slot `S`, an operation can be in one of the followi
 * `EXECUTED_WITH_SUCCESS`: the operation was executed at or before `S` and its payload run was successful (see TODO link op exec). The operation can not be executed anymore.
 * `EXECUTED_WITH_FAILURE`: the operation was executed at or before `S` and its payload run generated errors (see TODO link op exec). The operation can not be executed anymore.
 
-If the slot `S` is final, then the observed status of the operation at the output of `S` is final.
+If the slot `S` is the latest candidate slot, then the observed status of a given operation at the output of `S` is considered candidate.
+As candidate slots are executed, candidate operation states can transition from any state into any other because blockclique changes might happen and rewrite the slot history.
+
+If the slot `S` is the latest executed final slot, then the observed status of a given operation at the output of `S` is considered final.
+As final slots are executed, the following final operation state transitions can be observed:
+* `EXECUTABLE_OR_EXPIRED` -> `EXECUTED_WITH_SUCCESS`: the operation was executed as final with success
+* `EXECUTABLE_OR_EXPIRED` -> `EXECUTED_WITH_SUCCESS`: the operation was executed as final with failure
+* `EXECUTED_WITH_SUCCESS` -> `EXECUTABLE_OR_EXPIRED`: the operation was executed as final with success and then it expired and was pruned away
+* `EXECUTED_WITH_FAILURE` -> `EXECUTABLE_OR_EXPIRED`: the operation was executed as final with failure and then it expired and was pruned away
+
+Operations are guaranteed to be kept in the `EXECUTED_WITH_SUCCESS` or `EXECUTED_WITH_FAILURE` for at least 10 periods (2 minutes, 40 seconds)
+to give time to operators to register those states before they are pruned.
 
 ##### Querying and interpreting the state of an operation
 
