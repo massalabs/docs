@@ -539,6 +539,60 @@ Legality checks performed on deserialization:
 Signature verification with respect to data and public key is not performed on signature deserialization.
 Invalid field elements in the signature are not checked on signature deserialization but on signature verification.
 
+##### Secret key
+
+
+The secret key has the following binary representation:
+
+<table>
+    <tr>
+        <td><code>version number</code></td>
+        <td>between 1 (included) and 9 (included) bytes</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions. Indicates the secret key version.</td>
+    </tr>
+    <tr>
+        <td><code>cryptographic secret key</code></td>
+        <td>32 bytes</td>
+        <td>ed25519 secret key bytes</td>
+    </tr>
+</table>
+
+Legality checks performed on binary deserialization:
+* the version number must be 0
+* the cryptographic secret key bytes must be 32 bytes long 
+
+
+Secret keys have the following UTF-8 ASCII-compatible text representation:
+<table>
+    <tr>
+        <td><code>prefix letter 'S'</code></td>
+        <td>1 letter (1 byte)</td>
+        <td>A constant prefix indicating that it is a secret key to avoid ambiguity with other IDs (eg. Block IDs are prefixed with 'B')</td>
+    </tr>
+    <tr>
+        <td><code>secret key contents</code></td>
+        <td>18 (included) to 62 (included) characters (18 to 62 bytes)</td>
+        <td>base58check (no version, with checksum) representation of the binary serialization of the secret key (see above)</td>
+    </tr>
+</table>
+
+Note that the base58check encoding is the same one as the one used by bitcoin but without version number as it is already included in the underlying binary serialization of the secret key.
+
+Here is the entire encoding process for a secret key in text format:
+* serialize the secret key in binary format (see above)
+* compute the SHA256 hash of the binary serialization
+* append the first 4 bytes of the sha256 hash at the end of the binary serialization of the key. This is used as a checksum to detect typing errors as secret keys are also meant to be written on paper by humans.
+* encode the resulting byte array using the base alphabet `123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz`. Similar looking characters (eg 0 vs O) are excluded to avoid human confusion.
+* prepend the letter 'S'
+
+Legality checks performed on text deserialization:
+* the text must be valid UTF-8 and ASCCII with only alphanumeric characters
+* the prefix letter must be 'S'
+* the base58check must use the legal alphabet described above and the checksum must verify
+* the decoded binary serialization of the secret key must be legal (see above)
+
+Example of legal secret key: `S1CkpvD4WMjJWxR2WZcrDEkJ1kWG2kKe1e3Afe8miqmskHqovvA`
+
 ##### Public key
 
 Binary serialization format of the public key:
@@ -569,6 +623,36 @@ Legality checks performed on deserialization:
 * the cryptographic public key must be 32 bytes long
 * the compressed public key `y` component must be valid for the ed25519 curve
 
+Public keys have the following UTF-8 ASCII-compatible text representation:
+<table>
+    <tr>
+        <td><code>prefix letter 'P'</code></td>
+        <td>1 letter (1 byte)</td>
+        <td>A constant prefix indicating that it is a secret key to avoid ambiguity with other IDs (eg. Block IDs are prefixed with 'B')</td>
+    </tr>
+    <tr>
+        <td><code>public key contents</code></td>
+        <td>18 (included) to 62 (included) characters (18 to 62 bytes)</td>
+        <td>base58check (no version, with checksum) representation of the binary serialization of the public key (see above)</td>
+    </tr>
+</table>
+
+Note that the base58check encoding is the same one as the one used by bitcoin but without version number as it is already included in the underlying binary serialization of the public key.
+
+Here is the entire encoding process for a public key in text format:
+* serialize the public key in binary format (see above)
+* compute the SHA256 hash of the binary serialization
+* append the first 4 bytes of the sha256 hash at the end of the binary serialization of the key. This is used as a checksum to detect typing errors as public keys are also meant to be written on paper by humans.
+* encode the resulting byte array using the base alphabet `123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz`. Similar looking characters (eg 0 vs O) are excluded to avoid human confusion.
+* prepend the letter 'P'
+
+Legality checks performed on text deserialization:
+* the text must be valid UTF-8 and ASCCII with only alphanumeric characters
+* the prefix letter must be 'P'
+* the base58check must use the legal alphabet described above and the checksum must verify
+* the decoded binary serialization of the public key must be legal (see above)
+
+Example of legal public key: `P1t4JZwHhWNLt4xYabCbukyVNxSbhYPdF6wCYuRmDuHD784juxd`
 
 ##### Address
 
@@ -881,15 +965,28 @@ Legality checks performed at binary deserialization:
 
 ##### Example of legal operation with valid signature
 
-Example operation:
 
-TODO
+* Sender Secret key in text format: `S1CkpvD4WMjJWxR2WZcrDEkJ1kWG2kKe1e3Afe8miqmskHqovvA`
+* Sender Public key in text format: `P1t4JZwHhWNLt4xYabCbukyVNxSbhYPdF6wCYuRmDuHD784juxd`
+* Sender Address in text format: `AU12m1gXHUGxBZsDF4veeWfYaRmpztBCieHhPBaqf3fcRF2LdAuZ7`
+* Operation fee: `0.001 MAS`
+* Expiry period: `1000`
+* Operation type: `Transaction`
+* Transaction operation payload:
+  * Destination address in text format: `AU12v83xmHg2UrLM8GLsXRMrm7LQgn3DZVT6kUeFsuFyhZKLkbQtY`
+  * Amount: `3.1 MAS`
 
-ID in text format: TODO
+Resulting operation ID in text format: `O1Vy2P4tTEPxkNXpbUPVFemzp18FkTTmsJ2U6hPoyTvJ4nZMvBs`
 
 Raw bytes in hexadecimal representation of the binary serialization of the operation:
 
-TODO 
+```
+00 36 B7 20 2A 12 DE DC 0E C1 F3 19 92 7F 17 87 E7 10 83 E0 58 63 8B CD 75 15 2F 3F 92
+0F 23 21 AE B4 C4 9B 87 87 4E 97 9F 95 28 77 0D D6 EB 65 18 36 0E 1C C1 84 DE A8 A0 57
+5A 1C 15 30 41 32 01 00 73 EE 58 D3 51 9D 54 03 E9 8F EF 60 35 4C DE 6C 7D A1 73 C1 6C
+8C 6C 58 CF C8 6E E5 21 51 3C A6 C0 84 3D E8 07 00 00 00 FC 50 AB 9B 1B 78 4A B1 93 0E
+5C F3 84 3E 8A E6 7C 59 42 1B 01 55 10 82 B0 25 90 91 4B 4C 2A 0A 80 FE 98 C6 0B
+```
 
 #### Operation propagation
 
