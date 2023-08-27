@@ -992,7 +992,25 @@ For each operation in a block, the following is performed:
   * In case of payload run failure, all the consequences of the payload run are rolled back, but the fee is still spent and the operation is still considered executed. This is because block producers have not enough computing power to simulate running all pending operations: this failure is the operation producer's responsibility. In this case, the operation is then considered **EXECUTED WITH FAILURE**.
   * In case of payload run success, the consequences of the execution are kept, and the operation is considered **EXECUTED WITH SUCCESS**.
 
-This process implies some peculiarities:
+Different types of operations have different payload run failure triggers:
+* `Transaction`: fails if the balance of the origin account is not enough to cover the amount of the transaction.
+* `RollBuy`: fails if the balance of the origin account is not enough to cover the amount of the roll buy.
+* `RollSell`: fails if the the origin account has not enough rolls to sell.
+* `CallSC`: fails if any of the following happen:
+  * the balance of the origin account is not enough to cover the coins being transferred
+  * the target smart contract is not found
+  * the target smart contract has invalid bytecode
+  * the target smart contract has no function with the given name and expected prototype.
+  * the smart contract execution in the VM exceeds `max_gas`
+  * the smart contract execution in the VM raises a runtime exception
+* `ExecuteSC`: fails if any of the following happen:
+  * the bytecode is invalid
+  * the bytecode does not expose a `main` function with the right prototype
+  * the smart contract execution in the VM exceeds `max_gas`
+  * the smart contract execution in the VM raises a runtime exception
+  * the smart contract execution spends more than `max_coins` from the sender
+
+The operation execution process in Massa implies some peculiarities:
 * the same operation can be included multiple times in the same block or in different blocks but executed either 0 or 1 times in total
 * it is not because an operation is included in a final block that the operation is executed as final
 
