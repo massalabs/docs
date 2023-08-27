@@ -762,11 +762,122 @@ and fit in an unsigned 64bit integer.
 
 ###### ExecuteSC operation payload
 
-TODO
+The binary serialization format of the payload of a an Execute SC operation follows:
+
+<table>
+    <tr>
+        <td><code>max_gas</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
+    </tr>
+    <tr>
+        <td><code>max_coins</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Coin amount binary serialization (see Coin Amount section).</td>
+    </tr>
+    <tr>
+        <td><code>bytecode length</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
+    </tr>
+    <tr>
+        <td><code>bytecode</code></td>
+        <td>from 0 to 10,000,000 bytes</td>
+        <td>Raw bytes of bytecode to execute.</td>
+    </tr>
+    <tr>
+        <td><code>operation datastore length</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
+    </tr>
+    <tr>
+        <td><code>operation datastore items</code></td>
+        <td></td>
+        <td>Concatenated datastore items (see below)</td>
+    </tr>
+</table>
+
+Datastore item binary format:
+
+<table>
+    <tr>
+        <td><code>key length</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
+    </tr>
+    <tr>
+        <td><code>key</code></td>
+        <td>from 0 byte (included) to 255 bytes (included)</td>
+        <td>Raw key byte array.</td>
+    </tr>
+    <tr>
+        <td><code>value length</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
+    </tr>
+    <tr>
+        <td><code>value</code></td>
+        <td>from 0 byte (included) to 10,000,000 bytes (included)</td>
+        <td>Raw value byte array.</td>
+    </tr>
+</table>
+
+Checks performed at binary deserialization:
+* bytecode length is inferior or equal to 10,000,000
+* datastore length is inferior or equal to 128
+* all datastore key lengths are inferior or equal to 255
+* all datastore value lengths are inferior or equal to 10,000,000
+
 
 ###### CallSC operation payload
 
-TODO
+
+The binary serialization format of the payload of a an Call SC operation follows:
+
+<table>
+    <tr>
+        <td><code>max_gas</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
+    </tr>
+    <tr>
+        <td><code>coins</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Coin amount binary serialization (see Coin Amount section).</td>
+    </tr>
+    <tr>
+        <td><code>target address</code></td>
+        <td>from 34 (included) to 50 bytes (included)</td>
+        <td>Target address binary representation, see Address section.</td>
+    </tr>
+    <tr>
+        <td><code>function name length</code></td>
+        <td>from 1 byte (included) to 3 bytes (included)</td>
+        <td>Varint unsigned 16bit integer using protobuf conventions.</td>
+    </tr>
+    <tr>
+        <td><code>function name</code></td>
+        <td>from 0 (included) to 65535 bytes (included)</td>
+        <td>Name of the function to call encoded as UTF-8 string without null termination.</td>
+    </tr>
+    <tr>
+        <td><code>param length</code></td>
+        <td>from 1 byte (included) to 9 bytes (included)</td>
+        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
+    </tr>
+    <tr>
+        <td><code>param</code></td>
+        <td>from 0 byte (included) to 10,000,000 bytes (included)</td>
+        <td>Raw bytes to pass as argument to the called function.</td>
+    </tr>
+</table>
+
+Checks performed at binary deserialization:
+* coins must be a legal coin amount (see Coin amount section)
+* target address must be a legal address (see Address section)
+* function name length must be inferior or equal to 65535
+* function name must be valid UTF-8
+* param length must be inferior or equal to 10,000,000
 
 ##### Example of legal operation with valid signature
 
