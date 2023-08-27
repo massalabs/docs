@@ -404,7 +404,7 @@ This puts constraints on how operations are executed and finalized in Massa:
 
 Massa addresses these issues through multiple techniques.
 
-#### Operation legality
+#### Operation format and legality
 
 An operation is considered legal if it properly deserializes, its field values are legal and mutually consistent,
 and it passes signature verification.
@@ -704,7 +704,7 @@ The type identifier indicates the payload type:
 * `ExecuteSC = 3`
 * `CallSC = 4`
 
-Checks performed on deserialization:
+Legality checks performed on deserialization:
 * the fee must be legal (see Coin amount section)
 * the type identifier must be one of the ones listed above
 * the operation payload defined by the type identifier must be legal (see below)
@@ -726,7 +726,7 @@ The binary serialization format of the payload of a transaction operation follow
     </tr>
 </table>
 
-Checks performed on deserialization:
+Legality checks performed on deserialization:
 * the destination address must be legal (see Address section)
 * the amount must be legal (see Coin amount section)
 
@@ -822,7 +822,7 @@ Datastore item binary format:
     </tr>
 </table>
 
-Checks performed at binary deserialization:
+Legality checks performed at binary deserialization:
 * bytecode length is inferior or equal to 10,000,000
 * datastore length is inferior or equal to 128
 * all datastore key lengths are inferior or equal to 255
@@ -872,7 +872,7 @@ The binary serialization format of the payload of a an Call SC operation follows
     </tr>
 </table>
 
-Checks performed at binary deserialization:
+Legality checks performed at binary deserialization:
 * coins must be a legal coin amount (see Coin amount section)
 * target address must be a legal address (see Address section)
 * function name length must be inferior or equal to 65535
