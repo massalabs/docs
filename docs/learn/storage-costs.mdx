@@ -17,7 +17,6 @@ These locked coins act as a commitment and are released when the allocated stora
 To determine the amount of coins needed to lock for each byte of storage, the value of 0.0001 Massa coin (MAS) has been chosen.
 This value ensures that if half of the total coins (250,000,000 MAS) are locked, the storage limit of 10TB will be reached.
 
-To avoid confusion, a fixed size of 8 bytes has been chosen for each balance.
 The initial ledger entry for address and balance incurs a cost of 0.001 MAS.
 Datastore keys also have variable sizes, but to simplify calculations, a fixed size of 10 bytes is used for determining storage costs.
 
