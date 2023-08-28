@@ -56,23 +56,16 @@ and operations (see below) are requests to modify the ledger.
 
 The information stored in the ledger with each address is the following:
 
-<table>
-    <tr>
-        <th colspan="2">Ledger Information Associated with Each Address</th>
-    </tr>
-    <tr>
-        <td><code>balance</code></td>
-        <td>The amount of Massa coins owned by the address</td>
-    </tr>
-    <tr>
-        <td><code>bytecode</code></td>
-        <td>When the address references a smart contract, this is the compiled code corresponding to the smart contract (typically contains several functions that act as API entry points for the smart contract)</td>
-    </tr>
-    <tr>
-        <td><code>datastore</code></td>
-        <td>A key/value map that can store any persistent data related to a smart contract, its variables, etc</td>
-    </tr>
-</table>
++-------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Ledger Information Associated with Each Address                                                                                                                                               |
++=============+=================================================================================================================================================================================+
+| `balance`   | The amount of Massa coins owned by the address.                                                                                                                                 |
++-------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `bytecode`  | When the address references a smart contract, this is the compiled code corresponding to the smart contract (typically contains several functions that act as API entry points).|
++-------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `datastore` | A key/value map that can store any persistent data related to a smart contract, its variables, etc.                                                                             |
++-------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
 
 In order to promote widespread adoption and facilitate node running with reduced entry fees, the size of the ledger in Massa 
 has been limited to a maximum of 1 TB. 
@@ -244,54 +237,42 @@ the Massa network ensures the integrity and efficiency of its operations.
 There are three types of operations: transactions, roll operations, and smart contract code execution. 
 The general structure of an operation is the following, and the different types of operations differ by their payload:
 
-<table>
-    <tr>
-        <th colspan="2">Operation header</th>
-    </tr>
-    <tr>
-        <td><code>creator_public_key</code></td>
-        <td>The public key of the operation creator (32 bytes)</td>
-    </tr>
-    <tr>
-        <td><code>expiration_period</code></td>
-        <td>Period after which the operation is expired (u64 varint)</td>
-    </tr>
-    <tr>
-        <td><code>fee</code></td>
-        <td>The amount of fees the creator is willing to pay (u64 varint)</td>
-    </tr>
-    <tr>
-        <td><code>type</code></td>
-        <td>The type of operation (from 0 to 4: transaction, rollbuy, rollsell, executesc, callsc) (u64 varint)</td>
-    </tr>
-    <tr>
-        <td><code>payload</code></td>
-        <td>The content of the operation (see below)</td>
-    </tr>
-    <tr>
-        <td><code>signature</code></td>
-        <td>Signature of all the above with the private key of the operation creator (64 bytes)</td>
-    </tr>   
-</table>
++---------------------+------------------------------------------------------------+------------------+
+| Transaction Binary Representation                                                                   |
++---------------------+------------------------------------------------------------+------------------+
+| Field               | Description                                                | Type             |
++=====================+============================================================+==================+
+| `creator_public_key`| The public key of the operation creator                    | 32 bytes         |
++---------------------+------------------------------------------------------------+------------------+
+| `expiration_period` | Period after which the operation is expired                | u64 varint       |
++---------------------+------------------------------------------------------------+------------------+
+| `fee`               | The amount of fees the creator is willing to pay           | u64 varint       |
++---------------------+------------------------------------------------------------+------------------+
+| `type`              | The type of operation                                      | u64 varint       |
+|                     | (from 0 to 4: transaction, rollbuy, rollsell, executesc,   |                  |
+|                     | callsc)                                                    |                  |
++---------------------+------------------------------------------------------------+------------------+
+| `payload`           | The content of the operation                               |see each operation|
++---------------------+------------------------------------------------------------+------------------+
+| `signature`         | Signature of all the above with the private key of the     | 64 bytes         |
+|                     | operation creator                                          |                  |
++---------------------+------------------------------------------------------------+------------------+
+
 
 #### Transaction operations
 
 Transactions are operations that move native Massa coins between addresses. Here is the corresponding payload:
 
-<table>
-    <tr>
-        <th colspan="2">Transaction payload</th>
-    </tr>
-    <tr>
-        <td><code>amount</code></td>
-        <td>The amount of coins to transfer (u64 varint)</td>
-    </tr>
-    <tr>
-        <td><code>destination_address</code></td>
-        <td>The address of the recipient (32 bytes)
-    </td>
-    </tr> 
-</table>
++---------------------+----------------------------------+----------------------+
+| Transaction Payload Binary Representation                                     |
++---------------------+----------------------------------+----------------------+
+| Field               | Description                      | Type                 |
++=====================+==================================+======================+
+| `amount`            | The amount of coins to transfer  | u64 varint           |
++---------------------+----------------------------------+----------------------+
+|`destination_address`| The address of the recipient     | 32 bytes             |
++---------------------+----------------------------------+----------------------+
+
 
 #### Buy/Sell Rolls operations
 
@@ -299,16 +280,13 @@ Rolls are staking tokens that participants can buy or sell with native Massa coi
 addresses can participate in block creation  [more about staking below](/docs/node/stake). 
 This is done via special operations, with a simple payload:
 
-<table>
-    <tr>
-        <th colspan="2">Roll buy/sell payload</th>
-    </tr>
-    <tr>
-        <td><code>nb_of_rolls</code></td>
-        <td>The number of rolls to buy or to sell (u64 varint)
-    </td>
-    </tr>
-</table>
++---------------------+-----------------------------------+-------------------+
+| Buy/Sell Rolls Payload Binary Representation                                |
++---------------------+-----------------------------------+-------------------+
+| Field               | Description                       | Type              |
++=====================+===================================+===================+
+| `nb_of_rolls`       | The number of rolls to buy or sell| u64 varint        |
++---------------------+-----------------------------------+-------------------+
 
 #### Smart Contract operations
 
@@ -329,69 +307,47 @@ Former is done using the Execute SC operation, and latter with Call SC operation
  By executing smart contracts in this manner, the Massa network offers flexibility and efficiency 
  in managing and executing code within its blockchain ecosystem.
 
-<table>
-    <tr>
-        <th colspan="2">Execute SC payload</th>
-    </tr>
-    <tr>
-        <td><code>max_gas</code></td>
-        <td>The maximum gas spendable for this operation (u64 varint)</td>
-    </tr>
-    <tr>
-        <td><code>bytecode_len</code></td>
-        <td>The length of the bytecode field (u64 varint)</td>
-    </tr>
-    <tr>
-        <td><code>bytecode</code></td>
-        <td>The bytecode to run (in the context of the caller address)</td>
-    </tr>
-    <tr>
-        <td><code>datastore_len</code></td>
-        <td>The number of the datastore keys (u64 varint), each record is then stored one after another</td>
-    </tr>
-    <tr>
-        <td>list of datastore records</td>
-        <td>Concatenation of <code>key_len</code> (u8), <code>key</code>, <code>value_len</code> (u64 varint), <code>value</code></td>
-    </tr>
-</table>
++---------------------------+---------------------------------------------------------------------------------------------------------------------+-------------------+
+| Execute SC Payload Binary Representation                                                                                                                            |
++---------------------------+---------------------------------------------------------------------------------------------------------------------+-------------------+
+| Field                     | Description                                                                                                         | Type              |
++===========================+=====================================================================================================================+===================+
+| `max_gas`                 | The maximum gas spendable for this operation                                                                        | u64 varint        |
++---------------------------+---------------------------------------------------------------------------------------------------------------------+-------------------+
+| `bytecode_len`            | The length of the bytecode field                                                                                    | u64 varint        |
++---------------------------+---------------------------------------------------------------------------------------------------------------------+-------------------+
+| `bytecode`                | The bytecode to run (in the context of the caller address)                                                          |                   |
++---------------------------+---------------------------------------------------------------------------------------------------------------------+-------------------+
+| `datastore_len`           | The number of the datastore keys (u64 varint), each record is then stored one after another                         | u64 varint        |
++---------------------------+---------------------------------------------------------------------------------------------------------------------+-------------------+
+| list of datastore records | Concatenation of `key_len` (u8), `key`, `value_len` (u64 varint), `value`                                           |                   |
++---------------------------+---------------------------------------------------------------------------------------------------------------------+-------------------+
+
 
 2. Call SC operation
 
-Here, the code is indirectly called via the call to an existing smart contract function, together with the required parameters: 
+Here, the code is indirectly called via the call to an existing smart contract function, together with the required parameters:
 
-<table>
-    <tr>
-        <th colspan="2">Call SC</th>
-    </tr>
-    <tr>
-        <td><code>max_gas</code></td>
-        <td>The maximum gas spendable for this operation (u64 varint)</td>
-    </tr>
-    <tr>
-        <td><code>coins</code></td>
-        <td>The coins transferred in the call (u64 varint)</td>
-    </tr>
-    <tr>
-        <td><code>target_address</code></td>
-        <td>The address of the targeted smart contract (32 bytes)</td>
-    </tr>
-    <tr>
-        <td><code>function_name_length</code></td>
-        <td>The length of the name of the function that is called (u8)</td>
-    </tr>
-    <tr>
-        <td><code>function_name</code></td>
-        <td>The name of the function that is called (utf8)</td>
-    </tr>
-    <tr>
-        <td><code>param_len</code></td>
-        <td>The number of parameters of the function call (u64 varint)</td>
-    </tr>
-    <tr>
-        <td><code>params</code></td>
-        <td>The parameters of the function call</td>
-    </tr>
-</table>
++------------------------+------------------------------------------------------+------------------+
+| Call SC Payload Binary Representation                                                            |
++------------------------+------------------------------------------------------+------------------+
+| Field                  | Description                                          | Type             |
++========================+======================================================+==================+
+| `max_gas`              | The maximum gas spendable for this operation         | u64 varint       |
++------------------------+------------------------------------------------------+------------------+
+| `coins`                | The coins transferred in the call                    | u64 varint       |
++------------------------+------------------------------------------------------+------------------+
+| `target_address`       | The address of the targeted smart contract           | 32 bytes         |
++------------------------+------------------------------------------------------+------------------+
+| `function_name_length` | The length of the name of the function that is called| u8               |
++------------------------+------------------------------------------------------+------------------+
+| `function_name`        | The name of the function that is called              | utf8             |
++------------------------+------------------------------------------------------+------------------+
+| `param_len`            | The number of parameters of the function call        | u64 varint       |
++------------------------+------------------------------------------------------+------------------+
+| `params`               | The parameters of the function call                  |                  |
++------------------------+------------------------------------------------------+------------------+
+
 
 ### Operation lifecycle
 
@@ -413,20 +369,17 @@ and it passes signature verification.
 
 Binary serialization format of an operation:
 
-<table>
-    <tr>
-        <td><code>signature</code></td>
-        <td colspan="2">See [Signature section](# Signature)</td>
-    </tr>
-    <tr>
-        <td><code>sender public key</code></td>
-        <td colspan="2">See [Public Key section](# Public key)</td>
-    </tr>
-    <tr>
-        <td><code>serialized operation contents</code></td>
-        <td colspan="2">See [Operation Contents section](# Operation contents)</td>
-    </tr>
-</table>
++---------------------------------+-----------------------------------+-------------------+
+| Operation Binary Representation                                                         |
++---------------------------------+-----------------------------------+-------------------+
+| Field                           | Description                       | Type              |
++=================================+===================================+===================+
+| `signature`                     | See [Signature section](#signature)                   |
++---------------------------------+-----------------------------------+-------------------+
+| `sender public key`             | See [Public Key section](#public-key)                 |
++---------------------------------+-----------------------------------+-------------------+
+| `serialized operation contents` | See [Operation Contents section](#operation-contents) |
++---------------------------------+-----------------------------------+-------------------+
 
 Legality checks performed on deserialization:
 * the signature is legal (see [Signature section](#signature))
@@ -456,18 +409,16 @@ Resolving potential conflicts can be done adjusting the expiry period of the ope
 
 The ID of an operation has the following binary representation:
 
-<table>
-    <tr>
-        <td><code>version number</code></td>
-        <td>between 1 (included) and 9 (included) bytes</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions. Indicates the operation's version.</td>
-    </tr>
-    <tr>
-        <td><code>operation_contents_hash</code></td>
-        <td>32 bytes</td>
-        <td>see [Operation contents hash section](#operation-contents-hash)</td>
-    </tr>
-</table>
++---------------------------+-----------------------------------------------------------------+-----------------------------------+
+| Operation ID Binary Representation                                                                                              |
++---------------------------+-----------------------------------------------------------------+-----------------------------------+
+| Field                     | Description                                                     | Type                              |
++===========================+=================================================================+===================================+
+| `version number`          | Varint unsigned 64-bit integer using protobuf conventions.      | between 1 and 9 bytes (inclusive) |
+|                           | Indicates the operation's version.                              |                                   |
++---------------------------+-----------------------------------------------------------------+-----------------------------------+
+| `operation_contents_hash` | See [Operation contents hash section](#operation-contents-hash) | 32 bytes                          |
++---------------------------+-----------------------------------------------------------------+-----------------------------------+
 
 Legality checks performed on binary deserialization:
 * the version number must be 0
@@ -475,18 +426,18 @@ Legality checks performed on binary deserialization:
 
 
 The ID of an operation has the following UTF-8 ASCII-compatible text representation:
-<table>
-    <tr>
-        <td><code>prefix letter 'O'</code></td>
-        <td>1 letter (1 byte)</td>
-        <td>Not a zero but the letter O. A constant prefix indicating that it is an operation ID to avoid ambiguity with other IDs (eg. Block IDs are prefixed with 'B')</td>
-    </tr>
-    <tr>
-        <td><code>operation ID contents</code></td>
-        <td>18 (included) to 62 (included) characters (18 to 62 bytes)</td>
-        <td>base58check (no version, with checksum) representation of the binary serialization of the operation ID (see above)</td>
-    </tr>
-</table>
+
++-------------------------+--------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| Operation ID Text Representation                                                                                                                                                |
++-------------------------+--------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| Field                   | Description                                                                                                        | Type                             |
++=========================+====================================================================================================================+==================================+
+| `prefix letter 'O'`     | Not a zero but the letter O.                                                                                       |                                  |
+|                         | A constant prefix indicating that it is an operation ID                                                            |                                  |
+|                         | to avoid ambiguity with other IDs (e.g., Block IDs are prefixed with 'B')                                          | 1 letter (1 byte)                |
++-------------------------+--------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| `operation ID contents` | Base58check (no version, with checksum) representation of the binary serialization of the operation ID (see above) | 18 to 62 characters (18 to 62 bytes) |
++-------------------------+--------------------------------------------------------------------------------------------------------------------+----------------------------------+
 
 Note that the base58check encoding is the same one as the one used by bitcoin but without version number as it is already included in the underlying binary serialization of the operation ID.
 
@@ -525,18 +476,15 @@ For maximal robustness and future-proofing, Massa tolerates operation signature 
 
 Binary serialization format of the signature:
 
-<table>
-    <tr>
-        <td><code>version number</code></td>
-        <td>between 1 (included) and 9 (included) bytes</td>
-        <td>varint unsigned 64bit integer using protobuf conventions</td>
-    </tr>
-    <tr>
-        <td><code>signature content</code></td>
-        <td>64 bytes</td>
-        <td>constant-size ed25519 signature made of the concatenation of its R (32-bit) and s (32-bit) components</td>
-    </tr>
-</table>
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
+| Signature Binary Representation                                                                                                                                           |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
+| Field               | Description                                                                                           | Type                                        |
++=====================+=======================================================================================================+=============================================+
+| `version number`    | Varint unsigned 64-bit integer using protobuf conventions                                             | Between 1 (included) and 9 (included) bytes |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
+| `signature content` | Constant-size ed25519 signature made of the concatenation of its R (32-bit) and s (32-bit) components | 64 bytes                                    |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
 
 Legality checks performed on deserialization:
 * the version number must be 0
@@ -550,18 +498,15 @@ Invalid field elements in the signature are not checked on signature deserializa
 
 The secret key has the following binary representation:
 
-<table>
-    <tr>
-        <td><code>version number</code></td>
-        <td>between 1 (included) and 9 (included) bytes</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions. Indicates the secret key version.</td>
-    </tr>
-    <tr>
-        <td><code>cryptographic secret key</code></td>
-        <td>32 bytes</td>
-        <td>ed25519 secret key bytes</td>
-    </tr>
-</table>
++----------------------------+------------------------------------------------------------------------------------------------+---------------------------------------------+
+| Secret Key Binary Representation                                                                                                                                          |
++----------------------------+------------------------------------------------------------------------------------------------+---------------------------------------------+
+| Field                      | Description                                                                                    | Type                                        |
++============================+================================================================================================+=============================================+
+| `version number`           | Varint unsigned 64-bit integer using protobuf conventions. Indicates the secret key version.   | Between 1 (included) and 9 (included) bytes |
++----------------------------+------------------------------------------------------------------------------------------------+---------------------------------------------+
+| `cryptographic secret key` | ed25519 secret key bytes                                                                       | 32 bytes                                    |
++----------------------------+------------------------------------------------------------------------------------------------+---------------------------------------------+
 
 Legality checks performed on binary deserialization:
 * the version number must be 0
@@ -569,18 +514,18 @@ Legality checks performed on binary deserialization:
 
 
 Secret keys have the following UTF-8 ASCII-compatible text representation:
-<table>
-    <tr>
-        <td><code>prefix letter 'S'</code></td>
-        <td>1 letter (1 byte)</td>
-        <td>A constant prefix indicating that it is a secret key to avoid ambiguity with other IDs (eg. Block IDs are prefixed with 'B')</td>
-    </tr>
-    <tr>
-        <td><code>secret key contents</code></td>
-        <td>18 (included) to 62 (included) characters (18 to 62 bytes)</td>
-        <td>base58check (no version, with checksum) representation of the binary serialization of the secret key (see above)</td>
-    </tr>
-</table>
+
++-----------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
+| Secret Key Text Representation                                                                                                                                              |
++-----------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
+| Field                 | Description                                                                                           | Type                                        |
++=======================+=======================================================================================================+=============================================+
+| `prefix letter 'S'`   | A constant prefix indicating that it is a secret key to avoid ambiguity with other IDs                | 1 letter (1 byte)                           |
+|                       | (e.g., Block IDs are prefixed with 'B')                                                               |                                             |
++-----------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
+| `secret key contents` | Base58check (no version, with checksum) representation of the binary serialization of the secret key  | 18 (included) to 62 (included) characters   |
+|                       | (see above)                                                                                           | (18 to 62 bytes)                            |
++-----------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
 
 Note that the base58check encoding is the same one as the one used by bitcoin but without version number as it is already included in the underlying binary serialization of the secret key.
 
@@ -603,18 +548,15 @@ Example of legal secret key: `S1CkpvD4WMjJWxR2WZcrDEkJ1kWG2kKe1e3Afe8miqmskHqovv
 
 Binary serialization format of the public key:
 
-<table>
-    <tr>
-        <td><code>version number</code></td>
-        <td>between 1 (included) and 9 (included) bytes</td>
-        <td>varint unsigned 64bit integer using protobuf conventions</td>
-    </tr>
-    <tr>
-        <td><code>cryptographic public key</code></td>
-        <td>32 bytes</td>
-        <td>Compressed ed25519 public key</td>
-    </tr>
-</table>
++----------------------------+------------------------------------------------------------+---------------------------------------------+
+| Public Key Binary Representation                                                                                                      |
++----------------------------+------------------------------------------------------------+---------------------------------------------+
+| Field                      | Description                                                | Type                                        |
++============================+============================================================+=============================================+
+| `version number`           | Varint unsigned 64-bit integer using protobuf conventions  | Between 1 (included) and 9 (included) bytes |
++----------------------------+------------------------------------------------------------+---------------------------------------------+
+| `cryptographic public key` | Compressed ed25519 public key                              | 32 bytes                                    |
++----------------------------+------------------------------------------------------------+---------------------------------------------+
 
 The cryptographic public key is compressed in the following way to take only 32 bytes instead of 64:
 * the first 255 bits represent the `y` coordinate
@@ -630,18 +572,18 @@ Legality checks performed on deserialization:
 * the compressed public key `y` component must be valid for the ed25519 curve
 
 Public keys have the following UTF-8 ASCII-compatible text representation:
-<table>
-    <tr>
-        <td><code>prefix letter 'P'</code></td>
-        <td>1 letter (1 byte)</td>
-        <td>A constant prefix indicating that it is a secret key to avoid ambiguity with other IDs (eg. Block IDs are prefixed with 'B')</td>
-    </tr>
-    <tr>
-        <td><code>public key contents</code></td>
-        <td>18 (included) to 62 (included) characters (18 to 62 bytes)</td>
-        <td>base58check (no version, with checksum) representation of the binary serialization of the public key (see above)</td>
-    </tr>
-</table>
+
++-----------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
+| Public Key Text Representation                                                                                                                                              |
++-----------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
+| Field                 | Description                                                                                           | Type                                        |
++=======================+=======================================================================================================+=============================================+
+| `prefix letter 'P'`   | A constant prefix indicating that it is a secret key to avoid ambiguity with other IDs                | 1 letter (1 byte)                           |
+|                       | (e.g., Block IDs are prefixed with 'B')                                                               |                                             |
++-----------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
+| `public key contents` | Base58check (no version, with checksum) representation of the binary serialization of the public key. | 18 (included) to 62 (included) characters.  |
+|                       | See above.                                                                                            | 18 to 62 bytes                              |
++-----------------------+-------------------------------------------------------------------------------------------------------+---------------------------------------------+
 
 Note that the base58check encoding is the same one as the one used by bitcoin but without version number as it is already included in the underlying binary serialization of the public key.
 
@@ -668,23 +610,19 @@ Addresses can be of two categories in Massa:
 
 Binary serialization format of an address:
 
-<table>
-    <tr>
-        <td><code>address category</code></td>
-        <td>between 1 (included) and 9 (included) bytes</td>
-        <td>varint unsigned 64bit integer using protobuf conventions, value 0 for externally owned accounts, value 1 for smart contracts</td>
-    </tr>
-    <tr>
-        <td><code>version number</code></td>
-        <td>between 1 (included) and 9 (included) bytes</td>
-        <td>varint unsigned 64bit integer using protobuf conventions</td>
-    </tr>
-    <tr>
-        <td><code>undrlying hash</code></td>
-        <td>32 bytes</td>
-        <td>Underlying blake3 hash</td>
-    </tr>
-</table>
++---------------------+------------------------------------------------------------+---------------------------------------------+
+| Address Binary Representation                                                                                                  |
++---------------------+------------------------------------------------------------+---------------------------------------------+
+| Field               | Description                                                | Type                                        |
++=====================+============================================================+=============================================+
+| `address category`  | Varint unsigned 64-bit integer using protobuf conventions: | Between 1 (included) and 9 (included) bytes |
+|                     | - value 0 for externally owned accounts,                   |                                             |
+|                     | - value 1 for smart contracts                              |                                             |
++---------------------+------------------------------------------------------------+---------------------------------------------+
+| `version number`    | Varint unsigned 64-bit integer using protobuf conventions  | Between 1 (included) and 9 (included) bytes |
++---------------------+------------------------------------------------------------+---------------------------------------------+
+| `underlying hash`   | Underlying blake3 hash                                     | 32 bytes                                    |
++---------------------+------------------------------------------------------------+---------------------------------------------+
 
 The underlying hash of an externally owned account address is computed by taking the blake3 hash
 of the binary serialization of the account's public key (see [Public Key section](#public-key)).
@@ -704,18 +642,17 @@ Legality checks performed on binary deserialization:
 
 Text serialization of an address:
 
-<table>
-    <tr>
-        <td><code>prefix letter 'A'</code></td>
-        <td>1 letter (1 byte)</td>
-        <td>A constant prefix indicating that it is an address to avoid ambiguity with other IDs (eg. Block IDs are prefixed with 'B')</td>
-    </tr>
-    <tr>
-        <td><code>address contents</code></td>
-        <td>18 (included) to 74 (included) characters (18 to 74 bytes)</td>
-        <td>base58check (no version, with checksum) representation of the binary serialization of the address (see above)</td>
-    </tr>
-</table>
++---------------------+----------------------------------------------------------------------------------------------------+-------------------------------------------+
+| Address Text Representation                                                                                                                                          |
++---------------------+----------------------------------------------------------------------------------------------------+-------------------------------------------+
+| Field               | Description                                                                                        | Type                                      |
++=====================+====================================================================================================+===========================================+
+| `prefix letter 'A'` | A constant prefix indicating that it is an address to avoid ambiguity with other IDs.              | 1 letter (1 byte)                         |
+|                     | (e.g., Block IDs are prefixed with 'B')                                                            |                                           |
++---------------------+----------------------------------------------------------------------------------------------------+-------------------------------------------+
+| `address contents`  | Base58check (no version, with checksum) representation of the binary serialization of the address. | 18 (included) to 74 (included) characters |
+|                     | See above.                                                                                         | 18 to 74 bytes                            |
++---------------------+----------------------------------------------------------------------------------------------------+-------------------------------------------+
 
 Here is the entire encoding process for an address in text format:
 * serialize the address in binary format (see above)
