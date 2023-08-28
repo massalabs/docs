@@ -441,10 +441,16 @@ The operation contents hash is computed as follows:
 operation_contents_hash = blake3_hash(concatenate(serialize_binary(public_key), serialize_binary(operation_contents)))
 ```
 
-Blake3 is 12 times faster than sha256 and is not subject to length extension attacks contrary to sha256.
+Blake3 is 12 times faster than sha256 and is not subject to length extension attacks contrary to sha256 (see https://en.wikipedia.org/wiki/Length_extension_attack ).
 See the Public Key and Operation Contents sections for details on the binary serialization formats of these fields. 
 
 This hash is a deterministic fingerprint of the non-malleable parts of the operation (excluding the signature) that can be considered unique in practice.
+
+Because the operation contents hash uniquely identifies an operation,
+if another operation containing the same values in its operation contents is created,
+both operations will be considered to be the same operation that can only be executed at most a single time. (TODO see execution section)
+In Massa, there is no Nounce in operations.
+Resolving potential conflicts can be done adjusting the expiry period of the operation being created.   
 
 ##### Operation ID
 
