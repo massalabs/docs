@@ -1011,10 +1011,6 @@ operations are propagated using optimized gossip algorithms.
 
 ##### Operation submission
 
-TODO API
-
-TODO GRPC
-
 When the API of a peer is called to submit an operation:
 * the operation is checked for legality (TODO redirect to legality section)
   * if the operation is not legal, it is rejected and an error message is returned by the API
@@ -1168,8 +1164,6 @@ The operation pool can therefore not be used as a reliable source of information
 Because of the peculiar way Massa handles operations to achieve its scalability, security and decentralization goals,
 tracking the state of execution of an operation requires understanding certain principles.
 
-##### Observable operation states
-
 At the output of an executed slot `S`, an operation can be in one of the following observable states:
 * `EXECUTABLE_OR_EXPIRED`: the operation is not in the list of previously executed operations at the output of `S`:
   * If the operation's expiry date is earlier or equal to the period of `S`, then the operation can not be executed anymore:
@@ -1192,11 +1186,6 @@ As final slots are executed, the following final operation state transitions can
 Operations are guaranteed to be kept in the `EXECUTED_WITH_SUCCESS` or `EXECUTED_WITH_FAILURE` state for at least 10 periods (2 minutes and 40 seconds)
 to give enough time for operators to register those states before they are pruned.
 
-##### Querying and interpreting the state of an operation
-
-TODO API
-
-TODO GRPC
 
 ### Endorsements
 
