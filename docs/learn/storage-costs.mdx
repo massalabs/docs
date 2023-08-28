@@ -18,7 +18,7 @@ To determine the amount of coins needed to lock for each byte of storage, the va
 This value ensures that if half of the total coins (250,000,000 MAS) are locked, the storage limit of 10TB will be reached.
 
 To avoid confusion, a fixed size of 8 bytes has been chosen for each balance.
-Therefore, the initial ledger entry for address and balance incurs a cost of (8 + 32) * 0.000025 = 0.001 MAS.
+The initial ledger entry for address and balance incurs a cost of 0.001 MAS.
 Datastore keys also have variable sizes, but to simplify calculations, a fixed size of 10 bytes is used for determining storage costs.
 
 To calculate the storage cost for a specific address in the ledger, the formula includes the address size, balance constant, bytecode length, 
