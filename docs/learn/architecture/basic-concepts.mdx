@@ -441,13 +441,8 @@ The operation contents hash is computed as follows:
 operation_contents_hash = blake3_hash(concatenate(serialize_binary(public_key), serialize_binary(operation_contents)))
 ```
 
-<<<<<<< HEAD
-Blake3 is 12 times faster than sha256 and is not subject to length extension attacks contrary to sha256 (see https://en.wikipedia.org/wiki/Length_extension_attack ).
-See the Public Key and Operation Contents sections for details on the binary serialization formats of these fields. 
-=======
-Blake3 is 12 times faster than sha256 and is not subject to length extension attacks contrary to sha256.
+Blake3 is 12 times faster than sha256 and is not subject to [length extension attacks](https://en.wikipedia.org/wiki/Length_extension_attack) contrary to sha256.
 See the [Public Key section](#public-key) and [Operation Contents](#operation-contents) sections for details on the binary serialization formats of these fields. 
->>>>>>> 0482895 (Adds links to inner sections)
 
 This hash is a deterministic fingerprint of the non-malleable parts of the operation (excluding the signature) that can be considered unique in practice.
 
