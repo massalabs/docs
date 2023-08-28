@@ -416,22 +416,22 @@ Binary serialization format of an operation:
 <table>
     <tr>
         <td><code>signature</code></td>
-        <td colspan="2">See Signature section</td>
+        <td colspan="2">See [Signature section](# Signature)</td>
     </tr>
     <tr>
         <td><code>sender public key</code></td>
-        <td colspan="2">See Public Key section</td>
+        <td colspan="2">See [Public Key section](# Public key)</td>
     </tr>
     <tr>
         <td><code>serialized operation contents</code></td>
-        <td colspan="2">See Operation Contents section</td>
+        <td colspan="2">See [Operation Contents section](# Operation contents)</td>
     </tr>
 </table>
 
 Legality checks performed on deserialization:
-* the signature is legal (see Signature section)
-* the public key is legal (see Public Key section)
-* the serialized operation contents are legal (see Operation Contents section)
+* the signature is legal (see [Signature section](#signature))
+* the public key is legal (see [Public Key section](#public-key))
+* the serialized operation contents are legal (see [Operation Contents section](#operation-contents))
 
 ##### Operation contents hash
 
@@ -441,8 +441,13 @@ The operation contents hash is computed as follows:
 operation_contents_hash = blake3_hash(concatenate(serialize_binary(public_key), serialize_binary(operation_contents)))
 ```
 
+<<<<<<< HEAD
 Blake3 is 12 times faster than sha256 and is not subject to length extension attacks contrary to sha256 (see https://en.wikipedia.org/wiki/Length_extension_attack ).
 See the Public Key and Operation Contents sections for details on the binary serialization formats of these fields. 
+=======
+Blake3 is 12 times faster than sha256 and is not subject to length extension attacks contrary to sha256.
+See the [Public Key section](#public-key) and [Operation Contents](#operation-contents) sections for details on the binary serialization formats of these fields. 
+>>>>>>> 0482895 (Adds links to inner sections)
 
 This hash is a deterministic fingerprint of the non-malleable parts of the operation (excluding the signature) that can be considered unique in practice.
 
@@ -465,13 +470,13 @@ The ID of an operation has the following binary representation:
     <tr>
         <td><code>operation_contents_hash</code></td>
         <td>32 bytes</td>
-        <td>see Operation contents hash section</td>
+        <td>see [Operation contents hash section](#operation-contents-hash)</td>
     </tr>
 </table>
 
 Legality checks performed on binary deserialization:
 * the version number must be 0
-* the operation contents hash must be legal (see Operation Contents hash section)
+* the operation contents hash must be legal (see [Operation contents hash section](#operation-contents-hash))
 
 
 The ID of an operation has the following UTF-8 ASCII-compatible text representation:
@@ -687,7 +692,7 @@ Binary serialization format of an address:
 </table>
 
 The underlying hash of an externally owned account address is computed by taking the blake3 hash
-of the binary serialization of the account's public key (see Public Key section).
+of the binary serialization of the account's public key (see [Public Key section](#public-key)).
 The Blockclique sharding thread of an externally owned account address is computed
 by taking the first 5 bits of its underlying hash.
 
@@ -784,7 +789,7 @@ Binary serialization format of operation contents:
     <tr>
         <td><code>fee</code></td>
         <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Coin amount in binary format (see Coin amount section)</td>
+        <td>Coin amount in binary format (see [Coin amount section](#coin-amounts))</td>
     </tr>
     <tr>
         <td><code>expire_period</code></td>
@@ -811,7 +816,7 @@ The type identifier indicates the payload type:
 * `CallSC = 4`
 
 Legality checks performed on deserialization:
-* the fee must be legal (see Coin amount section)
+* the fee must be legal (see [Coin amount section](#coin-amounts))
 * the type identifier must be one of the ones listed above
 * the operation payload defined by the type identifier must be legal (see below)
 
@@ -823,18 +828,18 @@ The binary serialization format of the payload of a transaction operation follow
     <tr>
         <td><code>destination address</code></td>
         <td>from 34 (included) to 50 bytes (included)</td>
-        <td>Transfer destination address binary representation, see Address section.</td>
+        <td>Transfer destination address binary representation, see [Address section](#address).</td>
     </tr>
     <tr>
         <td><code>amount</code></td>
         <td>from 1(included) to 9(included) bytes</td>
-        <td>Coin amount binary representation, see Coin Amount section.</td>
+        <td>Coin amount binary representation, see [Coin amount section](#coin-amounts).</td>
     </tr>
 </table>
 
 Legality checks performed on deserialization:
-* the destination address must be legal (see Address section)
-* the amount must be legal (see Coin amount section)
+* the destination address must be legal (see [Address section](#address))
+* the amount must be legal (see [Coin amount section](#coin-amounts))
 
 ###### RollBuy operation payload
 
@@ -879,7 +884,7 @@ The binary serialization format of the payload of a an Execute SC operation foll
     <tr>
         <td><code>max_coins</code></td>
         <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Coin amount binary serialization (see Coin Amount section).</td>
+        <td>Coin amount binary serialization (see [Coin amount section](#coin-amounts)).</td>
     </tr>
     <tr>
         <td><code>bytecode length</code></td>
@@ -949,12 +954,12 @@ The binary serialization format of the payload of a an Call SC operation follows
     <tr>
         <td><code>coins</code></td>
         <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Coin amount binary serialization (see Coin Amount section).</td>
+        <td>Coin amount binary serialization (see [Coin amount section](#coin-amounts)).</td>
     </tr>
     <tr>
         <td><code>target address</code></td>
         <td>from 34 (included) to 50 bytes (included)</td>
-        <td>Target address binary representation, see Address section.</td>
+        <td>Target address binary representation, see [Address section](#address).</td>
     </tr>
     <tr>
         <td><code>function name length</code></td>
@@ -979,8 +984,8 @@ The binary serialization format of the payload of a an Call SC operation follows
 </table>
 
 Legality checks performed at binary deserialization:
-* coins must be a legal coin amount (see Coin amount section)
-* target address must be a legal address (see Address section)
+* coins must be a legal coin amount (see [Coin amount section](#coin-amounts))
+* target address must be a legal address (see [Address section](#address))
 * function name length must be inferior or equal to 65535
 * function name must be valid UTF-8
 * param length must be inferior or equal to 10,000,000
