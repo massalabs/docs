@@ -26,7 +26,7 @@ and the sum of constants for each datastore key and its corresponding value size
 The overall formula is:
 
 $$
-Cost_{massa} = 0.000025 * (AddressSize + BalanceSize + BytecodeSize + \sum_i (DataStoreKey_i + DatastoreValue_i))
+Cost_{massa} = 0.0001 * (AddressSize + BalanceSize + BytecodeSize + \sum_i (DataStoreKey_i + DatastoreValue_i))
 $$
 
 It's important to note that the storage costs are always paid by the address that initiates the Application Binary Interface (ABI) call.
@@ -35,13 +35,13 @@ the associated storage costs will be charged to the address making the call.
 
 
 ## Examples
-When creating an address on the blockchain, a minimum of 0.001 MAS (0.000025 * (32 + 8)) needs to be sent alongside the operation that generates the address (e.g., a transfer).
+When creating an address on the blockchain, a minimum of 0.001 MAS needs to be sent alongside the operation that generates the address (e.g., a transfer).
 This cost covers the creation of the address and its associated balance.
 
 
 Suppose you want to store your birth date, which is 30 bytes long, in your datastore.
 In that case, you need to send an operation that creates a key in your datastore using a Smart Contract.
-This operation incurs a storage cost of at least 0.001 MAS, calculated as 0.000025 * (10 + 30).
+This operation incurs a storage cost of at least 0.004 MAS, calculated as 0.0001 * (10 + 30).
 
 Thus, if you create a new wallet using the Massa Client `massa-client`, you can generate a secret key `(wallet_generate_secret_key)`) and verify its address using the `wallet_info` function.
 However, until a transfer of at least 0.001 Massa is received to your wallet address, it will not appear in any of blockchain's ledgers.
@@ -55,7 +55,7 @@ If the amount of transfer to an unexisting user address is lower than the amount
 2. If a transfer of 10 MAS is received, the balance of the newly created address will show 9.999 MAS, as 0.001 MAS represent the storage cost.
 :::
 
-In case you wish to delete the entry in your datastore, you will be refunded the storage costs (0.001 MAS).
+In case you wish to delete the entry in your datastore, you will be refunded the storage costs.
 
 :::info
 
