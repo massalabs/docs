@@ -746,6 +746,22 @@ Binary serialization format of a coin amount:
 No checks are performed on deserialization except the validity of the varint itself
 and that its value fits in an unsigned 64bit integer.
 
+In text representation, coin amounts are represented as a traditional decimal number utf-8 string without zero padding and with the `.` decimal separator.
+
+Here are some examples of valid coin amounts in text format:
+* `123456.789012345`
+* `0.001`
+* `0`
+
+On text format deserialization, the following legality checks are performed:
+* the string is valid UTF-8
+* there is at least one character
+* only alphanumeric characters and the `.` decimal separator are allowed
+* the `.` decimal separator must appear zero or one time
+* the `.` decimal separator must not be the first nor the last character
+* deserialization does not under/over-flow the allowed coin amount range
+* deserialization into the underlying unsigned 64 bit representation does not cause precision loss (no rounding or truncation allowed) 
+
 ##### Operation contents
 
 Operation contents are represented with a common set of properties (`fee`, `expire_period`) and a specific payload
@@ -969,12 +985,12 @@ Legality checks performed at binary deserialization:
 * Sender Secret key in text format: `S1CkpvD4WMjJWxR2WZcrDEkJ1kWG2kKe1e3Afe8miqmskHqovvA`
 * Sender Public key in text format: `P1t4JZwHhWNLt4xYabCbukyVNxSbhYPdF6wCYuRmDuHD784juxd`
 * Sender Address in text format: `AU12m1gXHUGxBZsDF4veeWfYaRmpztBCieHhPBaqf3fcRF2LdAuZ7`
-* Operation fee: `0.001 MAS`
+* Operation fee: `0.001`
 * Operation expiry period: `1000`
 * Operation type: `Transaction`
 * Transaction operation payload:
   * Destination address in text format: `AU12v83xmHg2UrLM8GLsXRMrm7LQgn3DZVT6kUeFsuFyhZKLkbQtY`
-  * Amount: `3.1 MAS`
+  * Amount: `3.1`
 
 Resulting operation ID in text format: `O1Vy2P4tTEPxkNXpbUPVFemzp18FkTTmsJ2U6hPoyTvJ4nZMvBs`
 
