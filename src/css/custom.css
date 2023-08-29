@@ -51,3 +51,7 @@ li hr {
 [data-theme='dark'] li hr {
   background-color: #333;
 }
+
+table p {
+  margin-bottom: 0;
+}

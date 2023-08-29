@@ -5,6 +5,7 @@ const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const math = require("remark-math");
 const katex = require("rehype-katex");
+const remarkGridTables = require('remark-grid-tables');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -57,7 +58,7 @@ const config = {
           editUrl: "https://github.com/massalabs/docu-dev/tree/main/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
-          remarkPlugins: [math],
+          remarkPlugins: [math, remarkGridTables],
           rehypePlugins: [katex],
         },
         blog: {},
