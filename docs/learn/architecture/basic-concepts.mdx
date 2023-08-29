@@ -678,13 +678,15 @@ and the maximal coin amount that can be represented is `18,446,744,073.709551615
 Floating point numbers should never be used for amount computations to avoid determinism problems and rounding errors.
 
 Binary serialization format of a coin amount:
-<table>
-    <tr>
-        <td><code>mantissa</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions. The mantissa is deduced by multiplying the represented coin amount by `1e9`. </td>
-    </tr>
-</table>
+
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
+| Coin Amount Binary Representation                                                                                                                       |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
+| Field               | Description                                                                                           | Type                      |
++=====================+=======================================================================================================+===========================+
+| `mantissa`          | Varint unsigned 64-bit integer using protobuf conventions.                                            | From 1 byte (included) to |
+|                     | The mantissa is deduced by multiplying the represented coin amount by `1e9`.                          | 9 bytes (included)        |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
 
 No checks are performed on deserialization except the validity of the varint itself
 and that its value fits in an unsigned 64bit integer.
@@ -717,28 +719,22 @@ depending on the operation type among:
 
 Binary serialization format of operation contents:
 
-<table>
-    <tr>
-        <td><code>fee</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Coin amount in binary format (see [Coin amount section](#coin-amounts))</td>
-    </tr>
-    <tr>
-        <td><code>expire_period</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
-    </tr>
-    <tr>
-        <td><code>type identifier</code></td>
-        <td>from 1 byte (included) to 5 bytes (included)</td>
-        <td>Varint unsigned 32bit integer using protobuf conventions.</td>
-    </tr>
-    <tr>
-        <td><code>op</code></td>
-        <td>size varies</td>
-        <td>Binary-serialized operation payload (see below).</td>
-    </tr>
-</table>
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
+| Operation Contents Binary Representation                                                                                                                |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
+| Field               | Description                                                                                           | Type                      |
++=====================+=======================================================================================================+===========================+
+| `fee`               | Coin amount in binary format (see [Coin amount section](#coin-amounts))                               | From 1 byte (included) to |
+|                     |                                                                                                       | 9 bytes (included)        |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
+| `expire_period`     | Varint unsigned 64-bit integer using protobuf conventions.                                            | From 1 byte (included) to |
+|                     |                                                                                                       | 9 bytes (included)        |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
+| `type identifier`   | Varint unsigned 32-bit integer using protobuf conventions.                                            | From 1 byte (included) to |
+|                     |                                                                                                       | 5 bytes (included)        |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
+| `op`                | Binary-serialized operation payload (see below).                                                      | Size varies               |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
 
 The type identifier indicates the payload type:
 * `Transaction = 0`
@@ -756,18 +752,17 @@ Legality checks performed on deserialization:
 
 The binary serialization format of the payload of a transaction operation follows:
 
-<table>
-    <tr>
-        <td><code>destination address</code></td>
-        <td>from 34 (included) to 50 bytes (included)</td>
-        <td>Transfer destination address binary representation, see [Address section](#address).</td>
-    </tr>
-    <tr>
-        <td><code>amount</code></td>
-        <td>from 1(included) to 9(included) bytes</td>
-        <td>Coin amount binary representation, see [Coin amount section](#coin-amounts).</td>
-    </tr>
-</table>
++---------------------+-------------------------------------------------------------------------------------------------------+-----------------------+
+| Transaction Operation Payload Binary Representation                                                                                                 |
++---------------------+-------------------------------------------------------------------------------------------------------+-----------------------+
+| Field               | Description                                                                                           | Type                  |
++=====================+=======================================================================================================+=======================+
+|`destination address`| Transfer destination address binary representation, see [Address section](#address).                  | From 34 (included) to |
+|                     |                                                                                                       | 50 bytes (included)   |
++---------------------+-------------------------------------------------------------------------------------------------------+-----------------------+
+| `amount`            | Coin amount binary representation, see [Coin amount section](#coin-amounts).                          | From 1 (included) to  |
+|                     |                                                                                                       | 9 bytes (included)    |
++---------------------+-------------------------------------------------------------------------------------------------------+-----------------------+
 
 Legality checks performed on deserialization:
 * the destination address must be legal (see [Address section](#address))
@@ -777,13 +772,14 @@ Legality checks performed on deserialization:
 
 The binary serialization format of the payload of a roll buy operation follows:
 
-<table>
-    <tr>
-        <td><code>rolls</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
-    </tr>
-</table>
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
+| Payload of a Roll Buy Operation Binary Representation                                                                                                    |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
+| Field               | Description                                                                                           | Type                      |
++=====================+=======================================================================================================+===========================+
+| `rolls`             | Varint unsigned 64-bit integer using protobuf conventions.                                            | From 1 byte (included) to  |
+|                     |                                                                                                       | 9 bytes (included)        |
++---------------------+-------------------------------------------------------------------------------------------------------+---------------------------+
 
 No particular checks performed at deserialization except that the varint must be valid
 and fit in an unsigned 64bit integer.
@@ -792,13 +788,14 @@ and fit in an unsigned 64bit integer.
 
 The binary serialization format of the payload of a roll sell operation follows:
 
-<table>
-    <tr>
-        <td><code>rolls</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
-    </tr>
-</table>
++---------------------+------------------------------------------------------------+---------------------------+
+| Payload of a Roll Buy Operation Binary Representation                                                        |
++---------------------+------------------------------------------------------------+---------------------------+
+| Field               | Description                                                | Type                      |
++=====================+============================================================+===========================+
+| `rolls`             | Varint unsigned 64-bit integer using protobuf conventions. | From 1 byte (included) to |
+|                     |                                                            | 9 bytes (included)        |
++---------------------+------------------------------------------------------------+---------------------------+
 
 No particular checks performed at deserialization except that the varint must be valid
 and fit in an unsigned 64bit integer.
@@ -807,63 +804,47 @@ and fit in an unsigned 64bit integer.
 
 The binary serialization format of the payload of a an Execute SC operation follows:
 
-<table>
-    <tr>
-        <td><code>max_gas</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
-    </tr>
-    <tr>
-        <td><code>max_coins</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Coin amount binary serialization (see [Coin amount section](#coin-amounts)).</td>
-    </tr>
-    <tr>
-        <td><code>bytecode length</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
-    </tr>
-    <tr>
-        <td><code>bytecode</code></td>
-        <td>from 0 to 10,000,000 bytes</td>
-        <td>Raw bytes of bytecode to execute.</td>
-    </tr>
-    <tr>
-        <td><code>operation datastore length</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
-    </tr>
-    <tr>
-        <td><code>operation datastore items</code></td>
-        <td></td>
-        <td>Concatenated datastore items (see below)</td>
-    </tr>
-</table>
++------------------------------+------------------------------------------------------------------------------+---------------------------+
+| Payload of a ExecuteSC Operation Binary Representation                                                                                  |
++------------------------------+------------------------------------------------------------------------------+---------------------------+
+| Field                        | Description                                                                  | Type                      |
++==============================+==============================================================================+===========================+
+| `max_gas`                    | Varint unsigned 64-bit integer using protobuf conventions.                   | From 1 byte (included) to |
+|                              |                                                                              | 9 bytes (included)        |
++------------------------------+------------------------------------------------------------------------------+---------------------------+
+| `max_coins`                  | Coin amount binary serialization (see [Coin amount section](#coin-amounts)). | From 1 byte (included) to |
+|                              |                                                                              | 9 bytes (included)        |
++------------------------------+------------------------------------------------------------------------------+---------------------------+
+| `bytecode_length`            | Varint unsigned 64-bit integer using protobuf conventions.                   | From 1 byte (included) to |
+|                              |                                                                              | 9 bytes (included)        |
++------------------------------+------------------------------------------------------------------------------+---------------------------+
+| `bytecode`                   | Raw bytes of bytecode to execute.                                            | From 0 to 10,000,000 bytes|
++------------------------------+------------------------------------------------------------------------------+---------------------------+
+| `operation_datastore_length` | Varint unsigned 64-bit integer using protobuf conventions.                   | From 1 byte (included) to |
+|                              |                                                                              | 9 bytes (included)        |
++------------------------------+------------------------------------------------------------------------------+---------------------------+
+| `operation_datastore_items`  | Concatenated datastore items.                                                | See below.                |
++------------------------------+------------------------------------------------------------------------------+---------------------------+
 
 Datastore item binary format:
 
-<table>
-    <tr>
-        <td><code>key length</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
-    </tr>
-    <tr>
-        <td><code>key</code></td>
-        <td>from 0 byte (included) to 255 bytes (included)</td>
-        <td>Raw key byte array.</td>
-    </tr>
-    <tr>
-        <td><code>value length</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
-    </tr>
-    <tr>
-        <td><code>value</code></td>
-        <td>from 0 byte (included) to 10,000,000 bytes (included)</td>
-        <td>Raw value byte array.</td>
-    </tr>
-</table>
++---------------------+------------------------------------------------------------+----------------------------+
+| Datastore Item Binary Representation                                                                          |
++---------------------+------------------------------------------------------------+----------------------------+
+| Field               | Description                                                | Type                       |
++=====================+============================================================+============================+
+| `key length`        | Varint unsigned 64-bit integer using protobuf conventions. | From 1 byte (included) to  |
+|                     |                                                            | 9 bytes (included)         |
++---------------------+------------------------------------------------------------+----------------------------+
+| `key`               | Raw key byte array.                                        | From 0 byte (included) to  |
+|                     |                                                            | 255 bytes (included)       |
++---------------------+------------------------------------------------------------+----------------------------+
+| `value length`      | Varint unsigned 64-bit integer using protobuf conventions. | From 1 byte (included) to  |
+|                     |                                                            | 9 bytes (included)         |
++---------------------+------------------------------------------------------------+----------------------------+
+| `value`             | Raw value byte array.                                      | From 0 byte (included) to  |
+|                     |                                                            | 10,000,000 bytes (included)|
++---------------------+------------------------------------------------------------+----------------------------+
 
 Legality checks performed at binary deserialization:
 * bytecode length is inferior or equal to 10,000,000
@@ -877,43 +858,26 @@ Legality checks performed at binary deserialization:
 
 The binary serialization format of the payload of a an Call SC operation follows:
 
-<table>
-    <tr>
-        <td><code>max_gas</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
-    </tr>
-    <tr>
-        <td><code>coins</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Coin amount binary serialization (see [Coin amount section](#coin-amounts)).</td>
-    </tr>
-    <tr>
-        <td><code>target address</code></td>
-        <td>from 34 (included) to 50 bytes (included)</td>
-        <td>Target address binary representation, see [Address section](#address).</td>
-    </tr>
-    <tr>
-        <td><code>function name length</code></td>
-        <td>from 1 byte (included) to 3 bytes (included)</td>
-        <td>Varint unsigned 16bit integer using protobuf conventions.</td>
-    </tr>
-    <tr>
-        <td><code>function name</code></td>
-        <td>from 0 (included) to 65535 bytes (included)</td>
-        <td>Name of the function to call encoded as UTF-8 string without null termination.</td>
-    </tr>
-    <tr>
-        <td><code>param length</code></td>
-        <td>from 1 byte (included) to 9 bytes (included)</td>
-        <td>Varint unsigned 64bit integer using protobuf conventions.</td>
-    </tr>
-    <tr>
-        <td><code>param</code></td>
-        <td>from 0 byte (included) to 10,000,000 bytes (included)</td>
-        <td>Raw bytes to pass as argument to the called function.</td>
-    </tr>
-</table>
++------------------------+--------------------------------------------------------------------------------+-------------------------------------------------------+
+| Payload of a Call SC Operation                                                                                                                                  |
++------------------------+--------------------------------------------------------------------------------+-------------------------------------------------------+
+| Field                  | Description                                                                    | Type                                                  |
++========================+================================================================================+=======================================================+
+| `max_gas`              | Varint unsigned 64-bit integer using protobuf conventions.                     | From 1 byte (included) to 9 bytes (included)          |
++------------------------+--------------------------------------------------------------------------------+-------------------------------------------------------+
+| `coins`                | Coin amount binary serialization (see [Coin amount section](#coin-amounts)).   | From 1 byte (included) to 9 bytes (included)          |
++------------------------+--------------------------------------------------------------------------------+-------------------------------------------------------+
+| `target_address`       | Target address binary representation, see [Address section](#address).         | From 34 bytes (included) to 50 bytes (included)       |
++------------------------+--------------------------------------------------------------------------------+-------------------------------------------------------+
+| `function_name_length` | Varint unsigned 16-bit integer using protobuf conventions.                     | From 1 byte (included) to 3 bytes (included)          |
++------------------------+--------------------------------------------------------------------------------+-------------------------------------------------------+
+| `function_name`        | Name of the function to call encoded as UTF-8 string without null termination. | From 0 bytes (included) to 65535 bytes (included)     |
++------------------------+--------------------------------------------------------------------------------+-------------------------------------------------------+
+| `param_length`         | Varint unsigned 64-bit integer using protobuf conventions.                     | From 1 byte (included) to 9 bytes (included)          |
++------------------------+--------------------------------------------------------------------------------+-------------------------------------------------------+
+| `param`                | Raw bytes to pass as argument to the called function.                          | From 0 byte (included) to 10,000,000 bytes (included) |
++------------------------+--------------------------------------------------------------------------------+-------------------------------------------------------+
+
 
 Legality checks performed at binary deserialization:
 * coins must be a legal coin amount (see [Coin amount section](#coin-amounts))
