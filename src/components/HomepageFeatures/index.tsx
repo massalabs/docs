@@ -4,6 +4,13 @@ import Link from "@docusaurus/Link";
 import styles from "./styles.module.css";
 
 const FeatureList = [
+
+  {
+    title: "User's Handbook",
+    content: "Your comprehensive guide to interacting and developing on the Massa Blockchain.",
+    docName: "docs/handbook/home",
+    icon: "📚",
+  },
   {
     title: "Discover Massa",
     content: "Learn basic concepts and inner workings of Massa blockchain.",
