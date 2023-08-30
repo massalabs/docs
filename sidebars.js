@@ -13,6 +13,27 @@
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
+  handbookSidebar: [
+    {
+      type: "doc",
+      id: "handbook/home",
+    },
+    {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> Non-Technical Users </small></b></span>",
+    },
+    {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> SDK Developers </small></b></span>",
+    },
+    {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> API Developers </small></b></span>",
+    },
+  ],
   learnSidebar: [
     {
       type: "doc",
