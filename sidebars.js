@@ -24,6 +24,44 @@ const sidebars = {
         "<span class='menu__link'><b><small> Non-Technical Users </small></b></span>",
     },
     {
+      type: "doc",
+      id: "handbook/non-technical-users/getting-started",
+    },
+    {
+      type: "category",
+      label: "Massa Wallet",
+      items: [
+        {
+          type: "doc",
+          id: "handbook/non-technical-users/massa-wallet/getting-started",
+        },
+        {
+          type: "doc",
+          id: "handbook/non-technical-users/massa-wallet/account-creation",
+        },
+        {
+          type: "doc",
+          id: "handbook/non-technical-users/massa-wallet/transaction-management",
+        },
+        {
+          type: "doc",
+          id: "handbook/non-technical-users/massa-wallet/asset-monitoring-and-history",
+        },
+        {
+          type: "doc",
+          id: "handbook/non-technical-users/massa-wallet/account-backup",
+        },
+        {
+          type: "doc",
+          id: "handbook/non-technical-users/massa-wallet/account-restore",
+        },
+      ],
+    },
+    {
+      type: "doc",
+      id: "handbook/non-technical-users/browse-decentralized-application",
+    },
+    {
       type: "html",
       value:
         "<span class='menu__link'><b><small> SDK Developers </small></b></span>",
