@@ -4,13 +4,6 @@ import Link from "@docusaurus/Link";
 import styles from "./styles.module.css";
 
 const FeatureList = [
-
-  {
-    title: "User's Handbook",
-    content: "Your comprehensive guide to interacting and developing on the Massa Blockchain.",
-    docName: "docs/handbook/home",
-    icon: "📚",
-  },
   {
     title: "Discover Massa",
     content: "Learn basic concepts and inner workings of Massa blockchain.",
@@ -28,6 +21,12 @@ const FeatureList = [
     content: "Practical examples and step-by-step tutorials for building decentralized applications on Massa.",
     docName: "docs/tutorial/home",
     icon: "📖",
+  },
+  {
+    title: "Massa Station",
+    content: "Comprehensive guide to interacting with and to build on top of Massa Station.",
+    docName: "docs/massaStation/home",
+    icon: "🧩",
   },
   {
     title: "Run a Testnet Node",

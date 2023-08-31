@@ -13,19 +13,10 @@
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
-  handbookSidebar: [
+  massaStationSidebar: [
     {
       type: "doc",
-      id: "handbook/home",
-    },
-    {
-      type: "html",
-      value:
-        "<span class='menu__link'><b><small> Non-Technical Users </small></b></span>",
-    },
-    {
-      type: "doc",
-      id: "handbook/non-technical-users/getting-started",
+      id: "massaStation/home",
     },
     {
       type: "category",
@@ -33,43 +24,33 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          id: "handbook/non-technical-users/massa-wallet/getting-started",
+          id: "massaStation/massa-wallet/getting-started",
         },
         {
           type: "doc",
-          id: "handbook/non-technical-users/massa-wallet/account-creation",
+          id: "massaStation/massa-wallet/account-creation",
         },
         {
           type: "doc",
-          id: "handbook/non-technical-users/massa-wallet/transaction-management",
+          id: "massaStation/massa-wallet/transaction-management",
         },
         {
           type: "doc",
-          id: "handbook/non-technical-users/massa-wallet/asset-monitoring-and-history",
+          id: "massaStation/massa-wallet/asset-monitoring-and-history",
         },
         {
           type: "doc",
-          id: "handbook/non-technical-users/massa-wallet/account-backup",
+          id: "massaStation/massa-wallet/account-backup",
         },
         {
           type: "doc",
-          id: "handbook/non-technical-users/massa-wallet/account-restore",
+          id: "massaStation/massa-wallet/account-restore",
         },
       ],
     },
     {
       type: "doc",
-      id: "handbook/non-technical-users/browse-decentralized-application",
-    },
-    {
-      type: "html",
-      value:
-        "<span class='menu__link'><b><small> SDK Developers </small></b></span>",
-    },
-    {
-      type: "html",
-      value:
-        "<span class='menu__link'><b><small> API Developers </small></b></span>",
+      id: "massaStation/browse-decentralized-application",
     },
   ],
   learnSidebar: [
