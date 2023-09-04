@@ -69,8 +69,13 @@ Storing the entry locks `0.0001 * (4 + 8 + 5) = 0,0017` MAS coins.
 Now suppose that you change that existing entry to a new nickname "kev".
 The new value is shorter: freeing 2 bytes causes `0.0001 * 2 = 0.0002` coins to be refunded.
 
-In case you then delete the "nickname" datastore entry (with the "kev" value),
-`0.0001 * (4 + 8 + 3) = 0.0015` coins are refunded. 
+Now let's change the nickname again from "kev" to "ned". This does not change the datastore size and does not change the coin balance.
+
+Now, let's change the nickname again from "ned" to "pierre".
+This uses 3 extra byte and therefore locks `0.0001 * 3 = 0.0003` MAS coins.
+
+In case you then delete the "nickname" datastore entry (with the "pierre" value),
+`0.0001 * (4 + 8 + 6) = 0.0018` coins are refunded. 
 
 :::info
 
