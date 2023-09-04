@@ -31,7 +31,7 @@ and the sum of constants for each datastore key and its corresponding value size
 The overall formula is:
 
 $$
-Cost_{massa} = 0.001 + 0.0001 * BytecodeSize + 0.0001 * \sum_i (4 + DataStoreKey_i + DatastoreValue_i)
+Cost_{MAS} = 0.001 + 0.0001 * BytecodeSize + 0.0001 * \sum_i (4 + DataStoreKeySize_i + DatastoreValueSize_i)
 $$
 
 It's important to note that the storage costs are always paid by the address that initiates the Application Binary Interface (ABI) call.
