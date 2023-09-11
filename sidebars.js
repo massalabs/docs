@@ -13,6 +13,46 @@
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
+  massaStationSidebar: [
+    {
+      type: "doc",
+      id: "massaStation/home",
+    },
+    {
+      type: "category",
+      label: "Massa Wallet",
+      items: [
+        {
+          type: "doc",
+          id: "massaStation/massa-wallet/getting-started",
+        },
+        {
+          type: "doc",
+          id: "massaStation/massa-wallet/account-creation",
+        },
+        {
+          type: "doc",
+          id: "massaStation/massa-wallet/transaction-management",
+        },
+        {
+          type: "doc",
+          id: "massaStation/massa-wallet/asset-monitoring-and-history",
+        },
+        {
+          type: "doc",
+          id: "massaStation/massa-wallet/account-backup",
+        },
+        {
+          type: "doc",
+          id: "massaStation/massa-wallet/account-restore",
+        },
+      ],
+    },
+    {
+      type: "doc",
+      id: "massaStation/browse-decentralized-application",
+    },
+  ],
   learnSidebar: [
     {
       type: "doc",

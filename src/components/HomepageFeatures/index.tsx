@@ -23,6 +23,12 @@ const FeatureList = [
     icon: "📖",
   },
   {
+    title: "Massa Station",
+    content: "Comprehensive guide to interact with and to build on top of Massa Station.",
+    docName: "docs/massaStation/home",
+    icon: "🧩",
+  },
+  {
     title: "Run a Testnet Node",
     content: "Validate transactions, secure the network, and earn rewards.",
     docName: "docs/node/home",

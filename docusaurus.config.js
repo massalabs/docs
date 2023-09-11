@@ -106,6 +106,12 @@ const config = {
             label: "🖥 Testnet",
           },
           {
+            type: "docSidebar",
+            sidebarId: "massaStationSidebar",
+            position: "left",
+            label: "🧩 Massa Station",
+          },
+          {
             type: "search",
             position: "right",
           },
