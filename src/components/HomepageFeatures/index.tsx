@@ -24,7 +24,7 @@ const FeatureList = [
   },
   {
     title: "Massa Station",
-    content: "Comprehensive guide to interacting with and to build on top of Massa Station.",
+    content: "Comprehensive guide to interact with and to build on top of Massa Station.",
     docName: "docs/massaStation/home",
     icon: "🧩",
   },
