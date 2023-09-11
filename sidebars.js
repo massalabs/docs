@@ -135,7 +135,7 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "build/hello-world-plugin-1",
+      id: "build/hello-world-plugin",
     },
     {
       type: "category",
