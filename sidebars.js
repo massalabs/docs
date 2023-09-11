@@ -50,7 +50,15 @@ const sidebars = {
     },
     {
       type: "doc",
+      id: "massaStation/hello-world-plugin",
+    },
+    {
+      type: "doc",
       id: "massaStation/browse-decentralized-application",
+    },
+    {
+      type: "doc",
+      id: "massaStation/guidelines",
     },
   ],
   learnSidebar: [
@@ -174,10 +182,6 @@ const sidebars = {
       id: "build/hello-world-dapp",
     },
     {
-      type: "doc",
-      id: "build/hello-world-plugin",
-    },
-    {
       type: "category",
       label: "Smart Contract",
       items: [
@@ -205,21 +209,6 @@ const sidebars = {
               label: "WebAssembly Module",
             },
           ],
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Massa Station plugin",
-      items: [
-        {
-          type: "doc",
-          id: "build/plugin/introduction",
-          label: "Introduction",
-        },
-        {
-          type: "doc",
-          id: "build/plugin/guidelines",
         },
       ],
     },
