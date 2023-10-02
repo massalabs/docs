@@ -50,16 +50,25 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "massaStation/hello-world-plugin",
+      id: "massaStation/browse-decentralized-application",
     },
     {
-      type: "doc",
-      id: "massaStation/browse-decentralized-application",
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> Create a Plugin </small></b></span>",
     },
     {
       type: "doc",
       id: "massaStation/guidelines",
     },
+    {
+      type: "doc",
+      id: "massaStation/hello-world-plugin",
+    }
   ],
   learnSidebar: [
     {
