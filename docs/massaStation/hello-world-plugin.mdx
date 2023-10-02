@@ -188,8 +188,8 @@ import (
 
   "github.com/go-openapi/loads"
 )
-func killTime(quit chan bool) { // creates a ticker that will send a message every 5 seconds
-  // creates a ticker that will send a message every 5 seconds
+func killTime(quit chan bool) {
+    // creates a ticker that will send a message every 5 seconds
     ticker := time.NewTicker(5 * time.Second) //nolint:gomnd
 
     fmt.Fprintf(os.Stdout, "Plugin is initializing.\n")
