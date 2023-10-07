@@ -95,6 +95,10 @@ const sidebars = {
     },
     {
       type: "doc",
+      id: "learn/bootstrap",
+    },
+    {
+      type: "doc",
       id: "learn/storage-costs",
     },
     {
