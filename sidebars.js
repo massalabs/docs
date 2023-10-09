@@ -52,6 +52,23 @@ const sidebars = {
       type: "doc",
       id: "massaStation/browse-decentralized-application",
     },
+    {
+      type: "html",
+      value: "<hr/>",
+    },
+    {
+      type: "html",
+      value:
+        "<span class='menu__link'><b><small> Create a Plugin </small></b></span>",
+    },
+    {
+      type: "doc",
+      id: "massaStation/guidelines",
+    },
+    {
+      type: "doc",
+      id: "massaStation/hello-world-plugin",
+    }
   ],
   learnSidebar: [
     {
@@ -201,21 +218,6 @@ const sidebars = {
               label: "WebAssembly Module",
             },
           ],
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Massa Station plugin",
-      items: [
-        {
-          type: "doc",
-          id: "build/plugin/introduction",
-          label: "Introduction",
-        },
-        {
-          type: "doc",
-          id: "build/plugin/guidelines",
         },
       ],
     },
