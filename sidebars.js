@@ -119,6 +119,10 @@ const sidebars = {
       id: "learn/gas",
     },
     {
+      type: "doc",
+      id: "learn/operation-format-execution",
+    },
+    {
       type: "html",
       value: "<hr/>",
     },
