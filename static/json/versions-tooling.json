@@ -1,12 +1,12 @@
 {
   "title": "Massa Tools Versions Compatibilities",
-  "networks": ["Buildnet", "Testnet"],
+  "networks": ["Buildnet", "Securnet"],
   "projects": [
     {
       "title": "sc-project-initializer",
       "compatibilities": [
         { "network": "Buildnet", "version": "buildnet" },
-        { "network": "Testnet", "version": "latest" }
+        { "network": "Securnet", "version": "latest" }
       ],
       "install": "npm install @massalabs/project-initializer",
       "npmLink": "https://www.npmjs.com/package/@massalabs/sc-project-initializer?activeTab=versions"
@@ -15,7 +15,7 @@
       "title": "massa-as-sdk",
       "compatibilities": [
         { "network": "Buildnet", "version": "buildnet" },
-        { "network": "Testnet", "version": "latest" }
+        { "network": "Securnet", "version": "latest" }
       ],
       "install": "npm install @massalabs/massa-as-sdk",
       "npmLink": "https://www.npmjs.com/package/@massalabs/massa-as-sdk?activeTab=versions"
@@ -24,7 +24,7 @@
       "title": "massa-web3",
       "compatibilities": [
         { "network": "Buildnet", "version": "buildnet" },
-        { "network": "Testnet", "version": "latest" }
+        { "network": "Securnet", "version": "latest" }
       ],
       "install": "npm install @massalabs/massa-web3",
       "npmLink": "https://www.npmjs.com/package/@massalabs/massa-web3?activeTab=versions"
@@ -33,7 +33,7 @@
       "title": "wallet-provider",
       "compatibilities": [
         { "network": "Buildnet", "version": "buildnet" },
-        { "network": "Testnet", "version": "latest" }
+        { "network": "Securnet", "version": "latest" }
       ],
       "install": "npm install @massalabs/wallet-provider",
       "npmLink": "https://www.npmjs.com/package/@massalabs/wallet-provider?activeTab=versions"
@@ -42,7 +42,7 @@
       "title": "as-types",
       "compatibilities": [
         { "network": "Buildnet", "version": "buildnet" },
-        { "network": "Testnet", "version": "latest" }
+        { "network": "Securnet", "version": "latest" }
       ],
       "install": "npm install @massalabs/as-types",
       "npmLink": "https://www.npmjs.com/package/@massalabs/as-types?activeTab=versions"
@@ -51,7 +51,7 @@
       "title": "as-proba",
       "compatibilities": [
         { "network": "Buildnet", "version": "buildnet" },
-        { "network": "Testnet", "version": "latest" }
+        { "network": "Securnet", "version": "latest" }
       ],
       "install": "npm install @massalabs/as-proba",
       "npmLink": "https://www.npmjs.com/package/@massalabs/as-proba?activeTab=versions"
@@ -60,7 +60,7 @@
       "title": "as-transformer",
       "compatibilities": [
         { "network": "Buildnet", "version": "buildnet" },
-        { "network": "Testnet", "version": "latest" }
+        { "network": "Securnet", "version": "latest" }
       ],
       "install": "npm install @massalabs/as-transformer",
       "npmLink": "https://www.npmjs.com/package/@massalabs/as-transformer?activeTab=versions"
@@ -69,7 +69,7 @@
       "title": "sc-deployer",
       "compatibilities": [
         { "network": "Buildnet", "version": "buildnet" },
-        { "network": "Testnet", "version": "latest" }
+        { "network": "Securnet", "version": "latest" }
       ],
       "install": "npm install @massalabs/massa-sc-deployer",
       "npmLink": "https://www.npmjs.com/package/@massalabs/massa-sc-deployer?activeTab=versions"

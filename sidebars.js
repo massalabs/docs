@@ -279,9 +279,18 @@ const sidebars = {
       ],
     },
     {
-      type: "doc",
-      id: "build/networks-faucets",
+      type: "category",
       label: "Networks & Faucets",
+      items: [
+        {
+          type: "doc",
+          id: "build/networks-faucets/public-networks",
+        },
+        {
+          type: "doc",
+          id: "build/networks-faucets/local-network",
+        }
+      ],
     },
     {
       type: "doc",
