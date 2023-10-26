@@ -10,6 +10,8 @@ import VersionsTable from "@site/src/components/versions-table";
 # Local network generation
 Here, you will learn how to launch a local network with custom settings, initial coins and rolls distribution.
 
+This may be useful for instance if you want to build and test your integration on the latest version of the nodes.
+
 Clone massa:
 
 ```bash
@@ -68,6 +70,21 @@ Setup your node to use the secret you just generated as its public key and staki
     {}
     ```
 
+
+- modify the file `massa-node/base_config/initial_ledger.json`:
+
+    ```javascript
+    {
+        "ADDR": {
+            "balance": "80000000",
+            "datastore": {},
+            "bytecode": []
+        }
+    }
+    ```
+
+- optionally, if you need a non-standard configuration, you can modify the file `massa-node/base_config/config.toml` depending on what you are trying to do.
+
 You can now launch your node:
 ```bash
 cd massa-node && cargo run --features sandbox
@@ -80,4 +97,4 @@ cd massa-client && cargo run node_start_staking ADDR
 ```
 
 The local network and your node will start after 10 seconds. Once it is started, you can interact with it using the CLI
-client as you would with a testnet node.
+client as you would with a node on a public network.
