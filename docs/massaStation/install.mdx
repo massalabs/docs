@@ -1,0 +1,86 @@
+---
+id: install
+title: Install
+---
+
+## System Requirements
+
+- **Operating System**: The latest versions of Windows, Mac, and Debian-based Linux distributions
+- **Disk Space**: At least 200 MB
+- **RAM**: At least 2 GB
+
+:::info
+For now, Massa Station only supports Firefox and Chromium-based browsers (Chrome, Brave, etc.).
+:::
+
+To install _Massa Station_, follow these steps:
+
+1. Visit the [Massa Station website](https://station.massa.net/).
+2. Click the **Download** button and select the version compatible with your operating system.
+3. Once the download is complete, run the installer and follow the instructions.
+
+:::info
+During the installation process, you will be prompted to grant permissions to _Massa Station_.
+These permissions are necessary for _Massa Station_ to function correctly.
+:::
+
+:::note
+If you prefer to install _Massa Station_ **manually**, you can follow the instructions provided in the [Manual Install](/docs/massaStation/manual-install) section.
+:::
+
+## Windows
+
+1. Locate the downloaded `.msi` installer file and double-click on it to start the installation process.
+2. Follow the on-screen instructions to proceed with the installation.
+3. You will be prompted to choose the kind of installation you want. We recommend choosing the "Complete" installation as it will install all the necessary dependencies to access web on-chain. If you select the "Typical" option, Massa Station will be installed without DNS configuration. In that case, access to `.massa` domains may be restricted.
+4. Once the installation is complete, you can launch _Massa Station_ from the Start menu.
+5. If prompted, click on "Yes" to allow the installer to make changes on certificates. These certificates allow _Massa Station_ to use the HTTPS protocol, which improves your security when [browsing dApp](browse-decentralized-application).
+
+:::caution
+If you are using a version of Massa Station older than 0.3.6, Windows will warn you about untrusted software.
+You can safely ignore this warning and proceed with the installation by clicking on "more info" and "run anyway".
+:::
+
+## MacOS
+
+1. Locate the downloaded `.pkg` installer file. Hold "Option" key on the keyboard and right-click on the package, at the same time.
+2. From the context menu, select "Open" and then click "Open" again in the security pop-up window. This step is necessary because the installer is not signed by the App Store, and MacOS may block the installation by default.
+3. If prompted, enter your administrator password to authorize the installation.
+4. Follow the on-screen instructions to proceed with the installation.
+
+## Debian Linux
+
+### Terminal Installation using apt
+
+1. Locate the downloaded `.deb` installer file.
+2. Open a terminal on your Debian Linux system.
+3. Navigate to the directory where the downloaded `.deb` package is located.
+4. Run the following command to install the package:<br/>
+   `sudo apt install ./massastation-${{ VERSION }}_amd64.deb`
+5. Enter your administrator password when prompted and press Enter to confirm.
+6. The installation will begin, and you will see progress information in the terminal.
+7. Once the installation is complete, you can close the terminal.
+
+### GUI Installation
+
+1. Open your file manager and navigate to the location where the `.deb` package is saved.
+2. Right-click on the `.deb` package and choose "Open with Software Install" or a similar option.
+3. The package manager will launch and display _Massa Station_ installation page.
+4. Review the package information and dependencies, if any, and click on the "Install" button.
+5. If prompted, enter your administrator password to authorize the installation.
+6. The installation will commence, and you will see a progress bar indicating the status.
+7. Once the installation is complete, you will receive a notification confirming the successful installation.
+
+<br />
+
+:::info Updating on Linux
+
+There is a known issue involving version checks while updating _Massa Station_ via Software Installer, follow these instructions for best results.
+
+1. Download the latest version of _Massa Station_ installer for Debian Linux (`.deb`) from [here](https://station.massa.net/).
+2. Open your file manager and navigate to the location where the `.deb` package is saved.
+3. The package manager will launch and display _Massa Station_ installation page.
+4. Review the package information and dependencies, if any, and click on the red "Delete" button.
+5. Proceed to [**GUI installation**](https://docs.massa.net/docs/massaStation/home#gui-installation) starting at step 2.
+
+:::
