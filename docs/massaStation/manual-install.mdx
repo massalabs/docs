@@ -1,0 +1,76 @@
+---
+id: manual-install
+title: Manual Install
+---
+
+If you are unable to install _Massa Station_ using the methods described above, or simply prefer to install it manually, you can follow these steps:
+
+1. Download the latest version of the _Massa Station_ binary for your operating system from [here](https://github.com/massalabs/station/releases/latest).
+   :::caution
+   Make sure to download the binary for your operating system and architecture.<br/>
+   For example, if you are using Windows 10 on a 64-bit machine, you should download the `massastation_windows_amd64` file.<br/>
+   On Apple Silicon (M1, M2...) Macs, you should download the `massastation_darwin_arm64` file, while Intel Macs should download the `massastation_darwin_amd64` file.
+   :::
+2. Put the downloaded binary in a directory of your choice.
+3. On MacOS and Linux, create the _Massa Station_ data directory:
+   ```sh
+   mkdir -m 777 -p /usr/local/share/massastation
+   ```
+4. Run the binary to start _Massa Station_.
+5. Open your browser and navigate to `http://localhost/` to access _Massa Station_.
+
+This method of installation will not install the necessary dependencies for _Massa Station_ to function correctly and so, features such as HTTPS support and accessing `.massa` domains will not work.
+
+### Handle `station.massa` redirection
+
+If you want to access _Massa Station_ by typing `station.massa` in your browser's address bar, you will need to configure your system to redirect requests to `station.massa` to `localhost`.
+You can make this change by editing the 'hosts' file on your computer, regardless of whether you're using Windows, MacOS, or Linux:
+
+1. Open the 'hosts' file, which is located at:
+   - **Windows**: `C:\Windows\System32\drivers\etc\hosts`
+   - **MacOS** and **Linux**: `/etc/hosts`
+2. Add `127.0.0.1 station.massa` at the end of the file.
+3. Save and close the file.
+
+### Handle `*.massa` redirection
+
+If you want to access `.massa` domains in your web browser, you will need to install and configure a local DNS server on your system.
+
+- **Windows**: [Acrylic DNS](https://sourceforge.net/projects/acrylic/)
+- **MacOS**: Install [DNSMasq](https://formulae.brew.sh/formula/dnsmasq#default) using [Homebrew](https://brew.sh/).
+- **Linux**: DNSMasq might be enablable using Network Manager or be available through your package manager.
+
+Once installed, you will need to configure the DNS server to redirect all requests to `.massa` domains to `localhost` (or `127.0.0.1`).
+
+### Add HTTPS support
+
+Massa Station will automatically generate a self-signed certificate for HTTPS support when it is first run, but to do it, it requires some dependencies to be installed on your system.
+
+#### Windows
+
+1. Download a Windows version of the Mar Tools
+2. Extract the contents of the archive to a directory named `mar-tools` in the same directory as the `massastation.exe` binary.
+3. Run the `massastation.exe` binary to start _Massa Station_.
+
+#### MacOS
+
+1. Install [Homebrew](https://brew.sh/).
+2. Install the `nss` package using Homebrew: `brew install nss`
+3. Create the certificate directory:
+   ```sh
+   mkdir -m 777 -p /etc/massastation/certs
+   ```
+4. Run the `massastation` binary in repair mode with `sudo`:
+   ```sh
+   sudo ./massastation --repair
+   ```
+5. Run the `massastation` binary to start _Massa Station_.
+
+#### Linux
+
+1. Install the `nss` package using your package manager.
+2. Create the certificate directory:
+   ```sh
+   mkdir -m 777 -p /etc/massastation/certs
+   ```
+3. Run the `massastation` binary to start _Massa Station_.
