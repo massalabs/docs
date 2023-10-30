@@ -1,0 +1,100 @@
+---
+id: local-network
+sidebar_label: Local network (sandbox)
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import VersionsTable from "@site/src/components/versions-table";
+
+# Local network generation
+Here, you will learn how to launch a local network with custom settings, initial coins and rolls distribution.
+
+This may be useful for instance if you want to build and test your integration on the latest version of the nodes.
+
+Clone massa:
+
+```bash
+git clone git@github.com:massalabs/massa.git
+```
+
+Compile it with the sandbox feature enabled:
+
+```bash
+cd massa && cargo build --release --features sandbox
+```
+
+Create a keypair in massa-client:
+
+```bash
+cd massa-client && cargo run
+wallet_generate_secret_key
+```
+
+For the rest of the tutorial we will use theses abbreviations:
+
+- `SECRETK`: The secret you just generated
+- `PUBK`: The public key corresponding to SECRETK
+- `ADDR`: The address corresponding to PUBK
+
+Setup your node to use the secret you just generated as its public key and staking key:
+- modify or create the file `massa-node/config/node_privkey.key`:
+
+    ```bash
+    {"secret_key":"SECRETK","public_key":"PUBK"}
+    ```
+
+- modify the file `massa-node/base_config/initial_ledger.json`:
+
+    ```javascript
+    {
+        "ADDR": {
+            "balance": "80000000",
+            "datastore": {},
+            "bytecode": []
+        }
+    }
+    ```
+
+- CLEAR and modify the file `massa-node/base_config/initial_rolls.json`:
+
+    ```javascript
+    {
+        "ADDR": 100
+    }
+    ```
+
+- CLEAR content of `massa-node/base_config/initial_vesting.json`:
+
+    ```javascript
+    {}
+    ```
+
+
+- modify the file `massa-node/base_config/initial_ledger.json`:
+
+    ```javascript
+    {
+        "ADDR": {
+            "balance": "80000000",
+            "datastore": {},
+            "bytecode": []
+        }
+    }
+    ```
+
+- optionally, if you need a non-standard configuration, you can modify the file `massa-node/base_config/config.toml` depending on what you are trying to do.
+
+You can now launch your node:
+```bash
+cd massa-node && cargo run --features sandbox
+```
+
+On your client run the following command to add your secret key as staking key:
+
+```bash
+cd massa-client && cargo run node_start_staking ADDR
+```
+
+The local network and your node will start after 10 seconds. Once it is started, you can interact with it using the CLI
+client as you would with a node on a public network.
