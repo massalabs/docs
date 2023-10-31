@@ -1,0 +1,49 @@
+---
+id: install-troubleshooting
+title: Troubleshooting Installation
+---
+
+## Global
+
+### Get installer logs
+
+This section will help you get the logs of the installation process, please follow the instructions for your operating system.
+
+Once you have the logs, please open a new issue on the
+[Massa Station repository](https://github.com/massalabs/station/issues/new?assignees=&labels=issue%3Abug&projects=&template=bug.md&title=)
+and attach the logs to your issue so we can help you.
+
+#### Windows
+
+1. Press **Win + R**, a small window with a text box should open.
+2. In this window, type `%TEMP%` and press **Enter**.
+3. A File Explorer window should appear in a **Temp** directory.
+4. In this directory, search for the file named `MASSASTATION_INSTALLER_{VERSION}.log`
+   (With {VERSION} being the version of the Massa Station you are trying to install).
+
+#### MacOS
+
+1. **Do not close** the installer window, if you already did, please restart the installation process until
+   it fails and **do not close** the installer window.
+2. Press **CMD + L**.
+3. A small window named "Installer Log" should appear at the bottom of your screen.
+4. On the top right of the window, you should see a "Save" button, click on it and save the file in an easy
+   access location, for example your **Download** directory.
+
+#### Linux
+
+If you used the GUI installation method, please try to install the Massa Station using the [Terminal method](/docs/massaStation/install#terminal-installation-using-apt).
+
+If you used the Terminal installation method, please send us the output of the command you used to install the Massa Station.
+
+
+## Windows
+
+### After installation, my computer lost internet connection
+
+Some computers will lose internet connection after the installation. This is a known issue.
+
+To fix this issue, simply **restart your computer**.
+If the issue persists, please follow the instructions to [get the installer logs](#get-installer-logs) and open a new issue on the
+[Massa Station repository](https://github.com/massalabs/station/issues/new?assignees=&labels=issue%3Abug&projects=&template=bug.md&title=)
+so we can help you.
