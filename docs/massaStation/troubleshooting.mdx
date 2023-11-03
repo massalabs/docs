@@ -3,9 +3,67 @@ id: troubleshooting
 title: Troubleshooting
 ---
 
+This page will help you solve some common issues you might encounter while using Massa Station.
+
+### Massa Station isn't starting
+
+To check what is happening, you can open Massa Station logs. See [Get Massa Station logs](#get-massa-station-logs) to know how to get them.
+
+Once you have the logs, please go at the end of the file and look for the last error. If you see an error like this:
+
+```
+listen tcp :80: bind: address already in use
+```
+
+That means that another application is already using the port 80. You can either stop the application using the port 80 or change its port.
+
+
+### When opening Massa Station, I get a page with the error "DNS_PROBE_FINISHED_NXDOMAIN"
+
+This error means that your computer can't resolve the domain name of Massa Station. This can happen in multiple cases:
+
+#### The DNS server isn't installed
+
+If you unselected the option to install the DNS server during the installation of Massa Station, `.massa` domain names can't be resolved.
+
+To fix this, you can either reinstall Massa Station and make sure to select the option to install the DNS server
+or you can manually change your DNS server to redirect the Massa Station domain name to your computer as explained in
+the [manual installation](/docs/massaStation/manual-install#handle-massa-redirection) section.
+
+If the problem persists, please go to the [Web browser is using another DNS server](#your-web-browser-is-using-another-dns-server) section.
+
+#### The DNS server isn't running
+
+If the DNS server is installed but not running, `.massa` domain names can't be resolved.
+Please restart your computer to make sure that the DNS server is running.
+
+If the problem persists, please go to the next section.
+
+#### Your web browser is using another DNS server
+
+If the DNS server is installed and running, the problem might be that your web browser is using another DNS server.
+In Chromium based browsers, you can go to your browser settings and search for "Use secure DNS" and disable it.
+
+If the problem persists, please open an issue with the logs of Massa Station as explained in the
+[Get Massa Station logs](#get-massa-station-logs) section.
+
+
+### When opening Massa Station, I get a page with the error "ERR_CONNECTION_REFUSED"
+
+This error means that your computer can't connect to Massa Station.
+This might be because Massa Station isn't running or because the redirection to `station.massa` isn't working.
+
+Please check that Massa Station is running and retry to open https://station.massa/ in your web browser.
+
+If you still have the error, please open http://localhost/ in your web browser.
+If you get the same error, that means that Massa Station isn't running. In that case, please follow the instructions provided in the [Massa Station isn't starting](#massa-station-isnt-starting) section.
+
 ### Get Massa Station logs
 
-This section will help you get the logs from the Massa Station. Please follow the instructions for your operating system.
+In case you encounter an issue that isn't listed in the FAQ or previously on this page, we will need the logs of Massa Station to help you.
+This section will explain you how to get them.
+
+Please make sure to follow the instructions for your operating system.
 
 Once you have the logs, please open a new issue on the
 [Massa Station repository](https://github.com/massalabs/station/issues/new?assignees=&labels=issue%3Abug&projects=&template=bug.md&title=)
@@ -34,47 +92,9 @@ You should be able to see 2 log files:
 - `massastation.log`
 - `massastation-repair.log`
 
+Those are the log files you need.
+
 #### Linux
 
 It is located in `/usr/local/share/massastation/logs`. You can access it using the Files app or with a terminal using `cd`.
 Once in the directory, search for the file named `massastation.log`.
-
-### Massa Station isn't starting
-
-To check what is happening, you can open the Massa Station logs. See [Get Massa Station logs](#get-massa-station-logs) to know how to get them.
-
-Once you have the logs, please go at the end of the file and look for the last error. If you see an error like this:
-
-```
-listen tcp :80: bind: address already in use
-```
-
-That means that another application is already using the port 80. You can either stop the application using the port 80 or change its port.
-
-
-### When opening Massa Station, I get a page with the error "DNS_PROBE_FINISHED_NXDOMAIN"
-
-This error means that your computer can't resolve the domain name of the Massa Station. This might be because you
-unselected the option to install the DNS server during the installation of the Massa Station.
-
-To fix this, you can either reinstall the Massa Station and make sure to select the option to install the DNS server
-or you can manually change your DNS server to redirect the Massa Station domain name to your computer as explained in
-the [manual installation](/docs/massaStation/manual-install#handle-massa-redirection) section.
-
-If the DNS server is installed, the problem might be that your web browser is using another DNS server.
-In Chromium based browsers, you can go to your browser settings and search for "Use secure DNS" and disable it.
-
-If the problem persists, please open an issue with the logs of the Massa Station as explained in the
-[Get Massa Station logs](#get-massa-station-logs) section.
-
-
-### When opening Massa Station, I get a page with the error "ERR_CONNECTION_REFUSED"
-
-This error means that your computer can't connect to the Massa Station.
-This might be because the Massa Station isn't running or because the redirection to `station.massa` isn't working.
-
-Please check that the Massa Station is running and retry to open https://station.massa/ in your web browser.
-
-If you still have the error, please open http://localhost/ in your web browser.
-If you get the same error, that means that the Massa Station isn't running. In that case, please follow the instructions provided in the [Massa Station isn't starting](#massa-station-isnt-starting) section.
-
