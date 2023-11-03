@@ -32,10 +32,6 @@ const sidebars = {
         },
         {
           type: "doc",
-          id: "massaStation/install-troubleshooting",
-        },
-        {
-          type: "doc",
           id: "massaStation/uninstall",
         },
       ]
