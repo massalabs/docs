@@ -4,6 +4,7 @@ title: Manual Install
 ---
 
 :::caution
+
 ## Disclaimer
 
 This guide is intended for advanced users who are familiar with the command line and system administration.
@@ -11,7 +12,8 @@ This guide is intended for advanced users who are familiar with the command line
 
 ## Installation
 
-If you are unable to install _Massa Station_ using the methods described above, or simply prefer to install it manually, you can follow these steps:
+If you are unable to install _Massa Station_ using the methods described in the [Installation](/docs/massaStation/install) section,
+or simply prefer to install it manually, you can follow these steps:
 
 1. Download the latest version of the _Massa Station_ binary for your operating system from [here](https://github.com/massalabs/station/releases/latest).
    :::caution
@@ -36,11 +38,13 @@ If you are unable to install _Massa Station_ using the methods described above, 
 4. Run the binary to start _Massa Station_.
 5. Open your browser and navigate to `http://localhost/` to access _Massa Station_.
 
-This method of installation will not install the necessary dependencies for _Massa Station_ to function correctly and so, features such as HTTPS support and accessing `.massa` domains will not work.
+This method of installation will not install the necessary dependencies for _Massa Station_ to function correctly and so,
+features such as HTTPS support and accessing `.massa` domains will not work.
 
 ### Handle `station.massa` redirection
 
-If you want to access _Massa Station_ by typing `station.massa` in your browser's address bar, you will need to configure your system to redirect requests to `station.massa` to `localhost`.
+If you want to access _Massa Station_ by typing `station.massa` in your browser's address bar, you will need to configure your system to redirect
+requests to `station.massa` to `localhost`.
 You can make this change by editing the 'hosts' file on your computer, regardless of whether you're using Windows, MacOS, or Linux:
 
 1. Open the 'hosts' file, which is located at:
@@ -61,7 +65,8 @@ Once installed, you will need to configure the DNS server to redirect all reques
 
 ### Add HTTPS support
 
-Massa Station will automatically generate a self-signed certificate for HTTPS support when it is first run, but to do it, it requires some dependencies to be installed on your system.
+Massa Station will automatically generate a self-signed certificate for HTTPS support when it is first run, but to do it,
+it requires some dependencies to be installed on your system.
 
 #### Windows
 
