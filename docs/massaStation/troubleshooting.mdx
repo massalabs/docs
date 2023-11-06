@@ -121,7 +121,7 @@ and attach the logs to your issue so we can help you.
 
 #### MacOS
 
-1. Copy this path: /usr/local/share/massastation/logs/
+1. Copy this path: `/usr/local/share/massastation/logs/`
 2. Open finder
 3. Click on the "Go" button at the top of your screen
    ![Go button](troubleshooting-finder-go.png)
@@ -140,3 +140,38 @@ Those are the log files you need.
 
 It is located in `/usr/local/share/massastation/logs`. You can access it using the Files app or with a terminal using `cd`.
 Once in the directory, search for the file named `massastation.log`.
+
+## Massa Wallet
+
+### Get Massa Wallet logs
+
+In case you encounter an issue that isn't listed in the FAQ or previously on this page, we will need the logs of Massa Wallet to help you.
+This section will explain you how to get them.
+
+Please make sure to follow the instructions for your operating system.
+
+Once you have the logs, please open a new issue on the
+[Massa Wallet repository](https://github.com/massalabs/station-massa-wallet/issues/new?assignees=&labels=issue%3Abug&projects=&template=bug.md&title=)
+and attach the logs to your issue so we can help you.
+
+### Windows
+
+1. Copy `%APPDATA%\massa-station-wallet\`
+2. Press **Win + R**, a small window with a text box should open.
+3. In this window, paste what you just copied and press Enter.
+4. A File Explorer window should appear in an **APPDATA** directory
+5. In this directory, search for the file named `station-massa-wallet.log`
+
+### MacOS
+
+1. Open Finder
+2. On the top right you should see an application bar with different options such as File, Edit and View
+3. Click on the Go and in the dropdown select **Library**
+4. Look for a directory named **Application Support** and open it
+5. Open the folder named **massa-station-wallet**
+6. In this directory, search for the file named `station-massa-wallet.log`
+
+### Linux
+
+The log file is located in `~/.config/massa-station-wallet/`. You can access it using the Files app or with a terminal using `cd`.
+Once in the directory, search for the file named `station-massa-wallet.log`.
