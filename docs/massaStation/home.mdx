@@ -5,121 +5,46 @@ title: Introduction to Massa Station
 
 ## Introduction to Massa Station
 
-*Massa Station* is a desktop application that provides an intuitive way to interact with the Massa blockchain through
+_Massa Station_ is a desktop application that provides an intuitive way to interact with the Massa blockchain through
 your web browser.
 
-If you're not a developer or simply prefer a more visual approach, using *Massa Station* is ideal for you.
+If you're not a developer or simply prefer a more visual approach, using _Massa Station_ is ideal for you.
 
-*Massa Station* is the gateway to the Massa Blockchain. You can think of it as an application store for modules that
-leverage the exciting features of the Massa Blockchain. *Massa Station* comes in the form of a desktop application with
-some core modules pre-installed. For example, directly out of the box, *Massa Station* allows you to access Massa's
-[Decentralized Web](/docs/learn/decentralized-web). 
+_Massa Station_ is the gateway to the Massa Blockchain. You can think of it as an application store for modules that
+leverage the exciting features of the Massa Blockchain. _Massa Station_ comes in the form of a desktop application with
+some core modules pre-installed. For example, directly out of the box, _Massa Station_ allows you to access Massa's
+[Decentralized Web](/docs/learn/decentralized-web).
 
 :::info
-Once installed on your machine, *Massa Station* will allow your browser to resolve `.massa` url domains and interact
-with decentralized applications hosted on Massa. When using *Massa Station*, the `.massa` url domain indicates that you
+Once installed on your machine, _Massa Station_ will allow your browser to resolve `.massa` url domains and interact
+with decentralized applications hosted on Massa. When using _Massa Station_, the `.massa` url domain indicates that you
 are visiting a website that is hosted on-chain, and directly served to you. You can learn more about Decentralized Web
 [here](/docs/learn/decentralized-web).
 :::
 
-Another core module of *Massa Station* that is already available is the [Massa Wallet](/build/wallet/massa-station.mdx).
+Another core module of _Massa Station_ that is already available is the [Massa Wallet](/build/wallet/massa-station.mdx).
 It allows you to manage your Massa accounts, and sign and send transactions with an experience similar to a traditional
 browser-plugin wallet, but with enhanced security.
 
-Besides the core modules developed by the Massa team, *Massa Station* was designed with community and modularity in
+Besides the core modules developed by the Massa team, _Massa Station_ was designed with community and modularity in
 mind; indeed, it allows anyone to develop and install their own modules. The most looked upon modules in terms of
 community adoption, and upon audit, will be made publicly available through the Massa Plugin Store. We greatly encourage
-our community to develop their own modules, as we believe that the *Massa Station* ecosystem will be the key to the
+our community to develop their own modules, as we believe that the _Massa Station_ ecosystem will be the key to the
 adoption of the Massa Blockchain.
 
-### Installation
+## Get Started
 
-#### System Requirements:
+- [Install Massa Station](/docs/massaStation/install)
+- [Massa Station Modules](/docs/massaStation/modules)
+- [Browse Decentralized Apps](/docs/massaStation/browse-decentralized-application)
 
-- **Operating System**: The latest versions of Windows, Mac, and Debian-based Linux distributions
-- **Disk Space**: At least 200 MB
-- **RAM**: At least 2 GB
+## Build on Massa Station
 
-To install *Massa Station*, follow these steps:
+- [Plugin Creation Guidelines](/docs/massaStation/guidelines)
+- [Hello World Plugin](/docs/massaStation/hello-world-plugin)
 
-1. Visit the [Massa Station website](https://station.massa.net/).
-2. Click the **Download** button and select the version compatible with your operating system.
-3. Once the download is complete, run the installer and follow the instructions.
+## Other Resources
 
-:::info
-During the installation process, you will be prompted to grant permissions to *Massa Station*.
-These permissions are necessary for *Massa Station* to function correctly.
-:::
-
-#### For MacOS:
-
-1. Locate the downloaded .pkg installer file. Hold "Option" key on the keyboard and right-click on the package, at the same time.
-2. From the context menu, select "Open" and then click "Open" again in the security pop-up window. This step is necessary because the installer is not signed by the App Store, and MacOS may block the installation by default.
-3. If prompted, enter your administrator password to authorize the installation.
-4. Follow the on-screen instructions to proceed with the installation.
-
-#### For Windows:
-
-1. Locate the downloaded .msi installer file and double-click on it to start the installation process.
-2. Follow the on-screen instructions to proceed with the installation.
-3. You will be prompted to choose the kind of installation you want. We recommend choosing the "Complete" installation as it will install all the necessary dependencies to access web on-chain. If you select the "Typical" option, Massa Station will be installed without DNS configuration. In that case, access to `.massa` domains may be restricted.
-4. Once the installation is complete, you can launch *Massa Station* from the Start menu.
-5. If prompted, click on "Yes" to allow the installer to make changes on certificates. These certificates allow *Massa Station* to use the HTTPS protocol, which improves your security when [browsing dApp](browse-decentralized-application).
-
-:::caution
-If you are using a version of Massa Station older than 0.3.6, Windows will warn you about untrusted software.
-You can safely ignore this warning and proceed with the installation by clicking on "more info" and "run anyway".
-:::
-
-#### For Debian Linux :
-
-##### Terminal Installation using apt:
-
-1. Download the latest version of *Massa Station* installer for Debian Linux from here.
-2. Open a terminal on your Debian Linux system.
-3. Navigate to the directory where the downloaded .deb package is located.
-4. Run the following command to install the package:<br/>
- `sudo apt install ./massastation-${{ VERSION }}_amd64.deb`
-5. Enter your administrator password when prompted and press Enter to confirm.
-6. The installation will begin, and you will see progress information in the terminal.
-7. Once the installation is complete, you can close the terminal.
-
-##### GUI Installation:
-
-1. Download the latest version of *Massa Station* installer for Debian Linux (.deb) from here.
-2. Open your file manager and navigate to the location where the .deb package is saved.
-3. Right-click on the .deb package and choose "Open with Software Install" or a similar option.
-4. The package manager will launch and display *Massa Station* installation page.
-5. Review the package information and dependencies, if any, and click on the "Install" button.
-6. If prompted, enter your administrator password to authorize the installation.
-7. The installation will commence, and you will see a progress bar indicating the status.
-8. Once the installation is complete, you will receive a notification confirming the successful installation.
-
-<br/>
-
-:::info
-##### Updating on Linux 
-
-There is a known issue involving version checks while updating *Massa Station* via Software Installer, follow these instructions for best results. 
-
-1. Download the latest version of *Massa Station* installer for Debian Linux (`.deb`) from [here](https://station.massa.net/).
-2. Open your file manager and navigate to the location where the `.deb` package is saved.
-3. The package manager will launch and display *Massa Station* installation page. 
-4. Review the package information and dependencies, if any, and click on the red "Delete" button.
-5. Proceed to [**GUI installation**](https://docs.massa.net/docs/massaStation/home#gui-installation) starting at step 2. 
-:::
-
-### Modules
-
-*Massa Station* is not just a blockchain client with a user interface; it is a decentralized super app.
-You can learn more about the super app concept and its strategic value
-[here](https://www.gartner.com/en/articles/what-is-a-superapp).
-
-To achieve evolvability and decentralization, *Massa Station* is designed to be extendable using **modules**, which are
-also known as **plugins**.
-
-:::tip
-If you are unable or do not wish to install a thick client, you can always use one of our
-[community browser extensions](https://docs.massa.net/docs/build/wallet/community-wallets).
-However, by doing so, you will limit your access to the full potential of this super app.
-:::
+- [Massa Station FAQ](/docs/massaStation/faq)
+- [Manual Installation](/docs/massaStation/manual-install)
+- [Uninstall Massa Station](/docs/massaStation/uninstall)

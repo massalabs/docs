@@ -20,6 +20,28 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Setup",
+      items: [
+        {
+          type: "doc",
+          id: "massaStation/install",
+        },
+        {
+          type: "doc",
+          id: "massaStation/manual-install",
+        },
+        {
+          type: "doc",
+          id: "massaStation/uninstall",
+        },
+      ]
+    },
+    {
+      type: "doc",
+      id: "massaStation/modules",
+    },
+    {
+      type: "category",
       label: "Massa Wallet",
       items: [
         {
@@ -51,6 +73,14 @@ const sidebars = {
     {
       type: "doc",
       id: "massaStation/browse-decentralized-application",
+    },
+    {
+      type: "doc",
+      id: "massaStation/faq",
+    },
+    {
+      type: "doc",
+      id: "massaStation/troubleshooting",
     },
     {
       type: "html",
