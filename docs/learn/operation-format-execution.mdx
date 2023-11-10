@@ -622,10 +622,40 @@ When a block is received, if any of the following happen the block is rejected (
 
 This detects non-legal blocks early and prevents them from propagating in the network.
 
+## Operation total gas
+
+The `total_gas` of an operation is the total amount of gas reserved for its processing, preparation and execution.
+It depends on the type of operation.
+
+
+### Transaction, RollBuy, RollSell operations
+
+The `total_gas` of those types of operations is always 800000 which corresponds to their base processing cost.
+
+### CallSC operations
+
+The `total_gas` of a CallSC operation `op` is computed as follows:
+```
+total_gas =
+  800000 (base operation processing gas cost)
+  + op.max_gas (the maximum gas reserved for bytecode execution, as provided in the `max_gas` field of the operation)
+```
+
+### ExecuteSC operations
+
+The `total_gas` of an ExecuteSC operation `op` is computed as follows:
+```
+total_gas =
+  800000 (base operation processing gas cost)
+  + 314000000 (on-the-fly single-pass WASM compilation cost)
+  + op.max_gas (the maximum gas reserved for bytecode execution, as provided in the `max_gas` field of the operation)
+```
+
+
 ## Operation execution
 
 When the consensus algorithm outputs the list of slots to execute,
-that list is fed to the Execution thread that executes slots asynhronously, in time order.
+that list is fed to the Execution thread that executes slots asynchronously, in time order.
 
 The execution thread executes slots in order following two cursors: a candidate cursor and a final cursor.
 
@@ -649,12 +679,12 @@ the results of the slot's candidate execution are simply written to the final st
 When a slot is executed, if it contains a block, that block is executed.
 THe block's operations are tentatively executed in the order they appear in the block.
 For each operation in a block, the following is performed:
-* Gas check: if the remaining block gas (starting from `MAX_BLOCK_GAS = 4294967295`) is not enough to supply the operation's `max_gas`, the operation is ignored.
+* Gas check: if the remaining block gas (starting from `MAX_BLOCK_GAS = 4294967295`) is not enough to supply the operation's `total_gas`, the operation is ignored.
 * Thread check: if the thread of the operation sender does not match the thread of the block, the operation is ignored.
 * Period check: if the slot period of the block is not within the range of validity periods of the operation, the operation is ignored. The validity period interval of an operation `Op` is: `[expiration_period - 10, expiration_period]`.
 * Reuse check: if the operation is in the list of executed operations, the operation is ignored.
 * Fee spending: spend the fee from the sender's account. If this spending fails, ignore the operation.
-* Subtract the operation's `max_gas` from the remaining block gas.
+* Subtract the operation's `total_gas` from the remaining block gas.
 * Add the operation to the list of executed operations. Note that operations with an expiry period that is earlier or equal to the latest final period in the operation's thread are removed from this list after 10 extra periods in order to cap memory use.
 * If any of the previous steps failed, the operation is considered **NOT EXECUTED**, it is ignored and the block producer does not pocket any fees from it while wasting block space. Block producers should therefore be careful about the operations they choose to include or they might not get any fees from them. Thanks to sharding and the declarative `max_gas` and `max_coins` operation fields, block prodcuers can keep track of balances and gas usage without having to simulate the complete execution of candidate operations in order to avoid this pitfall.
 * From there on, the operation is considered executed.
@@ -708,7 +738,7 @@ This is done by a scoring algorithm that takes into account:
   * the number of opportunities other block producers have to execute the operation before the current node gets a chance to include it based on proof-of-stake selections
 * the usage of resources by the operation:
   * the operation size (occupying space in the finite block size)
-  * the operation `max_gas` (occupying gas in the finite block gas `MAX_BLOCK_GAS`)
+  * the operation `total_gas` (occupying gas in the finite block gas `MAX_BLOCK_GAS`)
 Operations are then kept sorted by score, and the ones with the worst scores are discarded to respect the max size of the pool.
 
 Sorted operations are then scanned based on their declarative coin spending (`fee + max_coins`)
