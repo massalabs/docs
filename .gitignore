@@ -23,8 +23,11 @@ yarn-error.log*
 
 # downlaoded files
 external/client/buildnet/config.toml
+external/client/securnet/config.toml
 external/client/testnet/config.toml
 external/node/buildnet/config.toml
+external/node/securnet/bootstrap_whitelist.json
+external/node/securnet/config.toml
 external/node/testnet/bootstrap_whitelist.json
 external/node/testnet/config.toml
 

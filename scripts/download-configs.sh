@@ -52,6 +52,16 @@ insert_content "EXTERNAL_BUILDNET_NODE_CONFIG_CONTENT" "./external/node/buildnet
 insert_content "EXTERNAL_BUILDNET_CLIENT_CONFIG_CONTENT" "./external/client/buildnet/config.toml" "./docs/node/all-configs.mdx"
 
 # Download node and client config files
+download_files "./external/node/securnet/" "./external/node/securnet/config-files.txt"
+download_files "./external/client/securnet/" "./external/client/securnet/config-files.txt"
+
+# Add node config file content to the documentation
+insert_content "EXTERNAL_SECURNET_NODE_CONFIG_CONTENT" "./external/node/securnet/config.toml" "./docs/node/all-configs.mdx"
+
+# Add client config file content to the documentation
+insert_content "EXTERNAL_SECURNET_CLIENT_CONFIG_CONTENT" "./external/client/securnet/config.toml" "./docs/node/all-configs.mdx"
+
+# Download node and client config files
 download_files "./external/node/testnet/" "./external/node/testnet/config-files.txt"
 download_files "./external/client/testnet/" "./external/client/testnet/config-files.txt"
 
