@@ -1,0 +1,1 @@
+https://raw.githubusercontent.com/massalabs/massa/securnet/massa-node/base_config/config.toml

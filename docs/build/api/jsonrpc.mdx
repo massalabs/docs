@@ -72,76 +72,95 @@ curl --location --request POST 'https://test.massa.net/api/v2' \
 
 ```json
 {
-"jsonrpc": "2.0",
-"result": {
-    "node_id": "N1VRyXjUaHeJd4Rmr3waVmpZDFzzH5ARRi3f5ye5BYgxBmxHC7X",
-    "node_ip": "141.94.218.103",
-    "version": "TEST.26.1",
-    "current_time": 1678095036319,
-    "current_cycle": 201,
-    "current_cycle_time": 1678094448000,
-    "next_cycle_time": 1678096496000,
-    "connected_nodes": {
-        "N13Ykon8Zo73PTKMruLViMMtE2rEG646JQ4sCcee2DnopmVM3P5": [
-            "51.75.60.228",
-            false
+    "jsonrpc": "2.0",
+    "result": {
+        "node_id": "N1VRyXjUaHeJd4Rmr3waVmpZDFzzH5ARRi3f5ye5BYgxBmxHC7X",
+        "node_ip": "141.94.218.103",
+        "version": "SECU.27.0",
+        "current_time": 1699881695772,
+        "current_cycle": 208,
+        "current_cycle_time": 1699879784000,
+        "next_cycle_time": 1699881832000,
+        "connected_nodes": {
+            "N13Ykon8Zo73PTKMruLViMMtE2rEG646JQ4sCcee2DnopmVM3P5": [
+                "::ffff:51.75.60.228",
+                false
+            ],
+            "N1XxexKa3XNzvmakNmPawqFrE9Z2NFhfq1AhvV1Qx4zXq5p1Bp9": [
+                "::ffff:158.69.23.120",
+                false
+            ],
+            "N1qxuqNnx9kyAMYxUfsYiv2gQd5viiBX126SzzexEdbbWd2vQKu": [
+                "::ffff:198.27.74.5",
+                false
+            ],
+            "N12UbyLJDS7zimGWf3LTHe8hYY67RdLke1iDRZqJbQQLHQSKPW8j": [
+                "::ffff:149.202.86.103",
+                false
+            ],
+            "N12rPDBmpnpnbECeAKDjbmeR19dYjAUwyLzsa8wmYJnkXLCNF28E": [
+                "::ffff:158.69.120.215",
+                false
+            ],
+            "N12vxrYTQzS5TRzxLfFNYxn6PyEsphKWkdqx2mVfEuvJ9sPF43uq": [
+                "::ffff:149.202.89.125",
+                false
+            ]
+        },
+        "last_slot": {
+            "period": 26743,
+            "thread": 15
+        },
+        "next_slot": {
+            "period": 26743,
+            "thread": 16
+        },
+        "consensus_stats": {
+            "start_timespan": 1699881635772,
+            "end_timespan": 1699881695772,
+            "final_block_count": 121,
+            "stale_block_count": 0,
+            "clique_count": 1
+        },
+        "pool_stats": [
+            0,
+            96
         ],
-        ...
-        "N12v69D3R9DRQefDVMRuJv4nzkLTtvcoa42pWixZq3zJQPeSBGSh": [
-            "46.4.76.149",
-            true
-        ]
-    },
-    "last_slot": {
-        "period": 25764,
-        "thread": 24
-    },
-    "next_slot": {
-        "period": 25764,
-        "thread": 25
-    },
-    "consensus_stats": {
-        "start_timespan": 1678094976319,
-        "end_timespan": 1678095036319,
-        "final_block_count": 120,
-        "stale_block_count": 0,
-        "clique_count": 1
-    },
-    "pool_stats": [
-        482673,
-        1322
-    ],
-    "network_stats": {
-        "in_connection_count": 18,
-        "out_connection_count": 13,
-        "known_peer_count": 10033,
-        "banned_peer_count": 0,
-        "active_node_count": 31
-    },
-    "execution_stats": {
-        "time_window_start": 1678094976319,
-        "time_window_end": 1678095036319,
-        "final_block_count": 120,
-        "final_executed_operations_count": 183229,
-        "active_cursor": {
-            "period": 25764,
-            "thread": 20
+        "network_stats": {
+            "in_connection_count": 6,
+            "out_connection_count": 0,
+            "known_peer_count": 7,
+            "banned_peer_count": 0,
+            "active_node_count": 6
+        },
+        "execution_stats": {
+            "time_window_start": 1699881635772,
+            "time_window_end": 1699881695772,
+            "final_block_count": 121,
+            "final_executed_operations_count": 0,
+            "active_cursor": {
+                "period": 26743,
+                "thread": 11
+            },
+            "final_cursor": {
+                "period": 26741,
+                "thread": 14
+            }
+        },
+        "config": {
+            "genesis_timestamp": 1699453800000,
+            "end_timestamp": null,
+            "thread_count": 32,
+            "t0": 16000,
+            "delta_f0": 1088,
+            "operation_validity_periods": 10,
+            "periods_per_cycle": 128,
+            "block_reward": "1.02",
+            "roll_price": "100",
+            "max_block_size": 300000
         }
     },
-    "config": {
-        "genesis_timestamp": 1677682800000,
-        "end_timestamp": 1680292800000,
-        "thread_count": 32,
-        "t0": 16000,
-        "delta_f0": 1088,
-        "operation_validity_periods": 10,
-        "periods_per_cycle": 128,
-        "block_reward": "0.30",
-        "roll_price": "100",
-        "max_block_size": 1000000
-    }
-},
-"id": 1
+    "id": 1
 }
 ```
 
