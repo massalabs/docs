@@ -70,19 +70,6 @@ Setup your node to use the secret you just generated as its public key and staki
     {}
     ```
 
-
-- modify the file `massa-node/base_config/initial_ledger.json`:
-
-    ```javascript
-    {
-        "ADDR": {
-            "balance": "80000000",
-            "datastore": {},
-            "bytecode": []
-        }
-    }
-    ```
-
 - optionally, if you need a non-standard configuration, you can modify the file `massa-node/base_config/config.toml` depending on what you are trying to do.
 
 You can now launch your node:
