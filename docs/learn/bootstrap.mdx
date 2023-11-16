@@ -68,7 +68,7 @@ Massa nodes can bootstrap other nodes, with certain limitations because the proc
 
 The bootstrap system listens on the address/port defined in `massa-node/base_config/config.toml`. The node's bootstrap server can be disabled by removing the `bind` entry from the config file.
 
-The Massa State is large (~1 terabyte in the worst case), and takes time to upload to bootstrapping nodes. During that time, new changes to the state continue to appear, so new changes affecting already-uploaded parts need to be sent on-the-fly.
+The Massa State is large (terabytes in the worst case), and takes time to upload to bootstrapping nodes. During that time, new changes to the state continue to appear, so new changes affecting already-uploaded parts need to be sent on-the-fly.
 
 By default, Massa nodes only allow a whitelist of IP addresses to bootstrap from them. This list is present in the `massa-node/base_config/bootstrap_whitelist.json` file. This list is intended to prevent flooding attacks by attackers pretending to be bootstrapping, and also makes it more difficult for node runners to bootstrap from untrusted sources. If you wish to disable whitelisting and allow anyone to bootstrap from your node, simply delete the `bootstrap_whitelist.json` file and restart your node.
 
