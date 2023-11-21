@@ -6,20 +6,24 @@ sidebar_label: Storage costs
 # Storage costs
 
 In Massa, each network node maintains a full copy of the ledger.
-To prevent the requirement of massive storage capacities, a ledger-size limit of 1TB has been set.
+To prevent the requirement of massive storage capacities, a ledger-size limit of 10TB has been set.
 This limit is essential to encourage widespread adoption and enable users to run nodes from their homes.
 To ensure compliance with this limit, a mechanism has been established that correlates storage space with locked coins.
 
-For every byte of storage space claimed, whether it's for storing address and balance information, keys in the datastore, bytecode, or other data elements,
- users are required to lock a corresponding amount of coins.
+For every byte of storage space claimed, whether it's for storing address and balance information,
+keys in the datastore, bytecode, or other data elements, users are required to lock a corresponding amount of coins.
 These locked coins act as a commitment and are released when the allocated storage space is released.
 
-To determine the amount of coins needed to lock for each byte of storage, the value of 0.00025 Massa coin (MAS) has been chosen.
-This value ensures that if half of the total coins (250,000,000 MAS) are locked, the storage limit of 1TB will be reached.
+To determine the amount of coins needed to lock for each byte of storage, the value of 0.0001 Massa coin (MAS) has been chosen.
+This value ensures that if all of the total initial coin supply (1,000,000,000 MAS) is locked for storage only,
+the 10TB limit is reached and no account can push this limit further because there are no more coins available.
 
-To avoid confusion, a fixed size of 8 bytes has been chosen for each balance.
-Therefore, the initial ledger entry for address and balance incurs a cost of (8 + 32) * 0.00025 = 0.01 MAS.
-Datastore keys also have variable sizes, but to simplify calculations, a fixed size of 10 bytes is used for determining storage costs.
+The initial ledger entry for address and balance incurs a cost of 0.001 MAS.
+
+Datastore entries also occupy space:
+* a base size of 4 bytes that represents the average storage used for storing an empty key-value entry
+* the length of the key
+* the length of the value
 
 To calculate the storage cost for a specific address in the ledger, the formula includes the address size, balance constant, bytecode length, 
 and the sum of constants for each datastore key and its corresponding value size.
@@ -27,7 +31,7 @@ and the sum of constants for each datastore key and its corresponding value size
 The overall formula is:
 
 $$
-Cost_{massa} = 0.00025 * (AddressSize + BalanceSize + BytecodeSize + \sum_i (DataStoreKey_i + DatastoreValue_i))
+Cost_{MAS} = 0.001 + 0.0001 * BytecodeSize + 0.0001 * \sum_i (4 + DataStoreKeySize_i + DatastoreValueSize_i)
 $$
 
 It's important to note that the storage costs are always paid by the address that initiates the Application Binary Interface (ABI) call.
@@ -36,27 +40,42 @@ the associated storage costs will be charged to the address making the call.
 
 
 ## Examples
-When creating an address on the blockchain, a minimum of 0.01 MAS (0.00025 * (32 + 8)) needs to be sent alongside the operation that generates the address (e.g., a transfer).
+
+### Transferring coins to a non-existing account
+
+
+When creating a new account in Massa, a minimum of 0.001 MAS needs to be sent alongside the operation that creates the new account (e.g., a transfer).
 This cost covers the creation of the address and its associated balance.
 
+You create a new account using the Massa Client `massa-client`, you can generate a secret key `(wallet_generate_secret_key)`) and verify its address using the `wallet_info` function.
+However, that operation is done fully offline and the new account does not appear in the blockchain just yet.
 
-Suppose you want to store your birth date, which is 30 bytes long, in your datastore.
-In that case, you need to send an operation that creates a key in your datastore using a Smart Contract.
-This operation incurs a storage cost of at least 0.01 MAS, calculated as 0.00025 * (10 + 30).
+Now imagine a sender account wants to send `10 MAS` to your new account using a Transaction operation transferring `10 MAS` to your newly generated address.
+Since the newly created account is not in the state just yet,
+`0.001` coins from the transferred amount are reserved for writing the account address and balance,
+and your newly created account's balance becomes `9.999`.
+Note that if the transferred amount is lower than `0.001 MAS`, the new destination account can not be written and the operation payload run fails.
 
-Thus, if you create a new wallet using the Massa Client `massa-client`, you can generate a secret key `(wallet_generate_secret_key)`) and verify its address using the `wallet_info` function.
-However, until a transfer of at least 0.01 Massa is received to your wallet address, it will not appear in any of blockchain's ledgers.
+In any subsequent transfers towards your now-written account,
+no coins will be reserved for storage and you will receive the full transferred amount.  
 
-If the amount of transfer to an unexisting user address is lower than the amount of MAS coin needed to create the address on the ledger, the operation will be refused.
+### Datastore handling in a smart contract
 
+Suppose you want to store your username "kevin" under the key "username" in the datastore of an existing account, both in utf-8 bytes.
+The value is 5 bytes long and the key is 8 bytes long and we assume that that entry did not exist before in the datastore of the account.
+In that case, you need to send an operation that creates this new entry in your datastore using a Smart Contract.
+Storing the entry locks `0.0001 * (4 + 8 + 5) = 0,0017` MAS coins.
 
-:::tip
-1. If a transfer of 0.005 MAS is received, the operation will fail.
+Now suppose that you change that existing entry to a new nickname "kev".
+The new value is shorter: freeing 2 bytes causes `0.0001 * 2 = 0.0002` coins to be refunded.
 
-2. If a transfer of 10 MAS is received, the balance of the newly created address will show 9.99 MAS, as 0.01 MAS represent the storage cost.
-:::
+Now let's change the nickname again from "kev" to "ned". This does not change the datastore size and does not change the coin balance.
 
-In case you wish to delete the entry in your datastore, you will be refunded the storage costs (0.01 MAS).
+Now, let's change the nickname again from "ned" to "pierre".
+This uses 3 extra byte and therefore locks `0.0001 * 3 = 0.0003` MAS coins.
+
+In case you then delete the "nickname" datastore entry (with the "pierre" value),
+`0.0001 * (4 + 8 + 6) = 0.0018` coins are refunded. 
 
 :::info
 
