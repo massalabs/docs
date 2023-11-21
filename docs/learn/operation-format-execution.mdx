@@ -770,7 +770,7 @@ As candidate slots are executed, candidate operation states can transition from 
 If the slot `S` is the latest executed final slot, then the observed status of a given operation at the output of `S` is considered final.
 As final slots are executed, the following final operation state transitions can be observed:
 * `EXECUTABLE_OR_EXPIRED` -> `EXECUTED_WITH_SUCCESS`: the operation was executed as final with success
-* `EXECUTABLE_OR_EXPIRED` -> `EXECUTED_WITH_SUCCESS`: the operation was executed as final with failure
+* `EXECUTABLE_OR_EXPIRED` -> `EXECUTED_WITH_FAILURE`: the operation was executed as final with failure
 * `EXECUTED_WITH_SUCCESS` -> `EXECUTABLE_OR_EXPIRED`: the operation was executed as final with success and then it expired and was pruned away
 * `EXECUTED_WITH_FAILURE` -> `EXECUTABLE_OR_EXPIRED`: the operation was executed as final with failure and then it expired and was pruned away
 
