@@ -34,7 +34,7 @@ const sidebars = {
           type: "doc",
           id: "massaStation/uninstall",
         },
-      ]
+      ],
     },
     {
       type: "doc",
@@ -98,7 +98,7 @@ const sidebars = {
     {
       type: "doc",
       id: "massaStation/hello-world-plugin",
-    }
+    },
   ],
   learnSidebar: [
     {
@@ -239,6 +239,7 @@ const sidebars = {
         },
         {
           type: "category",
+          collapsible: false,
           label: "Develop",
           items: [
             {
@@ -283,7 +284,7 @@ const sidebars = {
         {
           type: "doc",
           id: "build/wallet/wallet-provider",
-        },  
+        },
         {
           type: "doc",
           id: "build/wallet/community-wallets",
@@ -323,7 +324,7 @@ const sidebars = {
         {
           type: "doc",
           id: "build/networks-faucets/local-network",
-        }
+        },
       ],
     },
     {
