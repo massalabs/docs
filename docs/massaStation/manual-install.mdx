@@ -53,16 +53,6 @@ You can make this change by editing the 'hosts' file on your computer, regardles
 2. Add `127.0.0.1 station.massa` at the end of the file.
 3. Save and close the file.
 
-### Handle `*.massa` redirection
-
-If you want to access `.massa` domains in your web browser, you will need to install and configure a local DNS server on your system.
-
-- **Windows**: [Acrylic DNS](https://sourceforge.net/projects/acrylic/)
-- **MacOS**: Install [DNSMasq](https://formulae.brew.sh/formula/dnsmasq#default) using [Homebrew](https://brew.sh/).
-- **Linux**: DNSMasq might be enablable using Network Manager or be available through your package manager.
-
-Once installed, you will need to configure the DNS server to redirect all requests to `.massa` domains to `localhost` (or `127.0.0.1`).
-
 ### Add HTTPS support
 
 Massa Station will automatically generate a self-signed certificate for HTTPS support when it is first run, but to do it,
