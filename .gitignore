@@ -32,3 +32,6 @@ external/node/testnet/bootstrap_whitelist.json
 external/node/testnet/config.toml
 
 *.mdx-e
+
+# IDE
+.idea
