@@ -45,11 +45,11 @@ Legality checks performed on deserialization:
 The operation contents hash is computed as follows:
 
 ```
-operation_contents_hash = blake3_hash(concatenate(serialize_binary(public_key), serialize_binary(operation_contents)))
+operation_contents_hash = blake3_hash(concatenate(serialize_binary(chain_id), serialize_binary(public_key), serialize_binary(operation_contents)))
 ```
 
 Blake3 is 12 times faster than sha256 and is not subject to [length extension attacks](https://en.wikipedia.org/wiki/Length_extension_attack) contrary to sha256.
-See the [Public Key section](#public-key) and [Operation Contents](#operation-contents) sections for details on the binary serialization formats of these fields. 
+See the [Chain id section](#chain-id), the [Public Key section](#public-key) and [Operation Contents](#operation-contents) sections for details on the binary serialization formats of these fields.
 
 This hash is a deterministic fingerprint of the non-malleable parts of the operation (excluding the signature) that can be considered unique in practice.
 
@@ -103,7 +103,7 @@ Here is the entire encoding process for an operation ID in text format:
 * prepend the letter 'O'
 
 Legality checks performed on text deserialization:
-* the text must be valid UTF-8 and ASCCII with only alphanumeric characters
+* the text must be valid UTF-8 and ASCII with only alphanumeric characters
 * the prefix letter must be 'O'
 * the base58check must use the legal alphabet described above and the checksum must verify
 * the decoded binary serialization of the operation ID must be legal (see above)
@@ -540,9 +540,39 @@ Legality checks performed at binary deserialization:
 * function name must be valid UTF-8
 * param length must be inferior or equal to 10,000,000
 
+### Chain id
+
+The chain id is an unsigned 64 bit value used to avoid replay attacks between Massa networks.
+
++---------------------+-------------------------------------------+
+| Chain id values                                                 |
++---------------------+-------------------------------------------+
+| Network             | Value                                     |
++=====================+===========================================+
+| MainNet             | 77658377                                  |
++---------------------+-------------------------------------------+
+| BuildNet            | 77658366                                  |
++---------------------+-------------------------------------------+
+| SecureNet           | 77658383                                  |
++---------------------+-------------------------------------------+
+| LabNet              | 77658376                                  |
++---------------------+-------------------------------------------+
+| Sandbox             | 77                                        |
++---------------------+-------------------------------------------+
+
+Binary serialization format of the chain id:
+
++---------------------+---------------------------------------------+---------------------------------------------+
+| Signature Binary Representation                                                                                 |
++---------------------+---------------------------------------------+---------------------------------------------+
+| Field               | Description                                 | Type                                        |
++=====================+=============================================+=============================================+
+| `chain id`          | unsigned 64-bit integer as big endian bytes | 8 bytes                                     |
++---------------------+---------------------------------------------+---------------------------------------------+
+
 ### Example of legal operation with valid signature
 
-
+* Chain id: 77658383
 * Sender Secret key in text format: `S1CkpvD4WMjJWxR2WZcrDEkJ1kWG2kKe1e3Afe8miqmskHqovvA`
 * Sender Public key in text format: `P1t4JZwHhWNLt4xYabCbukyVNxSbhYPdF6wCYuRmDuHD784juxd`
 * Sender Address in text format: `AU12m1gXHUGxBZsDF4veeWfYaRmpztBCieHhPBaqf3fcRF2LdAuZ7`
@@ -553,16 +583,20 @@ Legality checks performed at binary deserialization:
   * Destination address in text format: `AU12v83xmHg2UrLM8GLsXRMrm7LQgn3DZVT6kUeFsuFyhZKLkbQtY`
   * Amount: `3.1`
 
-Resulting operation ID in text format: `O1Vy2P4tTEPxkNXpbUPVFemzp18FkTTmsJ2U6hPoyTvJ4nZMvBs`
+Resulting operation ID in text format: `O12CRpeqSW1NenBZ7pN79ZZz454xkbeQBGspyu4gKVXcYndm8gxw`
 
 Raw bytes in hexadecimal representation of the binary serialization of the operation:
 
 ```
-00 36 B7 20 2A 12 DE DC 0E C1 F3 19 92 7F 17 87 E7 10 83 E0 58 63 8B CD 75 15 2F 3F 92
-0F 23 21 AE B4 C4 9B 87 87 4E 97 9F 95 28 77 0D D6 EB 65 18 36 0E 1C C1 84 DE A8 A0 57
-5A 1C 15 30 41 32 01 00 73 EE 58 D3 51 9D 54 03 E9 8F EF 60 35 4C DE 6C 7D A1 73 C1 6C
-8C 6C 58 CF C8 6E E5 21 51 3C A6 C0 84 3D E8 07 00 00 00 FC 50 AB 9B 1B 78 4A B1 93 0E
-5C F3 84 3E 8A E6 7C 59 42 1B 01 55 10 82 B0 25 90 91 4B 4C 2A 0A 80 FE 98 C6 0B
+00 FE C0 79 BE 60 05 EF D4 2A 1D 6A 03 0D D3 FB
+99 56 F9 FC C7 C8 78 9B 11 8D 25 1A 58 72 16 4F
+10 48 51 F2 57 20 FD 48 F9 FD 24 C3 6D 5B D3 16
+47 E9 B7 05 E2 DE F8 6C F3 B5 CE BA D2 9F 86 26
+0A 00 73 EE 58 D3 51 9D 54 03 E9 8F EF 60 35 4C
+DE 6C 7D A1 73 C1 6C 8C 6C 58 CF C8 6E E5 21 51
+3C A6 C0 84 3D E8 07 00 00 00 FC 50 AB 9B 1B 78
+4A B1 93 0E 5C F3 84 3E 8A E6 7C 59 42 1B 01 55
+10 82 B0 25 90 91 4B 4C 2A 0A 80 FE 98 C6 0B
 ```
 
 ## Operation propagation
