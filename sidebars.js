@@ -381,11 +381,6 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "node/update",
-      label: "Updating a node",
-    },
-    {
-      type: "doc",
       id: "node/wallet",
       label: "Creating a wallet",
     },
@@ -398,11 +393,6 @@ const sidebars = {
       type: "doc",
       id: "node/routability",
       label: "Routability",
-    },
-    {
-      type: "doc",
-      id: "node/reward",
-      label: "Testnet Staking Rewards Program",
     },
     {
       type: "doc",
