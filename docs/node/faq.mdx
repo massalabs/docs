@@ -10,9 +10,9 @@ sidebar_label: Frequently Asked Questions
 ### What are the hardware requirements?
 
 The philosophy of Massa is to be as decentralized as possible. To fulfill this goal, we aim to have low hardware
-requirements so that many people can run nodes. Right now 4 cores and 8 GB of RAM should be enough to run a node. As the
-transaction rate increases, it might not be sufficient anymore. Ultimately, we plan that the mainnet fits on a desktop
-computer with 8 cores, 16 GB RAM, and 1TB disk.
+requirements so that many people can run nodes. On the other hand, some minimal hardware is required to be able
+to process enough operations per second as per our scalability goals. We plan that the mainnet fits on a desktop
+computer with 8 cores, 16 GB RAM, 1TB disk and a decent home internet connection.
 
 ### Can it run on a VPS?
 
@@ -31,17 +31,6 @@ the output will go to the `nohup.out` file. You will be able to close the termin
 have to use ``pkill -f massa-node``. You can also use [screen](https://help.ubuntu.com/community/Screen) or
 [tmux](http://manpages.ubuntu.com/manpages/cosmic/man1/tmux.1.html) for example.
 
-### Will Massa support smart contracts?
-
-We will try to support both the EVM for retro compatibility, and a specific smart contract engine that fully leverages
-the Massa protocol and allows to develop in more usual languages as well as introduces several innovations.
-
-Our smart contract system is released and run on the testnet. You can find the full documentation
-[here](/docs/build/smart-contract/intro).
-
-Our smart contract system includes some exciting features, such as self-wakeup, a bit like what is introduced
-[here](https://arxiv.org/pdf/2102.10784.pdf).
-
 ### What ports does Massa use?
 
 By default, Massa uses TCP port 31244 for protocol communication with other nodes, and 31245 to bootstrap other nodes.
@@ -55,12 +44,7 @@ Massa also uses TCP port 33034 for the new private API, and 33035 for the new pu
 
 ### How secure are the keypairs?
 
-Please note that the Testnet coins have NO VALUE. That being said, we are working on adding encryption on several levels
-before the Mainnet.
-
-The staking key file in the node folder and the wallet file in the client folder are currently not encrypted but it will
-come soon. Also, private API communication between the client and the node is not encrypted for now but it will be
-implemented before the Mainnet as well.
+The staking wallet in the node folder and the wallet file in the client are encrypted.
 
 Note that nodes don't know or trust each other, and they never exchange sensitive information, therefore cryptography is
 not required at that level. A handshake is performed at the connection with another peer. We sign random bytes that the
@@ -76,18 +60,14 @@ message we send (just random bytes).
 You need to back up the file `wallet.dat` and migrate it to the massa-client folder on your new server. You also need to
 backup and migrate the `node_privkey.key` file in massa-node/config to keep your connectivity stats.
 
-If you have rolls, you also need to register the key used to buy rolls to start staking again [here](/docs/node/reward).
+If you have rolls, you also need to register the key used to buy rolls to start staking again.
 
 ### Why are the balances in the client and the explorer different?
 
 It may mean that your node is desynchronized. Check that your node is running, that the computer meets hardware
 requirements, and try restarting your node.
 
-### Does the command `cargo run -- --wallet wallet.dat` override my existing wallet?
-
-No, it loads the wallet if it exists, otherwise, it creates it.
-
-### Where is the `wallet.dat` located?
+### Where are the wallet files located?
 
 By default, in the massa-client directory.
 
@@ -148,37 +128,6 @@ your operation will be added to a block even if the fee is zero. We will communi
 
 You need to wait for your rolls to become active (around 1h45), then depending on the number of rolls you have, you
 might want to wait for more to be selected for block/endorsement production.
-
-## Testnet and rewards
-
-### How can I migrate my node from one computer/provider to another and keep my score in the Testnet Staking Reward Program?
-
-If you migrate your node from one computer/provider to another you should save the keypair associated with the staking
-address that is registered. This keypair is located in the `wallet.dat` file located in `massa-client` folder. You can
-also save your node keypair `node_privkey.key` located in the `massa-node/config` folder, if you don't then don't forget
-to register your new node keypair to the Discord bot.
-
-If your new node has a new IP address then you should not forget to register the new IP address to the Discord bot.
-
-If you lost `wallet.dat` and/or `node_privkey.key`, don't panic, just redo the whole node setup and rewards registration
-process and the newly generated keys will be associated with your discord account. Past scores won't be lost.
-
-### I want to stake more! Can I abuse the faucet bot to get more coins?
-
-You can claim testnet tokens every 24h. The tokens are worthless, you won't have any advantage over the others by doing
-that.
-
-### Will the amount of staked Rolls affect Testnet rewards?
-
-No, as long as you have at least 1 roll, further roll purchases won't change your score.
-
-### I can't register with the Discord bot because the node ID is already used
-
-If you changed your staking key, you need to register again with the bot using the
-``node_testnet_rewards_program_ownership_proof`` command. If you are using the same install, the bot will return the
-following error message: "This node ID is already used or has already been used, please use another one!". To solve
-this, you need to generate a new node ID. Stop your node and delete the `node_privkey.key` file in `massa-node/config`.
-You can then start your node again and you will have a new node ID.
 
 ## Common issues
 

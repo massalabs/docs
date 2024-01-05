@@ -7,37 +7,8 @@ sidebar_label: Installing a node
 
 :::info
 
-Right now 4 cores and 8 GB of RAM should be enough to run a node, but it might increase in the future.
+You need a computer with 8 cores, 16 GB RAM, 1TB disk and a decent internet connection.
 More info in the [FAQ](/docs/node/faq).
-
-:::
-
-## From Massa station (simplest installation)
-
-If you wish to run a Massa node with a couple of clicks only, you can download Massa station app and activate the node-manager
-plugin. This will enable you to configure, install, start and even update a node using a simple graphical interface.
-For that, there are 5 steps to follow:
-
-1. Install Massa station based on your OS:
-    - [Windows](https://github.com/massalabs/station/releases/latest/download/massastation_windows_amd64.exe)
-    - MacOS
-        - For Apple Silicon CPUs (M1, M2...), use
-        [ARM](https://github.com/massalabs/station/releases/latest/download/massastation_darwin_arm64)
-        - For Intel CPUs (i5, i7...), use
-        [AMD](https://github.com/massalabs/station/releases/latest/download/massastation_darwin_amd64)
-    - [Linux](https://github.com/massalabs/station/releases/latest/download/massastation_linux_amd64)
-2. Start Massa station using the icon tray. If you need help,
-[this page](https://github.com/massalabs/station/blob/main/INSTALLATION.md) can help.
-3. [Configure your VPS](https://github.com/massalabs/station-massa-node-manager/wiki) and go to
-[station home page](https://station.massa/).
-4. Install the node-manager plugin.
-5. Add your VPS details and click on "start".
-6. You're now a Massa node-runner!
-
-:::info
-
-If you have trouble following this procedure, feel free to
-[open a question](https://github.com/massalabs/station/issues/new) describing your problem.
 
 :::
 
@@ -46,10 +17,11 @@ If you have trouble following this procedure, feel free to
 If you just wish to run a Massa node without compiling it yourself, you can simply download the latest binary below and
 go to the next step: [Running a node](/docs/node/run).
 
-- [Windows executable](https://github.com/massalabs/massa/releases/download/TEST.26.1/massa_TEST.26.1_release_windows.zip)
-- [Linux binary](https://github.com/massalabs/massa/releases/download/TEST.26.1/massa_TEST.26.1_release_linux.tar.gz) - 
+- [Windows executable](https://github.com/massalabs/massa/releases/download/MAIN.1.0/massa_MAIN.1.0_release_windows.zip)
+- [Linux binary](https://github.com/massalabs/massa/releases/download/MAIN.1.0/massa_MAIN.1.0_release_linux.tar.gz) - 
 only works with libc2.28 and higher (for example Ubuntu 20.04 and higher)
-- [MacOS binary](https://github.com/massalabs/massa/releases/download/TEST.26.1/massa_TEST.26.1_release_macos.tar.gz)
+- [MacOS binary](https://github.com/massalabs/massa/releases/download/MAIN.1.0/massa_MAIN.1.0_release_macos_aarch64.tar.gz)
+- Other binaries can be found on https://github.com/massalabs/massa/releases/tag/MAIN.1.0
 
 ## From source code (advanced installation)
 
@@ -62,10 +34,10 @@ Otherwise, if you wish to run a Massa node from source code, here are the steps 
 - install [rustup](https://www.rust-lang.org/tools/install): ```curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh```
 - configure path: ```source $HOME/.cargo/env```
 - check rust version: ```rustc --version```
-- install rust stable version: ```rustup toolchain install 1.72.0```
-- set it as default: ```rustup default 1.72.0```
+- install rust stable version: ```rustup toolchain install 1.74.1```
+- set it as default: ```rustup default 1.74.1```
 - check rust version: ```rustc --version```
-- clone this repo: ```git clone --branch testnet https://github.com/massalabs/massa.git```
+- clone this repo: ```git clone https://github.com/massalabs/massa.git```
 
 ### On Windows
 
@@ -85,5 +57,11 @@ Otherwise, if you wish to run a Massa node from source code, here are the steps 
 
 **Clone the Massa Git Repository**:
 - Open Windows Power Shell
-    - Clone the latest distributed version: ```git clone --branch testnet https://github.com/massalabs/massa.git```
-    - Change default Rust to nightly: ```rustup default 1.72.0```
+    - Clone the latest distributed version: ```git clone https://github.com/massalabs/massa.git```
+    - Change default Rust to the following stable version: ```rustup default 1.74.1```
+
+
+## My node is installed. What next ?
+
+Once you have installed your node, you want to set it up for running and staking.
+Please follow the next step: [Running a node](/docs/node/run).

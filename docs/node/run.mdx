@@ -5,7 +5,12 @@ sidebar_label: Running a node
 
 # Running a node
 
-## From binaries (simple installation)
+This document explains how to run a node.
+
+This assumes that you have installed the node software.
+If not, please follow the [installation instructions](/docs/node/install).
+
+## If your node was installed from binaries (simple installation)
 
 Simply run the binaries you downloaded in the previous step:
 
@@ -22,7 +27,7 @@ You can override the default configuration via massa-node/config/config.toml fil
 
 **Start the node**
 
-On a first window:
+In a first window:
 
 ```shell
 cd massa/massa-node/
@@ -38,7 +43,7 @@ Replace `<PASSWORD>` with a password that you will need to keep to restart your 
 
 **Start the client**
 
-On a second window:
+In a second window:
 
 ```shell
 cd massa/massa-client/
@@ -52,13 +57,13 @@ Then:
 
 Replace `<PASSWORD>` with a password that you will need to keep to restart your client
 
-## From source code (advanced installation)
+## If your node was installed from source code (advanced installation)
 
 ### On Ubuntu / MacOS
 
 **Start the node**
 
-On a first window:
+In a first window:
 
 ```shell
 cd massa/massa-node/
@@ -127,3 +132,10 @@ the issues and open them on the Rust side if they are valid. This avoids polluti
 reports of the same error.
 
 :::
+
+## What next ?
+
+Congratulations, you are now running a node.
+But your node is still not staking, so it is not producing blocks nor receiving rewards.
+
+It is time to activate staking on your node. Follow the tutorial: [Staking with a node](/docs/node/stake).

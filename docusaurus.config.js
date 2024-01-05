@@ -103,7 +103,7 @@ const config = {
             type: "docSidebar",
             sidebarId: "nodeSidebar",
             position: "left",
-            label: "🖥 Testnet",
+            label: "🖥 Mainnet",
           },
           {
             type: "docSidebar",

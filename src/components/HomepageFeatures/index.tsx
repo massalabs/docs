@@ -29,7 +29,7 @@ const FeatureList = [
     icon: "🧩",
   },
   {
-    title: "Run a Testnet Node",
+    title: "Run a Node",
     content: "Validate transactions, secure the network, and earn rewards.",
     docName: "docs/node/home",
     icon: "🖥",

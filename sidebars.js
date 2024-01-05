@@ -381,11 +381,6 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "node/update",
-      label: "Updating a node",
-    },
-    {
-      type: "doc",
       id: "node/wallet",
       label: "Creating a wallet",
     },
@@ -401,13 +396,13 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "node/reward",
-      label: "Testnet Staking Rewards Program",
+      id: "node/all-configs",
+      label: "Node and client configuration",
     },
     {
       type: "doc",
-      id: "node/all-configs",
-      label: "Node and client configuration",
+      id: "node/initial",
+      label: "Initial node runners",
     },
     {
       type: "html",
