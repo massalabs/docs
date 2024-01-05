@@ -207,16 +207,14 @@ The procedure depends on how you have saved your wallet in the first place.
 #### If you have saved your secret/private key
 
 Then you can import it in the client using the following command:
-```
-TODO
+```shell
+wallet_add_secret_keys <your_secret_key>
 ```
 
 #### If you have saved an encrypted wallet file
 
-
-Then you can import it in the client by 
-TODO
-
+Then you can import it in the client by placing the .yaml file in `massa\massa-client\wallets`
+TODO: Check whether this is true?
 
 ### Enabling staking on your node
 
@@ -234,9 +232,10 @@ Register your address so that your node start to stake with it:
 node_start_staking <your_address>
 ```
 
-TODO command to check that the address is registered for staking
+To check whether the address is registered for staking, you can run:
+
+```shell
+node_get_staking_addresses
+```
 
 Now you can leave the node running, and it will start producing blocks just after Genesis!
-
-
-
