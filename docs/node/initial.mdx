@@ -10,7 +10,7 @@ If your address has non-zero initial rolls [in this listing](https://github.com/
 then you are among the happy initial node runners that were chosen to support the mainnet from day zero.
 
 This means that you will be running a node BEFORE the planned genesis that will happen January 15th, which implies that:
-* your node needs to be set up as sonon as possible, at most on January 14th
+* your node needs to be set up as soon as possible, at most on January 14th
 * there are no blocks before genesis, so no operations/transactions, and therefore no roll buys / roll sells. This means that the setup procedure is just slightly different compared to testnet.
 * only initial node runners like you will be present, so you will most likely have a lot of block prodcution and rewards
 
@@ -45,8 +45,8 @@ Otherwise, if you wish to run a Massa node from source code, here are the steps 
 - install [rustup](https://www.rust-lang.org/tools/install): ```curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh```
 - configure path: ```source $HOME/.cargo/env```
 - check rust version: ```rustc --version```
-- install rust stable version: ```rustup toolchain install 1.74.0```
-- set it as default: ```rustup default 1.74.0```
+- install rust stable version: ```rustup toolchain install 1.74.1```
+- set it as default: ```rustup default 1.74.1```
 - check rust version: ```rustc --version```
 - clone this repo: ```git clone https://github.com/massalabs/massa.git```
 
@@ -69,7 +69,7 @@ Otherwise, if you wish to run a Massa node from source code, here are the steps 
 **Clone the Massa Git Repository**:
 - Open Windows Power Shell
     - Clone the latest distributed version: ```git clone https://github.com/massalabs/massa.git```
-    - Change default Rust to nightly: ```rustup default 1.74.0```
+    - Change default Rust to the following stable version: ```rustup default 1.74.1```
 
 
 ## Step 2: Configuration
@@ -236,7 +236,7 @@ node_start_staking <your_address>
 
 TODO command to check that the address is registered for staking
 
-Now you can leave the node running, and it will start producing blocks just after Genesis !
+Now you can leave the node running, and it will start producing blocks just after Genesis!
 
 
 
