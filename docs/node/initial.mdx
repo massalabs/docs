@@ -253,11 +253,8 @@ Now you can leave the node running, and it will start producing blocks just afte
 
 You can use a service such as https://portchecker.co to check that the ports 31244 and 31245 are both opened for your public IP address.
 
-Additionally, in your massa-client, you can check that the `get_status` command shows your `Node's IP: <your_public_ip_address>` and not `No routable IP set`
-
-```shell
-get_status
-```
+Additionally, in your massa-client, you can check that the `get_status` command shows your `Node's IP: <your_public_ip_address>`.
+If it shows `No routable IP set` instead, please check again your configuration.
 
 ### Check your node staking address
 
@@ -273,21 +270,4 @@ is present in the initial staker lists, available in `massa/massa-node/base_conf
 
 In order for your node to be running properly, you have to make sure you are connected to other peers on the network.
 
-The `get_status`command will show you which node you are connected too:
-```shell
-get_status
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The `get_status` command will show you which nodes you are connected too.
