@@ -376,6 +376,11 @@ const sidebars = {
     },
     {
       type: "doc",
+      id: "node/routability",
+      label: "Routability",
+    },
+    {
+      type: "doc",
       id: "node/run",
       label: "Running a node",
     },
@@ -388,11 +393,6 @@ const sidebars = {
       type: "doc",
       id: "node/stake",
       label: "Staking",
-    },
-    {
-      type: "doc",
-      id: "node/routability",
-      label: "Routability",
     },
     {
       type: "doc",

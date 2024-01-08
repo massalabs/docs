@@ -25,7 +25,7 @@ export default function VersionsTable() {
   const versionsData: VersionsData = versions;
 
   return (
-    <Tabs defaultValue="Buildnet">
+    <Tabs defaultValue="Mainnet">
       {versionsData.networks.map((network) => (
         <TabItem value={network} label={network} key={network}>
           <table>

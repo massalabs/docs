@@ -60,8 +60,8 @@ Otherwise, if you wish to run a Massa node from source code, here are the steps 
     - Clone the latest distributed version: ```git clone https://github.com/massalabs/massa.git```
     - Change default Rust to the following stable version: ```rustup default 1.74.1```
 
-
 ## My node is installed. What next ?
 
 Once you have installed your node, you want to set it up for running and staking.
-Please follow the next step: [Running a node](/docs/node/run).
+Before running the node, you should configure it to be routable as indicated [here](routability#how-to-make-your-node-routable).
+Without it, your node will be unstable through lack of connectivity.

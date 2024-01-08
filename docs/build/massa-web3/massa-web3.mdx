@@ -146,7 +146,6 @@ You can easily initialize a client instance using the ClientFactory class:
 
 <Tabs>
 <TabItem value="mainnet-client" label="Mainnet" default>
-
 ```typescript
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
@@ -158,27 +157,9 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
   baseAccount // optional parameter
 );
 ```
-
-</TabItem>
-
-<TabItem value="testnet-client" label="Testnet" default>
-
-```typescript
-const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
-  privateKey
-);
-
-const testnetClient: Client = await ClientFactory.createDefaultClient(
-  DefaultProviderUrls.TESTNET,
-  true, // retry failed requests
-  baseAccount // optional parameter
-);
-```
-
 </TabItem>
 
 <TabItem value="buildnet-client" label="Buildnet" default>
-
 ```typescript
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
@@ -190,7 +171,6 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
   baseAccount // optional parameter
 );
 ```
-
 </TabItem>
 
 <TabItem value="labnet-client" label="Labnet" default>

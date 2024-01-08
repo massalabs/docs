@@ -50,10 +50,25 @@ Summary of the current state: time, last final blocks (hash, thread,
 slot, timestamp), clique count, connected nodes count.
 
 <Tabs>
-<TabItem value="json" label="cURL" default>
+<TabItem value="json (Mainnet)" label="cURL (Mainnet)" default>
 
 ```shell
-curl --location --request POST 'https://test.massa.net/api/v2' \
+curl --location --request POST 'https://mainnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_status",
+    "params": []
+}'
+```
+
+</TabItem>
+
+<TabItem value="json (Buildnet)" label="cURL (Buildnet)">
+
+```shell
+curl --location --request POST 'https://buildnet.massa.net/api/v2' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "jsonrpc": "2.0",
@@ -174,10 +189,24 @@ Get information about the block
 of the graph.
 
 <Tabs>
-<TabItem value="json" label="cURL" default>
+<TabItem value="json (Mainnet)" label="cURL (Mainnet)" default>
 
 ```shell
-curl --location --request POST 'https://test.massa.net/api/v2' \
+curl --location --request POST 'https://mainnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_cliques",
+    "params": []
+}'
+```
+
+</TabItem>
+<TabItem value="json (Buildnet)" label="cURL (Buildnet)">
+
+```shell
+curl --location --request POST 'https://buildnet.massa.net/api/v2' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "jsonrpc": "2.0",
@@ -222,10 +251,24 @@ Get information about active
 their roll counts for the current cycle.
 
 <Tabs>
-<TabItem value="json" label="cURL" default>
+<TabItem value="json (Mainnet)" label="cURL (Mainnet)" default>
 
 ```shell
-curl --location --request POST 'https://test.massa.net/api/v2' \
+curl --location --request POST 'https://mainnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_stakers",
+    "params": [ {"offset": 0, "limit": 2 }]
+}'
+```
+
+</TabItem>
+<TabItem value="json (Buildnet)" label="cURL (Buildnet)">
+
+```shell
+curl --location --request POST 'https://buildnet.massa.net/api/v2' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "jsonrpc": "2.0",
@@ -268,10 +311,24 @@ Get information about
 (es) (balances, block creation, \...).
 
 <Tabs>
-<TabItem value="json" label="cURL" default>
+<TabItem value="json (Mainnet)" label="cURL (Mainnet)" default>
 
 ```shell
-curl --location --request POST 'https://test.massa.net/api/v2' \
+curl --location --request POST 'https://mainnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_addresses",
+    "params": [["AU12gAkmGeozFceJD4tQmbVvihYdX2KyWZcYLL8xdYZeP4EuWYdex"]]
+}'
+```
+
+</TabItem>
+<TabItem value="json (Buildnet)" label="cURL (Buildnet)">
+
+```shell
+curl --location --request POST 'https://buildnet.massa.net/api/v2' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "jsonrpc": "2.0",
@@ -361,10 +418,24 @@ Get information about block graph
 within the specified time interval.
 
 <Tabs>
-<TabItem value="json" label="cURL" default>
+<TabItem value="json (Mainnet)" label="cURL (Mainnet)" default>
 
 ```shell
-curl --location --request POST 'https://test.massa.net/api/v2' \
+curl --location --request POST 'https://mainnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_graph_interval",
+    "params": [{"start": 1678095527706, "end": 1678095529706}]
+}'
+```
+
+</TabItem>
+<TabItem value="json (Buildnet)" label="cURL (Buildnet)">
+
+```shell
+curl --location --request POST 'https://buildnet.massa.net/api/v2' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "jsonrpc": "2.0",
@@ -447,10 +518,24 @@ Get information about [block(s)](https://docs.massa.net/docs/learn/architecture/
 associated to a given hash(s).
 
 <Tabs>
-<TabItem value="json" label="cURL" default>
+<TabItem value="json (Mainnet)" label="cURL (Mainnet)" default>
 
 ```shell
-curl --location --request POST 'https://test.massa.net/api/v2' \
+curl --location --request POST 'https://mainnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_blocks",
+    "params": [["B122ByHzPVJ3QFwmuYcZ4vZYzq6rfkqx7BJSJdFNHWp9j2o5Fpxv"]]
+}'
+```
+
+</TabItem>
+<TabItem value="json (Buildnet)" label="cURL (Buildnet)">
+
+```shell
+curl --location --request POST 'https://buildnet.massa.net/api/v2' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "jsonrpc": "2.0",
@@ -551,10 +636,24 @@ Get information about
 (s) information associated to a given operation(s) ID(s).
 
 <Tabs>
-<TabItem value="json" label="cURL" default>
+<TabItem value="json (Mainnet)" label="cURL (Mainnet)" default>
 
 ```shell
-curl --location --request POST 'https://test.massa.net/api/v2' \
+curl --location --request POST 'https://mainnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_operations",
+    "params": [["O1LMr9xyL9fVSbUvZao4jy6t2Pj5UPtLG8x1fxvS6SD7dPb5S52"]]
+}'
+```
+
+</TabItem>
+<TabItem value="json (Buildnet)" label="cURL (Buildnet)">
+
+```shell
+curl --location --request POST 'https://buildnet.massa.net/api/v2' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "jsonrpc": "2.0",
@@ -616,10 +715,24 @@ Get information about
 (s) (content, finality \...)
 
 <Tabs>
-<TabItem value="json" label="cURL" default>
+<TabItem value="json (Mainnet)" label="cURL (Mainnet)" default>
 
 ```shell
-curl --location --request POST 'https://test.massa.net/api/v2' \
+curl --location --request POST 'https://mainnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_endorsements",
+    "params": [["E12kB72Jz4iMWkVkckS2e6cUBm4e5XEW77biDjSysAWmQkNrvuJr"]]
+}'
+```
+
+</TabItem>
+<TabItem value="json (Buildnet)" label="cURL (Buildnet)">
+
+```shell
+curl --location --request POST 'https://buildnet.massa.net/api/v2' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "jsonrpc": "2.0",
