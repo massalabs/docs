@@ -176,12 +176,15 @@ and attach the logs to your issue so we can help you.
 The log file is located in `~/.config/massa-station-wallet/`. You can access it using the Files app or with a terminal using `cd`.
 Once in the directory, search for the file named `station-massa-wallet.log`.
 
-## `Massa Wallet can't be opened`error 
-ADD A SCREENSHOT OF THE ERROR HERE
+## `Massa Wallet can't be opened` error
+
+![Wallet plugin error](wallet-plugin-error.png)
+
 So far, this issue happens only on Linux because some dependencies aren't installed correctly.
 
 #### Linux
+
 1. Open your terminal
 2. Verify witch version of this packet you have `libwebkit2gtk` with `apt list --installed libwebkit2gtk`
 3. The required version is `0.4-37`, so you need to install it with this cmd `sudo apt install libwebkit2gtk-4.0-37`. If the version installed is already the `0.4-37`, please open an issue [here](https://github.com/massalabs/station/issues/new/choose).
-4. Once the library installed, restart Massa Wallet module by turning it off and on again. 
+4. Once the library installed, restart Massa Wallet module by turning it off and on again.
