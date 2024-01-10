@@ -376,6 +376,11 @@ const sidebars = {
     },
     {
       type: "doc",
+      id: "node/routability",
+      label: "Routability",
+    },
+    {
+      type: "doc",
       id: "node/run",
       label: "Running a node",
     },
@@ -391,8 +396,8 @@ const sidebars = {
     },
     {
       type: "doc",
-      id: "node/routability",
-      label: "Routability",
+      id: "node/check_status",
+      label: "Checking the node's status",
     },
     {
       type: "doc",

@@ -7,7 +7,7 @@
         "pattern": "^http://manpages.ubuntu.com"
       },
       {
-        "pattern": "^https://test.massa.net/api/v2"
+        "pattern": "^https://mainnet.massa.net/api/v2"
       },
       {
         "pattern": "^https://buildnet.massa.net/api/v2"

@@ -41,25 +41,25 @@ insert_content() {
 # Start of the script
 echo "Script started: Download config files"
 
-# Download node and client config files
+# Download node and client config files for mainnet
+download_files "./external/node/mainnet/" "./external/node/mainnet/config-files.txt"
+download_files "./external/client/mainnet/" "./external/client/mainnet/config-files.txt"
+
+# Add node config file content to the documentation for mainnet
+insert_content "EXTERNAL_MAINNET_NODE_CONFIG_CONTENT" "./external/node/mainnet/config.toml" "./docs/node/all-configs.mdx"
+
+# Add client config file content to the documentation for mainnet
+insert_content "EXTERNAL_MAINNET_CLIENT_CONFIG_CONTENT" "./external/client/mainnet/config.toml" "./docs/node/all-configs.mdx"
+
+# Download node and client config files for buildnet
 download_files "./external/node/buildnet/" "./external/node/buildnet/config-files.txt"
 download_files "./external/client/buildnet/" "./external/client/buildnet/config-files.txt"
 
-# Add node config file content to the documentation
+# Add node config file content to the documentation for buildnet
 insert_content "EXTERNAL_BUILDNET_NODE_CONFIG_CONTENT" "./external/node/buildnet/config.toml" "./docs/node/all-configs.mdx"
 
-# Add client config file content to the documentation
+# Add client config file content to the documentation for buildnet
 insert_content "EXTERNAL_BUILDNET_CLIENT_CONFIG_CONTENT" "./external/client/buildnet/config.toml" "./docs/node/all-configs.mdx"
-
-# Download node and client config files
-download_files "./external/node/testnet/" "./external/node/testnet/config-files.txt"
-download_files "./external/client/testnet/" "./external/client/testnet/config-files.txt"
-
-# Add node config file content to the documentation
-insert_content "EXTERNAL_TESTNET_NODE_CONFIG_CONTENT" "./external/node/testnet/config.toml" "./docs/node/all-configs.mdx"
-
-# Add client config file content to the documentation
-insert_content "EXTERNAL_TESTNET_CLIENT_CONFIG_CONTENT" "./external/client/testnet/config.toml" "./docs/node/all-configs.mdx"
 
 # Script completed successfully
 echo "Script finished: Config files downloaded and inserted into documentation."

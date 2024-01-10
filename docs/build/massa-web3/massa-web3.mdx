@@ -146,51 +146,35 @@ You can easily initialize a client instance using the ClientFactory class:
 
 <Tabs>
 <TabItem value="mainnet-client" label="Mainnet" default>
-
 ```typescript
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
 );
+const chainId = CHAIN_ID.MainNet;
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.MAINNET,
+  chainId,
   true, // retry failed requests
   baseAccount // optional parameter
 );
 ```
-
-</TabItem>
-
-<TabItem value="testnet-client" label="Testnet" default>
-
-```typescript
-const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
-  privateKey
-);
-
-const testnetClient: Client = await ClientFactory.createDefaultClient(
-  DefaultProviderUrls.TESTNET,
-  true, // retry failed requests
-  baseAccount // optional parameter
-);
-```
-
 </TabItem>
 
 <TabItem value="buildnet-client" label="Buildnet" default>
-
 ```typescript
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
 );
+const chainId = CHAIN_ID.BuildNet;
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.BUILDNET,
+  chainId,
   true, // retry failed requests
   baseAccount // optional parameter
 );
 ```
-
 </TabItem>
 
 <TabItem value="labnet-client" label="Labnet" default>
@@ -199,9 +183,11 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
 );
+const chainId = CHAIN_ID.LabNet;
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.LABNET,
+  chainId,
   true, // retry failed requests
   baseAccount // optional parameter
 );
@@ -215,9 +201,11 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
 );
+const chainId = CHAIN_ID.Sandbox;
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.LOCALNET,
+  chainId,
   true, // retry failed requests
   baseAccount // optional parameter
 );
@@ -232,6 +220,7 @@ You can also create a custom client connecting to a node whose ip and ports are 
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
 );
+const chainId = CHAIN_ID.Sandbox;
 
 // initialize a custom client using an own provider
 const providers: Array<IProvider> = [
@@ -247,6 +236,7 @@ const providers: Array<IProvider> = [
 
 const customClient: Client = await ClientFactory.createCustomClient(
   providers,
+  chainId,
   true, // retry failed requests
   baseAccount // optional parameter
 );
