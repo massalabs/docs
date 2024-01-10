@@ -5,7 +5,7 @@ sidebar_label: Creating a wallet
 
 # Creating a Massa wallet
 
-In this tutorial you will learn how to create a Massa wallet.
+In this tutorial you will learn how to create or import a Massa wallet.
 
 A wallet is a file that contains a list of keypairs. Like other blockchains, Massa uses elliptic curve cryptography
 (specifically ed25519) to secure your coins. It means that your secret key is your password allowing you to spend coins
@@ -38,12 +38,6 @@ Now you can either generate a new keypair (and associated address):
 wallet_generate_secret_key
 ```
 
-Or, if you already have one from a previous wallet, you can add manually an existing keypair:
-
-```shell
-wallet_add_secret_keys <SecretKey>
-```
-
 The list of addresses of your wallet can be accessed with:
 
 ```shell
@@ -61,6 +55,22 @@ Access secret key(s) of addresse(s):
 ```shell
 wallet_get_secret_key <Address1> <Address2>
 ```
+
+# Importing your wallet in the client
+
+In order to import a wallet into your client, the procedure depends on how you have saved your wallet in the first place.
+
+## If you have saved your secret/private key
+
+Then you can import it in the client using the following command:
+```shell
+wallet_add_secret_keys <your_secret_key>
+```
+
+## If you have saved an encrypted wallet file
+
+Then you can import it in the client by placing the corresponding `.yaml` file in the `massa/massa-client/wallets` folder.
+Make sure it is the only wallet in the folder.
 
 ## What next ?
 
