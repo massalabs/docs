@@ -47,17 +47,23 @@ We have detailed instructions on how to use Massa Station such as:
 
 Massa Station is a desktop super-app that, once opened, operates within your web browser. A mobile version is not available at this time.
 
-### Why can't I see modules in module store?
+### How to connect Massa Station to my own node
 
-The module store is hosted on GitHub. If you are in a country that blocks GitHub, you will not be able to see the modules.
+On Debian, Ubuntu, and macOS, navigate to `/usr/local/share/massastation` and edit the `config_network.yaml` file.
+Append the following lines to the end of the file:
 
-We are working on a solution to this problem, but in the meantime, you can install modules manually using the right panel of the module store.
+```yaml
+myNode:
+  URLs:
+    - https://my-node-url
+  ChainID: <Your node's corresponding chain ID>
+```
 
-For example with the Massa Wallet module:
+Ensure that the URL for the node you want Massa Station to connect to points to the correct RPC endpoint.
 
-1. Go to the [latest Massa Wallet release page](https://github.com/massalabs/station-massa-wallet/releases/latest).
-2. Copy the URL of the `.zip` file corresponding to your operating system.
-3. Paste the URL in the right panel of the module store and click on "Install".
+After adding these lines, this node will appear in the network selection dropdown list. Selecting it will direct Massa Station and its plugins, such as Massa Wallet, to connect to your specified node.
+
+If your node is on the MainNet, then the `ChainID` must match the MainNet's chain ID. The same applies if your node is on the BuildNet.
 
 ### Why can't I access Massa Station from my browser?
 
