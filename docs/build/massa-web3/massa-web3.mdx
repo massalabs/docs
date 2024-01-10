@@ -79,7 +79,7 @@ secret keys and other sensitive information. The Wallet-provider will automatica
 <Tabs>
 <TabItem value="wallet-provider-react" label="React" default>
 
-Full code can be found [here](https://github.com/massalabs/massa-sc-examples/blob/main/age/react/src/App.tsx)
+Full code can be found [here](https://github.com/massalabs/massa-sc-examples/blob/main/age/front/react/src/App.tsx)
 
 ```typescript
 useEffect(() => {
@@ -105,36 +105,6 @@ useEffect(() => {
   };
   registerAndSetProvider();
 }, [account]);
-```
-
-</TabItem>
-<TabItem value="vanilla-js" label="Vanilla JS" default>
-
-Full code can be found [here](https://github.com/massalabs/massa-sc-examples/blob/main/age/html/js/index.js)
-
-```typescript
-let massa = window.massa;
-let wallet = window.wallet;
-
-let client = null;
-let account = null;
-
-const initializeClient = async () => {
-  try {
-    let provider = (await wallet.providers(true, 10000))[0];
-    let accounts = await provider.accounts();
-    if (accounts.length === 0) {
-      throw new Error("No accounts found");
-    }
-    account = accounts[0];
-    if (!account || !provider) {
-      throw new Error("No account or provider found");
-    }
-    client = await massa.ClientFactory.fromWalletProvider(provider, account);
-  } catch (e) {
-    console.error(e);
-  }
-};
 ```
 
 </TabItem>
@@ -257,9 +227,7 @@ You can learn more about how to manage the base account in the [Wallet Operation
 Once there is an initialized client instance, it is straightforward to call methods on it:
 
 ```ts
-const balance = await web3Client
-  .wallet()
-  .getAccountBalance("address")
+const balance = await web3Client.wallet().getAccountBalance("address");
 ```
 
 You can find details for each of the exposed APIs with all the available methods in the following sections:
