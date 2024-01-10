@@ -396,6 +396,11 @@ const sidebars = {
     },
     {
       type: "doc",
+      id: "node/check_status",
+      label: "Checking the node's status",
+    },
+    {
+      type: "doc",
       id: "node/all-configs",
       label: "Node and client configuration",
     },
