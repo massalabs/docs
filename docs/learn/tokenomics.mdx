@@ -11,10 +11,10 @@ sidebar_label: Tokenomics
 This page reproduces most of the whitepaper's Tokenomics section, with additional details and updates.
 :::
 
-Massa, true to its values, has implemented a unique tokenomics model that emphasizes fairness and decentralization. This model ensures that the Massa token is distributed widely among the community, reducing the risk of centralization that can result in unfair voting practices, price manipulation, and security compromises:
+Massa, true to its values, has implemented a unique tokenomics model that emphasizes fairness and decentralization. This model ensures that the Massa token is distributed widely among the community, reducing the risk of centralization that can result in unfair voting practices, price manipulation, and security issues:
 - **Unfairly-distributed voting**: When a small number of entities control a significant portion of a blockchain's tokens, they can disproportionately influence governance decisions, undermining the democratic principles that underpin decentralized systems.
 - **Price manipulation**: Token centralization can also lead to price manipulation, as large holders can exert undue influence on the market, creating artificial fluctuations that distort the true value of the token.
-- **Security compromises**: A centralized token distribution can lead to security vulnerabilities, as malicious actors can target the limited number of entities controlling a large portion of the token supply. It also generates centralization in block production, leading to protocol-level risks.
+- **Security issues**: A centralized token distribution can lead to security vulnerabilities, as malicious actors can target the limited number of entities controlling a large portion of the token supply. It also generates centralization in block production, leading to protocol-level risks.
 
 Massa is committed to maintaining the highest standards of decentralization, with the goal to achieve a Nakamoto coefficient of over `1,000`, ensuring that control and decision-making power are widely distributed across the community. Achieving this not only requires efforts on the technical and legal design, but also on the coin distribution. On this aspect, we crafted three main particularities compared to other L1 blockchain coin distributions:
 - **Less tokens for the company/founders**: Massa Labs and founders are allocated `12%` of the total supply.
@@ -63,16 +63,16 @@ The total number of tokens in `initial_ledger.json`, `initial_rolls.json` (`x100
 - [backers.json](https://github.com/Massa-Foundation/genesis-ledger/blob/main/input_listings/backers.json): backers of Massa Labs who gave their addresses in time. Backers who did not provide their addresses have their coins kept in address `AU1PGvG4x1rmFaYBgSNVmgpPDkWvGtNqS2Jc7BjupmVjkce8dBai` for now.
 - [dashboard_data.json](https://raw.githubusercontent.com/Massa-Foundation/genesis-ledger/main/input_listings/dashboard_data.json): here you can find participants of the dashboard campaign, ambassadors, and testnet node runners who were eligible for a reward, with corresponding coins and if they want to be initial stakers. These tokens are vested for `24` months, with a `30%` initial unlock, and the release is approximately once per month, with some random noise to smooth the unlockings (e.g. on month `3`, a user might get tokens released on day `3` while another gets tokens on day `10`).
 - [foundation.json](https://github.com/Massa-Foundation/genesis-ledger/blob/main/input_listings/foundation.json): here are the three main addresses of the Massa Foundation. The first corresponds to the `310,000,000` tokens from category "Community and Ecosystem", from which above rewards were deducted. These tokens are vested for `60` months. The second is reserved for a public sale. These tokens are unlocked for now, but they are going to move to a vested smart contract for users to claim their tokens. The third address is the decentralization program address, with `2` years cliff and then `3` years linear vesting.
-- [founders.json](https://github.com/Massa-Foundation/genesis-ledger/blob/main/input_listings/founders.json) is an allocation reserved for founders. These tokens are unlocked at genesis and will be moved just after launch to a vested smart contracts where tokens will be claimable.
-- [labs.json](https://github.com/Massa-Foundation/genesis-ledger/blob/main/input_listings/labs.json). These are Massa Labs' tokens, with `5%` as initial rolls to start staking right from launch, together with the community, and the other `95%` vested for `60` months.
+- [founders.json](https://github.com/Massa-Foundation/genesis-ledger/blob/main/input_listings/founders.json) is an allocation reserved for founders. These tokens are unlocked at genesis and will be moved just after launch to a vested smart contract where tokens will be claimable, with `5%` initially unlocked and `95%` vested for `60` months.
+- [labs.json](https://github.com/Massa-Foundation/genesis-ledger/blob/main/input_listings/labs.json). These are Massa Labs' tokens, with `5%` as initial rolls to start staking right from launch, together with the community, and the other `95%` vested for `60` months. Massa Labs will thus start staking with `35,000` rolls. This is a large proportion of the total stake at launch, but it is expected to decrease significantly in the next days and weeks after launch when all other categories will ramp up with setting up their nodes.
 
 
-## Expected Circulating Supply
+## Expected Unlocked Supply
 
-Taking into account the vesting schedules of all categories, we can estimate the evolution of the circulating supply. Note that many of these tokens will not be effectively circulating although counted as circulating here, because they will be held as reserves by Massa Labs and Massa Foundation even when unlocked.
+Taking into account the vesting schedules of all categories, we can estimate the evolution of the unlocked supply. Note that many of these unlocked tokens will not be effectively circulating, because they will be held as reserves by Massa Labs and Massa Foundation.
 This figure does not account for staking rewards (see next section).
 
-![](release.png)
+![](Unlocked.png)
 
 ## Staking Rewards
 
