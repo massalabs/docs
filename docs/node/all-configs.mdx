@@ -13,6 +13,7 @@ Use with caution, overriding some configurations could lead to node
 instability and/or a complete desynchronization from Massa blockchain.
 :::
 
+
 ## Node configuration
 
 You can override the default configuration via
@@ -20,17 +21,22 @@ the `massa-node/config/config.toml` file.
 
 <!-- The content will be added at build time via ./scripts/download-configs.sh -->
 <Tabs>
-
   <TabItem value="mainnet" label="🖥 MainNet" default>
+
 ```toml
 EXTERNAL_MAINNET_NODE_CONFIG_CONTENT
+
 ```
+
   </TabItem>
 
-  <TabItem value="buildnet" label="👷 BuildNet" default>
+  <TabItem value="buildnet" label="👷 BuildNet">
+
 ```toml
 EXTERNAL_BUILDNET_NODE_CONFIG_CONTENT
+
 ```
+
   </TabItem>
 </Tabs>
 
@@ -42,14 +48,20 @@ the `massa-client/config/config.toml` file.
 <!-- The content will be added at build time via ./scripts/download-configs.sh -->
 <Tabs>
   <TabItem value="mainnet" label="🖥 MainNet" default>
+
 ```toml
 EXTERNAL_MAINNET_CLIENT_CONFIG_CONTENT
+
 ```
+
   </TabItem>
 
-  <TabItem value="buildnet" label="👷 BuildNet" default>
+  <TabItem value="buildnet" label="👷 BuildNet">
+
 ```toml
 EXTERNAL_BUILDNET_CLIENT_CONFIG_CONTENT
+
 ```
+
   </TabItem>
 </Tabs>
