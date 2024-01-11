@@ -51,20 +51,30 @@ Massa Station is a desktop super-app that, once opened, operates within your web
 
 For users operating on Debian, Ubuntu, or macOS systems, navigate to `/usr/local/share/massastation`.
 If you are using Windows, the corresponding directory is `C:\Program Files (x86)\MassaStation`.
-Once there, locate and modify the `config_network.yaml`: append the following lines to the end of the file:
+Once there, locate and modify the `config_network.yaml`.
+You'll want to append the following lines to the bottom of the file:
 
 ```yaml
-myNode:
+NodeName:
   URLs:
     - https://my-node-url
   ChainID: <Your node's corresponding chain ID>
+  Default: false # or true if you want to set this node as the default
 ```
 
-Ensure that the URL for the node you want Massa Station to connect to points to the correct RPC endpoint.
+Replace `NodeName` with a name of your choosing for the node, this will appear in the dropdown menu.
 
-After adding these lines, this node will appear in the network selection dropdown list. Selecting it will connect Massa Station and its plugins, such as Massa Wallet, to your specified node.
+Make sure that the URL exactly matches the RPC endpoint of your node. This URL is how Massa Station will communicate with your node.
 
-If your node is on the MainNet, then the `ChainID` must match the MainNet's chain ID. The same applies if your node is on the BuildNet.
+Additionally, suppose you frequently access a particular node and prefer Massa Station to automatically select this node on start-up.
+In that case, you can make it the default node by changing the `Default` field to `true`,
+and change the default field for the mainnet node to `false`.
+
+After these lines are added, close and reopen Massa Station. Your newly named node will now be a part of the network selection dropdown menu.
+Selecting it will connect Massa Station and its plugins, such as Massa Wallet, to your specified node.
+
+For those whose nodes are on the MainNet, it's essential that the `ChainID` accurately reflects the MainNet's chain ID,
+By ensuring the correct `ChainID` is set, your Massa Station will be in sync with the intended network.
 
 ### Why can't I access Massa Station from my browser?
 
