@@ -142,6 +142,10 @@ const sidebars = {
     },
     {
       type: "doc",
+      id: "learn/tokenomics",
+    },
+    {
+      type: "doc",
       id: "learn/bootstrap",
     },
     {
