@@ -47,17 +47,35 @@ We have detailed instructions on how to use Massa Station such as:
 
 Massa Station is a desktop super-app that, once opened, operates within your web browser. A mobile version is not available at this time.
 
-### Why can't I see modules in module store?
+### How to connect Massa Station to my own node
 
-The module store is hosted on GitHub. If you are in a country that blocks GitHub, you will not be able to see the modules.
+For users operating on Debian, Ubuntu, navigate to `~/.config/massa-station`.
+For macOS systems, navigate to `~/Library/Application Support/massa-station`.
+If you are using Windows, the corresponding directory is `%APPDATA%\massa-station`.
+Once there, locate and modify the `config_network.yaml`.
+You'll want to append the following lines to the bottom of the file:
 
-We are working on a solution to this problem, but in the meantime, you can install modules manually using the right panel of the module store.
+```yaml
+NodeName:
+  URLs:
+    - https://my-node-url
+  ChainID: <Your node's corresponding chain ID>
+  Default: false # or true if you want to set this node as the default
+```
 
-For example with the Massa Wallet module:
+Replace `NodeName` with a name of your choosing for the node, this will appear in the dropdown menu.
 
-1. Go to the [latest Massa Wallet release page](https://github.com/massalabs/station-massa-wallet/releases/latest).
-2. Copy the URL of the `.zip` file corresponding to your operating system.
-3. Paste the URL in the right panel of the module store and click on "Install".
+Make sure that the URL exactly matches the RPC endpoint of your node. This URL is how Massa Station will communicate with your node.
+
+Additionally, suppose you frequently access a particular node and prefer Massa Station to automatically select this node on start-up.
+In that case, you can make it the default node by changing the `Default` field to `true`,
+and change the default field for the mainnet node to `false`.
+
+After these lines are added, close and reopen Massa Station. Your newly named node will now be a part of the network selection dropdown menu.
+Selecting it will connect Massa Station and its plugins, such as Massa Wallet, to your specified node.
+
+For those whose nodes are on the MainNet, it's essential that the `ChainID` accurately reflects the MainNet's chain ID,
+By ensuring the correct `ChainID` is set, your Massa Station will be in sync with the intended network.
 
 ### Why can't I access Massa Station from my browser?
 
