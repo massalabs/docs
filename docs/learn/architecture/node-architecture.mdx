@@ -18,7 +18,7 @@ The pool and factories, referred to as “factory”, can be potentially running
 Overall, each of the modules described here runs inside one or more threads attached to their respective executable process
 (NB: the factory/node separation is not yet implemented, but will be soon).
 
-![](architecture.drawio.svg)
+![](architecture.svg)
 
 We will explain below the different modules present in this diagram, and simulate the production of an operation to show
 how it navigates through the different modules to better understand how blocks are produced and propagated.
@@ -85,7 +85,7 @@ weighted by the amount of stake (=rolls) they hold. The schema below illustrates
 are built, based on past cycles (two cycles are needed for the distribution update to ensure that the balance finalization
 has occurred and the amount of rolls is accurate):
 
-![](selector.drawio.svg)
+![](selector.svg)
 
 The Selector Module is in charge of computing the formula and replying to requests regarding what node is elected for any
 given slot in the present or the past. The Execution Module (see below) is in charge of feeding the Selector Module with
@@ -114,7 +114,7 @@ Here is a simplified example of a graph of pending blocks over two threads, with
 as a result of a multistaking attack where the block producer decided to create competing blocks for the same slot). Here the
 letter of a slot identifies it, while the number refers to its thread number:
 
-![](unfinalized_blocks_set.drawio.svg)
+![](unfinalized_blocks_set.svg)
 
 In this illustration we have shown only relevant parent links in blue, to make the whole diagram more readable, but in reality,
 each block has 32 parents, one in each of the 32 threads.
@@ -134,7 +134,7 @@ You will find a more formal mathematical definition of these incompatibility not
 From these definitions, you can build another graph, called the incompatibility graph, which connects any two blocks that
 have any form of incompatibility together:
 
-![](incompatibility_graph.drawio.svg)
+![](incompatibility_graph.svg)
 
 As you can see, some blocks are isolated and therefore compatible with any other, while some are linked, because they have
 a form of incompatibility.
@@ -144,7 +144,7 @@ members are incompatible with each other (so, no internal link within the clique
 to the set without introducing incompatibilities. In the above example, there are three maximal cliques that can be built,
 as illustrated below:
 
-![](cliques.drawio.svg)
+![](cliques.svg)
 
 They represent candidates to extend the set of already finalized blocks into a coherent set of new blocks. All we need to
 add to be able to build a consensus rule now is to introduce a deterministic metric to rank those candidates so that nodes
