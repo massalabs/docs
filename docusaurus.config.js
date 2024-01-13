@@ -33,7 +33,7 @@ const config = {
   // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
-    locales: ["en"],
+    locales: ["en", "fr"],
   },
 
   stylesheets: [
@@ -110,6 +110,10 @@ const config = {
             sidebarId: "massaStationSidebar",
             position: "left",
             label: "🧩 Massa Station",
+          },
+          {
+          type: "localeDropdown",
+          position: "right",
           },
           {
             type: "search",
