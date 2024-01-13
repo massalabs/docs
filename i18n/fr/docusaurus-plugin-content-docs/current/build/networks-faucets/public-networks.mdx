@@ -1,0 +1,107 @@
+---
+id: public-networks
+sidebar_label: Public networks & Faucets
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import VersionsTable from "@site/src/components/versions-table";
+
+# Networks & Faucets
+
+Here's a handy table containing all you need to know about the different Massa networks and their faucets.
+
+<Tabs>
+  <TabItem value="mainnet" label="🖥 MainNet" default>
+    <table>
+      <tr>
+        <td>🔗 Public API</td>
+        <td>
+          <a href="https://mainnet.massa.net/api/v2">
+            https://mainnet.massa.net/api/v2
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>🕵️ Explorer</td>
+        <td>
+          <a href="https://explorer.massa.net">https://explorer.massa.net</a>
+        </td>
+      </tr>
+    </table>
+  </TabItem>
+
+  <TabItem value="buildnet" label="👷 BuildNet" default>
+    <table>
+      <tr>
+        <td>🔗 Public API</td>
+        <td>
+          <a href="https://buildnet.massa.net/api/v2">
+            https://buildnet.massa.net/api/v2
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>🪙 Faucet</td>
+        <td>
+          <a href="https://discord.com/channels/828270821042159636/1097797634065956915">
+            #buildernet-faucet
+          </a>{" "}
+          Discord channel
+        </td>
+      </tr>
+      <tr>
+        <td>🕵️ Explorer</td>
+        <td>
+          <a href="https://buildnet-explorer.massa.net">https://buildnet-explorer.massa.net</a>
+        </td>
+      </tr>
+    </table>
+  </TabItem>
+</Tabs>
+
+:::note
+Each faucet allows for only one request per day.
+:::
+
+## What's a Network, Anyway?
+
+In the realm of blockchain technology, a network is a decentralized system of interconnected nodes.
+These nodes work in harmony to ensure the blockchain runs smoothly, validating transactions, adding them to the blockchain, and maintaining the integrity of the ledger.
+
+## What about Faucets?
+
+A faucet, in the context of blockchain, is a mechanism that provides small amounts of cryptocurrency to users for free.
+Think of it as a digital tap that drips a small portion of a specific cryptocurrency.
+
+Faucets play a crucial role in the blockchain ecosystem:
+
+- they offer a friendly introduction to new users by giving them a starting amount of cryptocurrency, and
+- they also aid developers in testing and building blockchain applications by providing the necessary tokens for experimentation.
+
+## What's Special About These Networks?
+
+### Mainnet
+
+The Massa Mainnet is the main network. It is the only Massa network for which MAS has a monetary value. As a result, no faucet is available for the Mainnet.
+
+### Buildnet
+
+The Massa Buildnet serves as your reliable playground for crafting and deploying smart contracts on the Massa blockchain. Buildnet follows a gradual upgrade cycle. This careful pace ensures its constant availability and stability - key factors that you, as a developer, rely on.
+
+At MassaLabs, we put significant effort into the careful maintenance of Buildnet. Our goal is to provide you with a platform where you can build robust, innovative applications.
+
+Leveraging Buildnet's unique features and capabilities, you can navigate the forefront of blockchain technology with confidence and peace of mind, knowing you have a stable and dependable environment for your projects.
+
+## Are There Any Requirements for Using Faucets?
+
+Sure! You'll need:
+
+- A Massa wallet (Don't have one yet? Generate addresses on the [Explorer website](https://massa.net/testnet/wallet))
+- A [Discord account](https://support.discord.com/hc/en-us/articles/360033931551-Getting-Started)
+
+## Library Compatibility with Massa Networks
+
+The following table outlines library compatibility across the Massa networks. Use this as a guide to select the appropriate library based on the network you're working with and your project needs.
+
+<VersionsTable />
