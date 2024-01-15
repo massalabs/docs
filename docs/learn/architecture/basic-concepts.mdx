@@ -22,7 +22,7 @@ enabling parallelization and improved block-creation performance.
 Instead of one chain, there are exactly 32 **threads** of chains running in parallel, with blocks equally 
 spread on each thread over time, and stored inside **slots** that are spaced at fixed time intervals:
 
-![](structure.drawio.svg)
+![](structure.svg)
 
 The time between two slots located on the same thread is called a **period** and lasts 16s (conventionally called $t_0$). 
 Corresponding slots in threads are slightly shifted in time relative to one another, by one period divided by the number 
@@ -41,7 +41,7 @@ In traditional blockchains, blocks are simply referencing their unique parent, f
 Massa, each block is referencing one parent block in each thread (so, 32 parents). Here is an example 
 illustrated with one particular block:
 
-![](block_parents.drawio.svg)
+![](block_parents.svg)
 
 Let’s introduce some relevant definitions and concepts generally necessary to understand how the Massa network operates. 
 We will then explain the node architecture and how the whole system works.
