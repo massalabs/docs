@@ -409,11 +409,6 @@ const sidebars = {
       label: "Node and client configuration",
     },
     {
-      type: "doc",
-      id: "node/initial",
-      label: "Initial node runners",
-    },
-    {
       type: "html",
       value: "<hr/>",
     },
