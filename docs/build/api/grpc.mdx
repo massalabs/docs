@@ -10,9 +10,9 @@ The [gRPC](https://grpc.io/) API allows you to communicate with the Massa blockc
 The Massa gRPC API is splitted in two parts:
 
 - **Public API**: used for blockchain interactions. Default port:
-    33037 e.g. <grpc://localhost:33037>
+    33037 e.g. [](grpc://localhost:33037)
 - **Private API**: used for node management. Default port: 33038 e.g.
-    <grpc://localhost:33038>
+    [](grpc://localhost:33038)
 
 :::info
 To enable events (blocks, endorsements, operations...) brodcast via gRPC streams in your Massa node, add or edit the file
@@ -70,7 +70,7 @@ directories:
 ```
 
 By specifying the directories in the configuration file, Buf knows which
-[.proto]{.title-ref} files to include in the build process.
+`[.proto]{.title-ref}` files to include in the build process.
 
 1.  Create a file called `buf.gen.yml` and add the following content:
 

@@ -1,8 +1,10 @@
 // @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
+// `@type` JSDoc annotations allow editor autocompletion and type checking
+// (when paired with `@ts-check`).
+// There are various equivalent ways to declare your Docusaurus config.
+// See: https://docusaurus.io/docs/api/docusaurus-config
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+import {themes as prismThemes} from 'prism-react-renderer';
 const math = require("remark-math");
 const katex = require("rehype-katex");
 const remarkGridTables = require('remark-grid-tables');
@@ -55,7 +57,7 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/massalabs/docu-dev/tree/main/",
+          editUrl: "https://github.com/massalabs/docs/tree/main/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
           remarkPlugins: [math, remarkGridTables],
@@ -171,12 +173,12 @@ const config = {
         placeholder: "Search the Docs...",
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: prismThemes.github,
+        darkTheme: prismThemes.dracula,
         // See https://docusaurus.io/docs/markdown-features/code-blocks#supported-languages
         additionalLanguages: ['toml', 'json', 'bash', 'powershell', 'protobuf'],
       },
     },
 };
 
-module.exports = config;
+export default config;
