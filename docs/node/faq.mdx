@@ -57,10 +57,13 @@ message we send (just random bytes).
 
 ### How to migrate from one server to another without losing staked amounts and tokens?
 
-You need to back up the file `wallet.dat` and migrate it to the massa-client folder on your new server. You also need to
+You need to back up the folder `massa-client/wallets` and migrate it to the massa-client folder on your new server. You also need to
 backup and migrate the `node_privkey.key` file in massa-node/config to keep your connectivity stats.
 
 If you have rolls, you also need to register the key used to buy rolls to start staking again.
+
+Note: You should never stake with the same address on two different nodes, don't forget to stop the node on the old server before
+staking on your new server.
 
 ### Why are the balances in the client and the explorer different?
 
