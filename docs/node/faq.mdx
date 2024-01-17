@@ -34,7 +34,7 @@ have to use ``pkill -f massa-node``. You can also use [screen](https://help.ubun
 ### What ports does Massa use?
 
 By default, Massa uses TCP port 31244 for protocol communication with other nodes, and 31245 to bootstrap other nodes.
-Massa also uses TCP port 33034 for the new private API, and 33035 for the new public API (API v2).
+Massa also uses TCP port 33034 for the new private API, 33035 for the new public API (API v2), 33037 for public GRPC and 33038 for private GRPC access.
 
 ### How to restart the Node?
 
@@ -72,7 +72,7 @@ requirements, and try restarting your node.
 
 ### Where are the wallet files located?
 
-By default, in the massa-client directory.
+By default, in the massa-client/wallets directory.
 
 ## Rolls and staking
 
@@ -85,7 +85,7 @@ The most likely reason is that you did not produce some blocks when selected to 
 - Node being desynchronized (which can be caused by temporary overload if the specs are insufficient or if other
   programs are using resources on the computer or because of internet connection problems) at some point while you had
   active_rolls \> 0
-- The node does not have the right registered staking keys (type staking_addresses in the client to verify that they
+- The node does not have the right registered staking keys (type `node_get_staking_addresses` in the client to verify that they
   match the addresses in your wallet_info that have active rolls) 100% of the time during which you had active_rolls \>
   0
 - Some hosting providers have Half-duplex connection setting. Contact hosting support and ask to switch you to
@@ -114,7 +114,7 @@ It is not slashing because the funds are reimbursed fully. It's more like an imp
 
 The point is the following: for the network to be healthy, everyone with active rolls needs to produce blocks whenever
 they are selected to do so. If an address misses more than 70% of its block creation opportunities during cycle C, all
-its rolls are implicitly sold at the beginning of cycle C+3.
+its rolls are implicitly sold at the end of cycle C+3.
 
 ### Do I need to register the keys after subsequent purchases of ROLLs, or do they get staked automatically?
 
