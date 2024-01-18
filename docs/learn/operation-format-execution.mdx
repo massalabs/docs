@@ -301,25 +301,28 @@ Text serialization of an address:
 +---------------------+----------------------------------------------------------------------------------------------------+-------------------------------------------+
 | Field               | Description                                                                                        | Type                                      |
 +=====================+====================================================================================================+===========================================+
-| `prefix letter 'A'` | A constant prefix indicating that it is an address to avoid ambiguity with other IDs.              | 1 letter (1 byte)                         |
+| `prefix letter 'A'` | A constant prefix indicating that it is an address to avoid ambiguity with other IDs.              | 1 ASCII letter (1 byte)                   |
 |                     | (e.g., Block IDs are prefixed with 'B')                                                            |                                           |
 +---------------------+----------------------------------------------------------------------------------------------------+-------------------------------------------+
-| `address contents`  | Base58check (no version, with checksum) representation of the binary serialization of the address. | 18 (included) to 74 (included) characters |
-|                     | See above.                                                                                         | 18 to 74 bytes                            |
+| `address category`  | Single letter indicating the category of the address. 'U' for externally owned addresses,          | 1 ASCII character (1 byte)                |
+|                     | and 'S' for smart contracts, see above.                                                            |                                           |
++---------------------+----------------------------------------------------------------------------------------------------+-------------------------------------------+
+| `address contents`  | Base58check (no version, with checksum) representation of the binary serialization of the address  | 37 (included) to 62 (included) characters |
+|                     | as detailes above, but without the category field (only version then hash).                        | 37 to 62 bytes                            |
 +---------------------+----------------------------------------------------------------------------------------------------+-------------------------------------------+
 
 Here is the entire encoding process for an address in text format:
-* serialize the address in binary format (see above)
+* serialize the address in binary format but without the address category (only version then hash in the binary serialization described above)
 * compute the SHA256 hash of the binary serialization
 * append the first 4 bytes of the sha256 hash at the end of the binary serialization of the address. This is used as a checksum to detect typing errors as addresses are also meant to be written on paper by humans.
 * encode the resulting byte array using the base alphabet `123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz`. Similar looking characters (eg 0 vs O) are excluded to avoid human confusion.
-* prepend the letter 'A'
+* prepend the prefix 'AU' for externally owned accounts or 'AS' for smart contracts
 
 Legality checks performed on text deserialization:
 * the text must be valid UTF-8 and ASCCII with only alphanumeric characters
-* the prefix letter must be 'A'
+* the prefix must be 'AU' or 'AS'
 * the base58check must use the legal alphabet described above and the checksum must verify
-* the decoded binary serialization of the address must be legal (see above)
+* the decoded binary serialization of the address must be legal (see above, but without the category field)
 
 Example of legal address in text format: `AU12v83xmHg2UrLM8GLsXRMrm7LQgn3DZVT6kUeFsuFyhZKLkbQtY`
 
