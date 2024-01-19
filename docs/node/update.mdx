@@ -5,37 +5,27 @@ sidebar_label: Updating a node
 
 # Updating a node
 
-If you use the binaries, simply download the latest binaries. Otherwise if you have built from source, follow the
-instructions below.
+## Update process
 
-Make sure you have all the packages installed on your system. Maybe new one could have been added since you last release
-refer to our [documentation](/docs/node/install#from-source-code-advanced-installation) for the updated list.
+The exact update procedure depends on how you previously installed your node.
 
-Make sure you have the right git repository:
+The basic process goes as follows:
+- Stop your previous node, as running 2 nodes with the same keys will lead to loss of coins
+- Backup your node wallet folders (`massa-node/staking_wallets` and `massa-client/wallets`)
+- If needed, backup you custom config files (`massa-node/config/config.toml` and `massa-client/config/config.toml`)
+- Install your new node by following the [documentation](/docs/node/install).
+- Restore your wallet folders to their respective location
+- If needed, restore your custom configuration
 
+If, during the process, you missed enough block production, your rolls may be automatically sold.
+If that is the case, wait for the coins to get reimbursed automatically (taking ~3 hours), and buy your rolls again.
+
+## Updating the git repository (if installed from sources)
+
+If you installed from sources, you can either re-clone the repo, or you can update your existing repo to the latest release.
+
+In order to update to the latest release, launch a terminal in your current repository, and then run the following commands:
 ```shell
-cd massa/
-git stash
-git remote set-url origin https://github.com/massalabs/massa.git
+git fetch
+git checkout MAIN.2.1
 ```
-
-Update Massa:
-
-```shell
-git checkout testnet
-git pull
-```
-
-After updating, enter the command `node_get_staking_addresses` in your client and make sure that it returns an address
-that has rolls according to wallet_info.
-
-- If `wallet_info` does not return any address, it means that you haven't backed up your wallet.dat correctly. Close the
-client, overwrite wallet.dat with your backup, launch the client again and try again. You can also create a new address
-by calling `wallet_generate_secret_key`.
-- If you can't find an address in `wallet_info` that has non-zero candidate, non-zero final and non-zero active rolls,
-please refer to the [staking tutorial](/docs/node/stake) on getting rolls.
-- If `node_get_staking_addresses` does not return any address or does not return an address that has active_rolls
-according to wallet_info, it means you haven't backed up `staking_keys.json` properly. Try stopping the node,
-overwriting `staking_keys.json` with your backup, and starting the node again to try again. You can also manually add a
-staking key by calling `add_staking_keys` with the `KEY` matching the address that has active rolls in wallet_info
-(warning: do not type the address or public key, only the `SECRET KEY`).
