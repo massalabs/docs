@@ -409,6 +409,11 @@ const sidebars = {
       label: "Node and client configuration",
     },
     {
+      type: "doc",
+      id: "node/update",
+      label: "Updating a node",
+    },
+    {
       type: "html",
       value: "<hr/>",
     },
