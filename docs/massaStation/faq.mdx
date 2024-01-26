@@ -66,6 +66,8 @@ NodeName:
 Replace `NodeName` with a name of your choosing for the node, this will appear in the dropdown menu.
 
 Make sure that the URL exactly matches the RPC endpoint of your node. This URL is how Massa Station will communicate with your node.
+The port of the public API is 33035, so this port must be open on the node server for Massa Station to communicate with your node.
+For example: `https://37.167.156.118:33035`.
 
 Additionally, suppose you frequently access a particular node and prefer Massa Station to automatically select this node on start-up.
 In that case, you can make it the default node by changing the `Default` field to `true`,
