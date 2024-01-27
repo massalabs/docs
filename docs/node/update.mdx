@@ -1,0 +1,31 @@
+---
+id: update
+sidebar_label: Updating a node
+---
+
+# Updating a node
+
+## Update process
+
+The exact update procedure depends on how you previously installed your node.
+
+The basic process goes as follows:
+- Stop your previous node, as running 2 nodes with the same keys will lead to loss of coins
+- Backup your node wallet folders (`massa-node/staking_wallets` and `massa-client/wallets`)
+- If needed, backup you custom config files (`massa-node/config/config.toml` and `massa-client/config/config.toml`)
+- Install your new node by following the [documentation](/docs/node/install).
+- Restore your wallet folders to their respective location
+- If needed, restore your custom configuration
+
+If, during the process, you missed enough block production, your rolls may be automatically sold.
+If that is the case, wait for the coins to get reimbursed automatically (taking ~3 hours), and buy your rolls again.
+
+## Updating the git repository (if installed from sources)
+
+If you installed from sources, you can either re-clone the repo, or you can update your existing repo to the latest release.
+
+In order to update to the latest release, launch a terminal in your current repository, and then run the following commands:
+```shell
+git fetch
+git checkout MAIN.2.1
+```
