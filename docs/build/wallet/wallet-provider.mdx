@@ -3,4 +3,74 @@ id: wallet-provider
 title: Wallet Provider
 ---
 
-This page should document the wallet provider package.
+# Wallet Provider Integration Guide
+
+## Overview of `wallet-provider`
+
+`wallet-provider` is a versatile library designed to connect dApps with user wallets, adhering to the Massa wallet standards. It supports seamless integration with the Massa blockchain, either as a standalone utility or in conjunction with `massa-web3`, facilitating a secure and efficient dApp-to-wallet communication channel.
+
+## Key Features
+
+- **Wallet Discovery**: Automatically identifies and connects to compatible wallets present on the user's device.
+- **Account Management**: Offers functionalities to import, retrieve, and handle wallet accounts with ease.
+- **Transaction Signing**: Enables the signing of transactions and messages directly from the dApp interface.
+- **Balance Inquiry**: Allows for real-time balance checks of connected wallet accounts.
+
+## Getting Started
+
+### Installation
+
+Ensure you have `wallet-provider` installed in your project. If not, you can add it using npm or yarn:
+
+```bash
+npm install @massalabs/wallet-provider
+# or
+yarn add @massalabs/wallet-provider
+```
+
+### Basic Usage Examples
+
+#### Listing Available Providers
+
+Retrieve a list of all wallet providers that adhere to the Massa wallet standard:
+
+```typescript
+import { providers } from "@massalabs/wallet-provider";
+const providerList = providers();
+```
+
+#### Selecting a Wallet Provider
+
+Choose a specific wallet provider from the available list, for example, `MASSASTATION`:
+
+```typescript
+import { providers } from "@massalabs/wallet-provider";
+
+const providerList = providers();
+const massaStationProvider = providerList.find(
+  (provider) => provider.name() === "MASSASTATION"
+);
+```
+
+#### Accessing Wallet Accounts
+
+After selecting a provider, you can retrieve the accounts associated with it:
+
+```typescript
+import { providers } from "@massalabs/wallet-provider";
+
+const providerList = providers();
+const massaStationProvider = providerList.find(
+  (provider) => provider.name() === "MASSASTATION"
+);
+
+const accounts = await massaStationProvider.accounts();
+```
+
+### Account Functions
+
+For a comprehensive list of account-related functionalities, such as sending transactions, signing messages, and querying account balances, refer to the `IAccount` interface documentation available [here](https://github.com/massalabs/wallet-provider/blob/main/src/account/IAccount.ts).
+
+---
+
+This guide serves as an introductory resource for integrating the `wallet-provider` with your dApp. For detailed documentation, including advanced features and integration scenarios, visit the [Massa standards repository](https://github.com/massalabs/massa-standards/blob/main/wallet/dapps-communication.md) and the `wallet-provider` [GitHub page](https://github.com/massalabs/wallet-provider).
