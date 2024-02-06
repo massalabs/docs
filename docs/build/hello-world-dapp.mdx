@@ -253,6 +253,7 @@ import {
   bytesToStr,
   WalletClient,
   DefaultProviderUrls,
+  BUILDNET_CHAIN_ID,
 } from "@massalabs/massa-web3";
 
 import { useEffect, useState } from "react";
@@ -277,6 +278,7 @@ function Content() {
     const initClient = async () => {
       const client = await ClientFactory.createDefaultClient(
         DefaultProviderUrls.BUILDNET,
+        BUILDNET_CHAIN_ID,
         false
       );
       setWeb3client(client);
