@@ -26,28 +26,27 @@ let opId = await client.smartContracts().callSmartContract({
   fee: BigInt(0),
 });
 ```
-[Github redirection](https://github.com/massalabs/massa-sc-examples/blob/main/age/react/src/App.tsx#L77)
 
-Since that method requires a string and an integer as parameters, we need to serialize them first. The `Args` class 
-provides a convenient way to do that. You can learn more about Args via the [source code](https://github.com/massalabs/web3-utils/blob/main/src/arguments.ts#L42)
+[Github redirection](https://github.com/massalabs/massa-sc-examples/blob/1a0f4db090ac0516d9edae5ae839422747edfae9/age/front/react/src/App.tsx#L74)
+
+Since that method requires a string and an integer as parameters, we need to serialize them first. The `Args` class
+provides a convenient way to do that. You can learn more about Args via the [source code](https://github.com/massalabs/massa-web3/blob/3dbfe0e60fb397af4c4502ea0031ee5ae1f2aba6/packages/web3-utils/src/arguments.ts#L68)
 and its usage with the [examples](https://github.com/massalabs/massa-sc-examples/).
-
-If the call is successful, we get an operation id back, you can then use it to check the status of the operation with the [explorer](https://buildnet.massa.net/#explorer)
 
 ## Reading a smart contract value
 
 You can directly read smart contract datastore values
- with the `readSmartContractData` method, which does not require any gas or fee:
+with the `readSmartContractData` method, which does not require any gas or fee:
 
 ```typescript
-      const res = await client.smartContracts().readSmartContract({
-        maxGas: BigInt(1000000),
-        targetAddress: CONTRACT_ADDRESS,
-        targetFunction: "getAge",
-        parameter: new Args().addString(inputName).serialize(),
-      });
-    
-    const age = res.returnValue;
+const res = await client.smartContracts().readSmartContract({
+  maxGas: BigInt(1000000),
+  targetAddress: CONTRACT_ADDRESS,
+  targetFunction: "getAge",
+  parameter: new Args().addString(inputName).serialize(),
+});
+
+const age = res.returnValue;
 ```
 
 :::info
