@@ -1,0 +1,30 @@
+{
+  "title": {
+    "message": "Docs",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "My Site Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.🎓 Learn": {
+    "message": "🎓 Learn",
+    "description": "Navbar item with label 🎓 Learn"
+  },
+  "item.label.🛠️ Build": {
+    "message": "🛠️ Build",
+    "description": "Navbar item with label 🛠️ Build"
+  },
+  "item.label.📖 Tutorial": {
+    "message": "📖 Tutorial",
+    "description": "Navbar item with label 📖 Tutorial"
+  },
+  "item.label.🖥 Mainnet": {
+    "message": "🖥 Mainnet",
+    "description": "Navbar item with label 🖥 Mainnet"
+  },
+  "item.label.🧩 Massa Station": {
+    "message": "🧩 Massa Station",
+    "description": "Navbar item with label 🧩 Massa Station"
+  }
+}

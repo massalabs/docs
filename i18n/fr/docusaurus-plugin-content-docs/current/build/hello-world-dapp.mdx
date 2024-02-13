@@ -39,7 +39,7 @@ Before we start, here's what you'll need:
   You'll need a funded Massa wallet and your secret key before you deploy your smart contract to the Massa blockchain.
 
 :::info
-Not sure how to create and fund a Massa wallet? Check our guide [here](/docs/build/wallet/intro).
+Not sure how to create and fund a Massa wallet? Check our guide [here](./wallet/intro).
 :::
 
 ### Setting up Your Project
@@ -146,11 +146,11 @@ Storage.set("greeting", "Hello, World!");
 This line sets the greeting message in the contract storage. The `Storage.set()` function takes two parameters: the key and the value. The key is a string that will be used to retrieve the value from the storage. The value can be of any type. In this example, we are using a string.
 
 :::info
-In Massa, if you want some data to be persistent on the blockchain, you need to store it in the contract storage. If you are familiar with web development, you can think of the storage as the database of your application. The contract storage is a key-value store that can be used to store simple objects such as our "Hello, World!" string, or more complex objects such as serializable object arrays. Then the data can be retrieved from the storage using methods such has `Storage.get()` or `Storage.has()` provided by the SDK. You can learn more about how to handle the storage with Massa AS-SDK [here](/docs/build/smart-contract/as-sdk.md#storage). 
+In Massa, if you want some data to be persistent on the blockchain, you need to store it in the contract storage. If you are familiar with web development, you can think of the storage as the database of your application. The contract storage is a key-value store that can be used to store simple objects such as our "Hello, World!" string, or more complex objects such as serializable object arrays. Then the data can be retrieved from the storage using methods such has `Storage.get()` or `Storage.has()` provided by the SDK. You can learn more about how to handle the storage with Massa AS-SDK [here](./smart-contract/as-sdk.md#storage). 
 :::
 
 :::info
-In Massa, when writing to the persistent storage a.k.a the ledger, you need to pay for the storage space you will be using. The more data you store, the more you will have to pay. Similarly when you free-up some space from the ledger, you recover the amount of coins you paid to allocate the space. The price of storage is a fixed amount of Massa coins for each byte of data (0.001 MAS per byte). You can learn more about storage cost in Massa smart contracts [here](/docs/learn/storage-costs.mdx).
+In Massa, when writing to the persistent storage a.k.a the ledger, you need to pay for the storage space you will be using. The more data you store, the more you will have to pay. Similarly when you free-up some space from the ledger, you recover the amount of coins you paid to allocate the space. The price of storage is a fixed amount of Massa coins for each byte of data (0.001 MAS per byte). You can learn more about storage cost in Massa smart contracts [here](../learn/storage-costs.mdx).
 :::
 
 - **Emitting an event**
@@ -158,7 +158,7 @@ In Massa, when writing to the persistent storage a.k.a the ledger, you need to p
 ```tsx
 generateEvent(`Greeting has been set`);
 ```
-Here, we are emitting an event to notify that the greeting message has been set. Events are a great way to notify the front ends of a dApp that something has happened. They are similar to events in Solidity. You can learn more about events [here](/docs/build/smart-contract/as-sdk.md#utilities).
+Here, we are emitting an event to notify that the greeting message has been set. Events are a great way to notify the front ends of a dApp that something has happened. They are similar to events in Solidity. You can learn more about events [here](./smart-contract/as-sdk.md#utilities).
 
 Now that we have written our smart contract, let's deploy it to the blockchain.
 
@@ -177,7 +177,7 @@ This command compiles your `main.ts` contract into a `main.wasm` file generated 
 #### Step 3: Deploy the Smart Contract
 
 Now that your smart contract is compiled and ready, let's deploy it to the Massa blockchain.
-You first need some funds in your wallet that you can request from the [faucet](/docs/build/networks-faucets/public-networks).
+You first need some funds in your wallet that you can request from the [faucet](./networks-faucets/public-networks).
 You can then run the following command in your project directory:
 
 ```bash
@@ -253,7 +253,6 @@ import {
   bytesToStr,
   WalletClient,
   DefaultProviderUrls,
-  BUILDNET_CHAIN_ID,
 } from "@massalabs/massa-web3";
 
 import { useEffect, useState } from "react";
@@ -278,7 +277,6 @@ function Content() {
     const initClient = async () => {
       const client = await ClientFactory.createDefaultClient(
         DefaultProviderUrls.BUILDNET,
-        BUILDNET_CHAIN_ID,
         false
       );
       setWeb3client(client);
@@ -361,7 +359,7 @@ We are using the `DefaultProviderUrls.BUILDNET` constant as our provider URL. Th
 The boolean is a flag that indicates whether or not we want to provide an wallet account to sign transactions. Here it is set to false because we are not going to sign any transactions. Finally, we are setting the client object to the `web3client` state variable using the `setWeb3client` function, so that the web3 client is available to the rest of our application.
 
 :::info
-The buildnet is a test network that is used to test smart contracts before deploying them to the mainnet. It is similar to the Ethereum Sepolia network. You can learn more about Massa networks [here](/docs/build/networks-faucets/public-networks).
+The buildnet is a test network that is used to test smart contracts before deploying them to the mainnet. It is similar to the Ethereum Sepolia network. You can learn more about Massa networks [here](./networks-faucets/public-networks).
 :::
 
 
@@ -417,5 +415,5 @@ Congratulations on writing and testing your first dApp using the Massa blockchai
 
 There's always more to learn. To continue exploring and expanding your knowledge, you can:
 
-- Review more detailed guides on [smart contract development](/docs/build/smart-contract/intro).
-- Check out more [complex examples](/docs/tutorial/home) of dApps built on Massa.
+- Review more detailed guides on [smart contract development](./smart-contract/intro).
+- Check out more [complex examples](../tutorial/home) of dApps built on Massa.

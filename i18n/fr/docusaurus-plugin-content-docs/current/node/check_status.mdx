@@ -1,0 +1,20 @@
+---
+id: check_status
+sidebar_label: Check your node's status
+---
+
+# Check your node's status
+
+## Check your routability status
+
+You can use a service such as https://portchecker.co to check that the ports 31244 and 31245 are both opened for your public IP address.
+
+Additionally, in your massa-client, you can check that the `get_status` command shows your `Node's IP: <your_public_ip_address>`.
+If it shows `No routable IP set` instead, please check again your configuration.
+
+## Make sure you are connected to peers
+
+In order for your node to be running properly, you have to make sure you are connected to other peers on the network.
+
+The `get_status` command will show you which nodes you are connected too.
+You need to have both IN and OUT connections.

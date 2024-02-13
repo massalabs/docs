@@ -1,0 +1,63 @@
+---
+id: providers
+sidebar_label: Providers
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# RPC Providers
+
+To interact with the different networks of the Massa blockchain, you can select from any of the listed providers.
+Be aware that the latency you encounter may vary depending on the provider's geographical location.
+To enhance redundancy and facilitate load balancing, consider using multiple providers.
+
+<Tabs>
+  <TabItem value="mainnet" label="🖥 MainNet" default>
+    <table>
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>Protocol</th>
+          <th>Endpoint URL</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr>
+          <td><a href="/docs/build/networks-faucets/public-networks">Massa Labs</a></td>
+          <td><code>JsonRPC</code></td>
+          <td><code>https://mainnet.massa.net/api/v2</code></td>
+        </tr>
+        <tr>
+          <td><a href="/docs/build/networks-faucets/public-networks">Massa Labs</a></td>
+          <td><code>gRPC</code></td>
+          <td><code>grpc://mainnet.massa.net:33037</code></td>
+        </tr>
+        </tbody>
+    </table>
+  </TabItem>
+
+  <TabItem value="buildnet" label="👷 BuildNet" default>
+    <table>
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>Protocol</th>
+          <th>Endpoint URL</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr>
+          <td><a href="/docs/build/networks-faucets/public-networks">Massa Labs</a></td>
+          <td><code>JsonRPC</code></td>
+          <td><code>https://buildnet.massa.net/api/v2</code></td>
+        </tr>
+        <tr>
+          <td><a href="/docs/build/networks-faucets/public-networks">Massa Labs</a></td>
+          <td><code>gRPC</code></td>
+          <td><code>grpc://buildnet.massa.net:33037</code></td>
+        </tr>
+        </tbody>
+    </table>
+  </TabItem>
+</Tabs>

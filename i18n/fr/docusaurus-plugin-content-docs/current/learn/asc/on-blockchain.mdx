@@ -1,0 +1,36 @@
+---
+id: massa-asc
+sidebar_label: Autonomous Smart Contracts
+---
+# Massa's Autonomous Smart Contracts
+
+Massa's Autonomous Smart Contracts address the challenges of reliability, sophistication, and centralization that plague dApps 
+seeking to offer automated smart-contract execution on behalf of their users. 
+These innovative smart contracts introduce the ability to self-wake, granting them the power to autonomously perform arbitrary operations. 
+For instance, they can be programmed to trigger specific calls when predefined exchange rate targets are met in a decentralized exchange.
+
+## The Mechanism within Massa Network
+
+![Autonomous SCs](./autonomous-sc.webp)
+
+Standard operations are sent to an *operation pool* and are executed when they are included in a block. The cost of
+execution is paid by the sender of the operation when the operation is executed.
+
+Autonomous smart contracts works by emitting messages which will schedule the execution. Those messages are emitted
+by smart contracts, through operations sent by users or by autonomous operations. Messages are then stored in an
+*asynchronous pool*. Contrary to standard operations, the gas required by autonomous smart contracts is paid upfront.
+
+The asynchronous pool is deterministic by nature as it’s filled with messages that ultimately come from operations
+included in blocks, which are processed by every node of the network. The pool has a finite size and messages
+are removed based on the fees and after a certain number of slots if they were not executed.
+
+As for normal operations, the number of autonomous operations that can be executed is limited, through a maximum amount
+of gas. In practice, it’s possible that your message isn’t executed at the slot that you want, but in a later slot,
+when there is enough space to include your message. If you want your message to be included as soon as possible, the
+fees needs to be higher than other messages (just like standard operations).
+
+Messages are ordered using the following formula:
+
+$(Reverse(Ratio(msg.fee, max(msg.max_gas,1))), emission\_slot, emission\_index),$
+
+where $emission\_index$ is an index that differentiate multiple messages created in the same slot.
