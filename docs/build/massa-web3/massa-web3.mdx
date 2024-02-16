@@ -55,16 +55,14 @@ If you want to use the library in a vanilla javascript project, please add the f
 ```html
 <script
   type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/@massalabs/massa-web3@x.x.x/bundle.js"
+  src="https://cdn.jsdelivr.net/npm/@massalabs/massa-web3@latest/bundle.js"
 ></script>
 ```
-
-whereby the x.x.x is one of the available released versions under [Massa-web3's releases page](https://github.com/massalabs/massa-web3/releases):
 
 In your code, once the script is fully loaded, just use window.massa to access all massa-web3 exports.
 
 ```ts
-<script>console.log("Massa Web3 ", window.massa);</script>
+console.log("Massa Web3 ", window.massa);
 ```
 
 ## Initialization
@@ -118,18 +116,19 @@ You can easily initialize a client instance using the ClientFactory class:
 <TabItem value="mainnet-client" label="Mainnet" default>
 
 ```typescript
-  const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
-    privateKey
-  );
-  const chainId = CHAIN_ID.MainNet;
+const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
+  privateKey
+);
+const chainId = CHAIN_ID.MainNet;
 
-  const testnetClient: Client = await ClientFactory.createDefaultClient(
-    DefaultProviderUrls.MAINNET,
-    chainId,
-    true, // retry failed requests
-    baseAccount // optional parameter
-  );
+const testnetClient: Client = await ClientFactory.createDefaultClient(
+  DefaultProviderUrls.MAINNET,
+  chainId,
+  true, // retry failed requests
+  baseAccount // optional parameter
+);
 ```
+
 </TabItem>
 
 <TabItem value="buildnet-client" label="Buildnet" default>
@@ -147,6 +146,7 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
   baseAccount // optional parameter
 );
 ```
+
 </TabItem>
 
 <TabItem value="labnet-client" label="Labnet" default>
