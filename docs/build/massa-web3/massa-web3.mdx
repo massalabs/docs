@@ -173,7 +173,9 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
 );
-const chainId = CHAIN_ID.Sandbox;
+
+// You must set the `chainId` to match the network your client intends to interact with.
+const chainId = CHAIN_ID.MainNet;
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
   DefaultProviderUrls.LOCALNET,
