@@ -56,15 +56,20 @@ const massaStationProvider = providerList.find(
 
 After selecting a provider, you can retrieve the accounts associated with it:
 
-```typescript
-import { providers } from "@massalabs/wallet-provider";
+```typescript reference title="Example"
+https://github.com/massalabs/wallet-provider/blob/main/code-snippets/provider-get-accounts.ts
+```
 
-const providerList = providers();
-const massaStationProvider = providerList.find(
-  (provider) => provider.name() === "MASSASTATION"
-);
+#### Retrieving network
 
-const accounts = await massaStationProvider.accounts();
+```typescript reference title="Example"
+https://github.com/massalabs/wallet-provider/blob/main/code-snippets/provider-get-nework.ts
+```
+
+#### Retrieving Chain id
+
+```typescript reference title="Example"
+https://github.com/massalabs/wallet-provider/blob/main/code-snippets/provider-get-chainId.ts
 ```
 
 ### Account Functions
