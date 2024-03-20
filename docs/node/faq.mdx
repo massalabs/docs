@@ -187,3 +187,51 @@ To do this, edit (or create if absent) the file `massa-node/config/config.toml` 
 ```
 
 then restart your node.
+
+### Bootstrapping and error message "client & server cloks differ too much"
+
+The clock of your server is not synchronised.
+
+On linux system using systemd, this can be checked using:
+
+`timedatectl`
+
+Check the line starting with 'System clock synchronized':
+
+`
+Local time: Wed 2018-06-13 12:38:51 UTC
+Universal time: Wed 2018-06-13 12:38:51 UTC
+RTC time: Wed 2018-06-13 12:38:51
+Time zone: ETC/UTC (UTC, +0000)
+System clock synchronized: no
+systemd-timesyncd.service active: yes
+RTC in local TZ: no
+`
+
+To fix this, edit the following file:
+
+`
+sudo nano /etc/systemd/timesyncd.conf
+`
+
+Edit the NTP Server detail (from https://www.ntppool.org/zone/@):
+
+`
+[Time]
+NTP=0.ch.pool.ntp.org 1.ch.pool.ntp.org
+FallbackNTP=0.north-america.pool.ntp.org 1.north-america.pool.ntp.org
+`
+
+Then:
+
+`
+sudo systemctl daemon-reload
+sudo timedatectl set-ntp off
+sudo timedatectl set-ntp on
+`
+
+and you can check it with:
+
+`
+timedatectl status
+`
