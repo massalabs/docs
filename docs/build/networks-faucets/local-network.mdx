@@ -50,7 +50,7 @@ Setup your node to use the secret you just generated as its public key and staki
     {
         "ADDR": {
             "balance": "80000000",
-            "datastore": {},
+            "datastore": [],
             "bytecode": []
         }
     }
@@ -64,13 +64,7 @@ Setup your node to use the secret you just generated as its public key and staki
     }
     ```
 
-- CLEAR content of `massa-node/base_config/initial_vesting.json`:
-
-    ```javascript
-    {}
-    ```
-
-- You also have to modify the file `massa-node/base_config/config.toml` to match the same ChainID as a Sandbox node, as it defaults to the Mainnet ChainID of 77658377.
+- You also have to modify the file `massa-client/base_config/config.toml` to match the same ChainID as a Sandbox node, as it defaults to the Mainnet ChainID of 77658377.
     ```javascript
     {
         chain_id = 77
