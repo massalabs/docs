@@ -112,6 +112,12 @@ const config = {
             label: "🧩 Massa Station",
           },
           {
+            type: "docSidebar",
+            sidebarId: "massaBridgeSidebar",
+            position: "left",
+            label: "🌉 Massa Bridge",
+          },
+          {
             type: "search",
             position: "right",
           },
