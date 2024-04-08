@@ -34,6 +34,12 @@ const FeatureList = [
     docName: "docs/node/home",
     icon: "🖥",
   },
+  {
+    title: "Massa Bridge",
+    content: "Bridge your assets between Massa and other blockchains.",
+    docName: "docs/massaBridge/home",
+    icon: "🌉",
+  },
 ];
 
 function Feature({ docName, title, content, icon }) {

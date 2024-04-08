@@ -436,7 +436,7 @@ const sidebars = {
   massaBridgeSidebar: [
     {
       type: "doc",
-      id: "massaBridge/introduction",
+      id: "massaBridge/home",
     },
     {
       type: "doc",

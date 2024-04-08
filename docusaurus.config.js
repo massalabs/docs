@@ -76,7 +76,7 @@ const config = {
       navbar: {
         title: "Docs",
         logo: {
-          alt: "My Site Logo",
+          alt: "Massa Logo",
           src: "img/massa_logo.svg",
           srcDark: "img/massa_logo_white.svg",
         },
