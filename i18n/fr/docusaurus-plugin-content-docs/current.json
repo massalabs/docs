@@ -1,0 +1,94 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.massaStationSidebar.category.Setup": {
+    "message": "Setup",
+    "description": "The label for category Setup in sidebar massaStationSidebar"
+  },
+  "sidebar.massaStationSidebar.category.Massa Wallet": {
+    "message": "Massa Wallet",
+    "description": "The label for category Massa Wallet in sidebar massaStationSidebar"
+  },
+  "sidebar.learnSidebar.category.Node Architecture": {
+    "message": "Node Architecture",
+    "description": "The label for category Node Architecture in sidebar learnSidebar"
+  },
+  "sidebar.buildSidebar.category.Smart Contract": {
+    "message": "Smart Contract",
+    "description": "The label for category Smart Contract in sidebar buildSidebar"
+  },
+  "sidebar.buildSidebar.category.Develop": {
+    "message": "Develop",
+    "description": "The label for category Develop in sidebar buildSidebar"
+  },
+  "sidebar.buildSidebar.category.Wallets": {
+    "message": "Wallets",
+    "description": "The label for category Wallets in sidebar buildSidebar"
+  },
+  "sidebar.buildSidebar.category.Massa-Web3": {
+    "message": "Massa-Web3",
+    "description": "The label for category Massa-Web3 in sidebar buildSidebar"
+  },
+  "sidebar.buildSidebar.category.Networks & Faucets": {
+    "message": "Networks & Faucets",
+    "description": "The label for category Networks & Faucets in sidebar buildSidebar"
+  },
+  "sidebar.buildSidebar.category.API": {
+    "message": "API",
+    "description": "The label for category API in sidebar buildSidebar"
+  },
+  "sidebar.buildSidebar.doc.Introduction": {
+    "message": "Introduction",
+    "description": "The label for the doc item Introduction in sidebar buildSidebar, linking to the doc build/smart-contract/intro"
+  },
+  "sidebar.buildSidebar.doc.WebAssembly Module": {
+    "message": "WebAssembly Module",
+    "description": "The label for the doc item WebAssembly Module in sidebar buildSidebar, linking to the doc build/smart-contract/sdk"
+  },
+  "sidebar.nodeSidebar.doc.Home": {
+    "message": "Home",
+    "description": "The label for the doc item Home in sidebar nodeSidebar, linking to the doc node/home"
+  },
+  "sidebar.nodeSidebar.doc.Installing a node": {
+    "message": "Installing a node",
+    "description": "The label for the doc item Installing a node in sidebar nodeSidebar, linking to the doc node/install"
+  },
+  "sidebar.nodeSidebar.doc.Routability": {
+    "message": "Routability",
+    "description": "The label for the doc item Routability in sidebar nodeSidebar, linking to the doc node/routability"
+  },
+  "sidebar.nodeSidebar.doc.Running a node": {
+    "message": "Running a node",
+    "description": "The label for the doc item Running a node in sidebar nodeSidebar, linking to the doc node/run"
+  },
+  "sidebar.nodeSidebar.doc.Creating a wallet": {
+    "message": "Creating a wallet",
+    "description": "The label for the doc item Creating a wallet in sidebar nodeSidebar, linking to the doc node/wallet"
+  },
+  "sidebar.nodeSidebar.doc.Staking": {
+    "message": "Staking",
+    "description": "The label for the doc item Staking in sidebar nodeSidebar, linking to the doc node/stake"
+  },
+  "sidebar.nodeSidebar.doc.Checking the node's status": {
+    "message": "Checking the node's status",
+    "description": "The label for the doc item Checking the node's status in sidebar nodeSidebar, linking to the doc node/check_status"
+  },
+  "sidebar.nodeSidebar.doc.Node and client configuration": {
+    "message": "Node and client configuration",
+    "description": "The label for the doc item Node and client configuration in sidebar nodeSidebar, linking to the doc node/all-configs"
+  },
+  "sidebar.nodeSidebar.doc.Initial node runners": {
+    "message": "Initial node runners",
+    "description": "The label for the doc item Initial node runners in sidebar nodeSidebar, linking to the doc node/initial"
+  },
+  "sidebar.nodeSidebar.doc.Frequently Asked Questions": {
+    "message": "Frequently Asked Questions",
+    "description": "The label for the doc item Frequently Asked Questions in sidebar nodeSidebar, linking to the doc node/faq"
+  },
+  "sidebar.nodeSidebar.doc.Tutorials and community resources": {
+    "message": "Tutorials and community resources",
+    "description": "The label for the doc item Tutorials and community resources in sidebar nodeSidebar, linking to the doc node/community-resources"
+  }
+}

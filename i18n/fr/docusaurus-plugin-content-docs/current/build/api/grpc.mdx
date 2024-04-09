@@ -1,0 +1,105 @@
+---
+id: grpc
+sidebar_label: gRPC
+---
+
+# Massa gRPC API
+
+The [gRPC](https://grpc.io/) API allows you to communicate with the Massa blockchain.
+
+The Massa gRPC API is splitted in two parts:
+
+- **Public API**: used for blockchain interactions. Default port:
+    33037 e.g. <grpc://localhost:33037>
+- **Private API**: used for node management. Default port: 33038 e.g.
+    <grpc://localhost:33038>
+
+:::info
+To enable events (blocks, endorsements, operations...) brodcast via gRPC streams in your Massa node, add or edit the file
+`massa-node/config/config.toml` with the following content:
+
+```toml
+[api]
+   # whether to broadcast for blocks, endorsement and operations
+   enable_broadcast = true
+```
+:::
+
+## Documentation
+
+- gRPC **API** [documentation](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/api.html).
+- gRPC **Commons** [documentation](https://htmlpreview.github.io/?https://github.com/massalabs/massa-proto/blob/main/doc/commons.html).
+- gRPC **API** [specification](https://github.com/massalabs/massa-proto/tree/main/proto/apis/massa/api/v1).
+
+## Integrations
+
+- **Postman**: You can find our Massa Postman collections on our official
+[workspace](https://www.postman.com/massalabs).
+- **Massa proto rs**: is a Rust library which contains generated code from Massa protobuf files. See
+[massa-proto-rs](https://github.com/massalabs/massa-proto-rs).
+
+## Code generation
+
+**Step 1: Clone `massa-proto` repository**
+
+```shell
+git clone -b MASSA_PROTO_TAG https://github.com/massalabs/massa-proto.git --depth 1
+```
+
+:::note
+If you are using an older version of the Massa node, please use the tag version or commit hash corresponding to your node version.
+Find all `massa-proto` tags [here](https://github.com/massalabs/massa-proto/tags).
+:::
+
+**Step 2: Install Buf CLI**
+
+1.  Download the latest version of Buf CLI from the [official website](https://docs.buf.build/installation).
+2.  Extract the downloaded file to a folder on your computer.
+3.  Add the buf binary to your system PATH environment variable.
+
+**Step 3: Set up Buf**
+
+1.  Add the following content to `buf.work.yml`:
+
+```yaml
+version: v1
+directories:
+    - proto/apis
+    - proto/commons
+    - proto/third_party
+```
+
+By specifying the directories in the configuration file, Buf knows which
+[.proto]{.title-ref} files to include in the build process.
+
+1.  Create a file called `buf.gen.yml` and add the following content:
+
+```yaml
+version: v1
+managed:
+  enabled: true
+plugins:
+  - remote: buf.build/community/timostamm-protobuf-ts:v2.9.0
+    out: gen/ts
+```
+
+The configuration uses the official [timostamm-protobuf-ts](https://buf.build/community/timostamm-protobuf-ts)
+plugin to generate gRPC client and classes in TypeScript.
+
+:::info
+For other languages check the complete list of [official Buf plugins](https://buf.build/plugins).
+:::
+
+**Step 4: Generate gRPC client/classes in TypeScript**
+
+1.  Launch the code generation:
+
+```yaml
+buf generate
+```
+
+2.  Install the required dependencies for the generated code to your project:
+
+```shell
+npm install @protobuf-ts/runtime@^2.9.0 @protobuf-ts/runtime-rpc@^2.9.0
+```

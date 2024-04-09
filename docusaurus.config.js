@@ -33,7 +33,7 @@ const config = {
   // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
-    locales: ["en"],
+    locales: ["en", "fr"],
   },
 
   stylesheets: [
@@ -55,7 +55,8 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/massalabs/docs/tree/main/",
+          editUrl: "https://github.com/massalabs/doc/tree/main/",
+          editLocalizedFiles: true,
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
           remarkPlugins: [math, remarkGridTables],
@@ -110,6 +111,10 @@ const config = {
             sidebarId: "massaStationSidebar",
             position: "left",
             label: "🧩 Massa Station",
+          },
+          {
+          type: "localeDropdown",
+          position: "right",
           },
           {
             type: "search",
