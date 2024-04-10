@@ -16,17 +16,17 @@ The bridge system comprises several key components:
 
 ### User flow
 
-To initiate bridging from Ethereum to Massa, a lock transaction is sent to the BridgeVault contract on Ethereum. This lock transaction will transfer the assets from the user's wallet to the BridgeVault contract, locking them in the process. In order to ensure that the bridge operation meet all the requirements, users should always use the Massa bridge UI. Once the lock transaction has received enough confirmations, it will be handled by the relayer network; On detecting a lock event, each individual relayer will produce a signature corresponding to this particular bridge operation. Once all of the three relayers have signed the lock transaction, the relayer network will forward this bridge operation to the bridge contract on Massa. The Massa bridge contract will then verify the signatures, and mint the corresponding amount of tokens to the user's wallet on Massa. The user will then receive a notification that the mint operation has been completed.
+To initiate bridging from Ethereum to Massa, a lock transaction is sent to the BridgeVault contract on Ethereum. This lock transaction will transfer the assets from the user's wallet to the BridgeVault contract, locking them in the process. In order to ensure that the bridge operation meet all the requirements, users should always use the Massa bridge UI. Once the lock transaction has received enough confirmations, it will be handled by the relayer network; On detecting a lock event, each individual relayer will produce a signature corresponding to this particular bridge operation. Once all of the three relayers have signed the lock transaction, the relayer network will forward this bridge operation to the Bridge contract on Massa. The Massa Bridge contract will then verify the signatures, and mint the corresponding amount of tokens to the user's wallet on Massa. The user will then receive a notification that the mint operation has been completed.
 
 To initiate bridging from Massa to Ethereum, a burn transaction is sent to the Bridge contract on Massa. This burn transaction will transfer the assets from the user's wallet to the Bridge contract, burning them in the process. Once the burn transaction has received enough confirmations, it will be handled by the relayer network; On detecting a burn event, each individual relayer will produce a signature corresponding to this particular bridge operation. During the process, the Massa Bridge UI will query the relayer network for the signatures. Once all of the three relayers have produced their signatures, the Massa bridge UI will prepare the redeem transaction. The user will then sign and send the redeem transaction to the Ethereum blockchain, triggering the release of the tokens. 
 
 ### Security Measures
 
-The bridgeVault contract on Ethereum holds the assets locked during the bridging process. The only way assets can be redeemed is by sending a message signed by the 3 out of 3 nodes of the relayer network. This ensures that the assets are only released when the relayer network has verified the corresponding burn transaction on Massa. The public keys of the relayer nodes are stored in the bridge contract on Massa, and can only be updated by a gnosis safe multisig wallet controlled by the bridge operators. Moreover, a 48h timeLock from openzeppelin is implemented in the bridge contract on Massa, which requires a 48h delay before the relayer network can update the public keys. This ensures that the bridge operators have enough time to intervene in case of a malicious update of the public keys. 
-The bridgeVault contract can charge fees. However they have been set to 0 for the time being.
+The BridgeVault contract on Ethereum holds the assets locked during the bridging process. The only way assets can be redeemed is by sending a message signed by the 3 out of 3 nodes of the relayer network. This ensures that the assets are only released when the relayer network has verified the corresponding burn transaction on Massa. The public keys of the relayer nodes are stored in the Bridge contract on Massa, and can only be updated by a gnosis safe multisig wallet controlled by the bridge operators. Moreover, a 48h timeLock from Openzeppelin is implemented in the Bridge contract on Massa, which requires a 48h delay before the relayer network can update the public keys. This ensures that the bridge operators have enough time to intervene in case of a malicious update of the public keys. 
+The BridgeVault contract can charge fees. However they have been set to 0 for the time being.
 
 **Gnosis safe**
-Safe address: [0x1234567890abcdef1234567890abcdef12345678](https://gnosis-safe.io/app/#/safes/0x1234567890abcdef1234567890abcdef12345678)
+Safe proxy address: [0x5d752840501b2d2f4841accf53794d0ed3e2c3eb](https://sepolia.etherscan.io/address/0x5d752840501b2d2f4841accf53794d0ed3e2c3eb)
 
 | Signer Name | Address                                   | Status   |
 |-------------|-------------------------------------------|----------|
@@ -35,8 +35,8 @@ Safe address: [0x1234567890abcdef1234567890abcdef12345678](https://gnosis-safe.i
 | SRE         | 0xPqr7890...StuV1234                      | Inactive |
 
 
-The bridge contract on Massa is responsible for minting the tokens in response to the locked assets on Ethereum. The bridge contract can only mint tokens when it receives a message signed by 3 out of 3 nodes of the relayer network. The synthetic token contracts ownership, has yet to be transferred to a multisig wallet after deployment. The public keys of the relayer nodes are hardcoded in the contract and cannot be updated. This contract as well can be paused for maintenance or security.
-The bridge contract can charge fees but have been set to 0.
+The Bridge contract on Massa is responsible for minting the tokens in response to the locked assets on Ethereum. The Bridge contract can only mint tokens when it receives a message signed by 3 out of 3 nodes of the relayer network. The synthetic token contracts ownership, has yet to be transferred to a multisig wallet after deployment. The public keys of the relayer nodes are hardcoded in the contract and cannot be updated. This contract as well can be paused for maintenance or security.
+The Bridge contract can charge fees but have been set to 0.
 
 The relayer network is a set of independent nodes responsible for monitoring bridge transactions, verifying events, and facilitating the cross-chain communication necessary for asset transfers. The three nodes are hosted on different cloud providers to avoid common points of failure. For redundancy, each node has a fallback mechanism and redundant RPC connections.
 
@@ -82,31 +82,6 @@ The Massa Bridge smart contracts have undergone security audits conducted by Cer
 - The **User** signs and sends the redeem transaction to the **EVM blockchain** using their wallet provider.
 - Once the redeem transaction is executed on the **EVM blockchain**, the **User** is notified of its completion.
 
-
-### Off-chain Relayer Network
-![Off chain architecture](off-chain-architecture.png)
-
 ### On-chain Smart Contracts
 ![On chain architecture](on-chain-architecture.png)
 
-
-## Security Measures
-
-### Multisig and TimeLock Mechanisms
-
-- The system employs multisig schemes for critical operations, requiring multiple signatures from authorized entities to execute sensitive actions, enhancing security against unauthorized access or compromises.
-- TimeLock is implemented for administrative actions, introducing a mandatory delay between the initiation and execution of such actions, providing a window for intervention if suspicious activity is detected.
-
-### Relayer Security
-
-- Relayers are selected based on strict criteria to ensure reliability and security. Each relayer operates independently, with each instance hosted on separate cloud providers to avoid common points of compromise.
-- The relayer network employs fallback mechanisms and redundant RPC connections to maintain operational resilience against network failures or targeted attacks.
-
-### Smart Contract Security
-
-- Contracts utilize established libraries like OpenZeppelin for foundational security features, including role-based access control and secure transfer mechanisms.
-- Regular audits and continuous monitoring are in place to identify and mitigate potential vulnerabilities, ensuring the integrity of contract logic and operations.
-
-## Conclusion
-
-The architecture and security framework of our bridge between the Ethereum and Massa blockchains is built on the principles of decentralization, redundancy, and rigorous security practices. Through a combination of smart contract immutability, distributed operations, and advanced security mechanisms, we provide a secure, efficient, and reliable bridge service that users can trust for their cross-chain transactions.
