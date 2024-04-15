@@ -77,7 +77,7 @@ const config = {
       navbar: {
         title: "Docs",
         logo: {
-          alt: "My Site Logo",
+          alt: "Massa Logo",
           src: "img/massa_logo.svg",
           srcDark: "img/massa_logo_white.svg",
         },
@@ -111,6 +111,12 @@ const config = {
             sidebarId: "massaStationSidebar",
             position: "left",
             label: "🧩 Massa Station",
+          },
+          {
+            type: "docSidebar",
+            sidebarId: "massaBridgeSidebar",
+            position: "left",
+            label: "🌉 Massa Bridge",
           },
           {
             type: "search",

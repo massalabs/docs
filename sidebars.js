@@ -433,6 +433,20 @@ const sidebars = {
       label: "Tutorials and community resources",
     },
   ],
+  massaBridgeSidebar: [
+    {
+      type: "doc",
+      id: "massaBridge/home",
+    },
+    {
+      type: "doc",
+      id: "massaBridge/instructions",
+    },
+    {
+      type: "doc",
+      id: "massaBridge/architecture-security",
+    },
+  ],
 };
 
 module.exports = sidebars;
