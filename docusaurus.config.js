@@ -5,7 +5,7 @@ const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const math = require("remark-math");
 const katex = require("rehype-katex");
-const remarkGridTables = require('remark-grid-tables');
+const remarkGridTables = require("remark-grid-tables");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -68,6 +68,7 @@ const config = {
       },
     ],
   ],
+  themes: ["@saucelabs/theme-github-codeblock"],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -76,7 +77,7 @@ const config = {
       navbar: {
         title: "Docs",
         logo: {
-          alt: "My Site Logo",
+          alt: "Massa Logo",
           src: "img/massa_logo.svg",
           srcDark: "img/massa_logo_white.svg",
         },
@@ -110,6 +111,12 @@ const config = {
             sidebarId: "massaStationSidebar",
             position: "left",
             label: "🧩 Massa Station",
+          },
+          {
+            type: "docSidebar",
+            sidebarId: "massaBridgeSidebar",
+            position: "left",
+            label: "🌉 Massa Bridge",
           },
           {
             type: "search",
@@ -174,7 +181,7 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
         // See https://docusaurus.io/docs/markdown-features/code-blocks#supported-languages
-        additionalLanguages: ['toml', 'json', 'bash', 'powershell', 'protobuf'],
+        additionalLanguages: ["toml", "json", "bash", "powershell", "protobuf"],
       },
     },
 };
