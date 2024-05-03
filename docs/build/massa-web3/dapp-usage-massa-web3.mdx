@@ -19,7 +19,7 @@ After creating a react app and setting up the Massa Web3 API as described in the
 let args = new Args().addString(inputName).addU32(newAge);
 let opId = await client.smartContracts().callSmartContract({
   targetAddress: CONTRACT_ADDRESS,
-  functionName: "changeAge",
+  targetFunction: "changeAge",
   parameter: args.serialize(),
   maxGas: BigInt(1000000),
   coins: BigInt(0),
