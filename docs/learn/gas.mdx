@@ -54,7 +54,7 @@ To replicate the priorization behavior of block producers in a deterministic way
 the autonomous smart contract pool sorts the autonomous smart contract messages
 by their profitability defined by the `fee/max_gas` ratio.
 
-The pool is of finite size `MAX_ASYNC_POOL_LENGTH = 10_000`.
+The pool is of finite size `MAX_ASYNC_POOL_LENGTH = 1_000`.
 Expired messages are automatically dropped from that pool.
 Despite this, if the pool still grows beyond its length limit,
 the least profitable messages are dropped to fit the limit.
