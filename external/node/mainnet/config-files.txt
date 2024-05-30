@@ -1,1 +1,1 @@
-https://raw.githubusercontent.com/massalabs/massa/MAIN.2.1/massa-node/base_config/config.toml
+https://raw.githubusercontent.com/massalabs/massa/MAIN.2.2/massa-node/base_config/config.toml
