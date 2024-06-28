@@ -27,7 +27,7 @@ These are the different steps of the operation processing that will occur, as il
 2. The API Module forwards the operation to the Pool Module and broadcasts it to other nodes via the Protocol/Network 
 Module. Other nodes hearing about it will also broadcast it (gossip protocol), and feed it to their Pool Module.
 
-3. At that stage, the operation sits in the Pool Modules of most nodes
+3. At that stage, the operation sits in the Pool Modules of most nodes. Note that a given operation does not have a specific nounce, and as a result can be included in any order relative to other operations.
 
 4. The Selector Module elects a particular node to handle the block production of the next current slot
 
