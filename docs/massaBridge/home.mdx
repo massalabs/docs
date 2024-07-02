@@ -3,10 +3,10 @@
 [Massa Bridge](https://bridge.massa.net/) is the first cross-chain bridge that allows you to transfer ERC-20 tokens from EVM-based networks to Massa, and vice versa.
 
 It comes with two modes: 
-1. **Mainnet:** enabling bridging from Ethereum or BNB Smart Chain (BSC) to Massa.
+1. **Mainnet:** enabling bridging from Ethereum or Binance Smart Chain (BSC) to Massa.
 2. **Testnet:** enabling bridging from Sepolia Testnet or BSC Testnet to Massa Buildnet.
 
-Massa Bridge currently enables bridging Circle USD, DAI, and Wrapped Ether from Ethereum, and Bridged USDT and Ethereum Token from BNB Smart Chain. 
+Massa Bridge currently enables bridging Circle USD, DAI, and Wrapped Ether from Ethereum, and Bridged USDT and Ethereum Token from Binance Smart Chain. 
 Synthetic assets received on Massa blockchain contain a suffix in the token name to identify the origin chain. For example, USDC bridged from Ethereum will become USDC.e on Massa. USDT from BSC chain becomes USDT.b on Massa.
 
 ## Token Addresses
@@ -30,6 +30,17 @@ For Massa:
 - [Bearby wallet](https://bearby.io/) (community-made wallet)
 
 For more details, please refer to the Massa Bridge FAQ: [https://bridge.massa.net/](https://bridge.massa.net/).
+
+### Bridge fees
+Depending on the EVM network and the direction of the bridge operation, the system can charge a fee. As of today, all transfers from EVM networks to Massa are free of charge. Redeems on the Binance Smart chain are also free. However a 0.1% fee will be applied when transferring assets from Massa to the Ethereum network. The fee is charged at the smart contract level and is automatically deducted from the transferred amount.
+
+
+| Bridge direction | Bridge fee |
+|----------------|----------|
+| Ethereum to Massa | 0% |
+| Massa to Ethereum | 0.1% |
+| BSC to Massa | 0% |
+| Massa to BSC | 0% |
 
 ## Getting Started 
 - For step-by-step instructions on how to use the bridge go to the [Instructions section](./instructions.mdx).
