@@ -1,0 +1,110 @@
+---
+title: Setting up a Public Instance
+---
+
+# Setting up a Public Instance
+
+Setting up a public DeWeb instance allows you to provide access to decentralized websites through your own domain.
+Follow these steps to get started.
+
+:::caution Important Notice
+When running a public instance of DeWeb, be aware that exposing everything on-chain might expose illegal content.
+As the owner of the public instance, you might be held responsible for the content served.
+We strongly recommend using the block/allow list to ensure your DeWeb instance does not serve illegal content,
+thereby protecting yourself from potential legal actions.
+
+Please note that Massa Labs and the Massa Foundation are not responsible for what is hosted on-chain.
+We do not block anyone or anything from uploading content to the blockchain.
+:::
+
+## Step 1: Download the Binary
+
+1. Visit the [DeWeb Releases](https://github.com/massalabs/DeWeb/releases/latest) page on GitHub.
+2. Download the binary file matching your operating system and architecture:
+
+   - **Linux**: `deweb-server-linux-{arch}`
+   - **Windows**: `deweb-server-windows-{arch}`
+   - **MacOS (Darwin)**: `deweb-server-darwin-{arch}` (For Apple Silicon, choose `arm64`)
+
+   If your target or architecture is missing, please [open an issue](https://github.com/massalabs/DeWeb/issues)
+   to request it.
+
+## Step 2: Extract the Binary
+
+1. Extract the downloaded file if it is in a zip format.
+
+## Step 3: Configure the Server
+
+1. Create a configuration file named `deweb_server_config.yaml` in the same directory as the server binary.
+2. At a minimum, set the `domain` field in the configuration file. For example, if you own the domain `example.com`
+   and will make your DeWeb instance available on it, set the `domain` to `example.com`.
+
+### Example Configuration
+
+```yaml
+domain: "example.com"
+network_node_url: "https://buildnet.massa.net/api/v2"
+api_port: 8080
+allow_list:
+  - "allowed-domain"
+  - "AS1Seo2..."
+block_list:
+  - "blocked-domain"
+  - "AS1REo4..."
+```
+
+The allow/block lists allow you to control which websites are accessible through your instance.
+You can use MNS domain names or smart contract addresses in these lists.
+
+For more detailed settings and options, refer to the [Server Configuration](../configuration/server-config) page.
+
+## Step 4: DNS Configuration
+
+To serve DeWeb properly, you need to configure your DNS provider to handle subdomains for MNS domains.
+In your domain provider panel, set the following DNS records:
+
+- **A Record** for IPv4: `*.example.com` pointing to your server's IPv4 address.
+- **AAAA Record** for IPv6: `*.example.com` pointing to your server's IPv6 address.
+
+## Step 5: Set Up HTTPS and Web Server
+
+DeWeb requires HTTPS to be properly served. You will need an HTTPS certificate for `*.example.com`
+and a web server (like Nginx, Apache, etc.) to handle the HTTPS and proxy the requests to your DeWeb server.
+
+### General Steps:
+
+1. **Obtain an HTTPS Certificate**: Get an SSL certificate for `*.example.com`.
+   You can use services like Let's Encrypt to get a free certificate.
+2. **Configure Your Web Server**: Set up your web server to:
+   - Listen on port 80 and redirect HTTP requests to HTTPS.
+   - Listen on port 443 for HTTPS requests.
+   - Proxy requests to your DeWeb server running on `localhost:8080`.
+
+For specific configurations, refer to the documentation of the web server you are using (e.g., Nginx, Apache).
+
+## Step 6: Copy the Files to the Server
+
+Copy the extracted binary and the configuration file (`deweb_server_config.yaml`) to your server.
+You can use tools like `scp` or any other method you prefer to transfer files to your server.
+
+## Step 7: Run the Server
+
+1. Open your terminal.
+2. Navigate to the directory where the binary and configuration file are located.
+3. Run the server with the following command:
+
+   ```bash
+   ./deweb-server
+   ```
+
+   (On Windows, use `deweb-server.exe`instead of`./deweb-server`)
+
+## Step 8: Access the Server
+
+Your DeWeb instance will be accessible from the domain you configured. For example,
+if you set the domain to `example.com`, you can access your DeWeb instance at `http://example.com`.
+
+:::info Work in Progress
+DeWeb is still a work in progress, and we are actively listening to feedback.
+If you encounter any issues or have suggestions, please let us know through our [issue tracker](https://github.com/massalabs/DeWeb/issues).
+:::
