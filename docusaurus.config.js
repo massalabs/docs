@@ -119,6 +119,12 @@ const config = {
             label: "🌉 Massa Bridge",
           },
           {
+            type: "docSidebar",
+            sidebarId: "massaDeWebSidebar",
+            position: "left",
+            label: "🌐 Massa DeWeb",
+          },
+          {
             type: "search",
             position: "right",
           },

@@ -447,6 +447,44 @@ const sidebars = {
       id: "massaBridge/architecture-security",
     },
   ],
+  massaDeWebSidebar: [
+    {
+      type: "doc",
+      id: "deweb/home",
+      label: "Home",
+    },
+    {
+      type: "category",
+      label: "Getting Started",
+      collapsed: false,
+      items: [
+        "deweb/getting-started/overview",
+        "deweb/getting-started/setup-local-server",
+        "deweb/getting-started/setup-public-instance",
+      ],
+    },
+    {
+      type: "category",
+      label: "Configuration",
+      collapsed: false,
+      items: ["deweb/configuration/server-config"],
+    },
+    // {
+    //   type: "category",
+    //   label: "CLI",
+    //   items: ["deweb/cli/cli-usage", "deweb/cli/upload-website", "deweb/cli/edit-website"],
+    // },
+    // {
+    //   type: "doc",
+    //   id: "deweb/faq",
+    //   label: "FAQ",
+    // },
+    // {
+    //   type: "doc",
+    //   id: "deweb/troubleshooting",
+    //   label: "Troubleshooting",
+    // },
+  ],
 };
 
 module.exports = sidebars;
