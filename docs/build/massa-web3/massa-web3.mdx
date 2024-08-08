@@ -27,17 +27,17 @@ Massa-web3 will allow you to interact with the Massa blockchain in a variety of 
 
 In addition, the library includes a [collection of handy utility functions](/docs/build/massa-web3/massa-web3-utils) (e.g conversion between different units, etc).
 
-:::tip
-For a quick integration of Massa within a web browser, consider reading our Web Frontend Integration Guide.
+### Massa-Web3 Next
+
+:::important
+The next version of `massa-web3` is coming soon! You can check out the development and contribute to the project by visiting the [next branch](https://github.com/massalabs/massa-web3/tree/next). Of course it will come with a lot of new features and improvements and a better documentation.
 :::
 
-## Installation
-
-Massa-web3 can be used as a library for frameworks or as a stand-alone bundled js file which can be easily loaded into the browser.
+## How to use
 
 ### Requirements
 
-- NodeJS 14+
+- NodeJS 18+
 - npm / yarn (see package.json)
 
 ### As a library (Node.js/React/Vue.js)
@@ -50,29 +50,95 @@ npm install @massalabs/massa-web3
 
 ### In a browser
 
-If you want to use the library in a vanilla javascript project, please add the following script tag to your html file:
+:::note
+For maintenance reasons, we stopped providing a standalone version of the library.
+If you want to use the library in a vanilla javascript project, you will need to use a bundler like [Vite](https://vitejs.dev/)..
+If the community requests it, we will consider providing a standalone version in the future.
+:::
 
-```html
-<script
-  type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/@massalabs/massa-web3@latest/bundle.js"
-></script>
-```
+#### Using Vite with `npx`
 
-In your code, once the script is fully loaded, just use window.massa to access all massa-web3 exports.
+1. **Create a Vite Project:**
 
-```ts
-console.log("Massa Web3 ", window.massa);
+   Use `npx` to create a new Vite project:
+
+   ```shell
+   npx create-vite@latest my-massa-project --template vanilla
+   cd my-massa-project
+   ```
+
+2. **Install Massa-Web3:**
+
+   Install the Massa-Web3 libraries:
+
+   ```shell
+   npm install @massalabs/massa-web3
+   npm install @massalabs/wallet-provider
+   ```
+
+3. **Import Massa-Web3:**
+
+   Import the libraries in your `index.html` file and make sure to have a wallet installed (here we use massa station as an example):
+
+   ```html
+   <script type="module">
+     import * as massa from "@massalabs/massa-web3";
+     import * as walletPro from "@massalabs/wallet-provider";
+
+     async function main() {
+       try {
+         let providerList = await walletPro.providers();
+         console.log("Providers:", providerList);
+
+         const provider = providerList.find(
+           (provider) => provider.name() === "MASSASTATION"
+         );
+
+         let accounts = await provider.accounts();
+
+         if (accounts.length === 0) {
+           console.log("No accounts found");
+           return;
+         }
+
+         console.log("Accounts:", accounts);
+
+         const account = accounts[0];
+
+         if (!account || !provider) {
+           return;
+         }
+
+         const client = await massa.ClientFactory.fromWalletProvider(
+           provider,
+           account
+         );
+
+         console.log("Client:", client);
+       } catch (e) {
+         console.log(e);
+       }
+     }
+
+     main();
+   </script>
+   ```
+
+#### Running the Vite Project
+
+Run the Vite project:
+
+```shell
+npm run dev
 ```
 
 ## Initialization
 
-Some usage of massa-web3 require an account. This account can be either provided using [Wallet-provider](/docs/build/wallet/wallet-provider) or directly in the code
+Some usage of massa-web3 require an account. This account can be either provided using [Wallet-provider](/docs/build/wallet/wallet-provider) generated from a secret key.
 
 ### With Wallet-provider
 
-The Wallet-provider allows you to easily connect your dApp to a user's wallet, without having to worry about
-secret keys and other sensitive information. The Wallet-provider will automatically detect if a wallet is installed and connect to it.
+The Wallet-provider allows you to easily connect your dApp to a compatible wallet extension or application. The following code snippet demonstrates how to initialize a client instance using the Wallet-provider in a React application:
 
 <Tabs>
 <TabItem value="wallet-provider-react" label="React" default>
@@ -83,26 +149,32 @@ Full code can be found [here](https://github.com/massalabs/massa-sc-examples/blo
 useEffect(() => {
   const registerAndSetProvider = async () => {
     try {
-      let provider = (await providers(true, 10000))[0];
-      let accounts = await provider.accounts();
+      const providerList = await providers(true, 10000);
+      if (providerList.length === 0) {
+        throw new Error("No providers found");
+      }
+
+      const provider = providerList[0];
+      const accounts = await provider.accounts();
       if (accounts.length === 0) {
-        setErrorMessage("No accounts found");
-        return;
+        throw new Error("No accounts found");
       }
-      setAccount(accounts[0]);
-      if (!account || !provider) {
-        return;
-      }
-      setClient(await ClientFactory.fromWalletProvider(provider, account));
-    } catch (e) {
-      console.log(e);
-      setErrorMessage(
-        "Please install massa station and the wallet plugin and refresh."
+
+      const account = accounts[0];
+      setAccount(account);
+
+      const newClient = await ClientFactory.fromWalletProvider(
+        provider,
+        account
       );
+      setClient(newClient);
+    } catch (error) {
+      console.error(error);
     }
   };
+
   registerAndSetProvider();
-}, [account]);
+}, []);
 ```
 
 </TabItem>
@@ -116,9 +188,11 @@ You can easily initialize a client instance using the ClientFactory class:
 <TabItem value="mainnet-client" label="Mainnet" default>
 
 ```typescript
+const privateKey = "...";
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
 );
+
 const chainId = CHAIN_ID.MainNet;
 
 const testnetClient: Client = await ClientFactory.createDefaultClient(
@@ -134,6 +208,7 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 <TabItem value="buildnet-client" label="Buildnet" default>
 
 ```typescript
+const privateKey = "...";
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
 );
@@ -152,6 +227,7 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 <TabItem value="labnet-client" label="Labnet" default>
 
 ```typescript
+const privateKey = "...";
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
 );
@@ -170,6 +246,7 @@ const testnetClient: Client = await ClientFactory.createDefaultClient(
 <TabItem value="local-client" label="Localnet" default>
 
 ```typescript
+const privateKey = "...";
 const baseAccount: IAccount = await WalletClient.getAccountFromSecretKey(
   privateKey
 );
