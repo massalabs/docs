@@ -469,11 +469,16 @@ const sidebars = {
       collapsed: false,
       items: ["deweb/configuration/server-config"],
     },
-    // {
-    //   type: "category",
-    //   label: "CLI",
-    //   items: ["deweb/cli/cli-usage", "deweb/cli/upload-website", "deweb/cli/edit-website"],
-    // },
+    {
+      type: "category",
+      label: "CLI",
+      collapsed: false,
+      items: [
+        "deweb/cli/overview",
+        // "deweb/cli/upload-website",
+        // "deweb/cli/edit-website",
+      ],
+    },
     // {
     //   type: "doc",
     //   id: "deweb/faq",
