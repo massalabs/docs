@@ -8,7 +8,7 @@ Setting up a DeWeb provider allows you to provide access to decentralized websit
 Follow these steps to get started.
 
 :::caution Important Notice
-Depending on your country and jurisdiction, serving on-chain content publicly might have legal implications. 
+Depending on your country and jurisdiction, serving on-chain content publicly might have legal implications.
 We strongly recommend you getting to know your local regulations to ensure proper compliance.
 
 Providers operate independently and can set their own content policies.
@@ -52,9 +52,15 @@ block_list:
 ```
 
 The allow/block lists allow you to control which websites are accessible through your provider.
+If there is any website in the allow list, all other websites are blocked.
 You can use MNS domain names or smart contract addresses in these lists.
 
 For more detailed settings and options, refer to the [Server Configuration](../configuration/server-config) page.
+
+:::info Recommendation
+We recommend running your own node and using your node's URL as the `network_node_url`.
+For instructions on how to run a node, refer to the [Run a Node](../docs/node/home) documentation.
+:::
 
 ## Step 4: DNS Configuration
 
@@ -99,8 +105,8 @@ You can use tools like `scp` or any other method you prefer to transfer files to
 
 ## Step 8: Access the Server
 
-Your DeWeb instance will be accessible from the domain you configured. For example,
-if you set the domain to `example.com`, you can access your DeWeb instance at `http://example.com`.
+Your DeWeb instance will be accessible from the domain you configured. For example, if you set the domain to `example.com`,
+you can access your DeWeb welcome page by visiting `http://deweb.example.com`.
 
 :::info Work in Progress
 DeWeb is still a work in progress, and we are actively listening to feedback.
