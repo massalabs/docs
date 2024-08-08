@@ -1,14 +1,15 @@
 ---
-title: Setting up a Public Instance
+title: Becoming a Provider
 ---
 
-# Setting up a Public Instance
+# Becoming a Provider
 
-Setting up a public DeWeb instance allows you to provide access to decentralized websites through your own domain.
+Setting up a DeWeb provider allows you to provide access to decentralized websites through your own domain.
 Follow these steps to get started.
 
 :::caution Important Notice
-Depending on your country and  jurisdiction, serving on-chain content publicly might have legal implications. We strongly recommend you getting to know your local regulations to ensure proper compliance.
+Depending on your country and jurisdiction, serving on-chain content publicly might have legal implications. 
+We strongly recommend you getting to know your local regulations to ensure proper compliance.
 
 Providers operate independently and can set their own content policies.
 Each provider can use the blocklist/whitelist system to comply with local regulations by selecting the websites they wish or not to serve.
@@ -21,7 +22,7 @@ Each provider can use the blocklist/whitelist system to comply with local regula
 
    - **Linux**: `deweb-server-linux-{arch}`
    - **Windows**: `deweb-server-windows-{arch}`
-   - **MacOS (Darwin)**: `deweb-server-darwin-{arch}` (For Apple Silicon, choose `arm64`)
+   - **MacOS (Darwin)**: `deweb-server-darwin-{arch}` For Apple Silicon (M1,M2,...), choose `arm64`, and for Intel, choose `amd64`.
 
    If your target or architecture is missing, please [open an issue](https://github.com/massalabs/DeWeb/issues)
    to request it.
@@ -50,7 +51,7 @@ block_list:
   - "AS1REo4..."
 ```
 
-The allow/block lists allow you to control which websites are accessible through your instance.
+The allow/block lists allow you to control which websites are accessible through your provider.
 You can use MNS domain names or smart contract addresses in these lists.
 
 For more detailed settings and options, refer to the [Server Configuration](../configuration/server-config) page.
