@@ -1,0 +1,74 @@
+---
+title: Setting up a Local Server
+---
+
+# Setting up a Local Server
+
+Setting up a DeWeb server locally allows you to browse and manage decentralized websites without any intermediaries.
+Follow these steps to get started.
+
+## Step 1: Download the Binary
+
+1. Visit the [DeWeb Releases](https://github.com/massalabs/DeWeb/releases/latest) page on GitHub.
+2. Download the binary file matching your operating system and architecture:
+
+   - **Linux**: `deweb-server-linux-{arch}`
+   - **Windows**: `deweb-server-windows-{arch}`
+   - **MacOS (Darwin)**: `deweb-server-darwin-{arch}` (For Apple Silicon, choose `arm64`)
+
+   If your target or architecture is missing, please [open an issue](https://github.com/massalabs/DeWeb/issues)
+   to request it.
+
+## Step 2: Extract the Binary
+
+1. Extract the downloaded file if it is in a zip format.
+
+## Step 3: Run the Server
+
+### Option 1: Using GUI
+
+#### Windows
+
+1. Navigate to the directory where the binary is located.
+2. Double-click the `deweb-server.exe` file.
+
+#### MacOS
+
+1. Navigate to the directory where the binary is located.
+2. Right-click the `deweb-server` file and select "Open".
+3. A warning dialog will appear. Click "Open" to run the binary.
+4. After the first run, you can double-click the binary to open it.
+
+#### Linux
+
+For Linux users, running binaries via GUI can vary greatly depending on the desktop environment. Generally:
+
+1. Navigate to the directory where the binary is located.
+2. Right-click the binary and select "Properties".
+3. Ensure the "Execute" permission is checked.
+4. Double-click the binary to run it.
+
+### Option 2: Using Terminal
+
+1. Open your terminal (command prompt on Windows).
+2. Navigate to the directory where the binary is located.
+3. Run the server with the following command:
+   ```bash
+   ./deweb-server
+   ```
+   (On Windows, use `deweb-server.exe` instead of `./deweb-server`)
+
+## Step 4: Access the Server
+
+By default, the DeWeb server runs on `localhost:8080`. You can access it using a web browser:
+
+- Visit `http://deweb.localhost:8080` to see the welcome page.
+
+## Configuration
+
+To customize your server settings, refer to the [Server Configuration](../configuration/server-config) page.
+
+:::info Work in Progress
+DeWeb is still a work in progress, and we are actively listening to feedback.
+If you encounter any issues or have suggestions, please let us know through our [issue tracker](https://github.com/massalabs/DeWeb/issues).
+:::

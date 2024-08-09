@@ -40,6 +40,12 @@ const FeatureList = [
     docName: "docs/massaBridge/home",
     icon: "🌉",
   },
+  {
+    title: "DeWeb",
+    content: "On-chain Decentralized Web Gateway",
+    docName: "docs/deweb/home",
+    icon: "🌐",
+  }
 ];
 
 function Feature({ docName, title, content, icon }) {

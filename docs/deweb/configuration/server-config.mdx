@@ -1,0 +1,55 @@
+---
+title: Server Configuration
+---
+
+# Server Configuration
+
+To configure your DeWeb server, create a YAML configuration file named `deweb_server_config.yaml`
+and store it alongside the server binary. Below is an example configuration file:
+
+## Example Configuration
+
+```yaml
+domain: "massa.network"
+network_node_url: "https://buildnet.massa.net/api/v2"
+api_port: 8080
+allow_list:
+  - "allowed-domain"
+  - "123456789abcdef"
+block_list:
+  - "blocked-domain"
+  - "abcdef123456789"
+```
+
+## Default Configuration
+
+If no configuration file is provided, the server will use the following default settings:
+
+```yaml
+domain: "localhost"
+network_node_url: "https://buildnet.massa.net/api/v2"
+api_port: 8080
+```
+
+## Configuration Fields
+
+- **Domain**: The domain the website is running on.
+  For example, set this to `massa.network` if your server is running on `massa.network`.
+  The default value is `localhost`.
+
+- **NetworkNodeURL**: The node DeWeb server will connect to. By default, this is set to `https://buildnet.massa.net/api/v2`.
+  You can use any node address for the JSON public API,
+  such as those listed in the [Massa API Documentation](https://docs.massa.net/docs/build/api/jsonrpc) (Default port: 33035).
+
+  :::note
+  The default node address targets the Massa buildnet, once DeWeb is fully ready,
+  the default node address will be updated to target a mainnet node.
+  :::
+
+- **APIPort**: The port the server will run on. The default value is 8080.
+
+- **AllowList**: A list of domains or smart contract addresses that are explicitly allowed.
+  By default, this list is empty. If specified, only the websites in this list will be accessible.
+
+- **BlockList**: A list of domains or smart contract addresses that are explicitly blocked.
+  By default, this list is empty. Websites in this list will be inaccessible.
