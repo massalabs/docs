@@ -51,7 +51,7 @@ Here are the steps to set up your smart contract project:
 First, open a terminal, and navigate to your preferred directory. Now, let's create your project with the following command:
 
 ```bash
-npx @massalabs/sc-project-initializer@buildnet init massa-hello-world
+npx @massalabs/sc-project-initializer init massa-hello-world
 ```
 
 With this command, you have created a new folder named `massa-hello-world` with all the necessary files for developing a Massa smart contract. Navigate to this folder.
@@ -66,18 +66,16 @@ Once you have navigated to the project directory, you should see the following f
 :::
 
 #### Step 2: Setting up the Environment variables
-In order to communicate with the blockchain and deploy our smart contract we are going to need two things: a wallet and a node. The node will allow us to communicate with the blockchain while the wallet will allow us to sign and pay for the deployment of our smart contract. The wallet will come under the form of a secret key, while the node will be the JSON-RPC URL of a public node.
+Seting up a wallet will allow us to sign and pay for the deployment of our smart contract. The wallet will come under the form of a private key.
 
 Copy the content of the `.env.example` to a newly created `.env` file at the root of your project directory.
-Once created, edit the `.env` file by inserting your wallet's secret key.
+Once created, edit the `.env` file by inserting your wallet's private key.
 ```bash
-WALLET_SECRET_KEY="Your_private_key_here"
-JSON_RPC_URL_PUBLIC=https://buildnet.massa.net/api/v2:33035
+PRIVATE_KEY="Your_private_key_here"
 ```
 
 :::info
-- WALLET_SECRET_KEY: This is your wallet's secret key. It will be used to sign the contract deployment transaction. Make sure your wallet is funded.
-- JSON_RPC_URL_PUBLIC: This is the URL of the JSON-RPC interface of a public or a private Massa node.
+- PRIVATE_KEY: This is your wallet's secret key. It will be used to sign the contract deployment transaction. Make sure your wallet is funded.
 :::
 
 ### Writing and Deploying the Smart Contract
@@ -92,25 +90,21 @@ Replace the content of the `main.ts` file in assembly/contracts with the followi
 ```tsx
 import { generateEvent, Storage, Context } from "@massalabs/massa-as-sdk";
 
+const GREETING_KEY = "greeting_key";
+
 /**
  * This function is meant to be called only one time: when the contract is deployed.
- *
- * @param _ - not used
  */
 export function constructor(_: StaticArray<u8>): void {
   // This line is important. It ensures that this function can't be called in the future.
   // If you remove this check, someone could call your constructor function and reset your smart contract.
-  if (!Context.isDeployingContract()) {
-    return;
-  }
+  assert(Context.isDeployingContract());
 
   // Set the greeting message in the contract storage
-  Storage.set("greeting", "Hello, World!");
+  Storage.set(GREETING_KEY, "Hello, World!");
 
   // Emit an event to notify that the greeting message has been set
   generateEvent(`Greeting has been set`);
-
-  return;
 }
 ```
 At first glance, it may seems like a lot of code for a simple "Hello, World!". But the code above is actually quite simple. Let's break it down:
@@ -131,12 +125,10 @@ You can learn more about the Massa AssemblyScript SDK [here](docs/build/smart-co
 
 ```tsx
 export function constructor(_: StaticArray<u8>): void {
-  if (!Context.isDeployingContract()) {
-    return;
-  }
+  assert(Context.isDeployingContract());
 ```
 
-This is the constructor function. It is called only once when the contract is being deployed. The constructor function takes a parameter of type `StaticArray<u8>`. This parameter is not used in this example, so we are ignoring it by using the `_` symbol. The `Context.isDeployingContract()` function is used to check if the contract is being deployed. If it is not, the function returns and the rest of the code is not executed. It ensures that the constructor function can't be called in the future. If you remove this check, someone could call your constructor function and reset your smart contract.
+This is the constructor function. It is called only once when the contract is being deployed. The constructor function takes a parameter of type `StaticArray<u8>`. This parameter is not used in this example, so we are ignoring it by using the `_` symbol. The `Context.isDeployingContract()` function is used to check if the contract is being deployed. If it is not, the function throws and the rest of the code is not executed. It ensures that the constructor function can't be called in the future. If you remove this check, someone could call your constructor function and reset your smart contract.
 
 - **Setting the greeting message in the contract storage**
 ```tsx
@@ -190,16 +182,7 @@ Upon successful execution, the console should display the operation id that you 
 After deployment, an event will be displayed in the console. This event contains the address of your deployed smart contract and the event message set in the constructor function.
 
 ```bash
-Event Data Received: [
-  {
-    context: {...},
-    data: 'Greeting has been set'
-  },
-  {
-    context: {...},
-    data: 'Contract deployed at address: AS12UJM8JYR6cRzXgkUGTjRDu9hicJUPkDvy7zGhGZq3WgZ511dwR'
-  }
-]
+Contract deployed at: AS1v3HJroUxyUYzErpnbYCx9GoRNWysRgwM9h27yfNe4WUFvhctg
 ```
 
 Keep the address of your deployed smart contract handy. You'll need it later.
@@ -234,10 +217,49 @@ After the installation is complete, navigate to your project folder.
 Next up, we are going to install the [Massa Web3 package](https://github.com/massalabs/massa-web3). This package enables our front end to interact with the Massa blockchain. If you are familiar with the EVM ecosystem, `massa-web3` would be the equivalent of `web3` or `ethers` librairies, but for the Massa blockchain. Here's how to install it:
 
 ```bash
-npm install @massalabs/massa-web3@buildnet
+npm install @massalabs/massa-web3@next
 ```
 
-- **Step 3: Building the Frontend**
+- **Step 3: Configure Webpack**
+
+To customize the Webpack configuration in a create-react-app project, you'll need to use react-app-rewired because create-react-app hides Webpack configuration by default.
+```bash
+npm install react-app-rewired --save-dev
+```
+
+In the root of your project, create a config-overrides.js file:
+```js
+const webpack = require('webpack');
+
+module.exports = function override(config) {
+  config.resolve.fallback = {
+    fs: false,
+    crypto: false,
+    buffer: require.resolve('buffer/'),
+  };
+
+  config.plugins.push(
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser',
+    })
+  );
+
+  return config;
+};
+```
+
+You'll need to update the scripts section in your package.json to use react-app-rewired instead of the default react-scripts:
+```json
+"scripts": {
+  "start": "react-app-rewired start",
+  "build": "react-app-rewired build",
+  "test": "react-app-rewired test",
+  "eject": "react-scripts eject"
+}
+```
+
+- **Step 4: Building the Frontend**
 
 Now that we have our dependencies installed, let's begin building the front end of our dApp.
 
@@ -246,69 +268,44 @@ Before writing our component, navigate to the src folder and locate the `App.tsx
 This `App.tsx` file serves as the main entry point for your application. Replace the content of this file with the following code:
 
 ```tsx
-import {
-  Client,
-  ClientFactory,
-  strToBytes,
-  bytesToStr,
-  WalletClient,
-  DefaultProviderUrls,
-  BUILDNET_CHAIN_ID,
-} from "@massalabs/massa-web3";
-
+import { bytesToStr, JsonRPCClient } from "@massalabs/massa-web3";
 import { useEffect, useState } from "react";
 
-const sc_addr = "SC_ADDRESS"; // TODO Update the constant value!
+const sc_addr = "SC_ADDRESS"; // TODO Update with your deployed contract address
+
+/**
+ * The key used to store the greeting in the smart contract
+ */
+const GREETING_KEY = "greeting_key";
 
 /**
  * Content component that handles interactions with a Massa smart contract
  * @returns The rendered component
  */
 function Content() {
-  /**
-   * State variables to manage the web3 client and greetings
-   */
-  const [web3client, setWeb3client] = useState<Client | null>(null);
+
   const [greeting, setGreeting] = useState<string | null>(null);
 
-  /**
-   * Initialize the web3 client using the custom provider defined above
+    /**
+   * Initialize the web3 client
    */
-  useEffect(() => {
-    const initClient = async () => {
-      const client = await ClientFactory.createDefaultClient(
-        DefaultProviderUrls.BUILDNET,
-        BUILDNET_CHAIN_ID,
-        false
-      );
-      setWeb3client(client);
-    };
-    initClient().catch(console.error);
-  }, []);
+  const client = JsonRPCClient.buildnet()
 
   /**
    * Fetch the greeting when the web3 client is initialized
    */
   useEffect(() => {
-    if (web3client) {
-      funcGetGreeting();
-    }
-  }, [web3client]);
+    getGreeting();
+  });
 
   /**
    * Function to get the current greeting from the smart contract
    */
-  async function funcGetGreeting() {
-    if (web3client) {
-      let res = await web3client
-        .publicApi()
-        .getDatastoreEntries([
-          { address: sc_addr, key: strToBytes("greeting") },
-        ]);
-      if (res[0].candidate_value) {
-        let greetingDecoded = bytesToStr(res[0].candidate_value);
-        setGreeting(greetingDecoded);
-      }
+  async function getGreeting() {
+    if (client) {
+      const dataStoreVal = await client.getDatastoreEntry(GREETING_KEY, sc_addr, false)
+      const greetingDecoded = bytesToStr(dataStoreVal);
+      setGreeting(greetingDecoded);
     }
   }
 
@@ -338,27 +335,13 @@ Make sure to replace `SC_ADDRESS` with your own smart contract address.
 
 Our code might seem like a mouthful at first, but let's break it down into smaller, digestible parts:
 
-- **Setting Up Providers and Initializing a Custom Client**
+- **Setting Up the Client**
 ```tsx
-const initClient = async () => {
-  const client = await ClientFactory.createDefaultClient(
-    DefaultProviderUrls.BUILDNET,
-      false
-    );
-    setWeb3client(client);
-};
+  const client = JsonRPCClient.buildnet()
 ```
 In order to interact with the blockchain, our front end application is going to need a client. A client is a piece of software that can be used to interact with a service; in our case the service is the Massa blockchain and we will use the client's methods to interact with our smart contract. 
 
-In the code above, we are using the `createDefaultClient` method to initialize our client object. This method takes two parameters: a provider URL and a boolean. The provider URL is the URL of the node we want to use to interact with the blockchain. 
-
-:::info
-If you remember correctly, [before deploying our smart contract](#step-2-setting-up-the-environment-variables)
-, we created a `.env` file and added a `JSON_RPC_URL` variable to it. This variable was the URL of a node used to deploy our smart contract to the Massa blockchain. Here we are doing something similar but instead of using a node to deploy our smart contract, we are using a node to interact with our smart contract.
-:::
-
-We are using the `DefaultProviderUrls.BUILDNET` constant as our provider URL. This constant points to a node on the Massa buildnet. 
-The boolean is a flag that indicates whether or not we want to provide an wallet account to sign transactions. Here it is set to false because we are not going to sign any transactions. Finally, we are setting the client object to the `web3client` state variable using the `setWeb3client` function, so that the web3 client is available to the rest of our application.
+In the code above, we are using the `JsonRPCClient.buildnet()` method to initialize our client using public buildnet RPC.
 
 :::info
 The buildnet is a test network that is used to test smart contracts before deploying them to the mainnet. It is similar to the Ethereum Sepolia network. You can learn more about Massa networks [here](/docs/build/networks-faucets/public-networks).
@@ -367,28 +350,22 @@ The buildnet is a test network that is used to test smart contracts before deplo
 
 - **Retrieving the Greeting**
 ```tsx
- async function funcGetGreeting() {
-    if (web3client) {
-      let res = await web3client
-        .publicApi()
-        .getDatastoreEntries([
-          { address: sc_addr, key: strToBytes("greeting") },
-        ]);
-      if (res[0].candidate_value) {
-        let greetingDecoded = bytesToStr(res[0].candidate_value);
-        setGreeting(greetingDecoded);
-      }
+  async function getGreeting() {
+    if (client) {
+      const dataStoreVal = await client.getDatastoreEntry(GREETING_KEY, sc_addr, false)
+      const greetingDecoded = bytesToStr(dataStoreVal);
+      setGreeting(greetingDecoded);
     }
   }
 ```
 In the code above, we are retrieving the "Hello, World!" greeting message by directly reading the smart contract's storage. 
 
-To do so, we are using the `getDatastoreEntries` method. This method takes an array of `DatastoreEntry` objects as a parameter. Each `DatastoreEntry` object contains the address of the smart contract and the key of the value we want to retrieve.
-In our case, the address of the smart contract is the one we got during contract deployment. The key is the string "greeting" [that we used to store the greeting message in the smart contract's storage](#step-1-writing-the-smart-contract). 
+To do so, we are using the `getDatastoreEntry` method.
+In our case, the address of the smart contract is the one we got during contract deployment. The key is the string "greeting_key" [that we used to store the greeting message in the smart contract's storage](#step-1-writing-the-smart-contract). 
 We retrieve the current greeting from the smart contract's storage and decode it using the `bytesToStr` function. Finally, we set the greeting to the `greeting` state variable using the `setGreeting` function.
 
 :::info
-As you can see, we cannot directly use the datastore entry returned by the smart contract. Indeed, the storage of the smart contract is a key value store that stores data in bytes. Thus, we need to decode the bytes returned by the smart contract to get the actual greeting message. That is why we have to use massa-web3 `bytesToStr` function. You can check massa-web3 utils [here](https://web3.docs.massa.net/modules/utils.html).
+ The storage of the smart contract is a key value store that stores data in bytes. Thus, we need to decode the bytes returned by the smart contract to get the actual greeting message. That is why we have to use massa-web3 `bytesToStr` function.
 :::
 
 - **User Interface**
