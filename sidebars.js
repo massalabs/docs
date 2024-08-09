@@ -291,6 +291,10 @@ const sidebars = {
         },
         {
           type: "doc",
+          id: "build/wallet/massa-web-hosting",
+        },
+        {
+          type: "doc",
           id: "build/wallet/community-wallets",
         },
       ],
