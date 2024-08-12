@@ -56,4 +56,13 @@ simply stored in a diff compared to the finalized ledger
 12. Eventually, the block will be marked as final and the ledger modification, including the operation changes, 
 will become final in the finalized ledger.
 
+# Read-only operations
 
+Besides normal operations described previously, massa nodes can also execute read-only requests, aiming to simulate as closely as possible what would 
+happen if the user sent a real operation. These can be used for testing, or in order to get gas estimations (as the gas consumed by a read-only execution is
+returned with the response).
+
+The Execution Module will handle read-only request, and revert back any changes made to the state during the execution of such requests.
+
+Different massa nodes may execute the same read-only requests under different contexts (and as such provide different responses),
+as no consensus mechanism is used to ensure their are synced for these requests.  
