@@ -21,11 +21,12 @@ the 10TB limit is reached and no account can push this limit further because the
 The initial ledger entry for address and balance incurs a cost of 0.001 MAS.
 
 Datastore entries also occupy space:
-* a base size of 4 bytes that represents the average storage used for storing an empty key-value entry
-* the length of the key
-* the length of the value
 
-To calculate the storage cost for a specific address in the ledger, the formula includes the address size, balance constant, bytecode length, 
+- a base size of 4 bytes that represents the average storage used for storing an empty key-value entry
+- the length of the key
+- the length of the value
+
+To calculate the storage cost for a specific address in the ledger, the formula includes the address size, balance constant, bytecode length,
 and the sum of constants for each datastore key and its corresponding value size.
 
 The overall formula is:
@@ -38,11 +39,9 @@ It's important to note that the storage costs are always paid by the address tha
 For example, if the ABI functions [setBytecode](https://as-sdk.docs.massa.net/functions/setBytecode.html) or [setBycodeOf](https://as-sdk.docs.massa.net/functions/setBytecodeOf.html) are used,
 the associated storage costs will be charged to the address making the call.
 
-
 ## Examples
 
 ### Transferring coins to a non-existing account
-
 
 When creating a new account in Massa, a minimum of 0.001 MAS needs to be sent alongside the operation that creates the new account (e.g., a transfer).
 This cost covers the creation of the address and its associated balance.
@@ -57,7 +56,7 @@ and your newly created account's balance becomes `9.999`.
 Note that if the transferred amount is lower than `0.001 MAS`, the new destination account can not be written and the operation payload run fails.
 
 In any subsequent transfers towards your now-written account,
-no coins will be reserved for storage and you will receive the full transferred amount.  
+no coins will be reserved for storage and you will receive the full transferred amount.
 
 ### Datastore handling in a smart contract
 
@@ -75,15 +74,14 @@ Now, let's change the nickname again from "ned" to "pierre".
 This uses 3 extra byte and therefore locks `0.0001 * 3 = 0.0003` MAS coins.
 
 In case you then delete the "nickname" datastore entry (with the "pierre" value),
-`0.0001 * (4 + 8 + 6) = 0.0018` coins are refunded. 
+`0.0001 * (4 + 8 + 6) = 0.0018` coins are refunded.
 
 :::info
 
-In the case of a refund for storage costs, the address that receives the refund is the one that initiates the ABI call 
+In the case of a refund for storage costs, the address that receives the refund is the one that initiates the ABI call
 ([setBytecode](https://as-sdk.docs.massa.net/functions/setBytecode.html) or [setBycodeOf](https://as-sdk.docs.massa.net/functions/setBytecodeOf.html) for example),
- which may differ from the address that initially paid for the storage.
+which may differ from the address that initially paid for the storage.
 
 If you are a Smart Contract developer and want your users to cover the storage costs for your contract, you can utilize the coins passed via the "`coins`" parameter of the "`CallSC`" operation.
 Additionally, you can save their addresses in your datastore to facilitate future refunds.
 :::
-
