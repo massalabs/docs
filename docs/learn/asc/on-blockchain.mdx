@@ -16,9 +16,10 @@ For instance, they can be programmed to trigger specific calls when predefined e
 Standard operations are sent to an *operation pool* and are executed when they are included in a block. The cost of
 execution is paid by the sender of the operation when the operation is executed.
 
-Autonomous smart contracts works by emitting messages which will schedule the execution. Those messages are emitted
-by smart contracts, through operations sent by users or by autonomous operations. Messages are then stored in an
-*asynchronous pool*. Contrary to standard operations, the gas required by autonomous smart contracts is paid upfront.
+Autonomous smart contracts works by emitting messages which will schedule the execution.
+The execution can be scheduled based on a target slot, or whenever a specific datastore entry has been written to (whether its value has been changed or not).
+Those messages are emitted by smart contracts, through operations sent by users or by autonomous operations.
+Messages are then stored in an *asynchronous pool*. Contrary to standard operations, the gas required by autonomous smart contracts is paid upfront.
 
 The asynchronous pool is deterministic by nature as it’s filled with messages that ultimately come from operations
 included in blocks, which are processed by every node of the network. The pool has a finite size and messages
