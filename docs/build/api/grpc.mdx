@@ -7,15 +7,14 @@ sidebar_label: gRPC
 
 The [gRPC](https://grpc.io/) API allows you to communicate with the Massa blockchain.
 
-The Massa gRPC API is splitted in two parts:
+The Massa gRPC API is split into two parts:
 
 - **Public API**: used for blockchain interactions. Default port:
-    33037 e.g. <grpc://localhost:33037>
-- **Private API**: used for node management. Default port: 33038 e.g.
-    <grpc://localhost:33038>
+  33037 e.g. `grpc://localhost:33037`
+- **Private API**: used for node management. Default port: 33038 e.g. `grpc://localhost:33038`
 
 :::info
-To enable events (blocks, endorsements, operations...) brodcast via gRPC streams in your Massa node, add or edit the file
+To enable events (blocks, endorsements, operations...) broadcast via gRPC streams in your Massa node, add or edit the file
 `massa-node/config/config.toml` with the following content:
 
 ```toml
@@ -23,6 +22,7 @@ To enable events (blocks, endorsements, operations...) brodcast via gRPC streams
    # whether to broadcast for blocks, endorsement and operations
    enable_broadcast = true
 ```
+
 :::
 
 ## Documentation
@@ -34,9 +34,9 @@ To enable events (blocks, endorsements, operations...) brodcast via gRPC streams
 ## Integrations
 
 - **Postman**: You can find our Massa Postman collections on our official
-[workspace](https://www.postman.com/massalabs).
+  [workspace](https://www.postman.com/massalabs).
 - **Massa proto rs**: is a Rust library which contains generated code from Massa protobuf files. See
-[massa-proto-rs](https://github.com/massalabs/massa-proto-rs).
+  [massa-proto-rs](https://github.com/massalabs/massa-proto-rs).
 
 ## Code generation
 
@@ -64,13 +64,14 @@ Find all `massa-proto` tags [here](https://github.com/massalabs/massa-proto/tags
 ```yaml
 version: v1
 directories:
-    - proto/apis
-    - proto/commons
-    - proto/third_party
+  - proto/apis
+  - proto/commons
+  - proto/third_party
 ```
 
 By specifying the directories in the configuration file, Buf knows which
-[.proto]{.title-ref} files to include in the build process.
+
+<span class="title-ref">.proto</span> files to include in the build process.
 
 1.  Create a file called `buf.gen.yml` and add the following content:
 

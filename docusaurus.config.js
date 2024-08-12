@@ -1,8 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
+import { themes as prismThemes } from "prism-react-renderer";
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const lightCodeTheme = prismThemes.github;
+const darkCodeTheme = prismThemes.dracula;
 const math = require("remark-math");
 const katex = require("rehype-katex");
 const remarkGridTables = require("remark-grid-tables");
@@ -68,12 +69,21 @@ const config = {
       },
     ],
   ],
-  themes: ["@saucelabs/theme-github-codeblock"],
+  themes: [
+    "@saucelabs/theme-github-codeblock",
+    "@docusaurus/theme-live-codeblock",
+  ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
-      // Replace with your project's social card
+      liveCodeBlock: {
+        /**
+         * The position of the live playground, above or under the editor
+         * Possible values: "top" | "bottom"
+         */
+        playgroundPosition: "bottom",
+      },
       navbar: {
         title: "Docs",
         logo: {
@@ -184,7 +194,7 @@ const config = {
         placeholder: "Search the Docs...",
       },
       prism: {
-        theme: lightCodeTheme,
+        theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
         // See https://docusaurus.io/docs/markdown-features/code-blocks#supported-languages
         additionalLanguages: ["toml", "json", "bash", "powershell", "protobuf"],
