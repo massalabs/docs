@@ -64,6 +64,6 @@ returned with the response).
 
 The Execution Module will handle read-only request, and revert back any changes made to the state during the execution of such requests.
 
-The read-only request happens at the slot just after the latest executed slot at the moment of execution.
+The read-only execution happens at the slot just after the latest executed non-final slot at the moment of execution.
 The same way you can't ensure at which height a normal operation is executed, different nodes might have processed different non-final blocks at a given time and execute the same read-only request under different contexts depending on that.
 as no consensus mechanism is used to ensure their are synced for these requests.  
