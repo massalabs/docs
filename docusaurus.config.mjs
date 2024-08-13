@@ -1,11 +1,11 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
-
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
-const math = require("remark-math");
-const katex = require("rehype-katex");
-const remarkGridTables = require("remark-grid-tables");
+import math from "remark-math";
+import katex from "rehype-katex";
+import { rehypeExtendedTable } from "rehype-extended-table";
+import { themes } from "prism-react-renderer/";
+const lightCodeTheme = themes.oneDark;
+const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -58,8 +58,8 @@ const config = {
           editUrl: "https://github.com/massalabs/docs/tree/main/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
-          remarkPlugins: [math, remarkGridTables],
-          rehypePlugins: [katex],
+          remarkPlugins: [math],
+          rehypePlugins: [katex, rehypeExtendedTable],
         },
         blog: {},
         theme: {
