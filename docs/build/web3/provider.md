@@ -32,7 +32,7 @@ npm install @massalabs/wallet-provider@next
 import { getWallets } from "@massalabs/wallet-provider";
 
 // First we get the list of wallets installed
-let walletList = await getWallets();
+const walletList = await getWallets();
 
 // Then we find the wallet we want to use
 const wallet = walletList.find(
@@ -45,7 +45,7 @@ if (!wallet) {
 }
 
 // We get the accounts from the wallet
-let accounts = await wallet?.accounts();
+const accounts = await wallet?.accounts();
 
 if (accounts.length === 0) {
   console.log("No accounts found");
