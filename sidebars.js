@@ -265,6 +265,56 @@ const sidebars = {
       ],
     },
     {
+      type: "category",
+      label: "Web3 next",
+      items: [
+        {
+          type: "doc",
+          id: "build/web3/web3-libraries-intro",
+          label: "Web3 Libraries Introduction",
+        },
+
+        {
+          type: "doc",
+          label: "Prerequisites",
+          id: "build/web3/prerequisites",
+        },
+        {
+          type: "doc",
+          id: "build/web3/provider",
+          label: "Provider",
+        },
+        {
+          type: "doc",
+          id: "build/web3/wallet",
+          label: "Wallet",
+        },
+        {
+          type: "doc",
+          id: "build/web3/operation",
+          label: "Operation",
+        },
+
+        {
+          type: "category",
+          collapsible: false,
+          label: "Contracts-wrappers",
+          items: [
+            {
+              type: "doc",
+              id: "build/web3/contracts-wrappers/contract-wrappers-intro",
+              label: "Introduction",
+            },
+            {
+              type: "doc",
+              id: "build/web3/contracts-wrappers/mrc20",
+              label: "MRC20",
+            },
+          ],
+        },
+      ],
+    },
+    {
       type: "html",
       value: "<hr/>",
     },
