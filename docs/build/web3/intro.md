@@ -57,3 +57,7 @@ npm install @massalabs/wallet-provider@next
 
 2. If you're building backend services, scripts, or applications that don't require wallet interaction:
    - Use `@massalabs/massa-web3` directly
+
+## Examples
+
+You can find examples in the [Massa example repository](https://github.com/massalabs/massa-sc-examples) that demonstrate how to use these libraries in various scenarios.
