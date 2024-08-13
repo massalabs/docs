@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # Prerequisites
 
-Before you can begin developing dapp on Massa, you'll need to ensure that your development environment meets the following requirements:
+Before you can begin developing dapps on Massa, you'll need to ensure that your development environment meets the following requirements:
 
 - [Node.js](https://nodejs.org/en/) installed on your system.
 
@@ -45,7 +45,7 @@ We recommend using [Vite](https://vitejs.dev/) as a fast and efficient bundler f
 1. Create a new project directory and navigate into it:
 
    ```shell
-    npm create vite@latest
+   npm create vite@latest
    ```
 
 2. Choose the `vanilla` template when prompted.
@@ -61,3 +61,43 @@ This setup allows you to use the Massa Web3 library in a vanilla JavaScript proj
 :::note
 Using a bundler like Vite not only resolves module dependencies but also provides features like hot module replacement and optimized builds for production, enhancing your development experience with the Massa Web3 library.
 :::
+
+### Vite Configuration and Polyfills
+
+To ensure compatibility with Vite and to provide necessary polyfills for the Massa Web3 library, follow these steps:
+
+1. Install required dependencies:
+
+   ```shell
+   npm install lodash-es
+   npm install vite-plugin-node-polyfills
+   ```
+
+2. Create a `vite.config.js` file in your project root with the following content:
+
+   ```javascript
+   import { defineConfig } from "vite";
+   import { nodePolyfills } from "vite-plugin-node-polyfills";
+
+   export default defineConfig({
+     plugins: [nodePolyfills()],
+     resolve: {
+       alias: {
+         lodash: "lodash-es",
+       },
+     },
+     build: {
+       rollupOptions: {
+         external: ["lodash"],
+       },
+     },
+   });
+   ```
+
+   This configuration adds the necessary Node.js polyfills and resolves lodash to its ES module version, ensuring compatibility with the Massa Web3 library.
+
+:::tip
+Use this configuration in your own Vite projects to ensure compatibility with the Massa Web3 library. It provides the required polyfills and resolves potential issues with dependencies like lodash.
+:::
+
+By following these steps, you'll have a properly configured development environment ready for building dapps on the Massa blockchain using the Massa Web3 library.
