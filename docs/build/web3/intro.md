@@ -1,12 +1,20 @@
 ---
-id: web3-libraries-intro
-sidebar_label: Web3 Libraries Introduction
+id: intro
+sidebar_label: Introduction
 sidebar_position: 1
 ---
 
 # Introduction to Massa Web3 Libraries
 
 The Massa blockchain ecosystem provides two main libraries for developers to interact with the blockchain. Understanding these libraries and their purposes is crucial for efficient development of applications on the Massa network.
+
+:::warning Important
+Welcome to the documentation for the next version of the Massa Web3 JS Library. This new version introduces significant improvements and new features that enhance your development experience with the Massa blockchain.
+While this represents the most current and advanced state of the library, please be aware that it may undergo some changes as we continue to refine and optimize based on user feedback and ecosystem developments.
+We strongly encourage you to use this new version in your projects. It offers better performance, additional capabilities, and improved developer ergonomics compared to previous versions.
+We're committed to keeping this documentation up-to-date. Any future changes or updates will be reflected here promptly.
+Thank you for choosing to work with the latest Massa Web3 JS Library. Your feedback and experiences are valuable to us as we continue to evolve and improve the library.
+:::
 
 ## 1. @massalabs/massa-web3
 

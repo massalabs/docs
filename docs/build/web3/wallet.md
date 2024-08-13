@@ -5,7 +5,7 @@ sidebar_label: Wallet
 
 # Wallet
 
-The Wallet interface provides methods to interact with user wallets in the Massa blockchain ecosystem. It's part of the `@massalabs/wallet-provider` library and is crucial for building decentralized applications (dApps) that require interaction with user wallets.
+The Wallet interface provides methods to interact with user [wallets](/docs/build/wallet/intro) in the Massa blockchain ecosystem. It's part of the `@massalabs/wallet-provider` library and is crucial for building decentralized applications (dApps) that require interaction with user wallets.
 
 :::warning
 

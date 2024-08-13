@@ -266,11 +266,11 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Web3 next",
+      label: "Web3 (next version)",
       items: [
         {
           type: "doc",
-          id: "build/web3/web3-libraries-intro",
+          id: "build/web3/intro",
           label: "Web3 Libraries Introduction",
         },
 
@@ -335,10 +335,7 @@ const sidebars = {
           type: "doc",
           id: "build/wallet/massa-wallet",
         },
-        {
-          type: "doc",
-          id: "build/wallet/wallet-provider",
-        },
+
         {
           type: "doc",
           id: "build/wallet/community-wallets",
@@ -347,7 +344,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Massa-Web3",
+      label: "Massa-Web3 (current version)",
       items: [
         {
           type: "doc",
@@ -360,6 +357,10 @@ const sidebars = {
         {
           type: "doc",
           id: "build/massa-web3/backend-usage-massa-web3",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/wallet-provider",
         },
         {
           type: "doc",

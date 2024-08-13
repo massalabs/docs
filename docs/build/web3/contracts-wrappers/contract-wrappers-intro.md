@@ -1,6 +1,6 @@
 ---
 id: contract-wrappers-intro
-sidebar_label: Intro
+sidebar_label: Introduction
 sidebar_position: 1
 ---
 

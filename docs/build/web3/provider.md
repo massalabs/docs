@@ -20,9 +20,9 @@ In a browser environment, you can create a Provider from a Wallet. This is usefu
 
 To use the Provider from a wallet you need two things:
 
-- **A wallet installed**: It can be MassaStation, bearby or any other wallet that supports the Massa blockchain.
+- **A wallet installed**: It can be MassaStation, bearby or any other wallet that supports the Massa blockchain. See [wallet section](/docs/build/wallet/intro).
 
-- **The wallet-provider package installed**: see the wallet see the [wallet-provider](https://www.npmjs.com/package/@massalabs/wallet-provider) section.
+- **The wallet-provider package installed**:
 
 ```typescript
 npm install @massalabs/wallet-provider
