@@ -25,7 +25,7 @@ To use the Provider from a wallet you need two things:
 - **The wallet-provider package installed**:
 
 ```typescript
-npm install @massalabs/wallet-provider
+npm install @massalabs/wallet-provider@next
 ```
 
 ```typescript
@@ -63,7 +63,7 @@ For backend applications or when you have direct access to private keys, you can
 First you will need to install the `@massalabs/massa-web3` package:
 
 ```typescript
-npm install @massalabs/massa-web3
+npm install @massalabs/massa-web3@next
 ```
 
 Then you can create a Provider from a KeyPair in two ways:
