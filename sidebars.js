@@ -265,6 +265,56 @@ const sidebars = {
       ],
     },
     {
+      type: "category",
+      label: "Web3 (next version)",
+      items: [
+        {
+          type: "doc",
+          id: "build/web3/intro",
+          label: "Web3 Libraries Introduction",
+        },
+
+        {
+          type: "doc",
+          label: "Prerequisites",
+          id: "build/web3/prerequisites",
+        },
+        {
+          type: "doc",
+          id: "build/web3/provider",
+          label: "Provider",
+        },
+        {
+          type: "doc",
+          id: "build/web3/wallet",
+          label: "Wallet",
+        },
+        {
+          type: "doc",
+          id: "build/web3/operation",
+          label: "Operation",
+        },
+
+        {
+          type: "category",
+          collapsible: false,
+          label: "Contracts-wrappers",
+          items: [
+            {
+              type: "doc",
+              id: "build/web3/contracts-wrappers/contract-wrappers-intro",
+              label: "Introduction",
+            },
+            {
+              type: "doc",
+              id: "build/web3/contracts-wrappers/mrc20",
+              label: "MRC20",
+            },
+          ],
+        },
+      ],
+    },
+    {
       type: "html",
       value: "<hr/>",
     },
@@ -285,10 +335,7 @@ const sidebars = {
           type: "doc",
           id: "build/wallet/massa-wallet",
         },
-        {
-          type: "doc",
-          id: "build/wallet/wallet-provider",
-        },
+
         {
           type: "doc",
           id: "build/wallet/community-wallets",
@@ -297,7 +344,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Massa-Web3",
+      label: "Massa-Web3 (current version)",
       items: [
         {
           type: "doc",
@@ -310,6 +357,10 @@ const sidebars = {
         {
           type: "doc",
           id: "build/massa-web3/backend-usage-massa-web3",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3/wallet-provider",
         },
         {
           type: "doc",
