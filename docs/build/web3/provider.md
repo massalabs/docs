@@ -26,6 +26,7 @@ To use the Provider from a wallet you need two things:
 
 ```typescript
 npm install @massalabs/wallet-provider@next
+npm install @massalabs/massa-web3@next
 ```
 
 ```typescript
