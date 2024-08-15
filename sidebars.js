@@ -522,7 +522,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "CLI",
+      label: "Upload a website to DeWeb",
       collapsed: false,
       items: [
         "deweb/cli/overview",
