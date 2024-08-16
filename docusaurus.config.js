@@ -184,7 +184,7 @@ const config = {
         placeholder: "Search the Docs...",
       },
       prism: {
-        theme: lightCodeTheme,
+        theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
         // See https://docusaurus.io/docs/markdown-features/code-blocks#supported-languages
         additionalLanguages: ["toml", "json", "bash", "powershell", "protobuf"],
