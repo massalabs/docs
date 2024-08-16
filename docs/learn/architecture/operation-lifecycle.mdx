@@ -66,3 +66,13 @@ The Execution Module will handle read-only request, and revert back any changes 
 
 The read-only execution happens at the slot just after the latest executed non-final slot at the moment of execution.
 The same way you can't ensure at which height a normal operation is executed, different nodes might have processed different non-final blocks at a given time and execute the same read-only request under different contexts depending on that.
+
+
+## A note on operation censorability
+
+Attackers producing blocks might refuse to include some transactions in their blocks in order to censor them.
+If your transaction expires and is not included, send it again.
+
+However, even a very strong attacker controlling 30% of the whole stake has only a chance in a million to delay your transaction by 3 minutes.
+
+You can safely assume that your transactions, even under attack by a powerful actor, can only be delayed by at most 3 minutes.
