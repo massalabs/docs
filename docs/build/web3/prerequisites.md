@@ -62,42 +62,56 @@ This setup allows you to use the Massa Web3 library in a vanilla JavaScript proj
 Using a bundler like Vite not only resolves module dependencies but also provides features like hot module replacement and optimized builds for production, enhancing your development experience with the Massa Web3 library.
 :::
 
-### Vite Configuration and Polyfills
+# Vite Configuration and Polyfills for Massa Web3 Projects
 
-To ensure compatibility with Vite and to provide necessary polyfills for the Massa Web3 library, follow these steps:
+To ensure compatibility with Vite and to provide necessary polyfills for the Massa Web3 library, follow these steps. These configurations are necessary because, at the moment, `massa-web3` uses `lodash` and `events`, which are not natively supported in the browser environment.
 
-1. Install required dependencies:
+## 1. Install Required Dependencies
 
-   ```shell
-   npm install lodash-es
-   npm install vite-plugin-node-polyfills
-   ```
+First, install the necessary dependencies by running the following commands in your project directory:
 
-2. Create a `vite.config.js` file in your project root with the following content:
+```bash
+npm install lodash-es
+npm install vite-plugin-node-polyfills
+```
 
-   ```javascript
-   import { defineConfig } from "vite";
-   import { nodePolyfills } from "vite-plugin-node-polyfills";
+## 2. Create Vite Configuration File
 
-   export default defineConfig({
-     plugins: [nodePolyfills()],
-     resolve: {
-       alias: {
-         lodash: "lodash-es",
-       },
-     },
-     build: {
-       rollupOptions: {
-         external: ["lodash"],
-       },
-     },
-   });
-   ```
+Create a `vite.config.js` file in your project root with the following content:
 
-   This configuration adds the necessary Node.js polyfills and resolves lodash to its ES module version, ensuring compatibility with the Massa Web3 library.
+```javascript
+import { defineConfig } from "vite";
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 
-:::tip
-Use this configuration in your own Vite projects to ensure compatibility with the Massa Web3 library. It provides the required polyfills and resolves potential issues with dependencies like lodash.
-:::
+export default defineConfig({
+  plugins: [nodePolyfills()],
+  resolve: {
+    alias: {
+      lodash: "lodash-es",
+    },
+  },
+  build: {
+    rollupOptions: {
+      external: ["lodash"],
+    },
+  },
+});
+```
 
-By following these steps, you'll have a properly configured development environment ready for building dapps on the Massa blockchain using the Massa Web3 library.
+## 3. Explanation of the Configuration
+
+- `nodePolyfills()`: This plugin provides polyfills for Node.js built-in modules, which are required by `massa-web3` but not available in the browser environment.
+- `resolve.alias`: This configuration resolves `lodash` to its ES module version (`lodash-es`), ensuring compatibility with the module system used by Vite.
+- `build.rollupOptions.external`: This tells Vite to treat `lodash` as an external dependency, which can help prevent duplicated code and potential conflicts.
+
+## Why This Configuration is Necessary
+
+1. **Node.js Polyfills**: The `massa-web3` library uses some Node.js-specific modules (like `events`) that are not available in the browser environment. The `vite-plugin-node-polyfills` provides implementations of these modules for the browser.
+
+2. **Lodash Compatibility**: `massa-web3` depends on `lodash`, which is traditionally a CommonJS module. Vite works best with ES modules. By using `lodash-es` and setting up the alias, we ensure that the ES module version of lodash is used, which is compatible with Vite's ESM-centric approach.
+
+3. **Build Optimization**: By marking `lodash` as external, we prevent potential issues with multiple versions of lodash being bundled and allow for better tree-shaking and code splitting.
+
+By following these steps and understanding the reasons behind them, you'll have a properly configured development environment ready for building dApps on the Massa blockchain using the Massa Web3 library with Vite as your build tool.
+
+Remember to keep an eye on updates to `massa-web3`, as future versions may reduce or eliminate the need for some of these polyfills and configurations.
