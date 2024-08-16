@@ -12,7 +12,7 @@ The Operation object is returned when sending an operation to the Massa blockcha
 Here's a basic example of how to use the Operation object:
 
 ```typescript
-import { Provider, Operation } from "@massalabs/massa-web3";
+import { Provider, Operation, OperationStatus } from "@massalabs/massa-web3";
 
 // Here we assume that 'provider' is an instance of Provider
 const operation = await provider.callSC({
@@ -26,6 +26,10 @@ const operation = await provider.callSC({
 
 const speculativeStatus = await operation.waitSpeculativeExecution();
 console.log("Speculative status:", speculativeStatus);
+
+if (status === OperationStatus.SpeculativeSuccess) {
+  console.log("Operation Success");
+}
 
 const speculativeEvents = await operation.getSpeculativeEvents();
 console.log("Speculative events:", speculativeEvents);

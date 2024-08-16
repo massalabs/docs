@@ -325,26 +325,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Wallets",
-      items: [
-        {
-          type: "doc",
-          id: "build/wallet/intro",
-        },
-        {
-          type: "doc",
-          id: "build/wallet/massa-wallet",
-        },
-
-        {
-          type: "doc",
-          id: "build/wallet/community-wallets",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Massa-Web3 (current version)",
+      label: "Massa-Web3 (legacy)",
       items: [
         {
           type: "doc",
@@ -368,6 +349,26 @@ const sidebars = {
         },
       ],
     },
+    {
+      type: "category",
+      label: "Wallets",
+      items: [
+        {
+          type: "doc",
+          id: "build/wallet/intro",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/massa-wallet",
+        },
+
+        {
+          type: "doc",
+          id: "build/wallet/community-wallets",
+        },
+      ],
+    },
+
     {
       type: "category",
       label: "Networks & Faucets",
