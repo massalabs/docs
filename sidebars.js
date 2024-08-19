@@ -266,7 +266,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Web3 (next version)",
+      label: "Web3 v2",
       items: [
         {
           type: "doc",
