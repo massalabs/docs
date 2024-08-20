@@ -523,12 +523,11 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Upload a website to DeWeb",
+      label: "Uploading to DeWeb",
       collapsed: false,
       items: [
-        "deweb/cli/overview",
-        // "deweb/cli/upload-website",
-        // "deweb/cli/edit-website",
+        "deweb/upload/cli",
+        "deweb/upload/mns",
       ],
     },
     // {
