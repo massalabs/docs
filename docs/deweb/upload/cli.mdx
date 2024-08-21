@@ -4,7 +4,7 @@ title: Upload with the CLI
 
 # DeWeb CLI
 
-DeWeb CLI is a command-line tool designed for deploying, editing, and deleting decentralized websites on the DeWeb platform.
+The DeWeb CLI is a command-line tool designed for deploying, editing, and deleting decentralized websites on the DeWeb platform.
 
 
 
@@ -20,7 +20,7 @@ On Windows, use `deweb-cli_{targetOS}.exe` instead of `./deweb-cli_{targetOS}`
 
 ## Usage
 
-You can use the `deweb-cli` command to interact with DeWeb. Below is the basic usage syntax:
+You can use the `deweb-cli` command to interact with the DeWeb. Below is the basic usage syntax:
 
 ```bash
 deweb-cli [global options] command [command options] [arguments...]
@@ -36,7 +36,7 @@ deweb-cli [global options] command [command options] [arguments...]
 
 ### upload
 
-Uploads a new website to the DeWeb platform.
+Uploads a new website to the DeWeb.
 
 ```bash
 deweb-cli upload [global options] <website_zip_file_path>
@@ -64,7 +64,7 @@ This should result in a zip file with all the files from the output directory, w
 
 ### edit
 
-Edits an existing website on the DeWeb platform.
+Edits an existing website on the DeWeb.
 
 ```bash
 deweb-cli edit [global options] <website_sc_address> <website_zip_file_path>
@@ -83,7 +83,7 @@ deweb-cli edit -w myWallet -n http://node-url.com <website_sc_address> ./updated
 
 ### delete
 
-Deletes an existing website from the DeWeb platform.
+Deletes an existing website from the DeWeb.
 
 ```bash
 deweb-cli delete [global options] <website_sc_address>
