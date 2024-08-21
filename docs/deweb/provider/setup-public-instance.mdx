@@ -44,18 +44,18 @@ domain: "example.com"
 network_node_url: "https://buildnet.massa.net/api/v2"
 api_port: 8080
 allow_list:
-  - "allowed-domain"
-  - "AS1Seo2..."
+  - "massaNameService"
+  - "AS1S...19b3"
 block_list:
-  - "blocked-domain"
-  - "AS1REo4..."
+  - "massaNameService"
+  - "AS1S...4x3o"
 ```
 
 The allow/block lists allow you to control which websites are accessible through your provider.
 If there is any website in the allow list, all other websites are blocked.
 You can use MNS domain names or smart contract addresses in these lists.
 
-For more detailed settings and options, refer to the [Server Configuration](../configuration/server-config) page.
+For more detailed settings and options, refer to the [Server Configuration](../local-server-config/server-config) page.
 
 :::info Recommendation
 We recommend running your own node and using your node's URL as the `network_node_url`.

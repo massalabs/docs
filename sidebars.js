@@ -511,15 +511,24 @@ const sidebars = {
       collapsed: false,
       items: [
         "deweb/getting-started/overview",
-        "deweb/getting-started/setup-local-server",
-        "deweb/getting-started/setup-public-instance",
       ],
     },
     {
       type: "category",
-      label: "Configuration",
+      label: "Acccessing DeWeb locally",
       collapsed: false,
-      items: ["deweb/configuration/server-config"],
+      items: [
+              "deweb/local-server-config/setup-local-server",
+              "deweb/local-server-config/server-config"
+      ],
+    },
+    {
+      type: "category",
+      label: "Becoming a provider",
+      collapsed: false,
+      items: [
+              "deweb/provider/setup-public-instance",
+      ],
     },
     {
       type: "category",
