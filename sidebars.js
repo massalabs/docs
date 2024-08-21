@@ -515,7 +515,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Acccessing DeWeb locally",
+      label: "Acccessing the DeWeb locally",
       collapsed: false,
       items: [
               "deweb/local-server-config/setup-local-server",
@@ -532,7 +532,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Uploading to DeWeb",
+      label: "Uploading to the DeWeb",
       collapsed: false,
       items: [
         "deweb/upload/cli",
