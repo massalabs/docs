@@ -266,7 +266,28 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Web3 v2",
+      label: "Autonomous Smart Contract",
+      items: [
+        {
+          type: "doc",
+          id: "build/autonomous-smart-contract/intro",
+          label: "Introduction",
+        },
+        {
+          type: "doc",
+          id: "build/autonomous-smart-contract/send-message",
+          label: "Send Message",
+        },
+        {
+          type: "doc",
+          id: "build/autonomous-smart-contract/with-guaranteed-execution",
+          label: "With Guaranteed Execution",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Massa-Web3",
       items: [
         {
           type: "doc",
