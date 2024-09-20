@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Autonomous Smart Contracts: Introduction
 
-Autonomous Smart Contracts (ASCs) represent a revolutionary concept in blockchain technology, enabling smart contracts to operate independently without constant external triggers. This capability is a cornerstone feature of the Massa blockchain, setting it apart from traditional blockchain platforms.
+Autonomous Smart Contracts (ASCs) represent a revolutionary concept in blockchain technology, enabling smart contracts to operate independently without the need of external triggers. This capability is a cornerstone feature of the Massa blockchain, setting it apart from traditional blockchain platforms.
 
 ## Key Features
 
