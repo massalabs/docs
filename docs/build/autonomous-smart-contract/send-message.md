@@ -95,6 +95,10 @@ The execution of scheduled messages depends on network conditions and the provid
 2. Use appropriate validity periods to balance execution likelihood and timeliness
 3. Carefully manage contract state and handle potential race conditions
 
+:::note
+Find more information about autonomous smart contracts in the [Massa documentation](https://docs.massa.net/docs/learn/architecture/basic-concepts#autonomous-smart-contract-execution).
+:::
+
 ## Conclusion
 
 The `sendMessage` function is a powerful tool for creating autonomous systems on Massa. While it offers great flexibility, developers must carefully consider execution dynamics and implement appropriate safeguards to ensure reliable operation of their Autonomous Smart Contracts.
