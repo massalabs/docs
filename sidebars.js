@@ -266,35 +266,34 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Web3 v2",
+      label: "Massa-Web3",
       items: [
         {
           type: "doc",
-          id: "build/web3/intro",
+          id: "build/massa-web3/intro",
           label: "Web3 Libraries Introduction",
         },
 
         {
           type: "doc",
           label: "Prerequisites",
-          id: "build/web3/prerequisites",
+          id: "build/massa-web3/prerequisites",
         },
         {
           type: "doc",
-          id: "build/web3/provider",
+          id: "build/massa-web3/provider",
           label: "Provider",
         },
         {
           type: "doc",
-          id: "build/web3/wallet",
+          id: "build/massa-web3/wallet",
           label: "Wallet",
         },
         {
           type: "doc",
-          id: "build/web3/operation",
+          id: "build/massa-web3/operation",
           label: "Operation",
         },
-
         {
           type: "category",
           collapsible: false,
@@ -302,15 +301,41 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              id: "build/web3/contracts-wrappers/contract-wrappers-intro",
+              id: "build/massa-web3/contracts-wrappers/contract-wrappers-intro",
               label: "Introduction",
             },
             {
               type: "doc",
-              id: "build/web3/contracts-wrappers/mrc20",
+              id: "build/massa-web3/contracts-wrappers/mrc20",
               label: "MRC20",
             },
           ],
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Massa-Web3 (legacy)",
+      items: [
+        {
+          type: "doc",
+          id: "build/massa-web3-legacy/intro",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3-legacy/dapp-usage-massa-web3",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3-legacy/backend-usage-massa-web3",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3-legacy/wallet-provider",
+        },
+        {
+          type: "doc",
+          id: "build/massa-web3-legacy/massa-web3-utils",
         },
       ],
     },
@@ -323,32 +348,7 @@ const sidebars = {
       value:
         "<span class='menu__link'><b><small> Developer Tools </small></b></span>",
     },
-    {
-      type: "category",
-      label: "Massa-Web3 (legacy)",
-      items: [
-        {
-          type: "doc",
-          id: "build/massa-web3/massa-web3-main",
-        },
-        {
-          type: "doc",
-          id: "build/massa-web3/dapp-usage-massa-web3",
-        },
-        {
-          type: "doc",
-          id: "build/massa-web3/backend-usage-massa-web3",
-        },
-        {
-          type: "doc",
-          id: "build/massa-web3/wallet-provider",
-        },
-        {
-          type: "doc",
-          id: "build/massa-web3/massa-web3-utils",
-        },
-      ],
-    },
+
     {
       type: "category",
       label: "Wallets",
@@ -509,35 +509,28 @@ const sidebars = {
       type: "category",
       label: "Getting Started",
       collapsed: false,
-      items: [
-        "deweb/getting-started/overview",
-      ],
+      items: ["deweb/getting-started/overview"],
     },
     {
       type: "category",
       label: "Acccessing the DeWeb locally",
       collapsed: false,
       items: [
-              "deweb/local-server-config/setup-local-server",
-              "deweb/local-server-config/server-config"
+        "deweb/local-server-config/setup-local-server",
+        "deweb/local-server-config/server-config",
       ],
     },
     {
       type: "category",
       label: "Becoming a provider",
       collapsed: false,
-      items: [
-              "deweb/provider/setup-public-instance",
-      ],
+      items: ["deweb/provider/setup-public-instance"],
     },
     {
       type: "category",
       label: "Uploading to the DeWeb",
       collapsed: false,
-      items: [
-        "deweb/upload/cli",
-        "deweb/upload/mns",
-      ],
+      items: ["deweb/upload/cli", "deweb/upload/mns"],
     },
     // {
     //   type: "doc",
