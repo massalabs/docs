@@ -101,22 +101,35 @@ deweb-cli delete -w myWallet -n http://node-url.com <website_sc_address>
 
 ## Configuration
 
-The CLI can be configured using a YAML file. By default, it looks for `deweb_cli_config.yaml` in the current directory. You can specify a different configuration file using the `--config` flag.
+The CLI can be configured using a JSON file. By default, it looks for `deweb_cli_config.json` in the current directory. You can specify a different configuration file using the `--config | -c`  flag.
 
-### Sample Configuration (`deweb_cli_config.yaml`)
+### Sample Configuration (`deweb_cli_config.json`)
 
-```yaml
-wallet_config:
-  wallet_nickname: "alice"
+:::note
+Using this config file allows you to stream line uploading process & reduce argument use in commands. We highly recommend that you take full advantage of this. 
+:::
 
-node_url: "https://buildnet.massa.net/api/v2"
 
-sc_config:
-  minimal_fees: 0
-  max_gas: 0
-  max_coins: 0
-  expiry: 0
+```json
+{
+  "wallet_path": "./wallet_alice.yaml",
+  "wallet_password": "42alice0"
+  "node_url": "https://buildnet.massa.net/api/v2",
+  "chunk_size": "64000"
+  "secret_key": "S[...]1"
+} 
 ```
+
+
+:::info
+`wallet_path` should be the path to your Massa Station Wallet yaml file. You can find this file by following this [tutorial](../../massaStation/massa-wallet/account-backup).
+
+
+Using the `secret_key` allows you to automatically sign transaction with any Massa ecosystem wallet. 
+
+Changing the `chunk_size` allows you to determine the size of uploaded chunks, the bigger they are, the less transaction you need to pay fees for. 
+:::
+
 
 ## Logging
 
