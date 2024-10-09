@@ -1,0 +1,39 @@
+# Contract Inheritance
+
+In Massa smart contracts, you can leverage AssemblyScript's standard import/export structure to inherit functions and properties from other contracts or modules. This allows you to build modular and reusable code by defining common functionality in base contracts and extending them in specialized contracts.
+
+By importing functions and classes from other files, you can easily reuse code across different contracts. This approach is especially useful for building complex contracts that share similar logic or features, such as tokens, where common functionalities can be inherited and extended.
+
+## Example: Token Contract with Inheritance
+
+This example showcases a token contract that follows the Massa Fungible Token (FT) standard, leveraging the base functionalities provided by the FT standard library. You can find the full FT standard implementation in the [Massa Standards Repository](https://github.com/massalabs/massa-standards/blob/main/smart-contracts/assembly/contracts/FT/token.ts)
+
+By using inheritance, you can easily create a new token with customized properties while reusing the FT standard functions.
+
+```ts
+import { Args } from '@massalabs/as-types';
+import { u256 } from 'as-bignum/assembly';
+export * as FT from '@massalabs/sc-standards/assembly/contracts/FT/token';
+
+export function constructor(_: StaticArray<u8>): StaticArray<u8> {
+    const token_name = "My Token";
+    const token_symbol = "MTK";
+    const decimals: u8 = 18;
+    const totalSupply = u256.fromU64(123456);
+
+    FT.constructor(
+        new Args()
+        .add(token_name)
+        .add(token_symbol)
+        .add(decimals)
+        .add(totalSupply)
+        .serialize(),
+    );
+}
+```
+
+## Why Use Inheritance with the FT Standard?
+Using the FT standard as a base allows you to inherit its well-defined functionalities without needing to reimplement core token mechanics. This approach ensures that your token will be compatible with existing Massa applications and services that follow the FT standard, facilitating interoperability and reliability.
+
+## Customization with Inheritance
+By extending the FT standard, you can add additional functions or modify existing ones to tailor the token contract to your needs. For example, you could implement custom transfer logic, introduce new events, or include access control mechanisms for minting and burning tokens.

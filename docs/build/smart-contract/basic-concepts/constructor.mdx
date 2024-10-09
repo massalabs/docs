@@ -1,0 +1,91 @@
+# Constructor function
+
+In Massa smart contracts, the constructor function is responsible for initializing the contract's state during deployment. This function is called only once, during the deployment step, to set up any required initial values or configurations.
+
+1. **Deployment-Only Execution**:
+    - To ensure that the constructor function is only executed during deployment, include the line `assert(Context.isDeployingContract());` at the start of the function. This assertion checks that the contract is currently in the deployment phase and will throw an error if the function is called after deployment.
+
+2. **Passing Parameters to the Constructor**:
+    - Just like other functions, parameters can be passed to the constructor using serialized data. This allows for the flexible initialization of the contract, enabling the deployment process to be customized with specific data.
+    The Args utility can be used to handle serialization and deserialization of these parameters, ensuring consistency with other functions in the contract.
+
+
+###  Example Constructor Implementation
+Below is an example of a constructor function that takes a string parameter for initialization. This example demonstrates how to set up the constructor to accept parameters, ensuring it is only called during deployment, and store the initialized data:
+
+```ts
+import { Args, Storage, Context } from "@massalabs/as-types";
+
+export function constructor(argsData: StaticArray<u8>): void {
+    // Ensure the function is only called during deployment
+    assert(Context.isDeployingContract(), "Constructor can only be called during deployment");
+
+    // Deserialize the initialization parameter
+    const initialMessage = new Args(argsData).nextString().expect("Initialization parameter missing or invalid");
+
+    // Store the initial message in contract storage
+    Storage.set("greeting", initialMessage);
+}
+```
+
+### Deploying with Constructor Parameters
+When deploying this contract, the serialized parameter(s) should be included in the deployment transaction. For example, in a TypeScript deployment script, you might serialize the initial message and include it in the deployment call:
+
+```ts
+import {
+  Account,
+  Args,
+  Mas,
+  SmartContract,
+  Web3Provider,
+} from '@massalabs/massa-web3';
+import { getScByteCode } from './utils';
+
+const account = await Account.fromEnv();
+const provider = Web3Provider.buildnet(account);
+
+// Retrieve the compiled smart contract bytecode
+const byteCode = getScByteCode('build', 'main.wasm');
+
+const constructorArgs = new Args().addString("Welcome to Massa!");
+
+const contract = await SmartContract.deploy(
+  provider,
+  byteCode,
+  constructorArgs,
+  { coins: Mas.fromString('0.01') },
+);
+```
+
+#### Explanation of the Deployment Code
+1. **Imports**:
+
+- Key modules are imported from @massalabs/massa-web3, including Account, Args, Mas, SmartContract, and Web3Provider, which are essential for deploying a smart contract.
+
+2. **Account Setup**:
+
+- An Account instance is created using Account.fromEnv(), which retrieves the necessary credentials from environment variables. This ensures the deployment uses a valid account on the Massa network.
+
+3. **Provider Initialization**:
+
+- Web3Provider.buildnet(account) sets up a provider instance connected to the Massa buildnet, allowing the account to interact with the network.
+
+4. **Bytecode Retrieval**:
+
+- The compiled smart contract bytecode is loaded using `getScByteCode('build', 'main.wasm')`. This function reads the compiled .wasm file from the specified directory `build`.
+ It assume your contract file is `main.ts`. The getScByteCode implementation can be found [here](https://github.com/massalabs/massa-sc-toolkit/blob/a987baa4ad0f5b9a3aea1cc1107d1e90892c5fee/packages/sc-project-initializer/commands/init/src/utils.ts#L8)
+
+5. **Constructor Arguments**:
+
+- The constructor arguments are prepared using Args, where addString("Welcome to Massa!") serializes the initialization message. This message will be passed to the constructor function in the smart contract.
+
+6. **Contract Deployment**:
+
+- SmartContract.deploy is called with the provider, bytecode, and constructor arguments to deploy the contract.
+The coins option specifies an initial allocation of 0.01 MAS to the contract.
+
+:::caution
+Deploying a smart contract on Massa incurs a cost, which is deducted from the caller's wallet in MAS. The deployment cost is proportional to the size of the compiled contract bytecode. This means that larger smart contracts, with more complex logic and features, will generally require more MAS to deploy. Learn more about storage costs [here](https://docs.massa.net/docs/learn/storage-costs)
+:::
+
+By following this approach, you can initialize your Massa smart contract with parameters at deployment, ensuring the constructor sets up the contract's initial state with custom values.

@@ -1,0 +1,136 @@
+# Events
+
+In Massa's smart contracts, events provide a way to emit runtime messages that can be useful for monitoring, debugging, and logging activities within the contract. Events can be triggered by errors, such as assertion failures or insufficient coin balances, as well as custom, user-defined events.
+
+## Types of events
+
+1. **Error Events**:
+
+    - Error events occur when the contract encounters runtime issues, such as:
+      - Failed assertions, where the assert statement fails.
+      - Errors during argument deserialization
+      - Insufficient coins to write to storage or to call another contract that requires a fee.
+    - These events help identify issues and diagnose why a transaction or contract call may have failed.
+
+2. **User-Defined Events**:
+
+    - In addition to system-generated error events, developers can define custom events to log specific actions or important milestones within the contract.
+    - User-defined events are typically used to provide visibility into contract behavior, for example during a transfer or token minting.
+
+## Important considerations for events
+In Massa, events are not stored in the blockchain ledger, meaning they are ephemeral. Therefore, events should not be used as a source of persistent data. Instead, they are suitable for temporary tasks such as monitoring, logging, or providing real-time feedback.
+For use cases that require persistent data, storage should be used.
+
+## Emitting a custom event
+To emit a custom event in a smart contract, you can use the generateEvent function (assuming this utility is available in your environment):
+
+```ts
+import { generateEvent } from "@massalabs/massa-as-sdk";
+
+export function transferTokens(to: string, amount: u64): void {
+    // Transfer logic here
+
+    // Emit a custom event after transfer
+    generateEvent(`Transferred ${amount.toString()} tokens to ${to}`);
+}
+```
+In this example, the generateEvent function is used to emit a custom message after a token transfer operation. This message can be retrieved as shown in the example below.
+
+## Retrieving events
+Although events are not permanently stored on the blockchain, they can still be retrieved for monitoring purposes after being emitted. Here's an example of how to retrieve events for a specific smart contract using the [@massalabs/massa-web3](https://github.com/massalabs/massa-web3) provider:
+```ts
+// typescript
+const events = await provider.getEvents({
+  smartContractAddress: "<deployed_contract_address>",
+});
+
+for (const event of events) {
+  console.log('Event message:', event.data);
+}
+```
+
+## Retrieving events with filters
+When retrieving events from a Massa smart contract, you can apply various filters to specify which events to retrieve. These filters allow you to narrow down the results based on specific criteria, such as the contract address, caller address, event time range, and whether the events are final or error-related. This flexibility helps you target the most relevant events for monitoring, debugging, or analysis.
+
+### Available event Filters
+
+Here are the different optional filters you can use when retrieving events:
+
+1. `start` and `end` (Slot):
+
+- Specifies the time range for events to retrieve, based on slots.
+- `start`: The slot at which to begin retrieving events.
+- `end`: The slot at which to stop retrieving events.
+- These filters are useful for fetching events that occurred within a specific timeframe.
+
+2. `smartContractAddress`:
+
+- Filters events by the specific smart contract address that emitted them.
+- This is essential for retrieving events from a particular contract, especially in environments with multiple contracts.
+
+3. `callerAddress`:
+
+- Filters events by the address that called the smart contract.
+- Use this filter to track interactions made by a specific user or another smart contract, providing insights into usage patterns or access control.
+
+4. `operationId`:
+
+- Filters events by a specific operation ID, allowing you to trace events related to a particular operation.
+- This is useful for tracking the full lifecycle of an operation, including any events it triggered.
+
+5. `isFinal`:
+
+- Filters events based on whether they are final or not.
+- Set to true to retrieve only final events, which are confirmed and immutable, or false to get non-final events that are still subject to change.
+
+6. `isError`:
+
+- Filters events by error status.
+- Set to true to retrieve only error events, which can help identify failed operations, or false to retrieve only successful events.
+
+## Event poller
+The [@massalabs/massa-web3](https://github.com/massalabs/massa-web3) library includes an event poller, that facilitates continuous monitoring of smart contract events by polling for updates at regular intervals. This feature is particularly useful for applications that require real-time event tracking or need to respond dynamically to contract activities.
+
+### How the event poller works
+The event poller retrieves events from the Massa blockchain using specified filters and invokes callback functions for handling incoming data and errors. You can configure the poller with various parameters, such as the smart contract address and the polling interval, to tailor its behavior to your needs.
+
+### Example: Setting up an event poller
+Below is an example of how to use the EventPoller from [@massalabs/massa-web3](https://github.com/massalabs/massa-web3 to continuously fetch and log events for a specific smart contract. This code sets up a poller that checks for new events every 5 seconds, processes each event, and stops if an error occurs:
+
+```ts
+// typescript
+let stop = false;
+
+// Callback function for handling incoming events
+const onData = async (events: SCEvent[]) => {
+  for (const event of events) {
+    console.log(
+      `Event period: ${event.context.slot.period} thread: ${event.context.slot.thread} -`,
+      event.data,
+    );
+  }
+};
+
+// Callback function for handling errors
+const onError = (error: Error) => {
+  console.error('Error:', error);
+  stop = true; // Stop polling in case of an error
+};
+
+// Start the event poller with a 5-second interval
+const { stopPolling } = EventPoller.start(
+  provider,
+  {
+    smartContractAddress: CONTRACT_ADDR, // Replace with your contract address
+  },
+  onData,
+  onError,
+  5000, // Polling interval in milliseconds
+);
+
+// Continue polling until stopped
+while (!stop) {
+  await scheduler.wait(5000);
+}
+stopPolling(); // Stop polling once the loop terminates
+```

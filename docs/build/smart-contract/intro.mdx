@@ -1,0 +1,29 @@
+---
+sidebar_position: 1
+---
+
+
+# Introduction
+
+Smart contracts are programs that interact with the blockchain, accessing ledger storage and modifying the current state of the ledger. They enable developers to build decentralized applications (dApps) that enforce contractual terms autonomously, embodying the principle that **code is law**.
+
+## How smartcontract works on Massa?
+
+On Massa, smart contracts are written in [AssemblyScript](https://assemblyscript.org/), which is compiled to [WebAssembly](https://webassembly.org/) (or Wasm). Massa nodes then execute this binary code using a virtual machine.
+
+While AssemblyScript resembles TypeScript, it differs in key ways. For instance, AssemblyScript provides direct access to all integer and floating-point types available in WebAssembly, whereas union types and optional arguments or properties are unsupported. Furthermore, all objects are statically typed, meaning properties cannot be dynamically altered. Notably, AssemblyScript currently does not support exception handling or closures.
+
+In this framework, a smart contract can be viewed as a stored procedure that can modify the ledger, interact with other smart contracts, and be invoked by end users.
+
+With **asynchronous execution**, smart contracts on Massa can automatically activate at a specified time or when certain conditions in the ledger are met, such as a specific data value within the contract.
+
+## Execution constraints of a Smart Contracts
+
+Smart contracts are executed directly by Massa nodes, with fees in place to prevent spam and network congestion:
+
+- The processing unit, or [gas](https://docs.massa.net/docs/learn/gas), measures the complexity of contract execution. Each block has a gas limit, which constrains the amount of computation that can occur.
+- According to the amount of gas needed to execute the smart contract, the caller must pay a fee in MAS for the operation to be included in a block by the Massa validators. 
+- If a smart contract requires [storage](https://docs.massa.net/docs/learn/storage-costs), it incurs an additional cost.
+
+Finally, smart contracts on Massa are deterministic. Once deployed, their code and interface are publicly available and unchangeable.
+

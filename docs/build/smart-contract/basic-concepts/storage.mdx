@@ -1,0 +1,73 @@
+# Storage
+In Massa smart contracts, all data stored on the blockchain is managed as raw bytes. This approach ensures efficient data handling, but it requires that all keys and values are serialized. Fortunately, the Massa SDK provides methods that simplify this process by handling serialization behind the scenes, allowing you to work with familiar data types like string or Args when accessing storage.
+
+## Storage Methods
+
+### Basic Storage Operations:
+
+- The primary methods for interacting with contract storage are `Storage.set`, `Storage.get`, and `Storage.has`.
+- Although storage keys and values are ultimately stored as raw bytes, these methods accept `StaticArray<u8>` `string` and `Args` as arguments, automatically handling serialization and deserialization.
+
+Here's a quick overview of each method, using `T = StaticArray<u8> | string | Args`
+
+- `Storage.set(key: T, value: T): void`:
+    - Stores the specified value under the provided key. If the key already exists, it updates the value.
+    - If new storage are used, it will occurs a cost in MAS. Learn more about storage cost [here](https://docs.massa.net/docs/learn/storage-costs)
+- `Storage.append(key: T, value: T): void`:
+     - Append data at a storage key
+     - If the key doesn't exist, this will stop the operation execution and revert all previously executed code.
+- `Storage.get(key: T): T`:
+    - Retrieves the value associated with the specified key.
+    - If the key doesn’t exist, this will stop the operation execution and revert all previously executed code.
+- `Storage.has(key: T): bool`:
+     - Checks if a value exists for the specified key and returns true if it does, or false if it doesn't.
+- `Storage.del(key: T): void`:
+     - Delete the key-value pair associated with the specified key.
+     - If the key doesn't exist, this will stop the operation execution and revert all previously executed code.
+
+
+### Using Storage:
+
+```ts
+import { Storage } from '@massalabs/massa-as-sdk';
+
+const USER_KEY = "user"
+
+// Store a value
+export function setUser(username: string): void {
+    Storage.set(USER_KEY, username);
+}
+
+// Retrieve a value
+export function getUser(username: string): string {
+    assert(Storage.has(USER_KEY))
+    return Storage.get(USER_KEY, username);
+}
+```
+
+### Interacting with Storage from Another Address:
+
+In some cases, you may need to read from or write to the storage of another smart contract or address. For this purpose, Massa provides the Storage.setOf, Storage.appendOf, Storage.getOf, and Storage.hasOf methods, which include an additional parameter for specifying the target address.
+
+Here's a quick overview of each method, using `T = StaticArray<u8> | string | Args`
+
+- `Storage.setOf(address: Address, key: T, value: T): void`:
+    - Stores a value in the storage of a specified address under the given key.
+    - Writing data to another contract storage require the caller to have writte access on the given contract. It happen only when deploying the contract from another one.
+
+- `Storage.appendOf(address: Address, key: T, value: T): void`:
+    - Append data at a storage key
+    - Writing data to another contract storage require the caller to have writte access on the given contract. It happen only when deploying the contract from another one.
+    - If the key doesn't exist, this will stop the operation execution and revert all previously executed code.
+
+- `Storage.getOf(address: Address, key: T): StaticArray<u8>`:
+    - Retrieves a value from the storage of a specified address using the given key.
+
+- `Storage.hasOf(address: Address, key: T): bool`:
+    - Checks if a specific key exists in the storage of the specified address.
+
+- `Storage.deleteOf(address: Address, key: T): void`:
+     - Delete the key-value pair associated with the specified key in the storage of the specified address.
+     - Writing data to another contract storage require the caller to have writte access on the given contract. It happen only when deploying the contract from another one.
+     - If the key doesn't exist, this will stop the operation execution and revert all previously executed code.
+

@@ -1,0 +1,80 @@
+# Interacting with MAS Tokens in Massa Smart Contracts
+In Massa smart contracts, you can interact with the MAS token to perform various financial operations, such as sending and receiving MAS tokens, checking balances, and transferring tokens between addresses.
+Mas token is represented using a u64 value.
+Here’s a guide on how to handle these interactions within a contract.
+
+:::caution
+In Massa, all contract exported functions are payable par default. This means that all functions can receive MAS tokens even if the called function does not write anything onchain.
+:::
+
+## Including MAS Tokens When Calling a Smart Contract
+When calling a smart contract, you can specify an amount of MAS tokens to send along with the call. This is done by setting the amount in the operation from the calling account to the contract.
+
+For example, if you are calling a function on a deployed smart contract from your client application, you would include the MAS amount in the operation parameters.
+Using [massa-web3](https://github.com/massalabs/massa-web3), the SmartContract class allows you to specify the coins parameter.
+
+```ts
+import { SmartContract, Mas } from '@massalabs/massa-web3';
+
+const contract = new SmartContract(provider, "<deployed_contract_address>");
+const amount = Mas.fromString('10'); // 10 MAS
+
+// Call the smart contract with 10 MAS
+await contract.call(
+  'receiveTokens',
+  // here the parameters of the function can be left undefined if the function does not require any
+  undefined,
+  { coins: amount }
+);
+```
+
+## Retrieving the Sent Value in the Contract
+
+Inside the contract, you can retrieve the amount of MAS tokens sent with the call by using the `transferredCoins()` function. This returns the amount of MAS in u64 format.
+
+```ts
+import { transferredCoins } from '@massalabs/massa-as-sdk';
+
+export function receiveTokens(): void {
+  const receivedAmount = transferredCoins();
+  assert(receivedAmount > 0, 'No MAS tokens were sent.');
+  // Further logic for handling the received amount
+}
+```
+
+## Checking the Contract Balance and the Balance of Another Address
+You can check the MAS token balance of the current contract or any other address using the `balance()` function or the `balanceOf(address: string)` function.
+
+1. Getting the Contract's Own Balance:
+
+```ts
+import { balance } from '@massalabs/massa-as-sdk';
+
+export function getContractBalance(): u64 {
+  return Context.balance();
+}
+```
+
+2. Getting the Balance of Another Address:
+
+```ts
+import { balanceOf } from '@massalabs/massa-as-sdk';
+
+export function getAddressBalance(address: string): u64 {
+  return balanceOf(address);
+}
+```
+
+## Sending MAS Tokens to Another Address
+To send MAS tokens from the contract to another address, you can use the `transferCoins()` function. This function takes the recipient address and the amount of MAS tokens to send.
+Note that the contract must have sufficient balance to cover the transfer.
+
+```ts
+import { transferCoins, balance, Address } from '@massalabs/massa-as-sdk';
+export function sendTokens(toAddress: Address, amount: u64): void {
+  const contractBalance = balance();
+  assert(contractBalance >= amount, 'Insufficient balance to send MAS tokens');
+
+  transferCoins(toAddress, amount);
+}
+```

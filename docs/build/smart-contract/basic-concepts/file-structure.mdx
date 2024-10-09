@@ -1,0 +1,65 @@
+# File structure and function visibility
+
+The entry point of your smart contract is the file that will be deployed on the blockchain. In the boilerplate project, this file is located at assembly/contracts/main.ts.
+
+```shell
+assembly/
+├── contracts/
+│   └── main.ts           # Entry point of the contract
+```
+
+Massa smart contracts are written in AssemblyScript, a variant of TypeScript, so they use .ts as the file extension. This allows contracts to utilize all the features of AssemblyScript, including type-checking and familiar syntax for JavaScript/TypeScript developers.
+
+Contracts consist of a named collection of exported functions. These functions have access to their execution context through the [@massalabs/massa-as-sdk](https://github.com/massalabs/massa-as-sdk), which provides essential blockchain-specific services, such as:
+
+- **Execution Context**: Access to details like sender, receiver, and block height.
+- **Storage Services**: Tools for reading and writing persistent data to the blockchain ledger.
+- **Logging Services**: Functions to generate logs and events for monitoring contract execution.
+- **Utility Functions**: Additional helpers to simplify common tasks within smart contracts.
+
+# Imports
+Similar to TypeScript, smart contracts on Massa can import external code to enhance their functionality. This can include:
+
+- **Local Project Files**: Importing functions or classes from other .ts files within the same project.
+- **External Packages**: Leveraging dependencies hosted on npm for reusable code and libraries.
+
+For blockchain-specific functionality, smart contracts typically import modules from the [@massalabs/massa-as-sdk](https://github.com/massalabs/massa-as-sdk). This SDK provides essential tools tailored for Massa smart contract development, including access to blockchain-specific data and operations.
+
+### Example Import Statement
+```ts
+import { Context } from "@massalabs/massa-as-sdk"
+```
+This import statement allows the contract to use the Context module, which provides access to crucial execution context details like the caller's address and the current block height.
+
+
+# Function visibility
+
+For a smart contract function to be callable by an end user or another smart contract, it must meet two conditions:
+
+- The function should be defined in the contract's entry point file.
+- The function must be marked with the export statement.
+
+:::caution
+ The export statement serves two purposes:
+- It makes the function callable from other files in the project.
+- It makes the function publicly available if located in the contract's entry point file (main.ts).
+:::
+
+While exporting functions can be useful for internal purposes, such as testing, it's advisable to avoid exporting functions from the entry point file if they aren't intended for public use. Instead, you can organize such internal functions in a separate file (e.g., utils.ts). This way, these functions can still be imported into other files or tests within the project without becoming publicly accessible after the contract is deployed.
+
+### Example of local import statement
+In the following example, a function is moved to an internal file to avoid making it publicly accessible upon deployment. The function can still be used within the project through a local import:
+```ts
+// main.ts 
+import { myFunction } from "../utils/utils.ts"
+```
+
+```shell
+assembly/
+├── contracts/
+│   └── main.ts           # Entry point of the contract
+└── utils/
+    └── utils.ts          # Internal functions for local use and testing
+```
+
+By structuring your contract this way, you ensure that only intended functions are exposed publicly, enhancing the security and maintainability of your smart contract.
