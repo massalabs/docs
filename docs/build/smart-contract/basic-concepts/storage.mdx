@@ -53,7 +53,7 @@ Here's a quick overview of each method, using `T = StaticArray<u8> | string | Ar
 
 - `Storage.setOf(address: Address, key: T, value: T): void`:
     - Stores a value in the storage of a specified address under the given key.
-    - Writing data to another contract storage require the caller to have writte access on the given contract. It happen only when deploying the contract from another one.
+    - Writing data to another contract storage require the caller to have writte access on the given contract. This occurs only when deploying the contract from another one.
 
 - `Storage.appendOf(address: Address, key: T, value: T): void`:
     - Append data at a storage key
