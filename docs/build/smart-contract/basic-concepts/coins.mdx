@@ -7,7 +7,7 @@ Here’s a guide on how to handle these interactions within a contract.
 In Massa, all contract exported functions are payable par default. This means that all functions can receive MAS tokens even if the called function does not write anything onchain.
 :::
 
-## Including MAS Tokens When Calling a Smart Contract
+## Including MAS Tokens when calling a smart contract
 When calling a smart contract, you can specify an amount of MAS tokens to send along with the call. This is done by setting the amount in the operation from the calling account to the contract.
 
 For example, if you are calling a function on a deployed smart contract from your client application, you would include the MAS amount in the operation parameters.
