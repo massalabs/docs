@@ -1,0 +1,36 @@
+# Smart Contract Data Types
+
+When developing smart contracts on Massa, it is essential to understand the data types available in AssemblyScript, as they directly influence how you handle and manipulate data within the contract. AssemblyScript offers a range of data types that align closely with WebAssembly's capabilities, providing efficient and predictable performance.
+
+## AssemblyScript native types
+
+| Data Type     | Description                            |
+|---------------|----------------------------------------|
+| i8 / u8       | 8-bit signed/unsigned integers         |
+| i16 / u16     | 16-bit signed/unsigned integers        |
+| i32 / u32     | 32-bit signed/unsigned integers        |
+| i64 / u64     | 64-bit signed/unsigned integers        |
+| f32 / f64     | 32-bit and 64-bit floating-point numbers |
+| bool          | Represents a Boolean value (`true` or `false`) |
+| string        | Represents UTF-16 encoded text         |
+
+### Array:
+`Array<T>`: Represents a dynamically-sized collection of elements of type T.
+Arrays are suitable for storing lists of data, such as user addresses or transaction histories. You can define arrays with specific types, such as `Array<i32>` or `Array<string>`, to ensure data consistency.
+
+### Byte array:
+Massa use AssemblyScript `StaticArray<u8>` native type to represent data bytes. This type is used internally in storage and is also used to serialize public function parameters and returned data.
+
+## Handling Large Numbers in Massa Smart Contracts
+
+In some smart contracts, you may need to work with numbers that exceed the size limitations of standard 64-bit integers. For example, financial applications involving token balances or computations with very large numbers require higher precision and larger ranges that i64 or u64 can't provide. To handle such cases, Massa smart contracts can use the [as-bignum](https://github.com/MaxGraey/as-bignum) library, which supports fixed length big number arithmetic.
+
+| Data Type     | Description                            |
+|---------------|----------------------------------------|
+| i128 / u128   | 128-bit signed/unsigned integers       |
+| i256 / u256   | 256-bit signed/unsigned integers       |
+
+### Example Import Statement
+```ts
+import { u256 } from "as-bignum/assembly"
+```

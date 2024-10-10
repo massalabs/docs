@@ -1,0 +1,148 @@
+# Generic Serializable
+In Massa smart contracts, you often need to work with complex data structures that go beyond primitive types. The Serializable interface provides a way to create custom types that can be easily serialized and deserialized, allowing you to store and retrieve these types in contract storage. By implementing Serializable, you can define your own classes and handle their serialization logic for efficient data management.
+
+## Creating a Serializable Type
+The example below demonstrates a User class that implements the Serializable interface. This class includes properties for the user's name and age, along with methods to serialize and deserialize User objects for storage and retrieval.
+
+```ts
+// users.ts
+import { Args, stringToBytes, Result, Serializable } from '@massalabs/as-types';
+import { Storage } from '@massalabs/massa-as-sdk';
+
+export class User implements Serializable {
+  constructor(public name: string = '', public age: u8 = 0) {}
+
+  // Serialize user data to bytes for storage
+  serialize(): StaticArray<u8> {
+    return new Args().add(this.name).add(this.age).serialize();
+  }
+
+  // Deserialize user data from bytes
+  deserialize(data: StaticArray<u8>, offset: i32): Result<i32> {
+    const args = new Args(data, offset);
+    this.name = args.nextString().expect("Can't deserialize name.");
+    this.age = args.nextU8().expect("Can't deserialize age.");
+    return new Result(args.offset);
+  }
+}
+```
+
+### Explanation of the User Class
+1. Constructor:
+
+    - The constructor initializes User instances with a name and an age. - Default values are provided to allow for easy instantiation.
+
+2. serialize Method:
+    - This method uses `Args` to convert the `name` and `age` properties into a byte array. It returns a serialized representation of the User object, which can then be stored in the contract's storage.
+
+3. deserialize Method:
+    - The deserialize method takes in a byte array and an offset, reconstructing the User object by extracting the name and age values. This allows the User instance to be reconstructed from storage.
+
+## Storing and retrieving Serializable data
+The following functions demonstrate how to store and retrieve User objects in the smart contract storage:
+
+```ts
+//main.ts
+import { Args, stringToBytes } from '@massalabs/as-types';
+import { Storage } from '@massalabs/massa-as-sdk';
+import { Users } from './users.ts';
+
+export function addUser(binArgs: StaticArray<u8>): void {
+  const args = new Args(binArgs);
+  const name = args.nextString().expect('Unable to decode user name');
+  const age = args.nextU8().expect('Unable to decode user age');
+  const id = args.nextString().expect('Unable to decode user id');
+  const userKey = stringToBytes(id);
+  assert(!Storage.has(userKey), 'User already exists');
+
+  // Create user serializable
+  const user = new User(name, age);
+  // Store serialized User
+  Storage.set(stringToBytes(id), user.serialize());
+}
+
+export function getUser(binArgs: StaticArray<u8>): StaticArray<u8> {
+  const args = new Args(binArgs);
+  const id = args.nextString().expect('Unable to decode user id');
+  const userKey = stringToBytes(id);
+  assert(Storage.has(userKey), 'User not found');
+
+  return Storage.get(userKey);
+}
+```
+
+## Using array of serializable
+In some scenarios, you might need to manage a collection of User objects as an array. The following example shows how to deserialize an array of User objects and store it in the contract's storage.
+
+```ts
+export function addUsers(binArgs: StaticArray<u8>): void {
+  const users = new Args(binArgs)
+    .nextSerializableObjectArray<User>()
+    .expect('Unable to decode users');
+  for (let i = 0; i < users.length; i++) {
+    const user = users[i];
+    const userKey = stringToBytes(user.name);
+    assert(!Storage.has(userKey), 'User already exists');
+    Storage.set(userKey, user.serialize());
+  }
+}
+```
+
+### Client-Side Serialization in TypeScript
+To add users from a client application, you need to serialize the user data in TypeScript, ensuring that it matches the AssemblyScript serialization format. This requires defining the same User class in TypeScript with methods that adhere to the serialization protocol.
+
+#### Defining the User Class in TypeScript
+```ts
+//user.ts (typescript)
+import {
+  Args,
+  IDeserializedResult,
+  ISerializable,
+} from '@massalabs/massa-web3';
+
+export class User implements ISerializable<User> {
+  constructor(
+    public name: string = '',
+    public age: number = 0,
+  ) {}
+
+  serialize(): Uint8Array {
+    const data = new Args()
+      .addString(this.name)
+      .addU8(BigInt(this.age))
+      .serialize();
+    return new Uint8Array(data);
+  }
+
+  deserialize(data: Uint8Array, offset: number): IDeserializedResult<User> {
+    const args = new Args(data, offset);
+
+    this.name = args.nextString();
+    this.age = Number(args.nextU8());
+
+    return { instance: this, offset: args.getOffset() };
+  }
+}
+```
+
+#### Calling the Contract with an Array of Users
+Using the serialized User objects, you can call the addUsers function in the contract to store multiple users:
+```ts
+//addUsers.ts (typescript)
+import { User } from './user.ts';
+
+const contract = new SmartContract(provider, "<deployed_contract_address>");
+
+const users = [new User('Alice', 25), new User('Bob', 30)];
+const operation = await contract.call(
+  'addUsers',
+  new Args().addSerializableObjectArray(users),
+);
+```
+
+
+
+## Benefits of using Serializable Types
+- Flexibility: Implementing Serializable allows you to create custom data types that can be stored and retrieved efficiently, enabling the management of complex data structures within smart contracts.
+- Data Integrity: By handling serialization and deserialization within the class, you control how the data is represented and validated, ensuring that only valid data is stored and retrieved.
+- Reusability: Once defined, serializable types can be reused across different parts of the contract or even in other contracts, promoting modular and maintainable code.

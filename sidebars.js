@@ -229,10 +229,6 @@ const sidebars = {
         "<span class='menu__link'><b><small> Build a dApp </small></b></span>",
     },
     {
-      type: "doc",
-      id: "build/hello-world-dapp",
-    },
-    {
       type: "category",
       label: "Smart Contract",
       items: [
@@ -242,23 +238,64 @@ const sidebars = {
           label: "Introduction",
         },
         {
+          type: "doc",
+          id: "build/smart-contract/prerequisites",
+          label: "Project setup",
+        },
+        {
+          type: "doc",
+          id: "build/smart-contract/sdk",
+          label: "Massa AS SDK",
+        },
+        {
           type: "category",
           collapsible: false,
-          label: "Develop",
+          label: "Basic concepts",
           items: [
             {
               type: "doc",
-              id: "build/smart-contract/prerequisites",
+              id: "build/smart-contract/basic-concepts/file-structure",
+              label: "File structure",
             },
             {
               type: "doc",
-              id: "build/smart-contract/webassembly-module",
-              label: "WebAssembly Module",
+              id: "build/smart-contract/basic-concepts/data-types",
+              label: "Data types",
             },
             {
               type: "doc",
-              id: "build/smart-contract/sdk",
-              label: "WebAssembly Module",
+              id: "build/smart-contract/basic-concepts/functions-parameters",
+              label: "Functions parameters",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/basic-concepts/constructor",
+              label: "Constructor",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/basic-concepts/inheritance",
+              label: "Inheritance",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/basic-concepts/coins",
+              label: "MAS token",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/basic-concepts/storage",
+              label: "Storage",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/basic-concepts/serializable",
+              label: "Serializable class",
+            },
+            {
+              type: "doc",
+              id: "build/smart-contract/basic-concepts/events",
+              label: "Events",
             },
           ],
         },
@@ -338,6 +375,10 @@ const sidebars = {
           id: "build/massa-web3-legacy/massa-web3-utils",
         },
       ],
+    },
+    {
+      type: "doc",
+      id: "build/hello-world-dapp",
     },
     {
       type: "html",
