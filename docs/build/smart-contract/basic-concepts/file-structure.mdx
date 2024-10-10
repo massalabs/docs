@@ -48,7 +48,7 @@ For a smart contract function to be callable by an end user or another smart con
 While exporting functions can be useful for internal purposes, such as testing, it's advisable to avoid exporting functions from the entry point file if they aren't intended for public use. Instead, you can organize such internal functions in a separate file (e.g., utils.ts). This way, these functions can still be imported into other files or tests within the project without becoming publicly accessible after the contract is deployed.
 
 ### Example of local import statement
-In the following example, a function is moved to an internal file to avoid making it publicly accessible upon deployment. The function can still be used within the project through a local import:
+In the following example, a function is moved to an internal file to prevent it from being publicly accessible after deployment. The function can still be used within the project through a local import:
 ```ts
 // main.ts 
 import { myFunction } from "../utils/utils.ts"
