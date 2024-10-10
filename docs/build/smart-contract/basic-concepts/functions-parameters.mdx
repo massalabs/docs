@@ -134,7 +134,7 @@ By following this approach, you can easily handle string inputs and outputs in M
 import { Args, stringToBytes } from '@massalabs/as-types';
 
 export function hello(argsData: StaticArray<u8>): StaticArray<u8> {
-    const args = new Args(ArgsData);
+    const args = new Args(argsData);
     const name = args.nextString().expect('Name argument is missing or invalid');
     const age = args.nextU8().expect('Age argument is missing or invalid');
     return strToBytes(`Hello ${name}! ich bin ${age.toString()} jahre`)
