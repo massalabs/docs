@@ -57,7 +57,7 @@ Here's a quick overview of each method, using `T = StaticArray<u8> | string | Ar
 
 - `Storage.appendOf(address: Address, key: T, value: T): void`:
     - Append data at a storage key
-    - Writing data to another contract storage require the caller to have writte access on the given contract. It happen only when deploying the contract from another one.
+    - Writing data to another contract storage require the caller to have writte access on the given contract. This occurs only when deploying the contract from another one.
     - If the key doesn't exist, this will stop the operation execution and revert all previously executed code.
 
 - `Storage.getOf(address: Address, key: T): StaticArray<u8>`:
