@@ -249,7 +249,7 @@ const sidebars = {
         },
         {
           type: "category",
-          collapsible: false,
+          collapsible: true,
           label: "Basic concepts",
           items: [
             {
