@@ -14,7 +14,7 @@ Here's a quick overview of each method, using `T = StaticArray<u8> | string | Ar
     - Stores the specified value under the provided key. If the key already exists, it updates the value.
     - If new storage are used, it will occurs a cost in MAS. Learn more about storage cost [here](https://docs.massa.net/docs/learn/storage-costs)
 - `Storage.append(key: T, value: T): void`:
-     - Append data at a storage key
+     - Append data to a storage key
      - If the key doesn't exist, this will stop the operation execution and revert all previously executed code.
 - `Storage.get(key: T): T`:
     - Retrieves the value associated with the specified key.
