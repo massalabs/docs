@@ -66,7 +66,7 @@ Contract code (assemblyscript)
 // main.ts (assemblyscript)
 import { Args, stringToBytes } from '@massalabs/as-types';
 
-export function hello(ArgsData: StaticArray<u8>): StaticArray<u8> {
+export function hello(argsData: StaticArray<u8>): StaticArray<u8> {
     const name = new Args(ArgsData).nextString().expect('Name argument is missing or invalid');
     return strToBytes(`Hello ${name}!`)
 }
