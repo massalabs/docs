@@ -22,7 +22,7 @@ With **asynchronous execution**, smart contracts on Massa can automatically acti
 Smart contracts are executed directly by Massa nodes, with fees in place to prevent spam and network congestion:
 
 - The processing unit, or [gas](https://docs.massa.net/docs/learn/gas), measures the complexity of contract execution. Each block has a gas limit, which constrains the amount of computation that can occur.
-- According to the amount of gas needed to execute the smart contract, the caller must pay a fee in MAS for the operation to be included in a block by the Massa validators. 
+- The caller must pay a fee in MAS based on the amount of gas required to execute the smart contract for the operation to be included in a block by the Massa validators.
 - If a smart contract requires [storage](https://docs.massa.net/docs/learn/storage-costs), it incurs an additional cost.
 
 Finally, smart contracts on Massa are deterministic. Once deployed, their code and interface are publicly available and unchangeable.
