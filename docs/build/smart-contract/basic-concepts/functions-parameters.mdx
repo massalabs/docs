@@ -20,7 +20,7 @@ Since raw bytes are used as both input and output, you can work with various dat
 
 # Serialization and Deserialization
 
-To use complex data types with your public callable functions, you'll need to convert (serialize) them to raw bytes before passing them as arguments. On the receiving end, the function will need to deserialize the bytes back into the original data type. This allows for versatile function inputs and outputs, even though the system natively supports only raw byte arrays.
+To use complex data types in your public callable functions, you must first serialize them into raw bytes before passing them as arguments. On the receiving end, the function will need to deserialize the bytes back into the original data type. This allows for versatile function inputs and outputs, even though the system natively supports only raw byte arrays.
 
 ## Using Args for Serialization and Deserialization
 
