@@ -36,7 +36,7 @@ export class User implements Serializable {
     - This method uses `Args` to convert the `name` and `age` properties into a byte array. It returns a serialized representation of the User object, which can then be stored in the contract's storage.
 
 3. deserialize Method:
-    - The deserialize method takes in a byte array and an offset, reconstructing the User object by extracting the name and age values. This enables the User instance to be rehydrated from storage.
+    - The deserialize method takes in a byte array and an offset, reconstructing the User object by extracting the name and age values. This allows the User instance to be reconstructed from storage.
 
 ## Storing and retrieving Serializable data
 The following functions demonstrate how to store and retrieve User objects in the smart contract storage:
