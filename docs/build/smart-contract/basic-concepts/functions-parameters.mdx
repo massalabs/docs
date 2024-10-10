@@ -51,7 +51,7 @@ Massa provides built-in support for serializing and deserializing AssemblyScript
 ### Supported Serializable Types
 The following types can be directly serialized and deserialized in Massa smart contracts:
 
-- **Native AssemblyScript Types**: This includes basic types like integers (`i32`, `u64`, etc.), `bool`, and `string`.
+- **Native AssemblyScript Types**: These includes basic types like integers (`i32`, `u64`, etc.), `bool`, and `string`.
 - **Big Integers**: Using the as-bignum library, Massa smart contracts can handle large integers beyond standard 64-bit limits such `u256`.
 - **Arrays**: Arrays of native types, such as `Array<i32>` or `Array<string>`, can also be serialized, allowing for the handling of collections of data in contract calls.
 - **Generic serializable** and array of serializable object: Serializable is a generic class that wrap the serialization logic and allow to define a custom serialization/deserialization of complex data.
