@@ -33,7 +33,7 @@ export class User implements Serializable {
     - The constructor initializes User instances with a name and an age. - Default values are provided to allow for easy instantiation.
 
 2. serialize Method:
-    - This method uses Args to convert the name and age properties into a byte array. It returns a serialized representation of the User object, which can then be stored in the contract's storage.
+    - This method uses `Args` to convert the `name` and `age` properties into a byte array. It returns a serialized representation of the User object, which can then be stored in the contract's storage.
 
 3. deserialize Method:
     - The deserialize method takes in a byte array and an offset, reconstructing the User object by extracting the name and age values. This enables the User instance to be rehydrated from storage.
