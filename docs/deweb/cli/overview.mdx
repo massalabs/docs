@@ -1,0 +1,47 @@
+---
+title: DeWeb CLI Overview
+---
+
+# DeWeb CLI Overview
+
+DeWeb CLI is a command-line tool designed for developers to manage website deployments on the Massa blockchain. 
+It provides commands for uploading, managing, and debugging website files directly on the blockchain, simplifying the deployment process.
+
+## Requirements
+
+Before running the CLI, ensure you have:
+
+- **Node.js** (version 18.0 or higher) and **npm** installed. You can check your versions with:
+  ```bash
+  node -v
+  npm -v
+  ```
+
+- **A Massa Wallet**: Either as a YAML wallet file or its secret key.
+    Refer to the [Massa Wallet Documentation](/docs/massaStation/massa-wallet/account-backup) for instructions on creating or obtaining these.
+
+## Capabilities
+
+DeWeb CLI offers a range of capabilities for working with website stored on the Massa blockchain:
+
+- **Upload**: Uploads and edits your website to the blockchain.
+- **Delete**: Removes your website and its associated files from the blockchain.
+- **List Files**: Lists all files associated with a specific website, useful for verifying deployed content.
+- **View File Content**: Allows you to view the content of a specific file, 
+    providing a way to debug or inspect individual files directly on the blockchain.
+
+To explore these commands further, you can use the `--help` option:
+
+```bash
+npx @massalabs/deweb-cli --help
+```
+
+## Quick Start
+
+Run DeWeb CLI with `npx` for instant access:
+
+```bash
+npx @massalabs/deweb-cli --help
+```
+
+This command will display available options and commands, allowing you to dive into using the DeWeb CLI right away.
