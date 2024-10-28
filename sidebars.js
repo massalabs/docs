@@ -513,7 +513,7 @@ const sidebars = {
     },
     {
       type: "category",
-      label: "Acccessing the DeWeb locally",
+      label: "Accessing the DeWeb locally",
       collapsed: false,
       items: [
         "deweb/local-server-config/setup-local-server",
@@ -521,10 +521,8 @@ const sidebars = {
       ],
     },
     {
-      type: "category",
-      label: "Becoming a provider",
-      collapsed: false,
-      items: ["deweb/provider/setup-public-instance"],
+      type: "doc",
+      id: "deweb/provider/setup-public-instance",
     },
     {
       type: "category",
