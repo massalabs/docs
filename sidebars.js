@@ -528,8 +528,18 @@ const sidebars = {
       type: "category",
       label: "Uploading to the DeWeb",
       collapsed: false,
-      items: ["deweb/upload/cli", "deweb/upload/mns"],
+      items: ["deweb/upload/overview", "deweb/upload/mns"],
     },
+    {
+      type: "category",
+      label: "DeWeb CLI (Command Line Interface)",
+      collapsed: false,
+      items: [
+        "deweb/cli/overview",
+        "deweb/cli/upload",
+        "deweb/cli/config",
+      ],
+    }
     // {
     //   type: "doc",
     //   id: "deweb/faq",
