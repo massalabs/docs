@@ -1,0 +1,59 @@
+---
+title: CLI Configuration
+---
+
+# CLI Configuration
+
+The DeWeb CLI supports configuration via a JSON file, allowing users to manage essential settings like wallet credentials
+and node details for seamless website deployment on the Massa blockchain.
+
+## Config File Structure
+
+Here’s a sample `deweb_cli_config.json` setup:
+
+```json
+{
+  "wallet_password": "your-wallet-password",
+  "wallet_path": "your-wallet.yaml",
+  "node_url": "https://mainnet.massa.net/api/v2",
+  "chunk_size": 64000
+}
+```
+
+Here’s a breakdown of each field:
+
+- **`wallet_password`**: The password for your Massa wallet file, used when `wallet_path` is specified.
+- **`wallet_path`**: The file path to your Massa wallet in YAML format. Only YAML wallet files are supported.
+- **`node_url`**: The URL of the Massa node where your website will be uploaded.
+- **`chunk_size`**: Defines the size in bytes of each chunk for file upload.
+  The default is typically `64000`, but it can be adjusted based on your needs and network conditions.
+- **`secret_key`**: The secret key for your Massa account. Use this as an alternative to `wallet_password` and `wallet_path`.
+
+:::info Note
+If `wallet_path` + `wallet_password` **and** `secret_key` are used in the config file, `secret_key` will take precedence.
+
+If the `SECRET_KEY` environment variable is set, it will take precedence over the `secret_key` and `wallet` fields in the config file.
+:::
+
+## Setting Configurations Directly on the Command Line
+
+If you prefer, you can bypass the config file and specify values directly on the command line. For example:
+
+```bash
+npx @massalabs/deweb-cli upload <website_path> --node_url <your_node_url> --wallet <path_to_wallet> --password <your_password>
+```
+
+You can also set the **secret key** as an environment variable:
+
+```bash
+export SECRET_KEY=<your_secret_key>
+```
+
+## Additional Resources
+
+For instructions on obtaining a YAML wallet file or secret key,
+refer to the [Massa Wallet Documentation](https://docs.massa.net/docs/massaStation/massa-wallet/account-backup).
+
+:::info
+If you encounter issues, please visit our [GitHub Issues page](https://github.com/massalabs/DeWeb/issues) for troubleshooting or to report problems.
+:::
