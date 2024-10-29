@@ -29,7 +29,7 @@ This is the core library for interacting with the Massa blockchain. It provides 
 **Installation:**
 
 ```bash
-npm install @massalabs/massa-web3@next
+npm install @massalabs/massa-web3
 ```
 
 ## 2. @massalabs/wallet-provider
@@ -44,7 +44,7 @@ This library is built on top of `massa-web3` and provides additional functionali
 **Installation:**
 
 ```bash
-npm install @massalabs/wallet-provider@next
+npm install @massalabs/wallet-provider
 ```
 
 <!-- **Important note:** If you're using `wallet-provider`, you don't need to separately install `massa-web3`, as it's included as a dependency. -->

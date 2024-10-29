@@ -52,8 +52,8 @@ We recommend using [Vite](https://vitejs.dev/) as a fast and efficient bundler f
 
 3. Install the Massa Web3 library:
    ```shell
-   npm install @massalabs/wallet-provider@next
-   npm install @massalabs/massa-web3@next
+   npm install @massalabs/wallet-provider
+   npm install @massalabs/massa-web3
    ```
 
 This setup allows you to use the Massa Web3 library in a vanilla JavaScript project with proper bundling and module resolution.
