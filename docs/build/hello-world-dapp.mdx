@@ -190,86 +190,44 @@ Keep the address of your deployed smart contract handy. You'll need it later.
 
 ## The Frontend
 
-Now that our smart contract is deployed, let's move on to the front end of your dApp. We'll use React with TypeScript to build a user interface that will interact with our deployed smart contract on the Massa blockchain. It will fetch the greeting message from the contract storage and display it to the user. 
-
+Now that our smart contract is deployed, let's move on to the front end of your dApp. We'll use Vite with React and TypeScript to build a user interface that will interact with our deployed smart contract on the Massa blockchain. It will fetch the greeting message from the contract storage and display it to the user.
 Sounds fun, doesn't it? Let's get started!
 
 ### Setting Up Your Project
 
 To set up your frontend project, follow these steps:
 
-- **Step 1: Initialize Your React Application**
+- **Step 1: Clone the Massa Vite boilerplate**
 
-First, open your terminal, navigate to your desired directory, and execute the following command to create a new React project:
+First, open your terminal, navigate to your desired directory, and execute the following command to create a new Vite project:
 
 ```bash
-npx create-react-app my-app --template typescript
+npx degit massalabs/react-boilerplate my-massa-dapp
+cd my-massa-dapp
+npm install
 ```
 
 :::info
-The --template typescript flag sets up a TypeScript template for our React application.
+The first command use degit to clone the Massa Vite boilerplate repository into a new ungited folder named `my-massa-dapp`. You can replace `my-massa-dapp` with your preferred project name. The project files are directly downloaded from https://github.com/massalabs/react-boilerplate.
 :::
 
-After the installation is complete, navigate to your project folder.
+- **Step 2: Start building**
 
-- **Step 2: Installing Massa Web3**
+:::info
+This boilerplate comes with the [Massa Web3 package](https://github.com/massalabs/massa-web3) installed. This package enables our front end to interact with the Massa blockchain. If you are familiar with the EVM ecosystem, `massa-web3` would be the equivalent of `web3` or `ethers` librairies, but for the Massa blockchain. Here's how to install it:
+:::
 
-Next up, we are going to install the [Massa Web3 package](https://github.com/massalabs/massa-web3). This package enables our front end to interact with the Massa blockchain. If you are familiar with the EVM ecosystem, `massa-web3` would be the equivalent of `web3` or `ethers` librairies, but for the Massa blockchain. Here's how to install it:
+Now that we have our project installed, let's begin building the front end of our dApp.
 
-```bash
-npm install @massalabs/massa-web3
-```
+Navigate to the src folder and locate the `App.tsx` file.
 
-- **Step 3: Configure Webpack**
-
-To customize the Webpack configuration in a create-react-app project, you'll need to use react-app-rewired because create-react-app hides Webpack configuration by default.
-```bash
-npm install react-app-rewired --save-dev
-```
-
-In the root of your project, create a config-overrides.js file:
-```js
-const webpack = require('webpack');
-
-module.exports = function override(config) {
-  config.resolve.fallback = {
-    fs: false,
-    crypto: false,
-    buffer: require.resolve('buffer/'),
-  };
-
-  config.plugins.push(
-    new webpack.ProvidePlugin({
-      Buffer: ['buffer', 'Buffer'],
-      process: 'process/browser',
-    })
-  );
-
-  return config;
-};
-```
-
-You'll need to update the scripts section in your package.json to use react-app-rewired instead of the default react-scripts:
-```json
-"scripts": {
-  "start": "react-app-rewired start",
-  "build": "react-app-rewired build",
-  "test": "react-app-rewired test",
-  "eject": "react-scripts eject"
-}
-```
-
-- **Step 4: Building the Frontend**
-
-Now that we have our dependencies installed, let's begin building the front end of our dApp.
-
-Before writing our component, navigate to the src folder and locate the `App.tsx` file.
-
-This `App.tsx` file serves as the main entry point for your application. Replace the content of this file with the following code:
+This `App.tsx` file serves as the main entry point for your application.
 
 ```tsx
 import { bytesToStr, JsonRPCClient } from "@massalabs/massa-web3";
 import { useEffect, useState } from "react";
+import { MassaLogo } from "@massalabs/react-ui-kit";
+import './App.css';
 
 const sc_addr = "SC_ADDRESS"; // TODO Update with your deployed contract address
 
@@ -279,10 +237,10 @@ const sc_addr = "SC_ADDRESS"; // TODO Update with your deployed contract address
 const GREETING_KEY = "greeting_key";
 
 /**
- * Content component that handles interactions with a Massa smart contract
+ * App component that handles interactions with a Massa smart contract
  * @returns The rendered component
  */
-function Content() {
+function App() {
 
   const [greeting, setGreeting] = useState<string | null>(null);
 
@@ -310,21 +268,17 @@ function Content() {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <div>Greeting: {greeting}</div>
-    </div>
+    <>
+    <div>
+     <MassaLogo className="logo" size={100}/>
+     <h2>Greeting message:</h2>
+     <h1>{greeting}</h1>
+     </div>
+    </>
   );
 }
 
-export default Content;
+export default App;
 ```
 
 :::info
@@ -377,10 +331,10 @@ The user interface consists of a centered text display that shows the current gr
 Finally, let's start our application and perform some basic user acceptance testing!
 
 ```bash
-npm run start
+npm run dev
 ```
 
-1. Open your web browser and navigate to [http://localhost:3000](http://localhost:3000)
+1. Open your web browser and navigate to [http://localhost:5173](http://localhost:5173)
 2. Here, you should see a greeting that says "Hello, World!" This is the message that was set in your smart contract.
 3. If you're able to see this greeting, your dApp is functioning correctly.
 
