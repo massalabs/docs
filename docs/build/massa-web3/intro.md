@@ -4,60 +4,35 @@ sidebar_label: Introduction
 sidebar_position: 1
 ---
 
-# Introduction to Massa Web3 Libraries
+# Introduction to Massa Web3
 
-The Massa blockchain ecosystem provides two main libraries for developers to interact with the blockchain. Understanding these libraries and their purposes is crucial for efficient development of applications on the Massa network.
+`@massalabs/massa-web3` is a TypeScript library designed to facilitate seamless interaction with the Massa blockchain, offering a set of tools and utilities similar to Ethereum’s `ethers.js`, `web3.js` or `Viem`. With this library, developers can easily build decentralized applications (dApps) on Massa, leveraging all core functionalities of the blockchain, including smart contract interactions, token transfers, event handling, and account management.
 
-:::warning Important
-Welcome to the documentation for the v2 of the Massa Web3 JS Library. This new version introduces significant improvements and new features that enhance your development experience with the Massa blockchain.
-While this represents the most current and advanced state of the library, please be aware that it may undergo some changes as we continue to refine and optimize based on user feedback and ecosystem developments.
-We strongly encourage you to use this new version in your projects. It offers better performance, additional capabilities, and improved developer ergonomics compared to previous versions.
-We're committed to keeping this documentation up-to-date. Any future changes or updates will be reflected here promptly.
-Thank you for choosing to work with the latest Massa Web3 JS Library. Your feedback and experiences are valuable to us as we continue to evolve and improve the library.
-:::
+## Key Features
 
-## 1. @massalabs/massa-web3
+- **Smart Contract Interaction**: Call smart contract functions, send transactions with MAS tokens, and receive responses.
+- **Account Management**: Create, manage, and import Massa accounts directly within your application, and sign transactions.
+- **MAS Token Transfer**: Send and receive MAS tokens, check balances, and manage transfers between accounts or contracts.
+- **Event Handling**: Retrieve and monitor on-chain events emitted by smart contracts to build real-time applications.
+- **Read Storage**: Retrieve data from contracts datastore.
+- **Utilities for Data Serialization**: Seamlessly handle data serialization and deserialization with the Args utility, allowing for compatibility between TypeScript and AssemblyScript
+- **Smart Contract Wrapper for Standard Contracts**: Interact easily with Massa’s standard contracts (like the fungible token, NFT standards or Massa name system) using the built-in contract wrappers. These wrappers simplify function calls, making it easier to integrate with standard Massa protocols and speeding up development.
 
-This is the core library for interacting with the Massa blockchain. It provides all the necessary tools for creating accounts, managing keys, sending transactions, and interacting with smart contracts.
+**Building dApps frontend:**
 
-**Use cases:**
+To interact with the blockchain through user interface wallets like `MassaStation Wallet`, `Bearby`, or `Metamask Snap`, it is recommended to use [`@massalabs/wallet-provider`](/docs/build/wallet-provider/wallet) on top of `@massalabs/massa-web3`. `wallet-provider` allows these wallets to serve as providers, enhancing accessibility for dApps with user-friendly wallets.
 
-- Building backend applications
-- Creating scripts for blockchain interaction
-- Developing applications that don't require direct interaction with user wallets
+**Getting Started:**
 
-**Installation:**
+To install `@massalabs/massa-web3`, you can add it to your project via npm:
 
 ```bash
 npm install @massalabs/massa-web3
 ```
 
-## 2. @massalabs/wallet-provider
+After installing, you can import and use the library in your TypeScript project:
 
-This library is built on top of `massa-web3` and provides additional functionality for interacting with wallet extensions (like MassaStation or Bearby).
-
-**Use cases:**
-
-- Building decentralized applications (dApps) that need to interact with user wallets in a browser environment
-- Creating front-end applications that require user authentication via blockchain wallets
-
-**Installation:**
-
-```bash
-npm install @massalabs/wallet-provider
+```typescript
+import { Account, SmartContract, Web3Provider } from '@massalabs/massa-web3';
 ```
 
-<!-- **Important note:** If you're using `wallet-provider`, you don't need to separately install `massa-web3`, as it's included as a dependency. -->
-
-## Choosing the Right Library
-
-1. If you're building a dApp or any application that needs to interact with user wallets:
-
-   - Use `@massalabs/wallet-provider`
-
-2. If you're building backend services, scripts, or applications that don't require wallet interaction:
-   - Use `@massalabs/massa-web3` directly
-
-## Examples
-
-You can find examples in the [Massa example repository](https://github.com/massalabs/massa-sc-examples) that demonstrate how to use these libraries in various scenarios.
