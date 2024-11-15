@@ -29,7 +29,7 @@ A Provider can be created from a KeyPair or accessed from a Wallet account. It c
 2. Integrated Wallet Providers:
 
 - For applications that interface with external wallets, `@massalabs/wallet-provider` implements providers designed to connect with popular Massa wallets like `MassaStation Wallet`, `Bearby` and `Metamask snap`.
-- These providers enable users to manage their own accounts, sign transactions, and interact with smart contracts directly from their wallets without exposing private keys to the application. It is mostly usefull to build decentralized frontend applications (dApps).
+- These providers enable users to manage their own accounts, sign transactions, and interact with smart contracts directly from their wallets without exposing private keys to the application. It is mostly useful to build decentralized frontend applications (dApps).
 
 
 ## Provider Methods
