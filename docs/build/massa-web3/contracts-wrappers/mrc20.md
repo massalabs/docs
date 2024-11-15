@@ -7,6 +7,34 @@ sidebar_label: MRC20 Contract Wrapper
 
 The MRC20 class is a wrapper for interacting with MRC20 token contracts on the Massa blockchain. It extends the SmartContract class and provides methods to easily interact with standard MRC20 functions.
 
+> **Note:** All official MRC20 tokens have their own specific implementations. Below is a list of official MRC20 wrappers:
+> - Mainnet:
+>   - WMAS (AS12U4TZfNK7qoLyEERBBRDMu8nm5MKoRzPXDXans4v9wdATZedz9)
+>   - USDCe (AS1hCJXjndR4c9vekLWsXGnrdigp4AaZ7uYG3UKFzzKnWVsrNLPJ)
+>   - DAIe (AS1ZGF1upwp9kPRvDKLxFAKRebgg7b3RWDnhgV7VvdZkZsUL7Nuv)
+>   - WETHe (AS124vf3YfAJCSCQVYKczzuWWpXrximFpbTmX4rheLs5uNSftiiRY)
+>   - WETHb (AS125oPLYRTtfVjpWisPZVTLjBhCFfQ1jDsi75XNtRm1NZux54eCj)
+>   - USDTb (AS12LKs9txoSSy8JgFJgV96m8k5z9pgzjYMYSshwN67mFVuj3bdUV)
+>   - PUR (AS133eqPPaPttJ6hJnk3sfoG5cjFFqBDi1VGxdo2wzWkq8AfZnan)
+> - Buildnet:
+>   - DAIs (AS12LpYyAjYRJfYhyu7fkrS224gMdvFHVEeVWoeHZzMdhis7UZ3Eb)
+>   - WETHs (AS1gt69gqYD92dqPyE6DBRJ7KjpnQHqFzFs2YCkBcSnuxX5bGhBC)
+>   - USDCs (AS12k8viVmqPtRuXzCm6rKXjLgpQWqbuMjc37YHhB452KSUUb9FgL)
+>   - USDTbt (AS12ix1Qfpue7BB8q6mWVtjNdNE9UV3x4MaUo7WhdUubov8sJ3CuP)
+>   - WETHbt (AS12RmCXTA9NZaTBUBnRJuH66AGNmtEfEoqXKxLdmrTybS6GFJPFs)
+>   - WMAS (AS12FW5Rs5YN2zdpEnqwj4iHUUPt9R4Eqjq2qtpJFNKW3mn33RuLU)
+
+## Basic usage:
+
+```typescript
+import { WETHe } from '@massalabs/massa-web3'
+...
+const wethContract = new WETHe(provider)
+const accountETHBalance = await wethContract.balanceOf(provider.address)
+```
+
+# Generic MRC20 methods
+
 ## Constructor
 
 ```typescript

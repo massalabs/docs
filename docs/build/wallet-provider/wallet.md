@@ -3,14 +3,26 @@ id: wallet
 sidebar_label: Wallet
 ---
 
-# Wallet
+# Building dApps with wallet-provider
 
-The Wallet interface provides methods to interact with user [wallets](/docs/build/wallet/intro) in the Massa blockchain ecosystem. It's part of the `@massalabs/wallet-provider` library and is crucial for building decentralized applications (dApps) that require interaction with user wallets.
+`@massalabs/wallet-provider` provides methods to interact with the Massa blockchain though UI wallets. The `@massalabs/wallet-provider` library usage is highly recommanded for building decentralized applications (dApps) that require interaction with user wallets.
+
+`@massalabs/wallet-provider` goal is to abtract all the UI controlled wallets into a generic `Provider` object that can be used in `@massalabs/massa-web3` library.
 
 :::warning
 
 Not all functions defined in the Wallet interface are available in every wallet implementation. The availability of specific functions may vary depending on the wallet being used (e.g., MassaStation, Bearby). In the following sections, we will specify which functions are available for each supported wallet. Always check the compatibility of your target wallet before using a specific function in your application.
 :::
+
+**Getting Started:**
+
+To install `@massalabs/wallet-provider`, you can add it to your project via npm:
+
+```bash
+npm install @massalabs/wallet-provider
+```
+
+# Wallet
 
 ## Usage Example
 

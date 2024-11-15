@@ -310,11 +310,10 @@ const sidebars = {
           id: "build/massa-web3/intro",
           label: "Web3 Libraries Introduction",
         },
-
         {
           type: "doc",
-          label: "Prerequisites",
-          id: "build/massa-web3/prerequisites",
+          label: "Account",
+          id: "build/massa-web3/account",
         },
         {
           type: "doc",
@@ -323,8 +322,8 @@ const sidebars = {
         },
         {
           type: "doc",
-          id: "build/massa-web3/wallet",
-          label: "Wallet",
+          id: "build/massa-web3/smart-contracts",
+          label: "Smart contracts",
         },
         {
           type: "doc",
@@ -349,6 +348,17 @@ const sidebars = {
           ],
         },
       ],
+    },
+    {
+      type: "category",
+      label: "Wallet Provider",
+      items: [
+        {
+          type: "doc",
+          id: "build/wallet-provider/wallet",
+          label: "Wallet Provider",
+        },
+       ],
     },
     {
       type: "category",

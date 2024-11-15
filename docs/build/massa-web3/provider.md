@@ -1,95 +1,36 @@
 ---
 id: provider
 sidebar_label: Provider
-sidebar_position: 3
 ---
 
 # Provider
 
-A Provider is a fundamental object used to interact with the Massa blockchain. It provides methods for various blockchain operations, including balance retrieval, network information, signing data, and executing smart contract operations.
+In `@massalabs/massa-web3`, a Provider is a core component that encapsulates an account and provides access to the Massa blockchain. Providers manage the connection between the application and the blockchain, making it easy to execute transactions, query data, and interact with smart contracts.
 
 A Provider can be created from a KeyPair or accessed from a Wallet account. It can be used to sign transactions and interact with the blockchain.
 
-## Creating a Provider
+## Types of Providers
 
-There are multiple ways to create a Provider, depending on your use case. Here are two common methods:
+1. Web3Provider:
 
-### 1. From a Wallet
+- The `Web3Provider` class is the primary provider type in `@massalabs/massa-web3`. It combines a Massa-web3 `Account` with an RPC client that connects to the Massa blockchain through a specified URL.
+- This URL can point to Massa’s public nodes, custom nodes, or a private node, allowing for flexibility in how you connect to the blockchain.
 
-In a browser environment, you can create a Provider from a Wallet. This is useful for dApps that interact with user wallets.
+  The following example show how to create a provider using the mainnet public RPC:
 
-To use the Provider from a wallet you need two things:
+   ```typescript
+   import 'dotenv/config'
+   import { Account, Web3Provider } from '@massalabs/massa-web3'
 
-- **A wallet installed**: It can be MassaStation, bearby or any other wallet that supports the Massa blockchain. See [wallet section](/docs/build/wallet/intro).
+   const account = await Account.fromEnv()
+   const provider = Web3Provider.mainnet(account)
+   ```
 
-- **The wallet-provider package installed**:
+2. Integrated Wallet Providers:
 
-```typescript
-npm install @massalabs/wallet-provider
-npm install @massalabs/massa-web3
-```
+- For applications that interface with external wallets, `@massalabs/wallet-provider` implements providers designed to connect with popular Massa wallets like `MassaStation Wallet`, `Bearby` and `Metamask snap`.
+- These providers enable users to manage their own accounts, sign transactions, and interact with smart contracts directly from their wallets without exposing private keys to the application. It is mostly useful to build decentralized frontend applications (dApps).
 
-```typescript
-import { getWallets } from "@massalabs/wallet-provider";
-
-// First we get the list of wallets installed
-const walletList = await getWallets();
-
-// Then we find the wallet we want to use
-const wallet = walletList.find(
-  (provider) => provider.name() === "MASSASTATION"
-);
-
-if (!wallet) {
-  console.log("No wallet found");
-  return;
-}
-
-// We get the accounts from the wallet
-const accounts = await wallet?.accounts();
-
-if (accounts.length === 0) {
-  console.log("No accounts found");
-  return;
-}
-
-// We use the first account as the provider
-const provider = accounts[0];
-```
-
-### 2. From a KeyPair or Environment Variable
-
-For backend applications or when you have direct access to private keys, you can create a Provider from a KeyPair. This method is also useful when working with environment variables for increased security.
-
-First you will need to install the `@massalabs/massa-web3` package:
-
-```typescript
-npm install @massalabs/massa-web3
-```
-
-Then you can create a Provider from a KeyPair in two ways:
-
-- **From a environment variable:**
-
-```typescript
-import { Account as KeyPair, Web3Provider } from "@massalabs/massa-web3";
-// Will use the environment variables at `PRIVATE_KEY` to create a KeyPair
-// but you can also pass the name of the env variable as a string
-const keyPair = await KeyPair.fromEnv();
-// Will use the KeyPair to create a Provider
-const provider = Web3Provider.buildnet(keyPair);
-```
-
-- **From a generated KeyPair:**
-
-```typescript
-import { Account as KeyPair, Web3Provider } from "@massalabs/massa-web3";
-
-// Will create a new KeyPair
-const keyPair = await KeyPair.generate();
-// Will use the KeyPair to create a Provider
-const provider = Web3Provider.buildnet(keyPair);
-```
 
 ## Provider Methods
 
@@ -119,7 +60,7 @@ balance(final: boolean): Promise<bigint>
 
 Retrieves the balance of the account.
 
-- `final`: If true, returns the final (confirmed) balance. If false, returns the speculative (possibly unconfirmed) balance.
+- `final`: If true, returns the final (confirmed) balance. If false, returns the speculative (possibly unconfirmed) balance. default to True
 
 ```typescript
 networkInfos(): Promise<Network>
@@ -202,3 +143,35 @@ getEvents(filter: EventFilter): Promise<SCEvent[]>
 Retrieves events based on the provided filter.
 
 - `filter`: Criteria for filtering events.
+
+```typescript
+getNodeStatus(): Promise<NodeStatusInfo>
+```
+
+Retrieves status and infos of current RPC
+
+```typescript
+getStorageKeys(
+    address: string,
+    filter: Uint8Array | string,
+    final?: boolean
+    ): Promise<Uint8Array[]>
+```
+
+Retrieves all storage keys registered at a given address
+- `address`: Smart contract or EOA address.
+- `filter`: Prefix key filter
+- `final`: Default to True
+
+```typescript
+readStorage(
+    address: string,
+    keys: Uint8Array[] | string[],
+    final?: boolean
+    ): Promise<Uint8Array[]>
+```
+
+Retrieves data associated to given storage keys of a given address
+- `address`: Smart contract or EOA address.
+- `keys`: array of storage keys
+- `final`: Default to True
