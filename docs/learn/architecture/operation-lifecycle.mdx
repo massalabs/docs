@@ -67,6 +67,7 @@ The Execution Module will handle read-only request, and revert back any changes 
 The read-only execution happens at the slot just after the latest executed non-final slot at the moment of execution.
 The same way you can't ensure at which height a normal operation is executed, different nodes might have processed different non-final blocks at a given time and execute the same read-only request under different contexts depending on that.
 
+Note that during a read-only request, all created addresses and calls for generating a random number will be different from a call in a normal request.
 
 ## A note on operation censorability
 
