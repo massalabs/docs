@@ -11,10 +11,77 @@ You can configure settings using either a config file or command-line options.
 
 Before you start, make sure you have the following:
 
-1. **Massa Wallet**: A wallet file in YAML format or a secret key.
-   Refer to [Massa wallet documentation](/docs/massaStation/massa-wallet/account-backup) for guidance on obtaining these.
-2. **Node URL**: The URL for the Massa node you plan to use.
-3. **Website Files**: Build your website files in a directory on your local machine.
+- **Massa Wallet**: A wallet file in YAML format or a secret key.
+  Refer to [Massa wallet documentation](/docs/massaStation/massa-wallet/account-backup) for guidance on obtaining these.
+- **Node URL**: The URL for the Massa node you plan to use.
+- **Website Files**: Ensure your website files are in a directory on your local machine and
+  meet the requirements outlined below.
+
+### Website Requirements
+
+DeWeb only supports websites that are pre-built. This means the files are generated in advance and
+ready to serve directly from storage. Your website bundle must include:
+
+- **An `index.html` file** as the entry point.
+- Any supporting files (e.g., CSS, JavaScript, images) within the same directory.
+
+This format allows the website to be served directly from the blockchain without the need for server-side processing
+but supports technologies like Client-Side Rendering (CSR), Client-Side Routing, Single Page Applications (SPAs),
+and communication with external APIs.
+
+#### Supported Technologies
+
+Any tools, frameworks, or build systems that generate pre-built files as described above should work with DeWeb.
+This includes projects that output an `index.html` file along with all necessary assets for client-side rendering.
+Examples of supported technologies include:
+
+- **[React](https://reactjs.org/)** applications built with tools like [Create React App](https://create-react-app.dev/) or [Vite](https://vitejs.dev/).
+- **[Vue.js](https://vuejs.org/)**
+- Projects built using build tools like **[Vite](https://vitejs.dev/)**
+
+These technologies produce client-side applications that are bundled into static files and can be served as-is.
+They support client-side routing, API calls, and other interactive features, provided all necessary files are included in the build output.
+
+#### Frameworks Requiring Configuration
+
+Frameworks such as **Next.js**, **Nuxt.js**, or **SvelteKit** can be used with DeWeb **if they are explicitly configured to output fully static files**.
+By default, these frameworks may rely on features like:
+
+- **Server-Side Rendering (SSR):** Pages are generated dynamically on the server at runtime.
+- **Dynamic Content Generation:** Content depends on backend processing or API routes provided by the framework.
+
+To make these frameworks compatible with DeWeb, you need to configure them to generate a static build.
+Please consult your framework's documentation for detailed instructions on generating a static build compatible with DeWeb.
+
+:::caution
+While we aim to support a wide range of frameworks, compatibility may vary.
+Please ensure your setup works as expected.
+If you encounter any issues or need assistance, feel free to report them at [https://github.com/massalabs/DeWeb/issues](https://github.com/massalabs/DeWeb/issues).
+A static bundle, as described, should work seamlessly with DeWeb.
+:::
+
+#### Unsupported Configurations
+
+Websites or applications that require server-side rendering, depend on backend servers to generate pages,
+or rely on dynamic content generation at runtime are **not supported** unless they can be configured to output static files as described above.
+
+Examples of unsupported setups include:
+
+- **Default configurations of Next.js, Nuxt.js, or SvelteKit** that use server-side rendering or dynamic routes.
+- Applications that depend on server-side code or databases to serve content.
+- Projects that cannot produce a self-contained bundle with an `index.html` file and all necessary assets.
+
+:::info
+We are continuously working to expand compatibility with a wider range of frameworks and setups.
+Stay tuned for updates and improvements to DeWeb's capabilities.
+:::
+
+**Summary:**
+
+- **Supported:** Any client-side applications that build to a static bundle containing an `index.html` and assets. This includes SPAs with client-side routing and API calls, as long as all necessary files are included in the build output.
+- **Conditionally Supported:** Frameworks like Next.js, Nuxt.js, and SvelteKit, **if** they are configured to output static files (no SSR or dynamic server-side features).
+
+- **Unsupported:** Applications requiring server-side rendering, dynamic server-side features, or backend processing at runtime.
 
 ## Step 1: Configure Access
 
