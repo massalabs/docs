@@ -358,7 +358,7 @@ const sidebars = {
           id: "build/wallet-provider/wallet",
           label: "Wallet Provider",
         },
-       ],
+      ],
     },
     {
       type: "category",
@@ -560,7 +560,10 @@ const sidebars = {
       type: "category",
       label: "Getting Started",
       collapsed: false,
-      items: ["deweb/getting-started/overview"],
+      items: [
+        "deweb/getting-started/overview",
+        "deweb/getting-started/registries",
+      ],
     },
     {
       type: "category",
@@ -579,18 +582,18 @@ const sidebars = {
       type: "category",
       label: "Uploading to the DeWeb",
       collapsed: false,
-      items: ["deweb/upload/overview", "deweb/upload/mns"],
+      items: [
+        "deweb/upload/overview",
+        "deweb/upload/mns",
+        "deweb/upload/website-registry",
+      ],
     },
     {
       type: "category",
       label: "DeWeb CLI (Command Line Interface)",
       collapsed: false,
-      items: [
-        "deweb/cli/overview",
-        "deweb/cli/upload",
-        "deweb/cli/config",
-      ],
-    }
+      items: ["deweb/cli/overview", "deweb/cli/upload", "deweb/cli/config"],
+    },
     // {
     //   type: "doc",
     //   id: "deweb/faq",
