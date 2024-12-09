@@ -3,6 +3,8 @@ import { parse } from "yaml";
 
 const YAML_URL =
   "https://raw.githubusercontent.com/massalabs/DeWeb-Websites/refs/heads/main/websites.yaml";
+const GITHUB_URL =
+  "https://github.com/massalabs/DeWeb-Websites/blob/main/websites.yaml";
 
 interface Website {
   title: string;
@@ -72,6 +74,15 @@ const WebsiteTable: React.FC = () => {
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={4}>
+              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );

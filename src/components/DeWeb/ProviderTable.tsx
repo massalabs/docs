@@ -3,6 +3,8 @@ import { parse } from "yaml";
 
 const YAML_URL =
   "https://raw.githubusercontent.com/massalabs/DeWeb-Providers/refs/heads/main/providers.yaml";
+const GITHUB_URL =
+  "https://github.com/massalabs/DeWeb-Providers/blob/main/providers.yaml";
 
 interface Provider {
   title: string;
@@ -76,6 +78,15 @@ const ProviderTable: React.FC = () => {
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={4}>
+              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );
