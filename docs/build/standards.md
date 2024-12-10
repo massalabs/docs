@@ -9,17 +9,33 @@ The Massa Standard is your comprehensive starting point for blockchain projects 
 
 Adhering to a standard like this in the blockchain world is important. Standards ensure all participants in a blockchain network can interact seamlessly because they follow a unified structure and protocol. This compatibility fosters a more robust and inclusive blockchain ecosystem, encouraging mass adoption and facilitating growth.
 
-## Fungible Tokens (FT)
+## Fungible Tokens (MRC20)
 
 FT is a standard for creating fungible, tradable tokens on the Massa blockchain. It includes a set of functions that allow for seamless interaction with tokens within smart contracts and wallets.
 
-[View on GitHub](https://github.com/massalabs/massa-standards/tree/main/smart-contracts/assembly/contracts/FT)
+[View on GitHub](https://github.com/massalabs/massa-standards/tree/main/smart-contracts/assembly/contracts/MRC20)
+
+### Available extensions:
+    - mintable
+    - burnable
+
 
 ## Non-Fungible Tokens (NFT)
 
 NFT is a standard for creating unique, non-fungible tokens on the Massa blockchain. This allows the creation and management of tokens where each instance has a unique value or properties.
 
-[View on GitHub](https://github.com/massalabs/massa-standards/tree/main/smart-contracts/assembly/contracts/NFT)
+[View on GitHub](https://github.com/massalabs/massa-standards/tree/main/smart-contracts/assembly/contracts/MRC721)
+
+### Available extensions:
+    - enumerable
+    - metadata
+
+## Multi Token Standard (MRC1155)
+
+Set of smart contracts to implement the ERC1155 specification on the Massa blockchain.
+see [ERC1155 documentation](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC1155)
+
+[View on GitHub](https://github.com/massalabs/massa-standards/tree/main/smart-contracts/assembly/contracts/MRC1155)
 
 ## Massa Domain Name Service (DNS)
 
