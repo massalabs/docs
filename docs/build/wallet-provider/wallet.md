@@ -11,7 +11,7 @@ sidebar_label: Wallet
 
 :::warning
 
-Not all functions defined in the Wallet interface are available in every wallet implementation. The availability of specific functions may vary depending on the wallet being used (e.g., MassaStation, Bearby). In the following sections, we will specify which functions are available for each supported wallet. Always check the compatibility of your target wallet before using a specific function in your application.
+Not all functions defined in the Wallet interface are available in every wallet implementation. The availability of specific functions may vary depending on the wallet being used (e.g., MassaStation, Bearby, Metamask Snap). In the following sections, we will specify which functions are available for each supported wallet. Always check the compatibility of your target wallet before using a specific function in your application.
 :::
 
 **Getting Started:**
