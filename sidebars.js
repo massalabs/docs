@@ -412,10 +412,13 @@ const sidebars = {
           type: "doc",
           id: "build/wallet/massa-wallet",
         },
-
         {
           type: "doc",
           id: "build/wallet/community-wallets",
+        },
+        {
+          type: "doc",
+          id: "build/wallet/metamask-snap",
         },
       ],
     },

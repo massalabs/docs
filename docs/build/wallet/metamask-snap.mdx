@@ -1,0 +1,70 @@
+
+# Metamask Snap (Coming Soon)
+
+Massa Snap integrates the innovative Massa blockchain with MetaMask, allowing users to manage MAS tokens, interact with smart contracts, and engage with Massa's ecosystem directly from their MetaMask wallet. This Snap simplifies the user experience for both end-users and developers, making Massa's decentralized features easily accessible.
+
+## Key Features
+1. **Transaction Management**
+    - Send and receive MAS tokens seamlessly.
+    - View transaction history and account balances.
+    - Smart Contract interaction.
+    - MRC20 Token and NFT interaction.
+    - Deploy Smart Contracts.
+    - Buy & sell rolls.
+
+2. **Create and manage Massa blockchain accounts.**
+    - Backup and restore accounts securely.
+
+## How to Install Massa Snap
+1. Ensure you have MetaMask installed in your browser.
+
+    - Download MetaMask: https://metamask.io
+2. Open MetaMask and navigate to the Snaps section.
+
+3. Search for "Massa" in the [Snap store](https://snaps.metamask.io/).
+
+4. Click Add to MetaMask and grant the requested permissions.
+
+5. Once installed, Massa Snap will appear in your MetaMask Snaps section.
+
+
+:::caution
+Snap-based accounts are derived from the private key associated with your MetaMask account (your seed phrase), so funds cannot be lost even in the event support for a particular Snap is discontinued.
+:::
+
+## Resources for Developers
+
+Access the Massa Snap codebase and companion dApp.
+https://github.com/massalabs/metamask-massa
+
+Support Massa wallet in your dApp using Wallet-Provider:
+https://github.com/massalabs/wallet-provider
+
+MetaMask Snap Development Guide:
+https://docs.metamask.io/snaps/
+
+## FAQs
+1. **What is a Snap?**
+    A Snap is a custom plugin for MetaMask that extends its functionality to integrate with other blockchains and services.
+
+2. **Why use Massa Snap?**
+    Massa Snap simplifies interaction with the innovative Massa blockchain, enabling features like smart contracts and decentralized web integration directly from MetaMask.
+
+3. **Is Massa Snap secure?**
+    Yes, Massa Snap follows industry best practices to ensure user security and privacy. All sensitive data is securely handled within MetaMask.
+    Security audit has been done by Sayfer, you can find the report [here](https://sayfer.io/audits/metamask-snap-audit-report-for-massa/)
+
+4. **Can i import my current wallet in MetamMask Snap?**
+    Short answer is no, currently you can't import a Maassa wallet in Metamask Snap because it uses only wallet generated from the MetaMask seed phrase.
+
+5. **Can i export my wallet to use in another wallet interface?**
+    Yes, you can export your wallet private key and import it in another wallet interface that supports the Massa blockchain.
+
+6. **How to transfer MAS to another account?**
+    For now, you can't directly transfer MAS or MRC20 tokens directly from the Snap interface. The feature will be available in the next version of the Massa Snap.
+    Currently two options are available:
+    - Export your private key and import it in another wallet interface that supports the Massa blockchain.
+    - Build a run the companion dApp locally where these features are available.
+        - Clone the [Metamask Massa](https://github.com/massalabs/metamask-massa) repository.
+        - run `yarn install && yarn build && yarn start` to start the dApp.
+        - Navigate to `http://localhost:3000` in your browser.
