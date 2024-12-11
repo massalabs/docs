@@ -56,7 +56,7 @@ This hash is a deterministic fingerprint of the non-malleable parts of the opera
 Because the operation contents hash uniquely identifies an operation,
 if another operation containing the same values in its operation contents is created,
 both operations will be considered to be the same operation that can only be executed at most a single time (see [Operation execution](#operation-execution)).
-In Massa, there is no Nounce in operations.
+In Massa, there is no Nonce in operations.
 Resolving potential conflicts can be done adjusting the expiry period of the operation being created.   
 
 ### Operation ID
@@ -191,7 +191,7 @@ Here is the entire encoding process for a secret key in text format:
 * prepend the letter 'S'
 
 Legality checks performed on text deserialization:
-* the text must be valid UTF-8 and ASCCII with only alphanumeric characters
+* the text must be valid UTF-8 and ASCII with only alphanumeric characters
 * the prefix letter must be 'S'
 * the base58check must use the legal alphabet described above and the checksum must verify
 * the decoded binary serialization of the secret key must be legal (see above)
@@ -215,7 +215,7 @@ Binary serialization format of the public key:
 The cryptographic public key is compressed in the following way to take only 32 bytes instead of 64:
 * the first 255 bits represent the `y` coordinate
 * the high bit of the 32nd byte gives the sign of `x`
-Using this data, and through symetries in the ed25519 curve, it is possible to deduce the `x` coordinate.
+Using this data, and through symmetries in the ed25519 curve, it is possible to deduce the `x` coordinate.
 In Massa, public key decompression is performed on public key deserialization,
 and because decompression is a CPU time-heavy operation,
 each connected peer has a dedicated CPU thread performing its deserializations.
@@ -249,7 +249,7 @@ Here is the entire encoding process for a public key in text format:
 * prepend the letter 'P'
 
 Legality checks performed on text deserialization:
-* the text must be valid UTF-8 and ASCCII with only alphanumeric characters
+* the text must be valid UTF-8 and ASCII with only alphanumeric characters
 * the prefix letter must be 'P'
 * the base58check must use the legal alphabet described above and the checksum must verify
 * the decoded binary serialization of the public key must be legal (see above)
@@ -308,7 +308,7 @@ Text serialization of an address:
 |                     | and 'S' for smart contracts, see above.                                                            |                                           |
 +---------------------+----------------------------------------------------------------------------------------------------+-------------------------------------------+
 | `address contents`  | Base58check (no version, with checksum) representation of the binary serialization of the address  | 37 (included) to 62 (included) characters |
-|                     | as detailes above, but without the category field (only version then hash).                        | 37 to 62 bytes                            |
+|                     | as detailed above, but without the category field (only version then hash).                        | 37 to 62 bytes                            |
 +---------------------+----------------------------------------------------------------------------------------------------+-------------------------------------------+
 
 Here is the entire encoding process for an address in text format:
@@ -319,7 +319,7 @@ Here is the entire encoding process for an address in text format:
 * prepend the prefix 'AU' for externally owned accounts or 'AS' for smart contracts
 
 Legality checks performed on text deserialization:
-* the text must be valid UTF-8 and ASCCII with only alphanumeric characters
+* the text must be valid UTF-8 and ASCII with only alphanumeric characters
 * the prefix must be 'AU' or 'AS'
 * the base58check must use the legal alphabet described above and the checksum must verify
 * the decoded binary serialization of the address must be legal (see above, but without the category field)
@@ -618,7 +618,7 @@ When the API of a peer is called to submit an operation:
 
 ### Operation broadcasting
 
-The broadcasting thread keeps sumbitted operations in memory for at least 32 seconds with a cap of 32000 operations being propagated at the same time. 
+The broadcasting thread keeps submitted operations in memory for at least 32 seconds with a cap of 32000 operations being propagated at the same time. 
 It also keeps LRU caches of operations already processed by the current peer, and by other peers it is connected to.
 
 When an operation is submitted to the broadcasting thread, it is first checked for expiry (expired operations are dropped),
@@ -641,13 +641,13 @@ Timeouts are applied as well to re-attempt retrieval from other peers in case of
 When a batch of full operations is received:
 * the sender peer is marked as knowing about these operations in the current peer's caches.
 * the operations are checked for legality with batched parallel signature verification (see [operation legality section](#operation-format-and-legality))
-  * if any of the operations is not legal, the batch is dropped, and the sender peer is bannned
+  * if any of the operations is not legal, the batch is dropped, and the sender peer is banned
 * the operations are added to the peer's operation pool (see [Pool and Operation inclusion](#operation-pool-and-operation-inclusion))
 * the operations are submitted to the broadcasting thread
 
 ### Operation propagation within blocks
 
-Blocks contain arbtirary operations chosen by the block producer.
+Blocks contain arbitrary operations chosen by the block producer.
 Block retrieval in Massa makes use of the propagation caches to only ask for operations that are not already known by the current peer.
 This effectively avoids re-doing operation propagation and legality checks for block operations that have already propagated by themselves previously.
 
@@ -708,7 +708,7 @@ Overall, the deeper the slot is in the past, the exponentially more stable its c
 up to finality after which it is guaranteed not to change anymore. 
 
 The final cursor attempts to execute all final slots up to the latest one.
-Final execution is prioritary over candidate execution:
+Final execution is prioritized over candidate execution:
 as long as there are slots to finalize, they are processed before candidate slots.
 If a finalizing slot was previously executed as candidate and neither itself nor any if its ancestors has changed since the execution,
 the results of the slot's candidate execution are simply written to the final state to avoid re-executing it.
@@ -723,7 +723,7 @@ For each operation in a block, the following is performed:
 * Fee spending: spend the fee from the sender's account. If this spending fails, ignore the operation.
 * Subtract the operation's `total_gas` from the remaining block gas.
 * Add the operation to the list of executed operations. Note that operations with an expiry period that is earlier or equal to the latest final period in the operation's thread are removed from this list after 10 extra periods in order to cap memory use.
-* If any of the previous steps failed, the operation is considered **NOT EXECUTED**, it is ignored and the block producer does not pocket any fees from it while wasting block space. Block producers should therefore be careful about the operations they choose to include or they might not get any fees from them. Thanks to sharding and the declarative `max_gas` and `max_coins` operation fields, block prodcuers can keep track of balances and gas usage without having to simulate the complete execution of candidate operations in order to avoid this pitfall.
+* If any of the previous steps failed, the operation is considered **NOT EXECUTED**, it is ignored and the block producer does not pocket any fees from it while wasting block space. Block producers should therefore be careful about the operations they choose to include or they might not get any fees from them. Thanks to sharding and the declarative `max_gas` and `max_coins` operation fields, block producers can keep track of balances and gas usage without having to simulate the complete execution of candidate operations in order to avoid this pitfall.
 * From there on, the operation is considered executed.
 * Run the payload of the operation (for example call a smart contract). This can succeed or fail.
   * In case of payload run failure, all the consequences of the payload run are rolled back, but the fee is still spent and the operation is still considered executed. This is because block producers have not enough computing power to simulate running all pending operations: this failure is the operation producer's responsibility. In this case, the operation is then considered **EXECUTED WITH FAILURE**.
@@ -779,7 +779,7 @@ This is done by a scoring algorithm that takes into account:
 Operations are then kept sorted by score, and the ones with the worst scores are discarded to respect the max size of the pool.
 
 Sorted operations are then scanned based on their declarative coin spending (`fee + max_coins`)
-and operations that overflow their sender's candidate balance given those cumulated spendings are discarded.
+and operations that overflow their sender's candidate balance given those cumulated spending are discarded.
 The accurate evaluation of the balance without execution is made possible by sharding:
 no operation executed in blocks being created elsewhere at the same time can spend those coins.
 This protects the pool from flood attacks and guarantees that the operation fees can be spent.
