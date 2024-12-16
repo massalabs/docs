@@ -1,0 +1,64 @@
+---
+id: massa-web-hosting
+title: Massa Web Hosting
+---
+
+# Upload a website on-chain
+
+This guide provides instructions for uploading a website on the blockchain using Massa Station.
+
+Massa's decentralized web allows you to store websites without using any centralized party in between your 
+client and the blockchain. 
+Massa Station is a desktop app that allows you to navigate Massa web3 content and to store your websites easily. 
+We will use it in this tutorial. 
+
+Hosting websites on the Massa blockchain comes with transaction and storage fees, including fees for deploying the website and renting storage space on the Massa blockchain. Websites will be stored in the smart-contract's datastore. 
+A DNS record will be assigned to the smart contract, to allow anyone to access the website while running Massa Station, 
+via domain_name.massa URL. 
+When the website is removed by the owner of the smart-contract, it's datastore will be erased, 
+and consequently the storage cost will be refunded to the user. 
+For cost efficiency, it's advised to place essential front-end components on-chain and use decentralized solutions 
+like IPFS for non-essential assets, potentially lowering storage expenses.
+Here you can read more about [Massa Storage Costs](https://docs.massa.net/en/latest/technical-doc/storage-costs.html). 
+It will cost approximately 375 Massa coins for a website of 1.5 MB.
+
+:::tip
+We currently support static websites built with: CSS, HTML, and ES6 Javascript. 
+You should upload zip-files of up to 1.5 MB in size.
+:::
+
+### Step 1
+To get started, you need to download [Massa Station](https://station.massa.net). 
+You can follow the [Massa Station Installation Guide](https://github.com/massalabs/station/blob/main/INSTALLATION.md).
+
+### Step 2
+Once Massa Station is installed and launched, install Massa Wallet module from the homepage. 
+You should either [create a wallet account](https://station.massa/plugin/massa-labs/massa-wallet/web-app/index), 
+or import an existing one.
+
+### Step 3
+Now that you have a wallet account, you will need to get some Massa coins on it, in order to pay for the fees 
+of uploading a website. You can find info about available faucets [here](docs/build/networks-faucets.mdx).
+
+### Step 4
+1. Open Massa Station and navigate to: [Massa Station Search Page](https://station.massa/web/search)
+2. Click on the side panel on the right. You should now see the form that will allow you to upload a website.
+
+Here's the information you need to provide:
+
+1. Wallet: Connect a wallet account using the drop-down menu.
+2. Name: A string that follows standard DNS rules, consisting of:
+   - whole numbers (0-9),
+   - lowercase letters (a-z),
+   - underscores (\_),
+   - dashes (-),
+   - between 3 and 50 characters long.
+3. Description: A string limited to 280 UTF-8 characters.
+4. Zip file: Provide a .zip file that contains a index.html file located at the root of the folder. The file must not exceed 1.5 Mo.
+
+:::tip
+here provide tips for reducing file size, if it can be applicable to wider group of developers
+:::
+
+### Step 5
+After clicking on the 'Upload' button, a pop-up window will appear to sign the batch of operations that will deploy the website on-chain. At this step, the system will check for the availability of the DNS domain. If the domain is available, your website will appear in the 'Massa ecosystem' page and will be available to all users of Massa Station.
