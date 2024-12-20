@@ -11,7 +11,7 @@ and store it alongside the server binary. Below is an example configuration file
 
 ```yaml
 domain: "massa.network"
-network_node_url: "https://buildnet.massa.net/api/v2"
+network_node_url: "https://mainnet.massa.net/api/v2"
 api_port: 8080
 allow_list:
   - "massaNameService"
@@ -27,7 +27,7 @@ If no configuration file is provided, the server will use the following default 
 
 ```yaml
 domain: "localhost"
-network_node_url: "https://buildnet.massa.net/api/v2"
+network_node_url: "https://mainnet.massa.net/api/v2"
 api_port: 8080
 ```
 
@@ -37,13 +37,13 @@ api_port: 8080
   For example, set this to `massa.network` if your server is running on `massa.network`.
   The default value is `localhost`.
 
-- **NetworkNodeURL**: The node DeWeb server will connect to. By default, this is set to `https://buildnet.massa.net/api/v2`.
+- **NetworkNodeURL**: The node DeWeb server will connect to. By default, this is set to `https://mainnet.massa.net/api/v2`.
   You can use any node address for the JSON public API,
   such as those listed in the [Massa API Documentation](https://docs.massa.net/docs/build/api/jsonrpc) (Default port: 33035).
 
-  :::note
-  The default node address targets the Massa buildnet, once DeWeb is fully ready,
-  the default node address will be updated to target a mainnet node.
+  :::tip
+  To access a website that has been deployed on buildnet,
+  set the node address to `https://buildnet.massa.net/api/v2`.
   :::
 
 - **APIPort**: The port the server will run on. The default value is 8080.
