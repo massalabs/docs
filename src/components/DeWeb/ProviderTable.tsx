@@ -11,6 +11,7 @@ interface Provider {
   desc: string;
   url: string;
   owner: string;
+  network: 'mainnet' | 'buildnet';
 }
 
 const ProviderTable: React.FC = () => {
