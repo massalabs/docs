@@ -98,10 +98,10 @@ import {
   Args,
   bytesToStr,
   SmartContract,
-  Web3Provider
+  JsonRpcProvider
 } from '@massalabs/massa-web3';
 const account = await Account.fromEnv();
-const provider = Web3Provider.newPublicBuildnetProvider(account);
+const provider = JsonRpcProvider.buildnet(account);
 
 const helloContract = new SmartContract(provider, "<deployed_contract_address>");
 
