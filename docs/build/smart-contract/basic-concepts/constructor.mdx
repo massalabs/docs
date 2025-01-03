@@ -37,12 +37,12 @@ import {
   Args,
   Mas,
   SmartContract,
-  Web3Provider,
+  JsonRpcProvider
 } from '@massalabs/massa-web3';
 import { getScByteCode } from './utils';
 
 const account = await Account.fromEnv();
-const provider = Web3Provider.buildnet(account);
+const provider = JsonRpcProvider.buildnet(account);
 
 // Retrieve the compiled smart contract bytecode
 const byteCode = getScByteCode('build', 'main.wasm');
@@ -53,14 +53,14 @@ const contract = await SmartContract.deploy(
   provider,
   byteCode,
   constructorArgs,
-  { coins: Mas.fromString('0.01') },
+  { coins: Mas.fromString('0.01') }
 );
 ```
 
 #### Explanation of the Deployment Code
 1. **Imports**:
 
-- Key modules are imported from @massalabs/massa-web3, including Account, Args, Mas, SmartContract, and Web3Provider, which are essential for deploying a smart contract.
+- Key modules are imported from @massalabs/massa-web3, including Account, Args, Mas, SmartContract, and JsonRpcProvider, which are essential for deploying a smart contract.
 
 2. **Account Setup**:
 

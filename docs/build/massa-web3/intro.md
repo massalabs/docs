@@ -33,6 +33,5 @@ npm install @massalabs/massa-web3
 After installing, you can import and use the library in your TypeScript project:
 
 ```typescript
-import { Account, SmartContract, Web3Provider } from '@massalabs/massa-web3';
+import { Account, SmartContract, JsonRpcProvider } from "@massalabs/massa-web3";
 ```
-
