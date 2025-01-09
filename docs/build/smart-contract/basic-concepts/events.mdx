@@ -23,10 +23,9 @@ For use cases that require persistent data, storage should be used.
 
 ## Limits
 
-In order to prevent high RAM usage and flooding, some limits are applied regarding to events:
-* Maximum number of events in a smart contract: 25
-* Message maximum size (in bytes): 512
-
+Due to the high throughput and low hardware requirements of Massa, memory usage linked to event emission needs to be capped. To achieve this, several limits need to be respected:
+* Up to 25 events can be emitted in total during one execution (operation, async message or deferred call) regardless of the number of sub-calls happening. Attempting to emit more events results in a runtime exception being raised causing the execution to fail & revert. Note that this limit only applies to events explicitly emitted by smart contract code using the `generateEvent` ABI or similar. System events such as execution failure notifications are not subject to this limit.
+* The maximum size of the event message is 512 bytes. Any attempt to emit a longer message by smart contract code using the `generateEvent` ABI or similar results in an exception being raised causing the execution to fail & revert. For system events (not explicitly emitted by smart contract code), any overflowing message is silently truncated down to 512 bytes.
 ## Emitting a custom event
 To emit a custom event in a smart contract, you can use the generateEvent function (assuming this utility is available in your environment):
 
