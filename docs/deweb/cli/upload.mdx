@@ -109,7 +109,17 @@ Alternatively, specify configurations directly in the command line for a one-tim
 
   `deweb-cli` will detect the `SECRET_KEY` variable automatically.
 
-## Step 2: Run the Upload Command
+## Step 2: Add Metadata
+
+Add the following metadata to your config file to help index your website:
+
+- `TITLE`: The title of your website (max length of 50 characters).
+- `DESCRIPTION`: A brief description of your website (max length of 250 characters).
+- `KEYWORD1`, `KEYWORD2`, `KEYWORD3`, `KEYWORD4`, `KEYWORD5`: Keywords that describe your website (max length of 50 characters each).
+
+For more information on the metadata fiels and CLI config file, refer to the [CLI Configuration](./config) page.
+
+## Step 3: Run the Upload Command
 
 With your configuration in place, run the `upload` command to deploy your website:
 
@@ -124,11 +134,11 @@ you can simply use the `--address` flag to specify the smart contract address of
 
 This command will begin the upload process.
 
-## Step 3: Confirm the Upload
+## Step 4: Confirm the Upload
 
 While the command is running, you will see estimated costs and be prompted to confirm the upload. Select `yes` to proceed.
 
-## Step 4: Follow the Progress
+## Step 5: Follow the Progress
 
 The CLI will display the progress of the upload, including the number of chunks uploaded.
 
@@ -141,7 +151,7 @@ Website deployed at AS12v...2UgLS
 This message confirms that your website has been successfully deployed on the Massa blockchain.
 The output address (`AS12v...2UgLS` in this example) represents the address where your website is hosted.
 
-## Step 5: Access Your Website
+## Step 6: Access Your Website
 
 To be able to access your website, you need to associate it with a Massa domain. Follow the instructions in [Assigning a MNS to your website](../upload/mns) to link your deployed website address to a custom Massa domain.
 
