@@ -11,7 +11,7 @@ A Provider can be created from a KeyPair or accessed from a Wallet account. It c
 
 ## Types of Providers
 
-1. JsonRpcProvider:
+1. **JsonRpcProvider**:
 
 - The `JsonRpcProvider` class is the primary provider type in `@massalabs/massa-web3`. It combines a Massa-web3 `Account` with an RPC client that connects to the Massa blockchain through a specified URL.
 - This URL can point to Massa’s public nodes, custom nodes, or a private node, allowing for flexibility in how you connect to the blockchain.
@@ -26,7 +26,7 @@ A Provider can be created from a KeyPair or accessed from a Wallet account. It c
   const provider = JsonRpcProvider.mainnet(account);
   ```
 
-2. JsonRpcPublicProvider:
+2. **JsonRpcPublicProvider**:
 
 - The `JsonRpcPublicProvider` class is a provider that can be initialized without an account. It is useful for read-only operations that do not require signing transactions.
 
@@ -40,7 +40,7 @@ A Provider can be created from a KeyPair or accessed from a Wallet account. It c
   const provider = JsonRpcProvider.mainnet(); // JsonRpcProvider will return a JsonRpcPublicProvider if no account is provided
   ```
 
-3. Integrated Wallet Providers:
+3. **Integrated Wallet Providers**:
 
 - For applications that interface with external wallets, `@massalabs/wallet-provider` implements providers designed to connect with popular Massa wallets like `MassaStation Wallet`, `Bearby` and `Metamask snap`.
 - These providers enable users to manage their own accounts, sign transactions, and interact with smart contracts directly from their wallets without exposing private keys to the application. It is mostly useful to build decentralized frontend applications (dApps).
