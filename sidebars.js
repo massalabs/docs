@@ -179,6 +179,14 @@ const sidebars = {
     },
     {
       type: "doc",
+      id: "learn/asc/deferred-calls",
+    },
+    {
+      type: "doc",
+      id: "learn/asc/versus",
+    },
+    {
+      type: "doc",
       id: "learn/asc/use-cases",
     },
     {
