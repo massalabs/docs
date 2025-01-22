@@ -6,15 +6,23 @@ const YAML_URL =
 const GITHUB_URL =
   "https://github.com/massalabs/DeWeb-Providers/blob/main/providers.yaml";
 
+type supportedNetwork = "mainnet" | "buildnet";
+
 interface Provider {
   title: string;
   desc: string;
   url: string;
   owner: string;
-  network: 'mainnet' | 'buildnet';
+  network: supportedNetwork;
 }
 
-const ProviderTable: React.FC = () => {
+interface ProviderTableProps {
+  network: supportedNetwork;
+}
+
+const ProviderTable: React.FC = (
+  { network }: ProviderTableProps
+) => {
   const [providers, setProviders] = useState<Provider[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -33,7 +41,8 @@ const ProviderTable: React.FC = () => {
         }
         const text = await response.text();
         const data = parse(text) as Provider[];
-        setProviders(data);
+        const filteredData = data.filter((provider) => provider.network === network);
+        setProviders(filteredData);
       } catch (err) {
         setError((err as Error).message);
         console.error("Error loading YAML file:", err);

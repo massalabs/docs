@@ -2,7 +2,6 @@
 title: Registries
 ---
 
-import WebsiteTable from "@site/src/components/DeWeb/WebsiteTable";
 import ProviderTable from "@site/src/components/DeWeb/ProviderTable";
 
 # DeWeb Registries
@@ -11,11 +10,6 @@ DeWeb uses registries to simplify the process of finding and accessing on-chain 
 These registries serve as indexes for on-chain websites, making it easier for users to discover and interact with them.
 Websites owners and Providers administrators can register their websites and providers in the respective registries.
 
-:::info
-These registries are intermediary solutions, intended to simplify operations and enhance usability while a fully decentralized,
-on-chain alternative is being developed.
-:::
-
 ## Website Registry
 
 The website registry plays a vital role in improving the accessibility of on-chain websites.
@@ -23,14 +17,35 @@ Since these sites are referenced by smart contract addresses, locating them dire
 The registry provides a temporary solution by offering an index of all on-chain websites, simplifying discovery and interaction.
 In addition, it facilitates optimized search capabilities based on metadata, categories, or other relevant parameters.
 
-Here is a list of websites that have been uploaded to the DeWeb:
+### The DeWeb Website Index
 
-<WebsiteTable />
+The DeWeb Website Index Smart Contract is a decentralized registry that stores metadata for all on-chain websites.
+This will later be used for indexing and decentralized search using the website metadatas.
+
+The following metadata keys will be used:
+- `TITLE`: The title of your website (max length of 50 characters).
+- `DESCRIPTION`: A brief description of your website (max length of 250 characters).
+- `KEYWORD1`, `KEYWORD2`, `KEYWORD3`, `KEYWORD4`, `KEYWORD5`: Keywords that describe your website (max length of 50 characters each).
 
 ### Register Your Website
 
-You can register your website hosted on DeWeb by opening a pull request to the [DeWeb Websites Registry](https://github.com/massalabs/Deweb-Websites).
-Your pull request must follow the guidelines outlined in the [repository's README file](https://github.com/massalabs/Deweb-Websites?tab=readme-ov-file#adding-a-website).
+Websites uploaded using the [DeWeb CLI](../cli/overview) or the [Decentralized Web Services platform](https://dws.massa.network)
+are automatically registered in the DeWeb Website Index Smart Contract. This process ensures that your website is easily
+discoverable by users.
+
+
+#### Manual Registration
+
+If you uploaded your website using a different method, you can manually register it by calling the `updateWebsite` function
+of the DeWeb Website Index Smart Contract. This function only requires the website smart contract address serialized using
+the [Args](../../build/smart-contract/basic-concepts/functions-parameters#using-args-for-serialization-and-deserialization) format.
+
+Here are the Smart Contract addresses for the DeWeb Website Index:
+
+| Network  | Address                                               |
+| -------- | ----------------------------------------------------- |
+| Mainnet  | AS12UpEfdonZxyFnsmrJfZbXLM3Gq6LaL3hPk7wTXqU4UZfnypKzF |
+| Buildnet | AS1TmA4GNpSYBseNNMXpbAp2trUwZxZy3T1sZ9Qd3Qdn9L8wGbMS  |
 
 ## Provider Registry
 
@@ -40,7 +55,13 @@ without requiring direct interaction with smart contracts. This system also supp
 empowering providers to limit access to specific on-chain content. For example, an organization like Solana could establish a provider
 using the `.solana.com` domain and configure an allow-list to deliver only its on-chain applications.
 
-<ProviderTable />
+### Mainnet Providers
+
+<ProviderTable network="mainnet" />
+
+### Buildnet Providers
+
+<ProviderTable network="buildnet" />
 
 ### Register Your Provider
 
