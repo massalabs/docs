@@ -17,7 +17,7 @@ Here’s a sample `deweb_cli_config.json` setup:
   "wallet_path": "your-wallet.yaml",
   "node_url": "https://mainnet.massa.net/api/v2",
   "chunk_size": 64000
-  "metadata": {
+  "metadatas": {
     "TITLE": "My Website",
     "DESCRIPTION": "This is my website",
     "KEYWORD1": "deweb",
@@ -34,9 +34,9 @@ Here’s a breakdown of each field:
 - **`wallet_password`**: The password for your Massa wallet file, used when `wallet_path` is specified.
 - **`wallet_path`**: The file path to your Massa wallet in YAML format. Only YAML wallet files are supported.
 - **`secret_key`**: The secret key for your Massa account. Use this as an alternative to `wallet_password` and `wallet_path`.
-- **`metadata`**: An optional field that allows you to specify metadata for your website.
-  This metadata will be stored on the Massa blockchain and can be accessed by anyone.
-  :::tip About Metadata
+- **`metadatas`**: An optional field that allows you to specify metadatas for your website.
+  Those metadatas will be stored on the Massa blockchain and can be accessed by anyone.
+  :::tip About Metadatas
     The following metadata keys will be used for website indexing and decentralized search:
 
     - `TITLE`: The title of your website (max length of 50 characters).
