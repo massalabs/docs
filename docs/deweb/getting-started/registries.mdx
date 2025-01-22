@@ -17,11 +17,22 @@ Since these sites are referenced by smart contract addresses, locating them dire
 The registry provides a temporary solution by offering an index of all on-chain websites, simplifying discovery and interaction.
 In addition, it facilitates optimized search capabilities based on metadata, categories, or other relevant parameters.
 
+### The DeWeb Website Index
+
+The DeWeb Website Index Smart Contract is a decentralized registry that stores metadata for all on-chain websites.
+This will later be used for indexing and decentralized search using the website metadatas.
+
+The following metadata keys will be used:
+- `TITLE`: The title of your website (max length of 50 characters).
+- `DESCRIPTION`: A brief description of your website (max length of 250 characters).
+- `KEYWORD1`, `KEYWORD2`, `KEYWORD3`, `KEYWORD4`, `KEYWORD5`: Keywords that describe your website (max length of 50 characters each).
+
 ### Register Your Website
 
 Websites uploaded using the [DeWeb CLI](../cli/overview) or the [Decentralized Web Services platform](https://dws.massa.network)
 are automatically registered in the DeWeb Website Index Smart Contract. This process ensures that your website is easily
 discoverable by users.
+
 
 #### Manual Registration
 
