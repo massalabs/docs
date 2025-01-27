@@ -399,6 +399,96 @@ curl --location --request POST 'https://buildnet.massa.net/api/v2' \
 </p>
 </details>
 
+
+### get_addresses_datastore_keys
+
+Get the datastore keys associated with specified address.
+This endpoint allows fetching storage keys for multiple addresses in a single request.
+
+<Tabs>
+<TabItem value="json (Mainnet)" label="cURL (Mainnet)" default>
+
+```shell
+curl --location --request POST 'https://mainnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_addresses_datastore_keys",
+    "params": [      
+      {
+            "address": "A12CgvKXR5NcVxCnB9qxKPj8F8BsEF3pf3mypWFutAR4kGxGwVth",
+            "prefix": "0x1234",
+            "is_final": true,
+            "start_key": "0x5678",
+            "inclusive_start_key": true,
+            "end_key": "0x9abc",
+            "inclusive_end_key": false,
+            "count": 100
+      },
+      {
+          "address": "A12dzL2h9SPbfRy2dzXgB6E2fo8ivYX8gNzS2xVZsKwR4uzn6H9",
+          "prefix": "0xabcd",
+          "is_final": true
+      }
+    ]
+}'
+```
+
+</TabItem>
+
+<TabItem value="json (Buildnet)" label="cURL (Buildnet)">
+
+```shell
+curl --location --request POST 'https://buildnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_addresses_datastore_keys",
+    "params": [{
+        "address": "A12CgvKXR5NcVxCnB9qxKPj8F8BsEF3pf3mypWFutAR4kGxGwVth",
+        "prefix": [],
+        "is_final": true
+    }]
+}'
+```
+</TabItem>
+</Tabs>
+
+<details>
+<summary>Example response: </summary>
+<p>
+
+```json
+{
+    "jsonrpc": "2.0",
+    "result": [
+       {
+            "address": "A12CgvKXR5NcVxCnB9qxKPj8F8BsEF3pf3mypWFutAR4kGxGwVth",
+            "is_final": true,
+            "keys": [
+                "0x123456",
+                "0x789abc",
+                "0xdef012"
+            ]
+        },
+        {
+            "address": "A12dzL2h9SPbfRy2dzXgB6E2fo8ivYX8gNzS2xVZsKwR4uzn6H9",
+            "is_final": true,
+            "keys": [
+                "0xabcdef",
+                "0x456789"
+            ]
+        }
+],
+"id": 1
+}
+```
+
+</p>
+</details>
+
 ### get_graph_interval
 
 Get information about block graph
