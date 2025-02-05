@@ -204,7 +204,7 @@ To do this, a smart contract can request the cancellation of a deferred call by 
 When cancellation is requested, the `coins` of the call are sent back to the smart contract that registered the deferred call, but the `fee` is not refunded.
 Also note that, in order to avoid any manipulation of the predictive fee market,
 the occupancy of the target slot is not updated when a deferred call is canceled and remains the same, as if the deferred call was still there.
-At the moment the call would have been executed if it weren't cancelled, the coins locked for storing the function arguments are sent back to the caller.
+At the moment the call would have been executed if it weren't canceled, the coins locked for storing the function arguments are sent back to the caller.
 
 ### The power of Deferred Calls in Massa
 
