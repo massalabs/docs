@@ -198,7 +198,7 @@ Smart contracts can decide to to cancel the execution of a deferred call they re
 To do this, a smart contract can request the cancellation of a deferred call by providing its unique ID.
 On cancellation, the `coins` of the call are sent back to the smart contract that registered the deferred call, but the `fee` is not refunded.
 Also note that, in order to avoid any manipulation of the predictive fee market,
-the occupancy of the target slot is not updated when a deferred call is cancelled and remains the same, as if the deferred call was still there.
+the occupancy of the target slot is not updated when a deferred call is canceled and remains the same, as if the deferred call was still there.
 
 ### The power of Deferred Calls in Massa
 
