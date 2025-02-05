@@ -192,13 +192,19 @@ During the execution of a slot, executions happen in the following order:
 
 Just like async messages, deferred calls are executed independently of blocks.
 
+When a deferred call is executed, the `coins` locked in the call are used as the `coins` parameter for calling the target smart contract function.
+The storage costs for the arguments of the call are sent back to the smart contract that registered the deferred call.
+
+In case of execution failure, the `coins` locked in the deferred call are sent back to the smart contract that registered the deferred call.
+
 ### Cancellation
 
 Smart contracts can decide to to cancel the execution of a deferred call they registered at any time before the target slot is reached.
 To do this, a smart contract can request the cancellation of a deferred call by providing its unique ID.
-On cancellation, the `coins` of the call are sent back to the smart contract that registered the deferred call, but the `fee` is not refunded.
+When cancellation is requested, the `coins` of the call are sent back to the smart contract that registered the deferred call, but the `fee` is not refunded.
 Also note that, in order to avoid any manipulation of the predictive fee market,
 the occupancy of the target slot is not updated when a deferred call is canceled and remains the same, as if the deferred call was still there.
+At the moment the call would have been executed if it weren't cancelled, the coins locked for storing the function arguments are sent back to the caller.
 
 ### The power of Deferred Calls in Massa
 
