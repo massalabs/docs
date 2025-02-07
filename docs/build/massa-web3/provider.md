@@ -107,7 +107,7 @@ Retrieves all storage keys registered at a given address.
 - `final`: Defaults to true.
 
 ```typescript
-readStorage(address: string, keys: Uint8Array[] | string[], final?: boolean): Promise<Uint8Array[]>
+readStorage(address: string, keys: Uint8Array[] | string[], final?: boolean): Promise<(Uint8Array | null)[]>
 ```
 
 Retrieves data associated with given storage keys of a given address.
