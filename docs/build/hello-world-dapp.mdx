@@ -262,6 +262,9 @@ function App() {
   async function getGreeting() {
     if (client) {
       const dataStoreVal = await client.getDatastoreEntry(GREETING_KEY, sc_addr, false)
+      if (!dataStoreVal) {
+        throw new Error(`datastore key ${GREETING_KEY} doesn't exist`);
+      }
       const greetingDecoded = bytesToStr(dataStoreVal);
       setGreeting(greetingDecoded);
     }
@@ -306,7 +309,10 @@ The buildnet is a test network that is used to test smart contracts before deplo
 ```tsx
   async function getGreeting() {
     if (client) {
-      const dataStoreVal = await client.getDatastoreEntry(GREETING_KEY, sc_addr, false)
+      const dataStoreVal = await client.getDatastoreEntry(GREETING_KEY, sc_addr, false);
+      if (!dataStoreVal) {
+        throw new Error(`datastore key ${GREETING_KEY} doesn't exist`);
+      }
       const greetingDecoded = bytesToStr(dataStoreVal);
       setGreeting(greetingDecoded);
     }
@@ -316,7 +322,7 @@ In the code above, we are retrieving the "Hello, World!" greeting message by dir
 
 To do so, we are using the `getDatastoreEntry` method.
 In our case, the address of the smart contract is the one we got during contract deployment. The key is the string "greeting_key" [that we used to store the greeting message in the smart contract's storage](#step-1-writing-the-smart-contract). 
-We retrieve the current greeting from the smart contract's storage and decode it using the `bytesToStr` function. Finally, we set the greeting to the `greeting` state variable using the `setGreeting` function.
+We retrieve the current greeting from the smart contract's storage, check if the value exists and decode it using the `bytesToStr` function. Finally, we set the greeting to the `greeting` state variable using the `setGreeting` function.
 
 :::info
  The storage of the smart contract is a key value store that stores data in bytes. Thus, we need to decode the bytes returned by the smart contract to get the actual greeting message. That is why we have to use massa-web3 `bytesToStr` function.
