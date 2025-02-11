@@ -134,7 +134,7 @@ Here is an overview:
 ### How are deferred calls scheduled?
 
 A smart contract can schedule a deferred call in two steps:
-* step 1: the smart contract requests a quote to schedule the call at a given future slot and gives the max amount of gas necessary for the call.
+* step 1: the smart contract requests a quote to schedule the call at a given future slot and provides the call parameter length and max amount of gas necessary for the call.
   The system tells the smart contract whether there is still enough gas available at the desired slot, and the fee the smart contract would need to burn to schedule the requested call.
 * step 2: if the smart contract agrees with the quote, it pays the quoted fee and any call coins, and the system schedules the call for the desired slot.
 
@@ -155,7 +155,7 @@ The system then performs the following steps:
     * the fee increases with the amount of gas requested
     * the fee increases with the occupancy of the target slot
     * the fee increases with the average occupancy of all slots currently available for reservation
-    * there is an extra fee for storing the arguments of the call in the state according to the logic given by [storage costs](/docs/learn/storage-costs).
+    * there is an extra fee for storing the arguments of the call in the state according to the logic given by [storage costs](/docs/learn/storage-costs). This charge is refunded to the emitter of the deferred call when the deferred call is removed from the state (eg. when it is executed).
 
 ![Deferred calls: quote step](./deferred_call_quote.png)
 
@@ -186,7 +186,7 @@ After registration, a unique ID of the deferred call is returned to the smart co
 During the execution of a slot, executions happen in the following order:
 * first the deferred calls scheduled for that slot are executed (if any)
 * then the block produced for that slot is executed (if any)
-* then, any async messages that are ready to execute (if any) are executed as long as there is enough remaining slot gas to fill `MAX_SLOT_GAS + MAX_ASYNC_GAS`.
+* then, any async messages that are ready to execute (if any) are executed as long as there is enough remaining slot gas to fill all the available slot gas that was not used by the block or deferred calls.
 
 ![Deferred calls execution](./deferred_calls_general.png)
 
@@ -195,7 +195,7 @@ Just like async messages, deferred calls are executed independently of blocks.
 When a deferred call is executed, the `coins` locked in the call are used as the `coins` parameter for calling the target smart contract function.
 The storage costs for the arguments of the call are sent back to the smart contract that registered the deferred call.
 
-In case of execution failure, the `coins` locked in the deferred call are sent back to the smart contract that registered the deferred call.
+In case of execution failure (non-existent target address/function, VM runtime error...), the `coins` locked in the deferred call are sent back to the smart contract that registered the deferred call.
 
 ### Cancellation
 
@@ -209,7 +209,7 @@ At the moment the call would have been executed if it weren't canceled, the coin
 ### The power of Deferred Calls in Massa
 
 Deferred calls are extremely powerful because they provide a way for smart contracts to schedule future calls with a full guarantee of execution.
-This means that smart contracts can rely on deferred calls to perform actions at an exact time in the future without any risk of failure.
+This means that smart contracts can rely on deferred calls to perform actions at an exact time in the future with strong guarantees.
 They are the most suitable for critical and time-sensitive applications.
 
 ### Limitations of Deferred Calls
