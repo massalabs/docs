@@ -295,6 +295,11 @@ const sidebars = {
             },
           ],
         },
+        {
+          type: "doc",
+          id: "build/smart-contract/async",
+          label: "ASYNC SC",
+        },
       ],
     },
     {

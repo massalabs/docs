@@ -1,0 +1,52 @@
+---
+id: async
+sidebar_label: ASYNC SC
+---
+
+# Async in massa 
+
+## Async message
+You can learn more about async message in massa [here](/docs/learn/asc/massa-asc#async-messages-allowing-smart-contracts-to-emit-operation-like-messages).
+
+## 
+
+
+# Deferred calls 
+
+You can learn more about deferred calls in massa [here](/docs/learn/asc/massa-asc#deferred-calls-scheduling-future-calls-with-guaranteed-execution).
+
+### Request a quote 
+#### with massa-sdk
+
+
+### Register a deferred call
+
+ /* 
+ * @param targetAddress - The address of the target deferred call
+ * @param targetFunction - The function to call in the target deferred call
+ * @param targetSlot - The target slot for the deferred call
+ * @param maxGas - The maximum amount of gas that the deferred call can use
+ * @param params - The parameters to send to the target deferred call function
+ * @param rawCoins - The amount of coins to send to the target deferred call
+ *
+ * @returns The id of the new deferred call
+ */
+```ts
+
+ const target_slot: Slot = {
+    period: 100,
+    thread: 0,
+ };
+ const maxGas = 4_000_000;
+ const myParam = 1337;
+
+ const callId = deferredCallRegister(
+    targetAddress,
+    'myFunction',
+    target_slot,
+    maxGas,
+    new Args().add(myParam).serialize(),
+    0,
+  );
+
+```
