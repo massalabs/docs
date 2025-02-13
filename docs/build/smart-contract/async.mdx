@@ -11,15 +11,15 @@ These features enable developers to build more complex and powerful decentralize
 
 Two different types of ASC are available in Massa:
 - [Async calls](/docs/learn/asc/massa-asc#async-messages-allowing-smart-contracts-to-emit-operation-like-messages)
-- [Deferred calls](/docs/learn/asc/massa-asc#deferred-calls-scheduling-future-calls-with-guaranteed-execution).
+- [Deferred calls](/docs/learn/asc/massa-asc#deferred-calls-scheduling-future-calls-with-guaranteed-execution)
 
 The main difference between them is the guarantee of execution. Deferred calls are guaranteed while async messages are not.
 In both cases, a smart contract function will be called and executed if conditions are met.
 An ASC call follow the same execution parameters as a regular smart contract call (including coins, maxGas, fee and function arguments).
 
-## Async Call method overview
+## Async Call overview
 
-The asyncCall function enables scheduling an operation for execution at a future time. The operation is processed as soon as possible after the specified start slot but no later than the end slot.
+The [asyncCall](https://github.com/massalabs/massa-as-sdk/blob/main/assembly/std/contract/calls.ts#L204) function enables scheduling an operation for execution at a future time. The operation is processed as soon as possible after the specified start slot but no later than the end slot.
 
 ### Execution Behavior:
 - Operations are executed deterministically on all nodes.
@@ -62,63 +62,119 @@ Parameters:
    - `validityEndSlot`: Validity end slot.
    - `maxGas`: Maximum gas to spend for the execution.
    - `fee`: Fee to be paid for message execution.
-   - `functionParams`: function parameters serialized.
+   - `functionParams`: Serialized function call parameters.
    - `coins`: Coins to allocate for the execution. If called function is on the same contract, this field has no effect as sender and recipient are the same.
    - `filterAddress`: Address trigger filter.
    - `filterKey`: Datastore key filter from the trigger address.
 
+### Usage example
+
+Syntra leverage the async call feature to allow sending tips or setup vesting plans for users.
+Check [Syntra smart contract](https://github.com/massalabs/syntra/blob/main/smart-contract/assembly/internal.ts#L76) for a real world example of async call usage.
+
 ## Deferred calls 
 
-You can learn more about deferred calls in massa [here](/docs/learn/asc/massa-asc#deferred-calls-scheduling-future-calls-with-guaranteed-execution).
+Unlike async calls, deferred calls are guaranteed to be executed at a given slot.
+The scheduele mecanism works as a booking market based on computation needs and load of available slots.
+In order to book for an execution in the future, a user must pay a fee to the network.
+The booking quote is calculated based on the amount of computation needed, the size of function call parameters in bytes and the load of the network.
 
-### Request a quote 
-TODO
-#### with massa-sdk
+### Request a quote
 
-#### with massa-web3
+The [deferredCallQuote](https://github.com/massalabs/massa-as-sdk/blob/main/assembly/std/deferredCalls.ts#L17) function is used to get the booking fee for a deferred call. The quote provides an estimate of the fee required to schedule the deferred call for the given slot.
 
+```typescript
+deferredCallQuote(
+  targetSlot: Slot,
+  maxGas: u64,
+  paramsSize: u64 = 0,
+): u64
+```
+
+Parameters:
+   - `targetSlot`: Slot to book for the execution.
+   - `maxGas`: The maximum amount of gas that the deferred call can use.
+   - `paramsSize`: Serialized function call parameters size in bytes.
+
+Returns:
+   - The booking quote in nanoMAS for the deferred call.
 
 ### Register a deferred call
 
- /* 
- * @param targetAddress - The address of the target deferred call
- * @param targetFunction - The function to call in the target deferred call
- * @param targetSlot - The target slot for the deferred call
- * @param maxGas - The maximum amount of gas that the deferred call can use
- * @param params - The parameters to send to the target deferred call function
- * @param rawCoins - The amount of coins to send to the target deferred call
- *
- * @returns The id of the new deferred call
- */
-```ts
+The [deferredCallRegister](https://github.com/massalabs/massa-as-sdk/blob/main/assembly/std/deferredCalls.ts#L42) function is used to book a deferred call.
 
- const target_slot: Slot = {
-    period: 100,
-    thread: 0,
- };
- const maxGas = 4_000_000;
- const myParam = 1337;
-
- const callId = deferredCallRegister(
-    targetAddress,
-    'myFunction',
-    target_slot,
-    maxGas,
-    new Args().add(myParam).serialize(),
-    0,
-  );
-
+```typescript
+deferredCallRegister(
+  targetAddress: string,
+  targetFunction: string,
+  targetSlot: Slot,
+  maxGas: u64,
+  params: StaticArray<u8> = [],
+  coins: u64 = 0,
+): string
 ```
 
+Parameters:
+   - `targetAddress`: Address of the contract to call.
+   - `targetFunction`: Function to call in the contract.
+   - `targetSlot`: Slot to book for the execution.
+   - `maxGas`: The maximum amount of gas that the deferred call can use.
+   - `params`: Serialized function call parameters.
+   - `coins`: Coins to allocate for the execution. If called function is on the same contract, this field has no effect as sender and recipient are the same.
+
+Returns:
+   - The created deferred call ID.
+
 ### Cancel a deferred call
-TODO
 
+The [deferredCallCancel](https://github.com/massalabs/massa-as-sdk/blob/main/assembly/std/deferredCalls.ts#L79) function is used to cancel a deferred call.
+A deferred call can only be canceled by its creator.
+To avoid booking market manipulation, the booking fee is not refunded and reserved gas for execution is not freed when canceling.
 
-### Cancel a deferred call
-TODO
+```typescript
+deferredCallCancel(id: string): void
+```
 
+Parameters:
+   - `id`: The deferred call ID to cancel.
 
+### Check deferred call status
 
+The [deferredCallExists](https://github.com/massalabs/massa-as-sdk/blob/main/assembly/std/deferredCalls.ts#L68) function is used to check if a deferred call is schedueled.
 
-### deferred call manager 
-TODO
+```typescript
+deferredCallExists(id: string): bool
+```
+
+Parameters:
+   - `id`: The deferred call ID to check.
+
+Returns:
+   - True if the deferred call is schedueled. False if already executed, canceled or inexistant.
+
+### Find a slot to book
+
+The [findCheapestSlot](https://github.com/massalabs/massa-as-sdk/blob/main/assembly/std/deferredCalls.ts#L92) function is a helper that compares the booking quotes in a given slot range and returns the cheapest one.
+
+```typescript
+findCheapestSlot(
+  startPeriod: u64,
+  endPeriod: u64,
+  maxGas: u64,
+  paramsSize: u64,
+): Slot
+```
+
+Parameters:
+   - `startPeriod`: First slot to check.
+   - `endPeriod`: Last slot to check.
+   - `maxGas`: The maximum amount of gas that the deferred call can use.
+   - `paramsSize`: Serialized function call parameters size in bytes.
+
+Returns:
+   - The slot with the cheapest quote in the given range.
+
+### Usage example
+
+Deferred call manager is a smart contract example that allow to schedule tasks in the future and monitor execuions.
+Check Deferred call manager contract [here](https://github.com/massalabs/massa-sc-examples/blob/main/deferred-call-manager/README.md).
