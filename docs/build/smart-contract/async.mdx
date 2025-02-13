@@ -1,17 +1,71 @@
 ---
 id: async
-sidebar_label: ASYNC SC
+sidebar_label: Autonomous smart contracts
 ---
 
-# Async in massa 
+# Autonomous smart contracts (ASC)
 
-## Async message
-You can learn more about async message in massa [here](/docs/learn/asc/massa-asc#async-messages-allowing-smart-contracts-to-emit-operation-like-messages).
+Autonomous smart contracts (ASC) are a set of features that allow smart contracts to be executed asynchronously.
+It allow a smart contract to be scheduled in the future in a decentralized way.
+These features enable developers to build more complex and powerful decentralized applications on the Massa blockchain.
 
+Two different types of ASC are available in Massa:
+- [Async calls](/docs/learn/asc/massa-asc#async-messages-allowing-smart-contracts-to-emit-operation-like-messages)
+- [Deferred calls](/docs/learn/asc/massa-asc#deferred-calls-scheduling-future-calls-with-guaranteed-execution).
 
-TODO : Add async message example
+The main difference between them is the garantee of execution. Deferred calls are guaranteed while async messages are not.
+In both cases, a smart contract function will be called and executed if conditions are met.
+An ASC call follow the same execution parameters as a regular smart contract call (including coins, maxGas, fee and function arguments).
 
+## Async Call method overview
 
+The asyncCall function enables scheduling an operation for execution at a future time. The operation is processed as soon as possible after the specified start slot but no later than the end slot.
+
+### Execution Behavior:
+- Operations are executed deterministically on all nodes.
+- Execution follows a priority system based on the fee attached to the message.
+- If an async operation has a low fee/maxGas ratio, it may be delayed if higher-fee async operation take priority.
+- If all slots in the specified period are congested with higher-fee async operations, it may never execute.
+
+### Optional Execution Filter:
+You can add a filter condition that requires a state update before the operation executes. Instead of executing "as soon as possible within the range", the operation will execute only after a specific state change occurs.
+
+### Filter Parameters:
+- filterAddress: The contract or account whose state change will trigger execution.
+- filterKey: A specific datastore entry within filterAddress that must change. filterAddress must be provided.
+
+### Execution Conditions:
+- If only filterAddress is provided:
+   - The message executes within the specified range only if there is a state change (e.g., balance update) in filterAddress.
+- If filterKey is also provided:
+   - The message executes within the range only if the specific filterKey in filterAddress's datastore has changed.
+
+```typescript
+asyncCall(
+  at: Address,
+  functionName: string,
+  validityStartSlot: Slot,
+  validityEndSlot: Slot,
+  maxGas: u64,
+  fee: u64,
+  functionParams: StaticArray<u8> = [],
+  coins: u64 = 0,
+  filterAddress: Address = new Address(),
+  filterKey: StaticArray<u8> = [],
+  ): void
+```
+
+Parameters:
+   - `at`: Address of the contract to call.
+   - `functionName`: Function to call in the contract.
+   - `validityStartSlot`: Validity start slot.
+   - `validityEndSlot`: Validity end slot.
+   - `maxGas`: Maximum gas to spend for the execution.
+   - `fee`: Fee to be paid for message execution.
+   - `functionParams`: function parameters serialized.
+   - `coins`: Coins to allocate for the execution. If called function is on the same contract, this field has no effect as sender and recipient are the same.
+   - `filterAddress`: Address trigger filter.
+   - `filterKey`: Datastore key filter from the trigger address.
 
 ## Deferred calls 
 
