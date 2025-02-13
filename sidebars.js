@@ -298,7 +298,7 @@ const sidebars = {
         {
           type: "doc",
           id: "build/smart-contract/async",
-          label: "ASYNC SC",
+          label: "Autonomous smart contracts",
         },
       ],
     },
