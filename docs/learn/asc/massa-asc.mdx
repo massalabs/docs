@@ -124,7 +124,7 @@ Async messages are inspired by operations, and therefore they are subject to som
 ## Deferred calls: scheduling future calls with guaranteed execution
 
 As a complementary solution to async messages, Massa also provides a way for smart contracts to schedule future calls,
-but this time with a full guarantee that the not only the scheduled execution will happen, but also that it will happen exactly at the slot decided by the smart contract.
+but this time with a full guarantee that not only the scheduled execution will happen, but also that it will happen exactly at the slot decided by the smart contract.
 
 ### General description
 
@@ -143,7 +143,7 @@ Here are more details:
 ### Step 1: Requesting a quote
 
 To schedule a future call, a smart contract needs to request a quote from the system with the following parameters:
-* tha target slot at which the call should happen
+* the target slot at which the call should happen
 * the max amount of gas the call will need
 * the size of the arguments to pass to the called function
 
