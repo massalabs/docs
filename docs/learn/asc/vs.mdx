@@ -1,0 +1,28 @@
+---
+id: versus
+sidebar_label: Async msg vs Deferred Calls
+---
+
+# Asynchronous Messages vs Deferred Calls 
+
+
+When developing dApps on the Massa blockchain, it's essential to choose the right method interacting in automated ways with the blockchain.This documentation presents the differences between these two approaches and explains when to use each.
+
+## Async Msg
+Async Msg are used to send asynchronous messages to smart contracts. They're ideal for cases where a smart contract needs to perform an action in the future without waiting for a response. However, please note that the execution of Async Msg is not guaranteed.
+
+
+## Deferred Calls
+
+Deferred Calls are used to schedule calls to smart contracts at a later time. The key difference between Deferred Calls and Async Msg is that Deferred Calls guarantee the execution of the scheduled call, provided that the reservation fees have been paid. This means that the call will be executed at the specified time (Slot), and the blockchain will ensure that the execution is attempted once. If the call fails for any reason, it will not be retried.
+
+
+## Comparison 
+
+The following table highlights the main differences between the two methods:
+
+| **Feature** | **Async Msg** | **Deferred Calls** |
+| --- | --- | --- |
+| **Execution Guarantee** | No | Yes (if reservation fees are paid) |
+| **Use Cases** | Running an autonomous AI, evolving NFTs | Trading bot, Detecting and liquidating under-collateralized positions, advancing game state, Transfert liquidity |
+| **Benefits** | Enables asynchronous communication between smart contracts | Guarantees the execution of scheduled calls |
