@@ -40,6 +40,8 @@ Risks:
 
 ## Looking Ahead
 DeWeb is continuously evolving to improve privacy, security, and ease of use. 
-Current registries are temporary solutions, and a fully decentralized registry system is in development to further enhance the experience.
+Current registries are temporary solutions, and a fully decentralized registry system is in development to further enhance the experience. 
+Also, a browser plugin will be developped to validate website integritity end-to-end which should solve supply chain attack issues when a third party node or provider is used, but not censorship and privacy. So we really recommend you to run a node and a local provider.
+
 
 Whether you prioritize privacy, security, or simplicity, DeWeb gives you the tools to browse the decentralized web in a way that suits your needs.
