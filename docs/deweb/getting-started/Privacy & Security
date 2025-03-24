@@ -1,0 +1,47 @@
+# Privacy and security
+
+DeWeb offers a decentralized way to host and access websites, putting control into users' hands. However, the level of privacy and security depends on how you choose to access DeWeb. 
+Below, we’ll detail the available methods, their benefits, and their risks.
+
+## 1. Accessing DeWeb Through a Local Node and Local Provider
+Running both a local node and a local provider is the most secure and private way to access DeWeb.
+  _Benefit:_
+  * Full Privacy: No third parties are involved, so your browsing activity is completely private.
+  * Data Integrity: Content is fetched directly from the blockchain, ensuring it hasn’t been altered.
+  _Risks:_
+  * Malicious websites can still harm you. For example:
+    * JavaScript Backdoors: A site might call external servers, revealing your IP address.
+    * Phishing: Fake sites could trick you into sharing sensitive information.
+    * Wallet Exploits: A malicious site may try to get you to approve unauthorized transactions.
+
+## 2. Accessing DeWeb Through a Local Provider Connected to a Third-Party Node
+If running a local node isn’t an option, using a local provider with a third-party node offers a middle ground.
+_Benefits:_
+  * Improved Setup Simplicity: You don’t need to manage a full node, but your local provider still processes content locally, adding a layer of security.
+_Risks:_
+  * Privacy Concerns: The third-party node can see the sites you access and associate them with your IP address.
+  * Tampering Risk: A malicious node could modify the data before sending it to your local provider.
+  * Site-Based Risks: Any compromised website can exploit your device, just as in Option 1.
+
+## 3. Accessing DeWeb Through a Third-Party Provider
+For maximum convenience, you can use a third-party provider that retrieves and delivers content directly to your browser.
+_Benefits:_
+  * Ease of Use: No technical setup is needed. You can access DeWeb directly in your browser.
+Risks:
+  * Visibility: The provider can track your browsing activity and associate it with your IP address.
+  * Content Manipulation: The provider could modify website data, injecting malicious code or redirecting you to fake sites.
+  * Site-Based Risks: The same risks from visiting malicious sites apply here as in Options 1 and 2.
+
+## Best Practices for Safe Browsing on DeWeb
+  1. Verify Websites: Only visit trusted websites with verified Massa Name Service (MNS) domains.
+  2. Review Transactions: Carefully check every transaction before signing it with your wallet.
+  3. Stay Updated: Follow official Massa channels for news on registry updates and decentralized tools.
+  4. Understand Immutability: Proposals are underway to make uploaded content immutable, reducing risks of unauthorized changes.
+
+## Looking Ahead
+DeWeb is continuously evolving to improve privacy, security, and ease of use. 
+Current registries are temporary solutions, and a fully decentralized registry system is in development to further enhance the experience. 
+Also, a browser plugin will be developped to validate website integritity end-to-end which should solve supply chain attack issues when a third party node or provider is used, but not censorship and privacy. So we really recommend you to run a node and a local provider.
+
+
+Whether you prioritize privacy, security, or simplicity, DeWeb gives you the tools to browse the decentralized web in a way that suits your needs.
