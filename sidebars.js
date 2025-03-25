@@ -571,6 +571,7 @@ const sidebars = {
       items: [
         "deweb/getting-started/overview",
         "deweb/getting-started/registries",
+        "deweb/getting-started/privacy",
       ],
     },
     {
