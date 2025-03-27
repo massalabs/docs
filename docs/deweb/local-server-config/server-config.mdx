@@ -19,6 +19,13 @@ allow_list:
 block_list:
   - "massaNameService"
   - "AS1S...4x3o"
+misc_public_info: {
+  "tips": {
+    "BTC": "1PMyg9yJe9Y8zS3bD2N4e6w2F7K6Rmyt7B",
+    "ETH": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+    "MAS": "AU1wfDH3BNBiFF9Nwko6g8q5gMzHW8KUHUL2YysxkZKNZHq37AfX"
+  }
+}
 ```
 
 ## Default Configuration
@@ -53,3 +60,5 @@ api_port: 8080
 
 - **BlockList**: A list of domains or smart contract addresses that are explicitly blocked.
   By default, this list is empty. Websites in this list will be inaccessible.
+
+- **misc_public_info**:  Optional, arbitrary raw JSON returned as the `misc` section of JSON object returned by the `/__deweb_info` public endpoint of the provider. It is useful in particular for allowing front-ends to tip the provider to incentivize quality of service. The `tips` section should be a dictionary of uppercase currency symbols as keys and the corresponding addresses that you own as values.
