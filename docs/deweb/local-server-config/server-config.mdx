@@ -61,4 +61,4 @@ api_port: 8080
 - **BlockList**: A list of domains or smart contract addresses that are explicitly blocked.
   By default, this list is empty. Websites in this list will be inaccessible.
 
-- **misc_public_info**:  Optional raw JSON returned as the `misc` section of JSON object returned by the `/__deweb_info` public endpoint of the provider. It is useful in particular for allowing front-ends to tip the provider to incentivize quality of service. The `tips` section should be a dictionary of uppercase currency symbols as keys and the corresponding addresses that you own as values.
+- **misc_public_info**:  Optional, arbitrary raw JSON returned as the `misc` section of JSON object returned by the `/__deweb_info` public endpoint of the provider. It is useful in particular for allowing front-ends to tip the provider to incentivize quality of service. The `tips` section should be a dictionary of uppercase currency symbols as keys and the corresponding addresses that you own as values.
