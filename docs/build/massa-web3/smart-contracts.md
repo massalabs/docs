@@ -62,8 +62,9 @@ async function readUserBalance(userAddress: string): Promise<bigint> {
     // Prepare arguments for the function call
     const args = new Args().addString(userAddress);
 
-    // Call the smart contract's balanceOf function
-    const result = await contract.call('balanceOf', args);
+    // Call the smart contract's balanceOf function.
+    // This function does not modify state, so read can be used
+    const result = await contract.read('balanceOf', args);
 
     // Deserialize the returned balance
     const balance = U256.fromBytes(result);
