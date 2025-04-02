@@ -601,7 +601,7 @@ const sidebars = {
       type: "category",
       label: "DeWeb CLI (Command Line Interface)",
       collapsed: false,
-      items: ["deweb/cli/overview", "deweb/cli/upload", "deweb/cli/config"],
+      items: ["deweb/cli/overview", "deweb/cli/upload", "deweb/cli/config", "deweb/cli/metadatas"],
     },
     // {
     //   type: "doc",
