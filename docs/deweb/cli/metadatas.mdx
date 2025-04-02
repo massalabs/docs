@@ -1,0 +1,73 @@
+---
+title: Metadatas
+---
+
+# Managing metadatas
+
+You can manage metadata for your website using the `metadata` command.
+Metadata can be added a two levels: global or per file.
+
+
+### Add global metadata
+
+Add one or more metadata to your website. You can specify the metadata key and value in the command line.
+If global metadata are present in the config file, they will be merged with the metadata provided in the command line.
+If both the config file and command line contain the same metadata key, the value from the command line will override the one in the config file.
+
+If the metadata key already exists, the value will be updated.
+The metadata key and value should be separated by a comma, and multiple key-value pairs should be separated by a semicolon.
+
+For example, to add two metadata entries, you can use the following command:
+
+```bash
+npx @massalabs/deweb-cli metadata --add "myMetadataKey1,myMetadataValue1;myMetadataKey2,myMetadataValue2" <website_contract_address>
+```
+
+### Remove global metadata
+Remove one or more global metadata from your website. You can specify the metadata key in the command line.
+The metadata key should be separated by a coma. For example, to remove two metadata entries, you can use the following command:
+
+```bash
+npx @massalabs/deweb-cli metadata --delete "myMetadataKey1,myMetadataKey2" <website_contract_address>
+```
+
+### Add file Metadata
+Add one or more metadata to a file using the `--file` option. You can specify the metadata key and value in the command line.
+
+For example, to add two metadata entries for "index.html" file , you can use the following command:
+
+```bash
+npx @massalabs/deweb-cli metadata --file "index.html" --add "myMetadataKey1,myMetadataValue1;myMetadataKey2,myMetadataValue2" <website_contract_address>
+```
+
+### Remove file Metadata
+Remove one or more metadata from a file using the `--file` option. You can specify the metadata key in the command line.
+The metadata key should be separated by a coma. For example, to remove two metadata entries for "index.html" file, you can use the following command:
+
+```bash
+npx @massalabs/deweb-cli metadata --file "index.html" --delete "myMetadataKey1,myMetadataKey2" <website_contract_address>
+```
+
+## System metadata
+
+Add the following global metadatas to help Massa DeWeb index your website:
+
+- `TITLE`: The title of your website (max length of 50 characters).
+- `DESCRIPTION`: A brief description of your website (max length of 250 characters).
+- `KEYWORD1`, `KEYWORD2`, `KEYWORD3`: Keywords that describe your website (max length of 50 characters each).
+
+### Http headers
+
+You can also add custom HTTP headers to your website, global or per file.
+Http headers will be set in the http response of the requested website ressource.
+
+In case of duplicate headers at global and file level, the file level headers will override the global ones.
+
+Use the `--add` or `--delete` option to add or remove HTTP headers.
+
+To be handeled as HTTP headers, the metadata key should start with `http-header:` prefix.
+For example, to add a custom header `X-My-Custom-Header` with value `my-value`, you can use the following command:
+
+```bash
+npx @massalabs/deweb-cli metadata --add "http-header:X-My-Custom-Header,my-value" <website_contract_address>
+```
