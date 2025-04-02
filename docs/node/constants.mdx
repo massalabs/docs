@@ -10,37 +10,46 @@ import TabItem from '@theme/TabItem';
 
 This page describes the constants governing the behavior of the network and their values (that are the same for all nodes of a given network). These tables are obtained from the source code of the node, in the [constants.rs file](https://github.com/massalabs/massa/blob/MAIN.2.4/massa-models/src/config/constants.rs) of the massa repo.
 
-## Constants common to all networks
+## Consensus related constants
+
+The following constants directly impact the security of the network's consensus.
 
 | Constant | Description | Value |
 |----------|-------------|-------|
-| BURN_ADDRESS | Massa address for which nobody knows the associated private key, where you can send funds to in order to burn them. | `AU1111111111111111111111111111111112m1s9K` |
-| POS_MISS_RATE_DEACTIVATION_THRESHOLD | A staker's roll will auto-sell if they miss more than the given threshold of selected block to produce during a given cycle | `70%` |
 | ROLL_PRICE | The price of a Roll, in MAS | `100` |
 | BLOCK_REWARD | The max number of MAS created as reward for block and endorsement production | `1.02` |
-| LEDGER_COST_PER_BYTE | The cost, in MAS, to store 1 byte in the ledger | `0.0001` |
-| LEDGER_ENTRY_BASE_COST | The cost, in MAS, to create a new address in the ledger | `0.001` |
+| POS_MISS_RATE_DEACTIVATION_THRESHOLD | A staker's roll will auto-sell if they miss more than the given threshold of selected block to produce during a given cycle | `70%` |
 | T0 | Time, in milliseconds, between two periods in the same thread | `16_000` |
 | PERIODS_PER_CYCLE | The number of periods in a cycle | `128` |
 | THREAD_COUNT | The number of threads | `32` |
 | ENDORSEMENT_COUNT | The max number of endorsements per block | `16` |
-| MAX_OPERATIONS_PER_BLOCK | The max number of operations per block | `5_000` |
-| MAX_BLOCK_SIZE | The max size of a block, in bytes | `300_000` |
+| ROLL_COUNT_TO_SLASH_ON_DENUNCIATION | Number of roll to remove per denunciation | `1` |
+| MAX_BOOTSTRAP_MESSAGE_SIZE | Max message size for bootstrap, in bytes | `300_000_000` |
+| VERSIONING_THRESHOLD_TRANSITION_ACCEPTED | Threshold of votes to accept a new Massa Improvement Proposal (MIP), considering the latest MIP_STORE_STATS_BLOCK_CONSIDERED blocks  | `75%` |
+| MIP_STORE_STATS_BLOCK_CONSIDERED | Number of blocks to consider for votes on a MIP | `1_000` |
+
+## Execution related constants
+
+The following constants relate to Massa's execution module, and define ledger storage costs, gas usage and smart contract limitations.
+
+### Base constants
+
+| BURN_ADDRESS | Massa address for which nobody knows the associated private key, where you can send funds to in order to burn them. | `AU1111111111111111111111111111111112m1s9K` |
+| LEDGER_COST_PER_BYTE | The cost, in MAS, to store 1 byte in the ledger | `0.0001` |
+| LEDGER_ENTRY_BASE_COST | The cost, in MAS, to create a new address in the ledger | `0.001` |
 | MAX_ASYNC_POOL_LENGTH | Maximum capacity of the asynchronous messages pool | `1_000` |
 | MAX_DATASTORE_KEY_LENGTH | Maximum length of a datastore key, in bytes | `255` |
 | MAX_DATASTORE_VALUE_LENGTH | Maximum length of a datastore value, in bytes | `10_000_000` |
 | MAX_BYTECODE_LENGTH | Maximum length of the bytecode of an address, in bytes | `10_000_000` |
 | MAX_PARAMETERS_SIZE | Maximum size of parameters in call SC, in bytes | `10_000_000` |
-| MAX_BOOTSTRAP_MESSAGE_SIZE | Max message size for bootstrap, in bytes | `300_000_000` |
-| VERSIONING_THRESHOLD_TRANSITION_ACCEPTED | Threshold of votes to accept a new Massa Improvement Proposal (MIP), considering the latest MIP_STORE_STATS_BLOCK_CONSIDERED blocks  | `75%` |
-| MIP_STORE_STATS_BLOCK_CONSIDERED | Number of blocks to consider for votes on a MIP | `1_000` |
-| ROLL_COUNT_TO_SLASH_ON_DENUNCIATION | Number of roll to remove per denunciation | `1` |
+| MAX_OPERATIONS_PER_BLOCK | The max number of operations per block | `5_000` |
+| MAX_BLOCK_SIZE | The max size of a block, in bytes | `300_000` |
 | MAX_GAS_PER_BLOCK | Maximum of GAS allowed for a block | `4_294_967_295`|
 | MAX_ASYNC_GAS | Maximum of GAS allowed for asynchronous messages execution on one slot | `1_000_000_000` |
 | ASYNC_MSG_CST_GAS_COST | Constant cost applied to asynchronous messages | `750_000` |
 | BASE_OPERATION_GAS_COST | Gas used by a base operation (transaction, roll buy, roll sell) | `800_000` |
 
-## Constants common to all networks (Brought by MIP-0001)
+### Constants added with MIP-0001
 
 | Constant | Description | Value |
 |----------|-------------|-------|
@@ -58,6 +67,8 @@ This page describes the constants governing the behavior of the network and thei
 | MAX_RUNTIME_MODULE_FUNCTION_IMPORTS | Maximum number of functions a module can import | `256` |
 
 ## Network dependant constants
+
+The following constants directly depend on the network deployed.
 
 <Tabs>
   <TabItem value="mainnet" label="🖥 MainNet" default>
