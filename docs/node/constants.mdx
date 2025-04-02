@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Network constants
 
-This page describes the constants governing the behavior of the network and their values (that are the same for all nodes of a given network). 
+This page describes the constants governing the behavior of the network and their values (that are the same for all nodes of a given network). These tables are obtained from the source code of the node, in the [constants.rs file](https://github.com/massalabs/massa/blob/MAIN.2.4/massa-models/src/config/constants.rs) of the massa repo.
 
 ## Constants common to all networks
 
@@ -44,7 +44,7 @@ This page describes the constants governing the behavior of the network and thei
 
 | Constant | Description | Value |
 |----------|-------------|-------|
-| MAX_EVENT_DATA_SIZE | Maximum size, in bytes, of events emited | `1_024`. Before MIP-0001, the limit is `50_000` |
+| MAX_EVENT_DATA_SIZE | Maximum size, in bytes, of events emitted | `1_024`. Before MIP-0001, the limit is `50_000` |
 | MAX_EVENT_PER_OPERATION | Maximum event number that can be emitted for an operation | `25` |
 | MAX_RECURSIVE_CALLS_DEPTH | Maximum number of recursion for calls | `25` |
 | DEFERRED_CALL_MAX_FUTURE_SLOTS | Maximum size of deferred call future slots | `1209600`, 1 week |
