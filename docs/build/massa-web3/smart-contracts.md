@@ -91,10 +91,10 @@ Parameters:
    - `func`: Name of the smart contract function to call.
    - `args`: Function arguments though Args class or already serialized. Default to empty array (no args)
    - `options`: available options:
-    - periodToLive: Time to live ( operation expiration) in periods.
-    - coins: MAS amount to sent with the call. But keep in mind its a read-only call, so its just for simulation purpose. default is 0
-    - fee: operation fee. default to 0.01 MAS
-    - maxGas: gas amount to execute operation. default to MAX_GAS_CALL
+     - periodToLive: Time to live ( operation expiration) in periods.
+     - coins: MAS amount to sent with the call.
+     - fee: operation fee. default to 0.01 MAS
+     - maxGas: gas amount to execute operation. default to MAX_GAS_CALL
 
    Return:
    [`Operation`](./operation.md)
@@ -134,12 +134,12 @@ Parameters:
    - `byteCode`: compiled SmartContract bytes
    -  `constructorArgs`: Contract constructor arguments though Args class or already serialized. Default to empty array (no args)
    - `options`: available options:
-    - periodToLive: Time to live ( operation expiration) in periods.
-    - coins: MAS amount to sent with the call. But keep in mind its a read-only call, so its just for simulation purpose. default is 0
-    - fee: operation fee. default to 0.01 MAS
-    - maxGas: gas amount to execute operation. default to MAX_GAS_CALL
-    - maxCoins: max MAS amount to spend (including bytecode storage fee and execution)
-    - waitFinalExecution: default to False
+     - periodToLive: Time to live ( operation expiration) in periods.
+     - coins: MAS amount to sent with the call.
+     - fee: operation fee. default to 0.01 MAS
+     - maxGas: gas amount to execute operation. default to MAX_GAS_CALL
+     - maxCoins: max MAS amount to spend (including bytecode storage fee and execution)
+     - waitFinalExecution: default to False
 
    Return:
    `SmartContract`instance
