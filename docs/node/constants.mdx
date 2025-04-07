@@ -8,7 +8,12 @@ import TabItem from '@theme/TabItem';
 
 # Network constants
 
-This page describes the constants governing the behavior of the network and their values (that are the same for all nodes of a given network). These tables are obtained from the source code of the node, in the [constants.rs file](https://github.com/massalabs/massa/blob/MAIN.2.4/massa-models/src/config/constants.rs) of the massa repo.
+This page describes the constants governing the behavior of the network and their values (that are the same for all nodes of a given network).
+These tables are obtained from the source code of the node, in the [massa repository](https://github.com/massalabs/massa/blob/MAIN.2.4/massa-models/src/config/constants.rs),
+and are used in various massa projects, for instance:
+
+- Smart contract related constants in [Massa-web3](https://github.com/massalabs/massa-web3/blob/main/src/smartContracts/constants.ts)
+- Operation related constants in [Massa Station](https://github.com/massalabs/station/blob/main/pkg/node/sendoperation/sendoperation.go#L17)
 
 ## Consensus related constants
 
@@ -34,6 +39,8 @@ The following constants relate to Massa's execution module, and define ledger st
 
 ### Base constants
 
+| Constant | Description | Value |
+|----------|-------------|-------|
 | BURN_ADDRESS | Massa address for which nobody knows the associated private key, where you can send funds to in order to burn them. | `AU1111111111111111111111111111111112m1s9K` |
 | LEDGER_COST_PER_BYTE | The cost, in MAS, to store 1 byte in the ledger | `0.0001` |
 | LEDGER_ENTRY_BASE_COST | The cost, in MAS, to create a new address in the ledger | `0.001` |
@@ -49,10 +56,11 @@ The following constants relate to Massa's execution module, and define ledger st
 | ASYNC_MSG_CST_GAS_COST | Constant cost applied to asynchronous messages | `750_000` |
 | BASE_OPERATION_GAS_COST | Gas used by a base operation (transaction, roll buy, roll sell) | `800_000` |
 
-### Constants added with MIP-0001
+### Constants added/updated with MIP-0001
 
 | Constant | Description | Value |
 |----------|-------------|-------|
+| BLOCK_REWARD | The max number of MAS created as reward for block and endorsement production, following a community vote to reduce inflation (implemented only if the vote passes) | `0.40` |
 | MAX_EVENT_DATA_SIZE | Maximum size, in bytes, of events emitted | `1_024`. Before MIP-0001, the limit is `50_000` |
 | MAX_EVENT_PER_OPERATION | Maximum event number that can be emitted for an operation | `25` |
 | MAX_RECURSIVE_CALLS_DEPTH | Maximum number of recursion for calls | `25` |
