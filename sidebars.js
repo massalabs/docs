@@ -521,6 +521,11 @@ const sidebars = {
     },
     {
       type: "doc",
+      id: "node/constants",
+      label: "Network constants",
+    },
+    {
+      type: "doc",
       id: "node/update",
       label: "Updating a node",
     },
