@@ -12,70 +12,74 @@ They enable smart contracts to access all kinds of off-chain information by ente
 
 ## Available Price feeds
 
-https://umbrella-network.readme.io/docs/price-feeds
+https://umbrella-network.github.io/technical-documentation/umbrella-network/docs/price-feeds.html
 
 ## Deployed Smart contracts
 
-https://umbrella-network.readme.io/docs/umb-token-contracts
+https://umbrella-network.github.io/technical-documentation/umbrella-network/docs/umb-token-contracts.html#contract-registry
 
 # Example: fetching a price feed
 
 ```tsx
-import {Client, Args, IReadData} from "@massalabs/massa-web3";
-import keccak256 from "@indeliblelabs/keccak256";
-import {getClient} from "./utils";
-
+import keccak256 from '@indeliblelabs/keccak256';
 import {
   Args,
   IDeserializedResult,
   ISerializable,
+  JsonRpcPublicProvider,
 } from '@massalabs/massa-web3';
 
 export class PriceData implements ISerializable<PriceData> {
-  private data: number = 0; // u8
-  private heartbeat: number = 0; // u32
-  private timestamp: number = 0; // u32
-  private price: bigint = BigInt(0); // u128
-
-  constructor(data: number = 0, heartbeat: number = 0, timestamp: number = 0, price: bigint = BigInt(0)) {
-    this.data = data;
-    this.heartbeat = heartbeat;
-    this.timestamp = timestamp;
-    this.price = price;
-  }
+  constructor(
+    private data = 0n,
+    private heartbeat = 0n,
+    private timestamp = 0n,
+    private price = 0n,
+  ) {}
 
   serialize(): Uint8Array {
     let args = new Args()
-        .addU8(this.data)
-        .addU32(this.heartbeat)
-        .addU32(this.timestamp)
-        .addU128(BigInt(this.price));
+      .addU8(this.data)
+      .addU32(this.heartbeat)
+      .addU32(this.timestamp)
+      .addU128(this.price);
     return new Uint8Array(args.serialize());
   }
-  deserialize(data: Uint8Array, offset: number): IDeserializedResult<PriceData> {
+  deserialize(
+    data: Uint8Array,
+    offset: number,
+  ): IDeserializedResult<PriceData> {
     const args = new Args(data, offset);
-    this.data = parseInt(args.nextU8().toString());
+    this.data = args.nextU8();
     this.heartbeat = args.nextU32();
     this.timestamp = args.nextU32();
-    this.price = BigInt(parseInt(args.nextU128().toString()));
+    this.price = args.nextU128();
     return { instance: this, offset: args.getOffset() };
   }
 }
 
-let getPriceDataArgs = new Args();
-let pair_ = keccak256("MS-USD");
-getPriceDataArgs.addUint8Array(new Uint8Array(pair_));
-const scAddr: string = "AS12bVikBj3xFP3ouP71hpWbzLRDTxq2RaY2ssQWzoSZJUdK3aRm";
+const RegistryContract = 'AS1xBPxEPYoqnXEgC2nJN5s6oeJdKobVqZF3CTvSQCtK582fSDhR';
+const publicProvider = JsonRpcPublicProvider.mainnet();
 
-const {client, account} = await getClient();
+let resp = await publicProvider.readSC({
+  target: RegistryContract,
+  func: 'getAddressByString',
+  parameter : new Args().addString('UmbrellaFeeds'),
+});
 
-let readData: IReadData = {
-    maxGas: BigInt(40_000_000),
-    targetAddress: scAddr,
-    targetFunction: "getPriceData",
-    parameter: getPriceDataArgs,
-}
-const resp = await client.smartContracts().readSmartContract(readData);
-const priceData = new Args(resp.returnValue).nextSerializable(PriceData);
-console.log("priceData:", priceData);
+const UMBPriceFeedContract = new Args(resp.value).nextString();
+
+console.log('UMBPriceFeedContract:', UMBPriceFeedContract);
+
+const pairhash = keccak256('BTC-USD');
+const parameter = new Args().addUint8Array(new Uint8Array(pairhash));
+
+resp = await publicProvider.readSC({
+  target: UMBPriceFeedContract,
+  func: 'getPriceData',
+  parameter,
+});
+
+const priceData = new Args(resp.value).nextSerializable(PriceData);
+console.log('priceData:', priceData);
 ```
