@@ -439,10 +439,6 @@ const sidebars = {
       ],
     },
     {
-      type: "doc",
-      id: "build/tooling-versions",
-    },
-    {
       type: "category",
       label: "API",
       items: [
