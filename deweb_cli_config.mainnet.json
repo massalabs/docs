@@ -1,0 +1,14 @@
+{
+  "address": "AS1BsB34Hq7VGpGG26cudgFr15nshSeJfAkkf6WGY8JcXbG6kzUg",
+  "node_url": "https://mainnet.massa.net/api/v2",
+  "metadatas":
+  {
+    "TITLE": "Massa docs",
+    "DESCRIPTION": "Massa documentation",
+    "KEYWORD1": "docs",
+    "KEYWORD2": "massa",
+    "KEYWORD3": "web3",
+    "KEYWORD4": "deweb",
+    "KEYWORD5": "decentralized"
+  }
+}
