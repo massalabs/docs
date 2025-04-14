@@ -1,0 +1,41 @@
+name: DeWeb deployer
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Download config files from Massa testnet branch
+        run: |
+         chmod +x ./scripts/download-configs.sh
+         ./scripts/download-configs.sh
+
+      - name: Install dependencies
+        run: npm ci
+      - name: Build website
+        run: npm run build
+
+      - name: Deploy to Massa DeWeb
+        id: deploy
+        uses: massalabs/deweb-gh-action@v0.0.7
+        with:
+          config_file: deweb_cli_config.mainnet.json
+          source_folder: ./build
+        env:
+            MASSA_DEWEB_SECRET_KEY: ${{ secrets.MASSA_DEWEB_MAINNET_PKEY }}
+
+      - name: Get deployed website address
+        run: |
+          echo "Deployed buildnet website address: ${{ steps.deploy.outputs.deployed-website }}"
