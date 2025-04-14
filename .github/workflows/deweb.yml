@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to GitHub Pages
+    name: Deploy to DeWeb
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,9 +18,7 @@ jobs:
           cache: npm
 
       - name: Download config files from Massa testnet branch
-        run: |
-         chmod +x ./scripts/download-configs.sh
-         ./scripts/download-configs.sh
+        run: ./scripts/download-configs.sh
 
       - name: Install dependencies
         run: npm ci
@@ -38,4 +36,4 @@ jobs:
 
       - name: Get deployed website address
         run: |
-          echo "Deployed buildnet website address: ${{ steps.deploy.outputs.deployed-website }}"
+          echo "Deployed website address: ${{ steps.deploy.outputs.deployed-website }}"
