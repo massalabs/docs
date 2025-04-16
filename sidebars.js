@@ -604,16 +604,12 @@ const sidebars = {
       collapsed: false,
       items: ["deweb/cli/overview", "deweb/cli/upload", "deweb/cli/config", "deweb/cli/metadatas"],
     },
-    // {
-    //   type: "doc",
-    //   id: "deweb/faq",
-    //   label: "FAQ",
-    // },
-    // {
-    //   type: "doc",
-    //   id: "deweb/troubleshooting",
-    //   label: "Troubleshooting",
-    // },
+    {
+      type: "category",
+      label: "DeWeb CI",
+      collapsed: false,
+      items: ["deweb/ci/ci",],
+    },
   ],
 };
 
