@@ -1,0 +1,126 @@
+---
+title: Continuous Integration with GitHub Actions
+---
+
+This section describes how to set up continuous integration (CI) for deploying websites to Massa's DeWeb using GitHub Actions.
+
+**Overview**
+
+The Massa DeWeb GitHub Action automates the deployment of sites to decentralized storage via the Massa DeWeb CLI. By integrating this action into your repository's workflow, you can ensure that every code change is automatically deployed to DeWeb, streamlining your development and release process.
+
+### Features
+
+- Deploy websites to Massa's DeWeb.
+- Supports custom configuration files and RPC endpoints.
+- Automatically installs the required CLI tools for deployment.
+- Outputs the address of the deployed or updated website.
+
+---
+
+## Usage Example
+
+Below is a sample workflow configuration to deploy your website on every push on `main` branch to the repository:
+
+```yaml
+name: Deploy to Massa DeWeb
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy to Massa DeWeb
+        id: deploy
+        uses: massalabs/deweb-gh-action@v0.0.7
+        with:
+          config_file: deweb_cli_config_buildnet.json
+          source_folder: dist
+        env:
+          MASSA_DEWEB_SECRET_KEY: ${{ secrets.MASSA_DEWEB_SECRET_KEY }}
+
+      - name: Get deployed website address
+        run: |
+          echo "Deployed website address: ${{ steps.deploy.outputs.deployed-website }}"
+```
+**Note:** This action only supports Linux runners.
+
+---
+
+## Inputs
+
+| Name          | Description                                      | Required | Default                     |
+|---------------|--------------------------------------------------|----------|-----------------------------|
+| config_file   | Path to the DeWeb CLI configuration file         | No       | deweb_cli_config.json        |
+| source_folder | Directory containing website files               | No       | dist                        |
+| rpc_url       | Massa JSON RPC URL                               | No       | https://buildnet.massa.net/api/v2 |
+
+---
+
+## Environment Variables
+
+| Name                    | Description                                         |
+|-------------------------|-----------------------------------------------------|
+| MASSA_DEWEB_SECRET_KEY  | Private key for deploying to Massa's DeWeb.         |
+
+- Store `MASSA_DEWEB_SECRET_KEY` securely as a GitHub secret and reference it in your workflow as `${{ secrets.MASSA_DEWEB_SECRET_KEY }}`.
+
+---
+
+## Outputs
+
+| Name              | Description                                  |
+|-------------------|----------------------------------------------|
+| deployed-website  | Address of the deployed or updated website   |
+
+---
+
+## Configuration File Example
+
+Create a `deweb_cli_config.json` file to customize deployment:
+
+```json
+{
+  "node_url": "https://buildnet.massa.net/api/v2",
+  "metadatas": {
+    "TITLE": "The website name - buildnet",
+    "DESCRIPTION": "Your website description"
+  }
+}
+```
+
+After the initial deployment, update your config file with the deployed address to enable seamless updates:
+
+```json
+{
+  "address": "DEPLOYED_WEBSITE_ADDRESS",
+  "node_url": "https://buildnet.massa.net/api/v2",
+  "metadatas": {
+    "TITLE": "The website name - buildnet",
+    "DESCRIPTION": "Your website description"
+  }
+}
+```
+
+You can specify the path to your configuration file using the `config_file` input.
+
+---
+
+## Best Practices
+
+- **Store Secrets Securely:** Always store sensitive keys like `MASSA_DEWEB_SECRET_KEY` as encrypted GitHub secrets.
+- **Automate Deployments:** Use the CI workflow to deploy on every push or on specific branches as needed.
+- **Update Configuration:** After the first deployment, update your config file with the deployed address to allow for incremental updates.
+
+---
+
+## Additional Resources
+
+- [Massa DeWeb GitHub Action Repository](https://github.com/massalabs/deweb-gh-action)
