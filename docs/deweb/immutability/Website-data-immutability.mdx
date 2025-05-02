@@ -1,7 +1,7 @@
 ---
 title: Website data immutability
 ---
-# website data immutability
+# Website Data Immutability
 
 :::warning
 Once you make a DeWeb website's data immutable, you will never be able to update this version of your website or delete it to recover tokens locked for storage.
@@ -12,27 +12,27 @@ That way, no person or piece of code can ever alter that data again.
 
 ## Make immutable with easy uploader
 
-1. Go on [easy uploader](https://dws.massa.network) and connect your wallet.
-2. Find the website you want to make immutable, click on the three dot menu and select **Make Immutable**
-    ![make website immutable](images/make_site_immutable_easy_uploader.png)
-3. Check data in the confirm panel, click on **approve** and sign the operation on your wallet.
+1. Go to [easy uploader](https://dws.massa.network) and connect your wallet.
+2. Find the website you want to make immutable, click on the three-dot menu and select **Make Immutable**
+    ![make website immutable](images/make_site_immutable_easy_uploader.png).
+3. Review the data in the confirmation panel, click on **approve** and sign the operation on your wallet.
     ![approve immutable](images/approve_immutable_easy_upload.png)
 
 :::note
-In the dashboard, websites that have been made immutable have a padlock icon.
+In the dashboard, websites mades immutable display a padlock icon.
     ![padlock icon](images/padlock_icon_easy_uploader.png)
 :::
 
 
 ## Make immutable with the CLI
 
-1. Setup the configuration of the cli if not already done. For more info, check [CLI configuration](/docs/deweb/cli/config)
-2. Type following command:
+1. Set up the configuration of the cli if not already done. For more info, check [CLI Configuration](/docs/deweb/cli/config)
+2. Type the following command:
     ```bash
     npx @massalabs/deweb-cli immutable <website_address>
     ```
-3. Type `y` to accept the confirmation prompt
+3. Type `y` to accept the confirmation prompt.
 
 :::info
-To skip the confirmation prompt, you can add `-y` or `--yes` option.
+To skip the confirmation prompt, you can add the `-y` or `--yes` option.
 :::

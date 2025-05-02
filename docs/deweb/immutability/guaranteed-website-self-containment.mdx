@@ -9,13 +9,13 @@ You can add this header at the website-level: `Content-Security-Policy: default-
 
 To add headers to a website, you have to use metadatas as explained [here](/docs/deweb/cli/metadatas#http-headers).
 In our case, you can add the content security policy header by adding the following metadata: 
-- key: `http-header:Content-Security-Policy` 
-- value: `default-src 'self'`
+- Key: `http-header:Content-Security-Policy` 
+- Value: `default-src 'self'`
 
-To add a metadata to a website, you have two ways:
-- via config file: in the deweb_cli_config.json file, add a metadata field as explained in [cli config](/docs/deweb/cli/config):
+To add a metadata to a website, you have two options:
+- via config file: in the deweb_cli_config.json file, add a metadatas field as explained in [cli config](/docs/deweb/cli/config):
 ```
-"metadata": {
+"metadatas": {
     "http-header:Content-Security-Policy": "default-src 'self'"
 }
 ```
@@ -25,11 +25,11 @@ npx @massalabs/deweb-cli metadata --add "http-header:Content-Security-Policy",de
 ```
 
 :::note
-Currently guaranteed website self-containment cannot be achieved via easy uploader because it doesn't handle custom metadatas.
+Currently guaranteed website self-containment cannot be achieved via **Easy Uploader** because it doesn't handle custom metadatas.
 :::
 
 :::warning
-As these directives are part of the website data itself, you can't set them if the website data has already been made immutable. So if you want to apply both data immutability (see above) and self-containment, you must first ensure self-containment before applying data immutability.
+As these directives are part of the website data itself, you cannot set them if the website data has already been made immutable. So if you want to apply both data immutability (see above) and self-containment, you must first ensure self-containment before applying data immutability.
 :::
 
 :::warning
