@@ -606,6 +606,17 @@ const sidebars = {
     },
     {
       type: "category",
+      label: "Immutable website on deweb",
+      collapsed: false,
+      items: [
+        "deweb/immutability/overview",
+        "deweb/immutability/mns",
+        "deweb/immutability/Website-data-immutability",
+        "deweb/immutability/guaranteed-website-self-containment",
+      ],
+    },
+    {
+      type: "category",
       label: "DeWeb CI",
       collapsed: false,
       items: ["deweb/ci/ci",],

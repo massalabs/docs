@@ -1,0 +1,19 @@
+# Overview
+
+## Intro
+
+One of blockchain’s most powerful features is its ability to make programs and data immutable: this guarantees they can never be altered again. Even if the creator attempts to modify immutable data or programs, they cannot—immutability is irreversible.
+
+Making a website immutable ensures its content can never be changed. This fosters significant trust among users: they gain assurance that even if the team behind the website disbands or is hacked, the site itself will remain intact and uncompromised.
+
+However, immutability has drawbacks. If a flaw or security vulnerability is discovered in an immutable website, the new or fixed version must be published separately. Users must then be proactively notified to adopt the updated version voluntarily.
+
+## The Three Pillars of DeWeb Immutability
+
+For a DeWeb website to achieve full immutability, it must satisfy three criteria:
+
+- **The MNS domain name of the website must be immutable.** Example: if `mysite.massa` is immutable, users are guaranteed that when they browse `mysite.massa`, it won't one day suddenly direct them to a different (potentially malicious) target.
+- **The website data must be immutable.** The code, text, images, scripts, and other files representing the DeWeb website itself are stored by smart contracts on the Massa blockchain. To achieve immutability, the smart contract handling the website must be made incapable of changing the stored data.
+- **The website should not depend on any non-immutable data.** If, when displayed in the user's browser, a website loads data from external sources, those sources can inject non-immutable code, data, and assets into the page. For full immutability, the website should be self-contained, and the user's browser should be instructed to refuse access to any resources that are not directly contained in the website itself.
+
+DeWeb allows applying all three of these aspects to achieve full immutability, but also **allows applying only a subset depending on the needs of the developers**.
