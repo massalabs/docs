@@ -1,0 +1,37 @@
+---
+title: Guaranteed Website Self-Containment
+---
+
+Protecting against the website asking the user's browser to load external, non-immutable data when displayed is achieved by setting specific HTTP headers that are part of the website data stored on-chain. When the website is loaded by a user from a provider, the provider forwards those HTTP headers to the user's browser to tell the browser to refuse any requests by the website to load resources coming from different domains.
+
+To prevent the browser from loading resources coming from other sources, you can use the [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP) header.
+You can add this header at the website-level: `Content-Security-Policy: default-src 'self';`
+
+To add headers to a website, you have to use metadatas as explained [here](/docs/deweb/cli/metadatas#http-headers).
+In our case, you can add the content security policy header by adding the following metadata: 
+- key: `http-header:Content-Security-Policy` 
+- value: `default-src 'self'`
+
+To add a metadata to a website, you have two ways:
+- via config file: in the deweb_cli_config.json file, add a metadata field as explained in [cli config](/docs/deweb/cli/config):
+```
+"metadata": {
+    "http-header:Content-Security-Policy": "default-src 'self'"
+}
+```
+- directly in command line as explained in [cli metadata](/docs/deweb/cli/metadatas):
+```bash
+npx @massalabs/deweb-cli metadata --add "http-header:Content-Security-Policy",default-src 'self'" <website_contract_address>
+```
+
+:::note
+Currently guaranteed website self-containment cannot be achieved via easy uploader because it doesn't handle custom metadatas.
+:::
+
+:::warning
+As these directives are part of the website data itself, you can't set them if the website data has already been made immutable. So if you want to apply both data immutability (see above) and self-containment, you must first ensure self-containment before applying data immutability.
+:::
+
+:::warning
+Some sites depend on external resources and might break under this constraint.
+:::

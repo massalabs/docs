@@ -1,0 +1,19 @@
+# Overview
+
+## Intro
+
+One of the superpowers of blockchain is that it allows some programs and data to be made immutable: that means they are guaranteed to never change again. Even if the creator wants to change immutable data or programs, they simply can't.
+
+Making a website immutable means that its contents can never be changed again. This provides a high level of trust to the users of the website: they know that even if the team behind it disappears or gets hacked, the website will never disappear or be compromised.
+
+Immutability also has downsides: if a flaw or security issue is discovered in an immutable website, the new/fixed version needs to be published separately, and users need to be informed so they voluntarily start using the new version.
+
+## The Three Sides of DeWeb Immutability
+
+For a DeWeb website to be considered **fully immutable**, it needs to meet three criteria:
+
+- **The MNS domain name of the website must be immutable.** Example: if `mysite.massa` is immutable, users are guaranteed that when they browse `mysite.massa`, it won't one day suddenly direct them to a different (potentially malicious) target.
+- **The website data must be immutable.** The code, text, images, scripts, and other files representing the DeWeb website itself are stored by smart contracts on the Massa blockchain. To achieve immutability, the smart contract handling the website must be made incapable of changing the stored data.
+- **The website should not depend on any non-immutable data.** If, when displayed in the user's browser, a website loads data from external sources, those sources can inject non-immutable code, data, and assets into the page. For full immutability, the website should be self-contained, and the user's browser should be instructed to refuse access to any resources that are not directly contained in the website itself.
+
+DeWeb allows applying all three of these aspects to achieve full immutability, but also **allows applying only a subset depending on the needs of the developers**.
