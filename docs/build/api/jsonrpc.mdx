@@ -399,6 +399,106 @@ curl --location --request POST 'https://buildnet.massa.net/api/v2' \
 </p>
 </details>
 
+### get_addresses_datastore_keys
+
+**Available from versions MAIN.3.0 for Mainnet / DEVN.28.14 for Buildnet.**
+
+Retrieve datastore keys for given addresses.
+
+#### Parameters
+
+| Field                 | Type              | Mandatory | Default | Description                                                                 |
+|-----------------------|-------------------|-----------|---------|-----------------------------------------------------------------------------|
+| `address`             | `string`          | Yes       | N/A     | The blockchain address for which to retrieve datastore keys.               |
+| `prefix`              | `array<integer>`  | Yes       | `[]`    | A prefix to filter the datastore keys (bytes represented as array of integers). |
+| `is_final`            | `boolean`         | Yes       | `true`  | Whether to retrieve keys from the final state of the blockchain.           |
+| `start_key`           | `array<integer>`  | No        | `null`  | The key to start filtering from (inclusive by default). Bytes as array of integers. |
+| `inclusive_start_key` | `boolean`         | No        | `true`  | Include or exclude the start_key.                                          |
+| `end_key`             | `array<integer>`  | No        | `null`  | The key to end filtering at (inclusive by default). Bytes as array of integers. |
+| `inclusive_end_key`   | `boolean`         | No        | `true`  | Include or exclude the end_key.                                            |
+| `count`               | `integer`         | No        | `500`   | The maximum number of keys to retrieve (Max: 500).                         |
+
+<Tabs>
+<TabItem value="json (Mainnet)" label="cURL (Mainnet)" default>
+
+```shell
+curl --location --request POST 'https://mainnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_addresses_datastore_keys",
+    "params": [
+        [
+            {
+                "address": "AS1iBwn89sM1GsTRu7PCK1DuYqZ7ckuF7M9gM1Ybx7rpzMw2tKc1",
+                "prefix": [107],
+                "is_final": true,
+                "start_key": [107,101,121,49],
+                "inclusive_start_key": true,
+                "end_key": [107,101,121,51],
+                "inclusive_end_key": false,
+                "count": 10
+            }
+        ]
+    ]
+}'
+```
+
+</TabItem>
+<TabItem value="json (Buildnet)" label="cURL (Buildnet)">
+
+```shell
+curl --location --request POST 'https://buildnet.massa.net/api/v2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "get_addresses_datastore_keys",
+    "params": [
+        [
+            {
+                "address": "AS1iBwn89sM1GsTRu7PCK1DuYqZ7ckuF7M9gM1Ybx7rpzMw2tKc1",
+                "prefix": [107],
+                "is_final": true,
+                "start_key": [107,101,121,49],
+                "inclusive_start_key": true,
+                "end_key": [107,101,121,51],
+                "inclusive_end_key": false,
+                "count": 10
+            }
+        ]
+    ]
+}'
+```
+
+</TabItem>
+</Tabs>
+
+<details>
+<summary>Example response: </summary>
+<p>
+
+```json
+{
+    "jsonrpc": "2.0",
+    "result": [
+        {
+            "address": "AS12KMSMMARaHNZYkWeUSBE9JrjBPSQr6q7NXHGDoGweCrdNkHELj",
+            "is_final": true,
+            "keys": [
+              [107,101,121,49],
+              [107,101,121,50]
+            ]
+        }
+    ],
+    "id": 1
+}
+```
+
+</p>
+</details>
+
 ### get_graph_interval
 
 Get information about block graph
