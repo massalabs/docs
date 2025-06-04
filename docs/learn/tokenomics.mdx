@@ -86,21 +86,21 @@ A minimum number of coins must be deposited to be able to stake, corresponding t
 
 If the node is offline for some reason, it misses the opportunity to produce the block and to get the reward. If the node is missing these opportunities too often, it is automatically deactivated and its rolls are sold and fully given back as coins. If the node produces more than one block in a selected slot, this is considered as bad behavior and is punished with slashing: one roll is slashed, completely lost and no coins are given back.
 
-At each slot, one staking address is selected to produce a block, and in order to improve consensus speed, `16` other addresses are selected to create endorsements —votes about the best blocks. A maximum minted reward of `1.02` tokens is distributed per slot. If there was a block in this slot, the reward is distributed as follows:
-- `0.06` tokens are given to the block creator
+At each slot, one staking address is selected to produce a block, and in order to improve consensus speed, `16` other addresses are selected to create endorsements —votes about the best blocks. 
+
+The maximum reward minted per slot was `1.02`, and is now `0.40001` since the first governance proposal passed ([https://mip.massa.net/proposals/0](https://mip.massa.net/proposals/0)) and was activated on May 26, 2025.
+The minted reward is distributed per slot. If there was a block in the slot, the reward is distributed as follows:
+- `0.02353` tokens are given to the block creator
 - For each endorsement included in the block (up to `16`)
-  - `0.02` tokens are given to the block creator
-  - `0.02` tokens are given to the endorsement creator
-  - `0.02` tokens are given to the creator of the endorsed block
+  - `0.007843333` tokens are given to the block creator
+  - `0.007843333` tokens are given to the endorsement creator
+  - `0.007843333` tokens are given to the creator of the endorsed block
 
 Block and endorsement creators also share the gas fees of all transactions included in the block, and half of the slashed coins, the other half being burnt. However, all the fees of autonomous smart contracts are burnt as they run outside blocks. 
 
-There are `2` slots per second in Massa architecture, so these rewards add up to a maximum of `64,377,504` newly-minted Massa tokens per year, distributed to active staking nodes. The inflation rate is therefore approximately `6.4%` during the first year, and decreases each year as the total supply increases.
+There are `2` slots per second in Massa architecture, so these rewards add up to a maximum of `25,246,711` newly-minted Massa tokens per year, distributed to active staking nodes. The inflation rate was approximately `6.4%` during the first year, and is now around `2.5%` and decreases each year as the total supply increases.
 
-As less than the total supply is expected to be staking at any point in time, the actual return per year for active stakers will be higher than this percentage. The next figure shows the maximum inflation rate and an estimation of the annual percentage return (APR) for staking nodes over time.
-
-
-![](inflation.png)
+As less than the total supply is expected to be staking at any point in time, the actual return per year for active stakers will be higher than this percentage. The average APR and its history can be found on Massa Staking Calculator ([https://massacalc.info/?tab=apy](https://massacalc.info/?tab=apy)).
 
 
 ### Example: How to compute my expected staking rewards ?
@@ -109,11 +109,11 @@ Let's assume I currently have `20` initial rolls from genesis, and after launch 
 
 I can monitor the total number of rolls currently staked on the network on the Massa [explorer](https://explorer.massa.net/). Let's assume I see that `500,000` rolls are staked (low number, maybe only in the first weeks after mainnet). I thus produce `0,0046%` of blocks and endorsements. 
 
-There are `172,800` blocks per day, so I expect to produce `8` blocks per day on average, but also approximately `127` endorsements per day. The maximum rewards given per block is `1.02` tokens (for block and endorsement producers), which is `176,256` tokens per day. Thus I can expect `176,256 * 0,0046% = 8.1` tokens per day for my `23` rolls, assuming `500,000` rolls are staked in total, and assuming I am always online and I don't miss a block! 
+There are `172,800` blocks per day, so I expect to produce `8` blocks per day on average, but also approximately `127` endorsements per day. The maximum rewards given per block is `0.40001` tokens (for block and endorsement producers), which is `69,121` tokens per day. Thus I can expect `69,121 * 0,0046% = 3.18` tokens per day for my `23` rolls, assuming `500,000` rolls are staked in total, and assuming I am always online and I don't miss a block! 
 
 These rewards do not take into account potential gas fees that will be set by users if the network becomes congested one day.
 
-The staking rewards are unlocked, so after `13` days, I should have `105` tokens and I will be able to buy a `24th` roll!
+The staking rewards are unlocked, so after a month approximately I should have `100` more tokens and I will be able to buy a `24th` roll!
 
 
 
