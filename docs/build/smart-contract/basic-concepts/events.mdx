@@ -21,6 +21,13 @@ In Massa's smart contracts, events provide a way to emit runtime messages that c
 In Massa, events are not stored in the blockchain ledger, meaning they are ephemeral. Therefore, events should not be used as a source of persistent data. Instead, they are suitable for temporary tasks such as monitoring, logging, or providing real-time feedback.
 For use cases that require persistent data, storage should be used.
 
+## Limits
+
+Due to the high throughput and low hardware requirements of Massa, memory usage linked to event emission needs to be capped. To achieve this, several limits need to be respected:
+* Up to 25 events can be emitted in total during one execution (operation, async message or deferred call) regardless of the number of sub-calls happening. Attempting to emit more events results in a runtime exception being raised causing the execution to fail & revert. Note that this limit only applies to events explicitly emitted by smart contract code using the `generateEvent` ABI or similar. System events such as execution failure notifications are not subject to this limit.
+* The maximum size of the event message is 512 bytes. Any attempt to emit a longer message by smart contract code using the `generateEvent` ABI or similar results in an exception being raised causing the execution to fail & revert. For system events (not explicitly emitted by smart contract code), any overflowing message is silently truncated down to 512 bytes.
+
+
 ## Emitting a custom event
 To emit a custom event in a smart contract, you can use the generateEvent function (assuming this utility is available in your environment):
 
