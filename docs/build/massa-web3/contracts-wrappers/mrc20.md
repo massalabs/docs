@@ -16,6 +16,7 @@ The MRC20 class is a wrapper for interacting with MRC20 token contracts on the M
 >   - WETHb (AS125oPLYRTtfVjpWisPZVTLjBhCFfQ1jDsi75XNtRm1NZux54eCj)
 >   - USDTb (AS12LKs9txoSSy8JgFJgV96m8k5z9pgzjYMYSshwN67mFVuj3bdUV)
 >   - PUR (AS133eqPPaPttJ6hJnk3sfoG5cjFFqBDi1VGxdo2wzWkq8AfZnan)
+>   - WBTCe (AS12fr54YtBY575Dfhtt7yftpT8KXgXb1ia5Pn1LofoLFLf9WcjGL)
 > - Buildnet:
 >   - DAIs (AS12LpYyAjYRJfYhyu7fkrS224gMdvFHVEeVWoeHZzMdhis7UZ3Eb)
 >   - WETHs (AS1gt69gqYD92dqPyE6DBRJ7KjpnQHqFzFs2YCkBcSnuxX5bGhBC)
@@ -23,6 +24,7 @@ The MRC20 class is a wrapper for interacting with MRC20 token contracts on the M
 >   - USDTbt (AS12ix1Qfpue7BB8q6mWVtjNdNE9UV3x4MaUo7WhdUubov8sJ3CuP)
 >   - WETHbt (AS12RmCXTA9NZaTBUBnRJuH66AGNmtEfEoqXKxLdmrTybS6GFJPFs)
 >   - WMAS (AS12FW5Rs5YN2zdpEnqwj4iHUUPt9R4Eqjq2qtpJFNKW3mn33RuLU)
+>   - WBTCs (AS1ZXy3nvqXAMm2w6viAg7frte6cZfJM8hoMvWf4KoKDzvLzYKqE)
 
 ## Basic usage:
 
