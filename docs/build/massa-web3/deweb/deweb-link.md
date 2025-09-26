@@ -8,7 +8,7 @@ sidebar_label: deweb link
 ## The Problem
 In web2, you can link site A to another site B by displaying the URL of site B in site A.  
 In web3, displaying a link to a decentralized website is not so straightforward.
-A deweb website is identified by one (or several) MNS (Massa Name System) domain but you can't just display it inside a `<a>` balise because most browsers don't handle MNS.  
+A deweb website is identified by one (or several) MNS (Massa Name System) domain but you can't just display it inside a `<a>` tag because most browsers don't handle MNS.  
 To access a deweb site, you have to incorporate its MNS as a subdomain of the URL of a [deweb provider](../../../deweb/provider/setup-public-instance.mdx). But which provider should you choose when you want to create a link to a deweb site ?  
 The usual way is to hardcode the provider into a URL like this: `<mns>.<provider domain name>`
 The drawback of this approach is that you force the user to use a specific provider. This causes the following issues:
