@@ -348,6 +348,23 @@ const sidebars = {
             },
           ],
         },
+        {
+          type: "category",
+          collapsible: false,
+          label: "Deweb",
+          items: [
+            {
+              type: "doc",
+              id: "build/massa-web3/deweb/massa-web3-deweb-overview",
+              label: "Overview",
+            },
+            {
+              type: "doc",
+              id: "build/massa-web3/deweb/deweb-link",
+              label: "Deweb Link",
+            },
+          ],
+        },
       ],
     },
     {
