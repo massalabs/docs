@@ -274,18 +274,20 @@ At this stage, we are running the API in standalone mode. In the next section, w
 
 ## Register to Massa Station
 
-### Install the Massa Station Plugin package
+### Install the Massa Station plugin-kit module
 
-To be able to register the plugin with Massa Station, we need to install the Massa Station Plugin package. Indeed, this package contains the `RegisterPlugin` function that allows us to register the plugin to Massa Station.
+To be able to register the plugin with Massa Station, we need to install the [plugin-kit](https://github.com/massalabs/station/tree/main/plugin-kit) go module.  
+The plugin-kit module provides useful features to develop Massa Station plugins in golang.
+Here, we are going to use the `RegisterPlugin` function that allows us to register the plugin to Massa Station.
 
 Install the following package:
 ```bash
-go get github.com/massalabs/station-massa-hello-world
+go get github.com/massalabs/station/plugin-kit
 ```
 
 This package will be imported to `my-plugin.go` file. So go ahead and add the following line to the imports section of `my-plugin.go`:
 ```go
-  "github.com/massalabs/station-massa-hello-world/pkg/plugin"
+  "github.com/massalabs/station/plugin-kit"
 ```
 The import section of your `my-plugin.go` file should look like this:
 
@@ -304,7 +306,7 @@ import (
   "github.com/go-openapi/loads"
   "github.com/rs/cors"
 
-  "github.com/massalabs/station-massa-hello-world/pkg/plugin"
+  pluginKit "github.com/massalabs/station/plugin-kit"
 )
 ```
 Once this is done, we will add the registration logic to our main function. We want to add the following lines to the main function:
@@ -315,7 +317,7 @@ Once this is done, we will add the registration logic to our main function. We w
     panic(err)
   }
 
-  plugin.RegisterPlugin(listener) // registers the plugin
+  pluginKit.RegisterPlugin(listener) // registers the plugin
 ```
 They should be added right after the `server := initializeAPI()` line. In the end, your main function should look like this:
 
@@ -334,7 +336,10 @@ func main() {
         panic(err)
     }
 
-    plugin.RegisterPlugin(listener) // registers the plugin
+    err = pluginKit.RegisterPlugin(listener) // registers the plugin
+    if err != nil {
+			panic(err)
+		}
 
     if err := server.Serve(); err != nil {
         panic(err)
@@ -346,7 +351,7 @@ func main() {
 ```
 
 :::info
-`plugin.RegisterPlugin` is a function available in the [hello-world plugin package](https://github.com/massalabs/station-massa-hello-world/blob/main/pkg/plugin/register.go).
+`pluginKit.RegisterPlugin` is a function available in the [plugin-kit module](https://github.com/massalabs/station/blob/main/plugin-kit/register.go).
 
 It facilitates the registration of a plugin with Massa Station, assigning a unique correlation ID to the plugin for identification purposes within the Massa Station system.
 :::
@@ -740,7 +745,7 @@ import (
   "github.com/go-openapi/loads"
   "github.com/rs/cors"
 
-  "github.com/massalabs/station-massa-hello-world/pkg/plugin"
+  pluginKit "github.com/massalabs/station/plugin-kit"
 )
 ```
 
