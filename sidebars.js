@@ -608,7 +608,6 @@ const sidebars = {
       items: [
         "deweb/upload/overview",
         "deweb/upload/mns",
-        "deweb/upload/website-registry",
       ],
     },
     {
