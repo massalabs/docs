@@ -1,0 +1,55 @@
+---
+title: Deleting a Website
+---
+
+# Deleting a Website
+
+The `delete` command removes the files and the global metadata of a website you own. With `--purge`, it
+also deletes the website smart contract itself.
+
+```bash
+npx @massalabs/deweb-cli delete <website_contract_address>
+```
+
+The command uses the same wallet configuration as `upload`: see [CLI Configuration](./config).
+
+## What the Command Does
+
+1. It lists the files and the global metadata stored in the website smart contract.
+2. It asks for confirmation. Use `-y` (`--yes`) to skip the prompt.
+3. It deletes them in several operations, so that large websites do not exceed the limits of a single
+   operation. The progress is displayed as the operations are confirmed.
+
+If some operations fail, the command reports how many and you can run it again: it only deletes what is
+left.
+
+Without `--purge`, the website smart contract stays on the blockchain, empty, and stays listed in the
+DeWeb index under your address. You can upload a new version to the same address later with
+`upload --address`.
+
+## Purging the Smart Contract
+
+```bash
+npx @massalabs/deweb-cli delete <website_contract_address> --purge
+```
+
+After deleting the files, `--purge` asks for a second confirmation (also skipped by `-y`), then deletes
+everything left in the smart contract, including its bytecode, and sends the coins it holds, among them
+the freed storage, back to your account. The address cannot be used as a website anymore.
+
+The website is then removed from the DeWeb index. Use `--noIndex` to skip this step.
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-y, --yes` | Skip the confirmation prompts. |
+| `--purge` | Also delete the website smart contract. |
+| `--noIndex` | With `--purge`, do not update the DeWeb index. |
+
+The [global options](./overview#global-options) (`--config`, `--node_url`, `--wallet`, `--password`)
+are also accepted.
+
+:::note
+An [immutable website](../immutability/overview) cannot be deleted.
+:::

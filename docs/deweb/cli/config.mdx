@@ -34,6 +34,8 @@ Here’s a breakdown of each field:
 - **`wallet_password`**: The password for your Massa wallet file, used when `wallet_path` is specified.
 - **`wallet_path`**: The file path to your Massa wallet in YAML format. Only YAML wallet files are supported.
 - **`secret_key`**: The secret key for your Massa account. Use this as an alternative to `wallet_password` and `wallet_path`.
+- **`address`**: The address of an already deployed website. `upload` then edits this website instead of
+  deploying a new one, and `list`, `show`, `metadata` use it when no address is given on the command line.
 - **`metadatas`**: An optional field that allows you to specify metadatas for your website.
   Those metadatas will be stored on the Massa blockchain and can be accessed by anyone.
   :::tip About Metadatas
@@ -52,7 +54,19 @@ If the `SECRET_KEY` environment variable is set, it will take precedence over th
 
 ## Setting Configurations Directly on the Command Line
 
-If you prefer, you can bypass the config file and specify values directly on the command line. For example:
+If you prefer, you can bypass the config file and specify values directly on the command line. A value
+given on the command line takes precedence over the config file:
+
+| Command-line option | Config file field |
+|---------------------|-------------------|
+| `-n, --node_url` | `node_url` |
+| `-w, --wallet` | `wallet_path` |
+| `-p, --password` | `wallet_password` |
+| `-a, --address` (after `upload` or `show`) | `address` |
+| `-s, --chunkSize` (after `upload`) | `chunk_size` |
+
+Use `-c, --config <path>` to read another config file than `deweb_cli_config.json` in the current
+directory. For example:
 
 ```bash
 npx @massalabs/deweb-cli upload <website_path> --node_url <your_node_url> --wallet <path_to_wallet> --password <your_password>

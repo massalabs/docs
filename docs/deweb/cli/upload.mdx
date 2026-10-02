@@ -127,10 +127,25 @@ With your configuration in place, run the `upload` command to deploy your websit
 npx @massalabs/deweb-cli upload /path/to/website-build-directory
 ```
 
-:::note
-If you need to edit an existing website,
-you can simply use the `--address` flag to specify the smart contract address of the website you want to edit.
+:::note Editing an existing website
+To edit a website you already deployed, give its smart contract address with `--address`, or `-a`
+after the command name:
+
+```bash
+npx @massalabs/deweb-cli upload /path/to/website-build-directory --address AS12...
+```
+
+Only the files that changed are uploaded, and no new smart contract is deployed. The address can also be
+set in the config file (`address` field).
 :::
+
+Other `upload` options:
+
+- `-y, --yes`: skip the confirmation prompt.
+- `--noIndex`: do not register the website in the DeWeb index (by default, a newly deployed website is
+  added to it).
+- `-s, --chunkSize <size>`: chunk size in bytes, overriding `chunk_size` from the config file.
+- `--skip-index-html-check`: upload even if there is no `index.html` at the root of the directory.
 
 This command will begin the upload process.
 
