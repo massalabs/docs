@@ -24,17 +24,51 @@ Before running the CLI, ensure you have:
 
 DeWeb CLI offers a range of capabilities for working with website stored on the Massa blockchain:
 
-- **Upload**: Uploads and edits your website to the blockchain.
-- **Delete**: Removes your website and its associated files from the blockchain.
-- **List Files**: Lists all files and metadata associated with a specific website, useful for verifying deployed content.
-- **View File Content**: Allows you to view the content of a specific file, 
+- **Upload** (`upload`): Uploads and edits your website to the blockchain. See [Uploading a Website](./upload).
+- **Delete** (`delete`): Removes your website and its associated files from the blockchain. See [Deleting a Website](./delete).
+- **List Files** (`list`): Lists all files and metadata associated with a specific website, useful for verifying deployed content.
+- **View File Content** (`show`): Allows you to view the content of a specific file,
     providing a way to debug or inspect individual files directly on the blockchain.
+- **Metadata** (`metadata`): Adds or removes website and file metadata. See [Metadatas](./metadatas).
+- **Immutability** (`immutable`): Makes a website immutable. See [Immutable websites](../immutability/overview).
 
 To explore these commands further, you can use the `--help` option:
 
 ```bash
 npx @massalabs/deweb-cli --help
 ```
+
+## Global Options
+
+These options are accepted by every command:
+
+| Option | Description |
+|--------|-------------|
+| `-c, --config <path>` | Path to the config file (default: `deweb_cli_config.json`). See [CLI Configuration](./config). |
+| `-n, --node_url <url>` | URL of the Massa node to use. |
+| `-w, --wallet <path>` | Path to a YAML wallet file. |
+| `-p, --password <password>` | Password of the wallet file. |
+| `-a, --accept_disclaimer` | Accept the legal disclaimer without being prompted. |
+
+They can be written before or after the command name:
+
+```bash
+npx @massalabs/deweb-cli -c my_config.json upload ./dist
+npx @massalabs/deweb-cli upload ./dist -c my_config.json
+```
+
+:::caution `-a` depends on its position
+An option written **after** the command name belongs to that command. Some commands define their own
+`-a` (`upload -a <address>`, `show -a <address>`, `metadata -a <metadata>`), so:
+
+- `npx @massalabs/deweb-cli -a upload ./dist` accepts the disclaimer;
+- `npx @massalabs/deweb-cli upload ./dist -a AS12...` edits the website at `AS12...`.
+
+After the command name, accept the disclaimer with the long form, `--accept_disclaimer`.
+:::
+
+Commands reject unexpected extra arguments: a misplaced value stops the command with an error instead
+of being ignored.
 
 ## Quick Start
 

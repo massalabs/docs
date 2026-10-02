@@ -23,6 +23,9 @@ For example, to add two metadata entries, you can use the following command:
 npx @massalabs/deweb-cli metadata --add "myMetadataKey1,myMetadataValue1;myMetadataKey2,myMetadataValue2" <website_contract_address>
 ```
 
+`-a` is the short form of `--add` when it is written after the command name, and `-d` the short form of
+`--delete`. See [Global Options](./overview#global-options) for why the position of `-a` matters.
+
 ### Remove global metadata
 Remove one or more global metadata from your website. You can specify the metadata key in the command line.
 The metadata key should be separated by a coma. For example, to remove two metadata entries, you can use the following command:
