@@ -106,6 +106,17 @@ Retrieves all storage keys registered at a given address.
 - `filter`: Prefix key filter.
 - `final`: Defaults to true.
 
+From version `5.3.0` this method is backed by
+[`get_addresses_datastore_keys`](../api/jsonrpc.mdx#get_addresses_datastore_keys)
+and paginates internally, so it returns every matching key regardless of the
+node's cap on a single datastore key query.
+
+Earlier versions instead read the full key list from
+[`get_addresses`](../api/jsonrpc.mdx#get_addresses) and filtered it client-side.
+That still returns every key, but it fetches the address's entire keyset on each
+call and cannot filter by prefix node-side, so upgrading is recommended for
+addresses holding many keys.
+
 ```typescript
 readStorage(address: string, keys: Uint8Array[] | string[], final?: boolean): Promise<(Uint8Array | null)[]>
 ```
