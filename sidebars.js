@@ -207,6 +207,14 @@ const sidebars = {
     },
     {
       type: "doc",
+      id: "tutorial/fungible-token",
+    },
+    {
+      type: "doc",
+      id: "tutorial/non-fungible-token",
+    },
+    {
+      type: "doc",
       id: "tutorial/trading-bot",
     },
   ],
