@@ -298,12 +298,15 @@ Get information about
 (es) (balances, block creation, \...).
 
 :::note
-The `final_datastore_keys` and `candidate_datastore_keys` fields list **every**
-datastore key of the address, with no prefix filter and no limit. On addresses
-holding many keys this makes the call expensive and the response large.
+Starting with MAIN.5.1, the `final_datastore_keys` and `candidate_datastore_keys`
+fields list **at most** `max_datastore_keys_query` keys each (`500` on the default
+configuration, reported by [`get_status`](#get_status)). Keys beyond the cap are
+left out **silently**, without error. Earlier releases listed every datastore key
+of the address.
 
-Prefer [`get_addresses_datastore_keys`](#get_addresses_datastore_keys), which
-supports prefix filtering and pagination.
+To list the keys of an address, use
+[`get_addresses_datastore_keys`](#get_addresses_datastore_keys), which supports
+prefix filtering and pagination.
 :::
 
 <Tabs>
@@ -430,10 +433,11 @@ Retrieve datastore keys for given addresses.
 :::caution
 The result is **capped** and truncated **silently**.
 
-Starting with MAIN.6.0 for Mainnet / DEVN.31.0 for Buildnet, omitting `count`
-defaults it to the node's maximum (`500` on the default configuration). Earlier
-releases documented the same default but did not enforce it, and returned every
-matching key instead.
+Starting with MAIN.5.1, omitting `count` defaults it to the node's maximum
+(`500` on the default configuration). Earlier releases documented the same
+default but did not enforce it, and returned every matching key instead. The
+node reports its maximum in the `max_datastore_keys_query` field of
+[`get_status`](#get_status) (`null` when it applies no cap).
 
 The response carries no indicator that keys were left out: a truncated result is
 indistinguishable from a complete one. An address holding more keys than the cap
