@@ -109,7 +109,9 @@ Retrieves all storage keys registered at a given address.
 From version `5.3.0` this method is backed by
 [`get_addresses_datastore_keys`](../api/jsonrpc.mdx#get_addresses_datastore_keys)
 and paginates internally, so it returns every matching key regardless of the
-node's cap on a single datastore key query.
+node's cap on a single datastore key query. From version `5.4.0`, the page size
+is the node's cap, read once from the `max_datastore_keys_query` field of
+`get_status`.
 
 Earlier versions instead read the full key list from
 [`get_addresses`](../api/jsonrpc.mdx#get_addresses) and filtered it client-side.
