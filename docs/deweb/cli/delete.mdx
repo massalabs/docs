@@ -39,6 +39,12 @@ the freed storage, back to your account. The address cannot be used as a website
 
 The website is then removed from the DeWeb index. Use `--noIndex` to skip this step.
 
+:::caution Large websites running an old contract
+Since the MIP-0002 network upgrade, purging fails on websites running contract version 2 or older that
+have more than 500 datastore keys (roughly more than 160 files). Upgrade the website contract first with
+[`upgrade`](./upgrade), then purge it.
+:::
+
 ## Options
 
 | Option | Description |
@@ -46,6 +52,9 @@ The website is then removed from the DeWeb index. Use `--noIndex` to skip this s
 | `-y, --yes` | Skip the confirmation prompts. |
 | `--purge` | Also delete the website smart contract. |
 | `--noIndex` | With `--purge`, do not update the DeWeb index. |
+
+Before deleting, the command warns you if the website runs an older contract than the one bundled with
+the CLI. See [Outdated Contract Warning](./upgrade#outdated-contract-warning).
 
 The [global options](./overview#global-options) (`--config`, `--node_url`, `--wallet`, `--password`)
 are also accepted.

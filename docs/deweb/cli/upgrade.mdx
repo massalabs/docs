@@ -1,0 +1,144 @@
+---
+title: Upgrading a Website Contract
+---
+
+# Upgrading a Website Contract
+
+Every DeWeb website is its own smart contract: it stores the website files and metadata and runs the
+code that manages them. The `upgrade` command replaces the code of an existing website contract with the
+version bundled with the DeWeb CLI, without redeploying the website:
+
+```bash
+npx @massalabs/deweb-cli upgrade <website_contract_address>
+```
+
+The website files, its metadata and its MNS domains are kept: the address does not change.
+
+## Contract Versions
+
+The DeWeb CLI deploys new websites with the contract it bundles. A website deployed with an older CLI
+keeps running the contract it was deployed with, until you upgrade it.
+
+Each contract stores its version in the website datastore, under the `\xFFDEWEB_VERSION` key.
+The versions differ in how they list datastore keys:
+
+- Versions 1 and 2 list datastore keys in a single query.
+- Version 3 lists datastore keys page by page, as required since
+  [MIP-0002](#why-upgrade-after-mip-0002), and adds the `syncVersion` function.
+
+The constructor of a contract, which stores the version, only runs when the contract is deployed. After
+an upgrade, the new code stores its version with `syncVersion`, which the CLI calls in the same operation
+as the upgrade (see [What the Command Does](#what-the-command-does)).
+
+## Why Upgrade After MIP-0002
+
+The MIP-0002 network upgrade (node release `MAIN.5.1`) limits datastore key queries made by smart
+contracts: a query fails when more than
+[500 keys](/docs/node/constants#constants-addedupdated-with-mip-0002) match. Contracts must list
+larger sets of keys page by page, with the paginated datastore key functions that MIP-0002 introduces.
+
+Contract version 2 and older list keys in a single query. The operation affected in practice is
+**purging** a website (`delete --purge`, see [Deleting a Website](./delete)), which lists the whole
+datastore of the contract: it fails on websites with more than 500 datastore keys. A website uses about
+3 keys per file plus its metadata, so websites with more than about 160 files cannot be purged. The
+operation fails with an error like:
+
+```
+datastore key query matched more than the maximum of 500 keys
+```
+
+Operations that list the keys of a single file (its chunks or its metadata) only fail for a file with
+more than 500 such keys. Uploading, editing and browsing a website are otherwise not affected.
+
+Contract version 3 lists keys page by page and has no such limit. Upgrade your websites to it, in
+particular large ones, so that they can still be purged.
+
+:::caution Requirements
+- **MIP-0002 must be active on the network.** Contract version 3 uses the paginated datastore key
+  functions, so it cannot be deployed nor run before MIP-0002 is active. Before that, `upgrade` stops
+  with an error and leaves the website unchanged.
+- **The CLI must ship contract version 3.** `upgrade` installs the contract bundled with the CLI you
+  run. The CLI releases published before MIP-0002 is active on mainnet still bundle version 2: with them,
+  websites running version 2 are reported as up to date. Use the latest release of the CLI
+  (`npx @massalabs/deweb-cli@latest`): the confirmation prompt shows the version it ships.
+:::
+
+## What the Command Does
+
+1. It checks that the website is not [immutable](../immutability/overview) and that your account is the
+   owner of the website. Only the owner can upgrade it.
+2. It compares the code of the website with the contract bundled with the CLI. If they are identical, it
+   reports that the website is up to date and stops. If the bundled contract needs MIP-0002 and MIP-0002
+   is not active on the network yet, it stops with an error.
+3. It shows the current and new contract versions, the current and new bytecode sizes and the cost, and
+   asks for confirmation. Use `-y` (`--yes`) to skip the prompt.
+4. It sends the upgrade in **one operation**: it replaces the bytecode (`upgradeSC`), then calls
+   `syncVersion` on the new code to store its version. If the new code cannot run, the whole operation
+   is reverted, bytecode included, and the website keeps its previous contract.
+5. It waits for the operation to be final and prints the version the website now runs.
+
+## Cost
+
+The website contract pays for the storage of its bytecode. The upgrade sends the storage cost of the
+bytecode growth, if the new bytecode is larger, plus the operation fees. From version 2 to version 3, it
+costs about 0.06 MAS plus fees. Coins that are not needed are sent back to your account.
+
+## Example
+
+```bash
+npx @massalabs/deweb-cli upgrade AS12v...2UgLS
+```
+
+```
+Upgrade the contract of the website at address AS12v...2UgLS from version 2 to 3?
+Bytecode: <current size> -> <new size> bytes. Cost: <cost> MAS + fees. The website files, metadata and MNS domains are kept.
+```
+
+After confirmation:
+
+```
+Upgrading the website at address AS12v...2UgLS...
+Operation O1...xyz finalized. The website at address AS12v...2UgLS now runs contract version 3.
+```
+
+A website that does not store its version (deployed before versions were recorded) is shown with version
+`unknown`.
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `-y, --yes` | Skip the confirmation prompt. |
+
+The [global options](./overview#global-options) (`--config`, `--node_url`, `--wallet`, `--password`,
+`--accept_disclaimer`) are also accepted, and the secret key can be given with the `SECRET_KEY`
+environment variable. See [CLI Configuration](./config).
+
+## Outdated Contract Warning
+
+`upload --address` (editing a website), `delete` and `metadata` check the contract of the website first.
+When it runs another contract than the one bundled with the CLI, they print a warning and continue:
+
+```
+The website at address AS12v...2UgLS runs contract version 2, this CLI ships version 3.
+Upgrade it with: deweb-cli upgrade AS12v...2UgLS
+```
+
+If MIP-0002 is not active on the network yet, the second line says instead:
+
+```
+It can be upgraded once MIP-0002 is active on this network.
+```
+
+Immutable and up-to-date websites print no warning.
+
+## Upgrading From the Uploader
+
+The [DeWeb uploader](https://dws.massa.network) web app shows the contract status of each of your
+websites (up to date, upgrade available, waiting for MIP-0002, or immutable) and lets you upgrade a
+website in one operation, after showing the bytecode change and the cost. It also warns you about an
+outdated contract before editing a website.
+
+:::info
+This feature of the uploader is being rolled out and may not be available yet.
+:::
