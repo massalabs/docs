@@ -4,8 +4,11 @@ on:
   push:
     branches:
       - main
-    # Review gh actions docs if you want to further define triggers, paths, etc
-    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
+    # Skip pushes that only touch CI or repo metadata, the website is unchanged.
+    paths-ignore:
+      - '.github/**'
+      - 'README.md'
+      - '.gitignore'
   workflow_dispatch:
 
 # Deploy only the latest main: a newer push cancels older runs.

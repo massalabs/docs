@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    # Skip pushes that only touch CI or repo metadata, the website is unchanged.
+    paths-ignore:
+      - '.github/**'
+      - 'README.md'
+      - '.gitignore'
   workflow_dispatch:
 
 # Never run two uploads in parallel: runs wait for the current upload,
