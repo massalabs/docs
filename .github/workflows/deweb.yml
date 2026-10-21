@@ -6,6 +6,12 @@ on:
       - main
   workflow_dispatch:
 
+# Deploy only the latest main: a newer push replaces any queued run.
+# Never cancel a running upload, it would leave the website half updated.
+concurrency:
+  group: deweb-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     name: Deploy to DeWeb
