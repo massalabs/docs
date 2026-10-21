@@ -6,10 +6,12 @@ on:
       - main
   workflow_dispatch:
 
-# Deploy only the latest main: a newer push replaces any queued run.
+# Never run two uploads in parallel: runs wait for the current upload,
+# and a newer push replaces any queued run so only the latest main is deployed.
+# The group is not per-branch since every run updates the same website.
 # Never cancel a running upload, it would leave the website half updated.
 concurrency:
-  group: deweb-deploy-${{ github.ref }}
+  group: deweb-deploy
   cancel-in-progress: false
 
 jobs:
