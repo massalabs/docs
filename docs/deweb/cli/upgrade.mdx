@@ -57,10 +57,9 @@ particular large ones, so that they can still be purged.
 - **MIP-0002 must be active on the network.** Contract version 3 uses the paginated datastore key
   functions, so it cannot be deployed nor run before MIP-0002 is active. Before that, `upgrade` stops
   with an error and leaves the website unchanged.
-- **The CLI must ship contract version 3.** `upgrade` installs the contract bundled with the CLI you
-  run. The CLI releases published before MIP-0002 is active on mainnet still bundle version 2: with them,
-  websites running version 2 are reported as up to date. Use the latest release of the CLI
-  (`npx @massalabs/deweb-cli@latest`): the confirmation prompt shows the version it ships.
+- **The CLI must ship contract version 3: use DeWeb CLI 0.7.0 or later.** `upgrade` installs the
+  contract bundled with the CLI you run. Earlier releases bundle version 2: with them, websites running
+  version 2 are reported as up to date. The confirmation prompt shows the version the CLI ships.
 :::
 
 ## What the Command Does
@@ -138,7 +137,3 @@ The [DeWeb uploader](https://dws.massa.network) web app shows the contract statu
 websites (up to date, upgrade available, waiting for MIP-0002, or immutable) and lets you upgrade a
 website in one operation, after showing the bytecode change and the cost. It also warns you about an
 outdated contract before editing a website.
-
-:::info
-This feature of the uploader is being rolled out and may not be available yet.
-:::
